@@ -1,8 +1,8 @@
+import { createRandomIdString } from "src/util/random";
 import { Value } from "./value";
 
-export class Email extends Value {
+export class Category extends Value {
   readonly value: string;
-  private static readonly emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   private constructor(value: string) {
     super()
@@ -10,20 +10,18 @@ export class Email extends Value {
   }
 
   static create(value: string) {
-    if (!value || !Email.emailRegex.test(value)) {
-      throw new Error('Invalid email format');
-    }
-    return new Email(value);
+    return new Category(value);
   }
 
   static restore(value: string) {
-    return new Email(value);
+    return new Category(value);
   }
 
   public isEqual(other: any): boolean {
-    if (!(other instanceof Email)) {
+    if (!(other instanceof Category)) {
       return false;
     }
     return this.value === other.value;
   }
 }
+

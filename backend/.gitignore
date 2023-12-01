@@ -37,3 +37,4 @@ lerna-debug.log*
 # version
 .envrc
 .nvmrc
+.env
