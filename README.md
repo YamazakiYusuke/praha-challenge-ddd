@@ -1,2 +1,19 @@
-# 概要
-PrAha Challengeの設計課題の雛形に使用するレポジトリです
+# package構造
+
+src
+├── controller
+│   └── 
+├── app (ユースケース)
+│   └── 
+├── domain
+│   ├── entities (エンティティ)
+│   │
+│   ├── repositories (インターフェイス)
+│   │
+│   ├── services (ドメインサービス)
+│   │
+│   └── values (値オブジェクト)
+├── infra  
+│   └── 
+├── util
+│   ├── 

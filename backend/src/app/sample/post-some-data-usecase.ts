@@ -1,6 +1,6 @@
-import { SomeData } from 'src/domain/some-data/some-data'
+import { SomeData } from 'src/domain/entities/some-data'
 import { createRandomIdString } from 'src/util/random'
-import { ISomeDataRepository } from '../../domain/some-data/some-data-repository'
+import { ISomeDataRepository } from '../../domain/repositories/some-data-repository'
 
 export class PostSomeDataUseCase {
   private readonly someDataRepo: ISomeDataRepository

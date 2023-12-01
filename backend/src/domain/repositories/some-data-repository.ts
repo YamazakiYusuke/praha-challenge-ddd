@@ -1,4 +1,4 @@
-import { SomeData } from 'src/domain/some-data/some-data'
+import { SomeData } from 'src/domain/entities/some-data'
 
 export interface ISomeDataRepository {
   save(someData: SomeData): Promise<SomeData>
