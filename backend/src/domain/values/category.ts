@@ -1,4 +1,3 @@
-import { createRandomIdString } from "src/util/random";
 import { Value } from "./value";
 
 export class Category extends Value {

@@ -25,8 +25,9 @@ export class Participant extends Entity {
   private pairId: Id
   private enrollmentStatus: EnrollmentStatus
 
-  private constructor(id: Id, name: Name, email: Email, teamId: Id, pairId: Id, enrollmentStatus: EnrollmentStatus) {
+  private constructor(props: { id: Id; name: Name; email: Email; teamId: Id; pairId: Id; enrollmentStatus: EnrollmentStatus }) {
     super()
+    const { id, name, email, teamId, pairId, enrollmentStatus } = props
     this.id = id
     this.name = name
     this.email = email
@@ -36,8 +37,29 @@ export class Participant extends Entity {
   }
 
   static create(props: { id: Id; name: Name; email: Email; teamId: Id; pairId: Id; enrollmentStatus: EnrollmentStatus }) {
-    const { id, name, email, teamId, pairId, enrollmentStatus } = props
-    return new Participant(id, name, email, teamId, pairId, enrollmentStatus);
+    if (!props.id) {
+      throw new Error('ID is required');
+    }
+    if (!props.name) {
+      throw new Error('Name is required');
+    }
+    if (!props.email) {
+      throw new Error('Email is required');
+    }
+    if (!props.teamId) {
+      throw new Error('Team ID is required');
+    }
+    if (!props.pairId) {
+      throw new Error('Pair ID is required');
+    }
+    if (!props.enrollmentStatus) {
+      throw new Error('Enrollment status is required');
+    }
+    return new Participant(props);
+  }
+
+  static restore(props: { id: Id; name: Name; email: Email; teamId: Id; pairId: Id; enrollmentStatus: EnrollmentStatus }) {
+    return new Participant(props);
   }
 
   public isEqual(other: any): boolean {

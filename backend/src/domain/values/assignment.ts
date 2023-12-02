@@ -1,7 +1,4 @@
 import { Category } from "./category"
-import { Email } from "./email"
-import { Id } from "./id"
-import { Name } from "./name"
 import { Value } from "./value"
 
 /**
@@ -19,7 +16,7 @@ import { Value } from "./value"
  */
 export class Assignment extends Value {
   readonly number: number
-  readonly category: Category 
+  readonly category: Category
   readonly title: string
   readonly introduction: string
   readonly content: string
@@ -36,11 +33,20 @@ export class Assignment extends Value {
 
   static create(props: { number: number; title: string; category: Category; introduction: string; content: string }) {
     const { number, category, title, introduction, content } = props
-    if (!number || !title || !category || !introduction || !content) {
-      throw new Error('Invalid properties for Assignment')
+    if (!number) {
+      throw new Error('Number is required')
     }
-    if (title.trim() === '' || introduction.trim() === '' || content.trim() === '') {
-      throw new Error('Title, Introduction, and Content cannot be empty strings')
+    if (!title || title.trim() === '') {
+      throw new Error('Title is required')
+    }
+    if (!category) {
+      throw new Error('Category is required')
+    }
+    if (!introduction || introduction.trim() === '') {
+      throw new Error('Introduction is required')
+    }
+    if (!content || content.trim() === '') {
+      throw new Error('Content is required')
     }
     return new Assignment(props)
   }
@@ -51,10 +57,10 @@ export class Assignment extends Value {
 
   public isEqual(other: any): boolean {
     if (!(other instanceof Assignment)) return false
-    return  this.number === other.number &&
-            this.category === other.category &&
-            this.title === other.title &&
-            this.introduction === other.introduction &&
-            this.content === other.content;
+    return this.number === other.number &&
+      this.category.isEqual(other.category) &&
+      this.title === other.title &&
+      this.introduction === other.introduction &&
+      this.content === other.content;
   }
 }
