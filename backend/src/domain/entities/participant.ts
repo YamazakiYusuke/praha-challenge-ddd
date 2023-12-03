@@ -18,7 +18,6 @@ import { Entity } from "./entity"
  * ```
  */
 export class Participant extends Entity {
-  private readonly id: Id
   private name: Name
   private email: Email
   private teamId: Id
@@ -26,9 +25,8 @@ export class Participant extends Entity {
   private enrollmentStatus: EnrollmentStatus
 
   private constructor(props: { id: Id; name: Name; email: Email; teamId: Id; pairId: Id; enrollmentStatus: EnrollmentStatus }) {
-    super()
     const { id, name, email, teamId, pairId, enrollmentStatus } = props
-    this.id = id
+    super(id)
     this.name = name
     this.email = email
     this.teamId = teamId
@@ -60,10 +58,5 @@ export class Participant extends Entity {
 
   static restore(props: { id: Id; name: Name; email: Email; teamId: Id; pairId: Id; enrollmentStatus: EnrollmentStatus }) {
     return new Participant(props);
-  }
-
-  public isEqual(other: any): boolean {
-    if (!(other instanceof Participant)) return false
-    return this.id === other.id;
   }
 }

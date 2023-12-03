@@ -9,14 +9,14 @@ export class Email extends Value {
     this.value = value
   }
 
-  static create(value: string) {
+  static create(value: string): Email | Error {
     if (!value || !Email.emailRegex.test(value)) {
       throw new Error('Invalid email format');
     }
     return new Email(value);
   }
 
-  static restore(value: string) {
+  static restore(value: string): Email  {
     return new Email(value);
   }
 

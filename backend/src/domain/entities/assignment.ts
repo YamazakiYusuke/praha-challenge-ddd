@@ -1,5 +1,6 @@
-import { Category } from "./category"
-import { Value } from "./value"
+import { Category } from "../values/category"
+import { Id } from "../values/id"
+import { Entity } from "./entity"
 
 /**
  * **sample code**
@@ -14,16 +15,16 @@ import { Value } from "./value"
  * const assignment = Assignment.create(props);
  * ```
  */
-export class Assignment extends Value {
+export class Assignment extends Entity {
   readonly number: number
   readonly category: Category
   readonly title: string
   readonly introduction: string
   readonly content: string
 
-  private constructor(props: { number: number; title: string; category: Category; introduction: string; content: string }) {
-    super()
-    const { number, category, title, introduction, content } = props
+  private constructor(props: { number: number; title: string; category: Category; introduction: string; content: string; id?: Id; }) {
+    const { id, number, category, title, introduction, content } = props
+    super(id ?? Id.create())
     this.number = number;
     this.category = category
     this.title = title
@@ -51,16 +52,7 @@ export class Assignment extends Value {
     return new Assignment(props)
   }
 
-  static restore(props: { number: number; title: string; category: Category; introduction: string; content: string }) {
+  static restore(props: { id: Id; number: number; title: string; category: Category; introduction: string; content: string }) {
     return new Assignment(props)
-  }
-
-  public isEqual(other: any): boolean {
-    if (!(other instanceof Assignment)) return false
-    return this.number === other.number &&
-      this.category.isEqual(other.category) &&
-      this.title === other.title &&
-      this.introduction === other.introduction &&
-      this.content === other.content;
   }
 }
