@@ -2,6 +2,13 @@ import { Category } from "../values/category"
 import { Id } from "../values/id"
 import { Entity } from "./entity"
 
+export interface AssignmentProps {
+  number: number;
+  title: string;
+  category: Category;
+  introduction: string;
+  content: string;
+}
 /**
  * **sample code**
  * ```typescript
@@ -15,24 +22,13 @@ import { Entity } from "./entity"
  * const assignment = Assignment.create(props);
  * ```
  */
-export class Assignment extends Entity {
-  readonly number: number
-  readonly category: Category
-  readonly title: string
-  readonly introduction: string
-  readonly content: string
+export class Assignment extends Entity<AssignmentProps> {
 
-  private constructor(props: { number: number; title: string; category: Category; introduction: string; content: string; id?: Id; }) {
-    const { id, number, category, title, introduction, content } = props
-    super(id ?? Id.create())
-    this.number = number;
-    this.category = category
-    this.title = title
-    this.introduction = introduction
-    this.content = content
+  private constructor(id: Id, props: AssignmentProps) {
+    super(id, props)
   }
 
-  static create(props: { number: number; title: string; category: Category; introduction: string; content: string }) {
+  static create(props: AssignmentProps): Assignment | Error {
     const { number, category, title, introduction, content } = props
     if (!number) {
       throw new Error('Number is required')
@@ -49,10 +45,30 @@ export class Assignment extends Entity {
     if (!content || content.trim() === '') {
       throw new Error('Content is required')
     }
-    return new Assignment(props)
+    return new Assignment(Id.create(), props)
   }
 
-  static restore(props: { id: Id; number: number; title: string; category: Category; introduction: string; content: string }) {
-    return new Assignment(props)
+  static restore(id: Id, props: AssignmentProps): Assignment {
+    return new Assignment(id, props)
+  }
+
+  public get number(): number {
+    return this.props.number;
+  }
+
+  public get title(): string {
+    return this.props.title;
+  }
+
+  public get category(): Category {
+    return this.props.category;
+  }
+
+  public get introduction(): string {
+    return this.props.introduction;
+  }
+
+  public get content(): string {
+    return this.props.content;
   }
 }

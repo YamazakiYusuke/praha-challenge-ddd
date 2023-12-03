@@ -1,10 +1,12 @@
 import { Id } from "../values/id";
 
-export abstract class Entity {
+export abstract class Entity<T> {
   protected id: Id;
+  protected props: T;
 
-  constructor(id: Id) {
+  constructor(id: Id, props: T) {
     this.id = id;
+    this.props = props;
   }
 
   public get getId(): Id {

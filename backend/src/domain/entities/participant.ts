@@ -3,11 +3,17 @@ import { Id } from "../values/id"
 import { Name } from "../values/name"
 import { Entity } from "./entity"
 
+export interface ParticipantProps {
+  name: Name;
+  email: Email;
+  teamId: Id;
+  pairId: Id;
+  enrollmentStatus: EnrollmentStatus;
+}
 /**
  * **sample code**
  * ```typescript
- * const props = {
- *  id: Id.create(),
+ * const props = ParticipantProps {
  *  name: Name.create('Joe'),
  *  email: Email.create('sample@example.com'),
  *  teamId: Id.create(),
@@ -17,27 +23,12 @@ import { Entity } from "./entity"
  * const participant = Participant.create(props);
  * ```
  */
-export class Participant extends Entity {
-  private name: Name
-  private email: Email
-  private teamId: Id
-  private pairId: Id
-  private enrollmentStatus: EnrollmentStatus
-
-  private constructor(props: { id: Id; name: Name; email: Email; teamId: Id; pairId: Id; enrollmentStatus: EnrollmentStatus }) {
-    const { id, name, email, teamId, pairId, enrollmentStatus } = props
-    super(id)
-    this.name = name
-    this.email = email
-    this.teamId = teamId
-    this.pairId = pairId
-    this.enrollmentStatus = enrollmentStatus
+export class Participant extends Entity<ParticipantProps> {
+  private constructor(id: Id, props: ParticipantProps) {
+    super(id, props)
   }
 
-  static create(props: { id: Id; name: Name; email: Email; teamId: Id; pairId: Id; enrollmentStatus: EnrollmentStatus }) {
-    if (!props.id) {
-      throw new Error('ID is required');
-    }
+  static create(props: ParticipantProps): Participant | Error {
     if (!props.name) {
       throw new Error('Name is required');
     }
@@ -53,10 +44,30 @@ export class Participant extends Entity {
     if (!props.enrollmentStatus) {
       throw new Error('Enrollment status is required');
     }
-    return new Participant(props);
+    return new Participant(Id.create(), props);
   }
 
-  static restore(props: { id: Id; name: Name; email: Email; teamId: Id; pairId: Id; enrollmentStatus: EnrollmentStatus }) {
-    return new Participant(props);
+  static restore(id: Id, props: ParticipantProps): Participant {
+    return new Participant(id, props);
+  }
+
+  public get name(): Name {
+    return this.props.name;
+  }
+
+  public get email(): Email {
+    return this.props.email;
+  }
+
+  public get teamId(): Id {
+    return this.props.teamId;
+  }
+
+  public get pairId(): Id {
+    return this.props.pairId;
+  }
+
+  public get enrollmentStatus(): EnrollmentStatus {
+    return this.props.enrollmentStatus;
   }
 }
