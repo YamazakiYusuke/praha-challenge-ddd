@@ -12,7 +12,7 @@ export interface AssignmentProps {
 /**
  * **sample code**
  * ```typescript
- * const props = {
+ * const props = AssignmentProps {
  *  number: 1,
  *  title: 'Sample Assignment',
  *  category: Category.create('Sample Category'),
