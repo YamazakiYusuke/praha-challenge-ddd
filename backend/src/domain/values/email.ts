@@ -1,12 +1,10 @@
 import { Value } from "./value";
 
-export class Email extends Value {
-  readonly value: string;
+export class Email extends Value<string> {
   private static readonly emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   private constructor(value: string) {
-    super()
-    this.value = value
+    super(value)
   }
 
   static create(value: string): Email | Error {
@@ -20,10 +18,7 @@ export class Email extends Value {
     return new Email(value);
   }
 
-  public isEqual(other: any): boolean {
-    if (!(other instanceof Email)) {
-      return false;
-    }
-    return this.value === other.value;
+  public get id(): String {
+    return this.props
   }
 }

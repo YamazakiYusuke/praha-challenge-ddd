@@ -1,28 +1,22 @@
 import { createRandomIdString } from "src/util/random";
 import { Value } from "./value";
 
-export class Id extends Value {
-  readonly value: string;
-
+export class Id extends Value<String> {
   private constructor(value: string) {
-    super()
-    this.value = value
+    super(value)
   }
 
-  static create() {
+  static create(): Id {
     let id = createRandomIdString();
     return new Id(id);
   }
 
-  static restore(id: string) {
+  static restore(id: string): Id {
     return new Id(id);
   }
 
-  public isEqual(other: any): boolean {
-    if (!(other instanceof Id)) {
-      return false;
-    }
-    return this.value === other.value;
+  public get id(): String {
+    return this.props
   }
 }
 

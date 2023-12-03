@@ -1,11 +1,8 @@
 import { Value } from "./value";
 
-export class Category extends Value {
-  readonly value: string;
-
+export class Category extends Value<String> {
   private constructor(value: string) {
-    super()
-    this.value = value
+    super(value)
   }
 
   static create(value: string) {
@@ -16,11 +13,8 @@ export class Category extends Value {
     return new Category(value);
   }
 
-  public isEqual(other: any): boolean {
-    if (!(other instanceof Category)) {
-      return false;
-    }
-    return this.value === other.value;
+  public get id(): String {
+    return this.props
   }
 }
 
