@@ -1,6 +1,6 @@
 import { Value } from "./value";
 
-export class Category extends Value<String> {
+export class Category extends Value<string> {
   private constructor(value: string) {
     super(value)
   }
@@ -13,7 +13,7 @@ export class Category extends Value<String> {
     return new Category(value);
   }
 
-  public get id(): String {
+  public get value(): string {
     return this.props
   }
 }

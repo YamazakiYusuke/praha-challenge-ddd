@@ -1,7 +1,7 @@
 # package構造
-
+```
 src
-├── controller
+├── controller     
 │   └── 
 ├── app (ユースケース)
 │   └── 
@@ -17,3 +17,4 @@ src
 │   └── 
 ├── util
 │   ├── 
+```

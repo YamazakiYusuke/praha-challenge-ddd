@@ -1,4 +1,5 @@
 import { Email } from "../values/email"
+import { EnrollmentStatus } from "../values/enrollment-status";
 import { Id } from "../values/id"
 import { Name } from "../values/name"
 import { Entity } from "./entity"
@@ -18,7 +19,7 @@ export interface ParticipantProps {
  *  email: Email.create('sample@example.com'),
  *  teamId: Id.create(),
  *  pairId: Id.create(),
- *  enrollmentStatus: EnrollmentStatus.Enrolled,
+ *  enrollmentStatus: EnrollmentStatus(EnrollmentStatusValue.Enrolled),
  * }
  * const participant = Participant.create(props);
  * ```

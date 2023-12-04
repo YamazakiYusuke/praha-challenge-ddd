@@ -18,7 +18,7 @@ export class Email extends Value<string> {
     return new Email(value);
   }
 
-  public get id(): String {
+  public get value(): string {
     return this.props
   }
 }
