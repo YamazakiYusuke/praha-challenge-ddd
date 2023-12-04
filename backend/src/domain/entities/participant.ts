@@ -71,4 +71,14 @@ export class Participant extends Entity<ParticipantProps> {
   public get enrollmentStatus(): EnrollmentStatus {
     return this.props.enrollmentStatus;
   }
+
+  public changeEnrollmentStatus(newStatus: EnrollmentStatus): void | Error {
+    if (!newStatus) {
+      throw new Error('New status is required');
+    }
+    if (this.props.enrollmentStatus.value === EnrollmentStatusValue.Withdrawn) {
+      throw new Error('Cannot change status of a withdrawn participant');
+    }
+    this.props.enrollmentStatus = newStatus;
+  }
 }

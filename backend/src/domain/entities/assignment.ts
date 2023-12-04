@@ -1,11 +1,11 @@
-import { Category } from "../values/category"
+import { Category } from "./category"
 import { Id } from "../values/id"
 import { Entity } from "./entity"
 
 export interface AssignmentProps {
   number: number;
   title: string;
-  category: Category;
+  categoryId: Id;
   introduction: string;
   content: string;
 }
@@ -15,7 +15,7 @@ export interface AssignmentProps {
  * const props = AssignmentProps {
  *  number: 1,
  *  title: 'Sample Assignment',
- *  category: Category.create('Sample Category'),
+ *  categoryId: categoryId,
  *  introduction: 'This is a sample assignment',
  *  content: 'The content of the sample assignment goes here',
  * }
@@ -29,14 +29,14 @@ export class Assignment extends Entity<AssignmentProps> {
   }
 
   static create(props: AssignmentProps): Assignment | Error {
-    const { number, category, title, introduction, content } = props
+    const { number, categoryId, title, introduction, content } = props
     if (!number) {
       throw new Error('Number is required')
     }
     if (!title || title.trim() === '') {
       throw new Error('Title is required')
     }
-    if (!category) {
+    if (!categoryId) {
       throw new Error('Category is required')
     }
     if (!introduction || introduction.trim() === '') {
@@ -60,8 +60,8 @@ export class Assignment extends Entity<AssignmentProps> {
     return this.props.title;
   }
 
-  public get category(): Category {
-    return this.props.category;
+  public get category(): Id {
+    return this.props.categoryId;
   }
 
   public get introduction(): string {
@@ -70,5 +70,40 @@ export class Assignment extends Entity<AssignmentProps> {
 
   public get content(): string {
     return this.props.content;
+  }
+
+  public changeNumber(newNumber: number): void | Error {
+    if (!newNumber) {
+      throw new Error('Number is required')
+    }
+    this.props.number = newNumber;
+  }
+
+  public changeTitle(newTitle: string): void | Error {
+    if (!newTitle || newTitle.trim() === '') {
+      throw new Error('Title is required')
+    }
+    this.props.title = newTitle;
+  }
+
+  public changeCategory(newCategoryId: Id): void | Error {
+    if (!newCategoryId) {
+      throw new Error('Category is required')
+    }
+    this.props.categoryId = newCategoryId;
+  }
+
+  public changeIntroduction(newIntroduction: string): void | Error {
+    if (!newIntroduction || newIntroduction.trim() === '') {
+      throw new Error('Introduction is required')
+    }
+    this.props.introduction = newIntroduction;
+  }
+
+  public changeContent(newContent: string): void | Error {
+    if (!newContent || newContent.trim() === '') {
+      throw new Error('Content is required')
+    }
+    this.props.content = newContent;
   }
 }

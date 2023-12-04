@@ -1,5 +1,5 @@
 import { Email } from "../values/email";
-import { Id } from "../values/id"
+import { Id } from "../values/id";
 import { Entity } from "./entity"
 
 export interface AdministratorProps {
@@ -30,5 +30,12 @@ export class Administrator extends Entity<AdministratorProps> {
 
   public get number(): Email {
     return this.props.email;
+  }
+
+  public changeEmail(newEmail: Email): void {
+    if (!newEmail) {
+      throw new Error('Email is required');
+    }
+    this.props.email = newEmail;
   }
 }

@@ -19,4 +19,3 @@ export class Id extends Value<string> {
     return this.props
   }
 }
-
