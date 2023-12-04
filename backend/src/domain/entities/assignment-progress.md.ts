@@ -10,8 +10,10 @@ export interface AssignmentProgressProps {
 /**
  * **sample code**
  * ```typescript
- * const props = AssignmentProgressProps {
- *  email: Email.create('admin@example.com'),
+ * const props: AssignmentProgressProps = {
+ *  assignmentId: assignmentId,
+ *  participantId: participantId,
+ *  assignmentProgressState: AssignmentProgressState.create('InProgress'),
  * }
  * const AssignmentProgress = AssignmentProgress.create(props);
  * ```

@@ -17,8 +17,8 @@ export interface ParticipantProps {
  * const props = ParticipantProps {
  *  name: Name.create('Joe'),
  *  email: Email.create('sample@example.com'),
- *  teamId: Id.create(),
- *  pairId: Id.create(),
+ *  teamId: teamId,
+ *  pairId: pairId,
  *  enrollmentStatus: EnrollmentStatus(EnrollmentStatusValue.Enrolled),
  * }
  * const participant = Participant.create(props);
