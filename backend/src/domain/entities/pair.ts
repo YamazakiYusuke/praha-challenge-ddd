@@ -22,7 +22,7 @@ export class Pair extends Entity<PairProps> {
     super(id, props)
   }
 
-  static create(props: PairProps): Pair | Error {
+  static create(props: PairProps): Pair | EntityCreationError {
     return new Pair(Id.create(), props)
   }
 

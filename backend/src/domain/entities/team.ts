@@ -22,7 +22,7 @@ export class Team extends Entity<TeamProps> {
     super(id, props)
   }
 
-  static create(props: TeamProps): Team | Error {
+  static create(props: TeamProps): Team | EntityCreationError {
     return new Team(Id.create(), props)
   }
 

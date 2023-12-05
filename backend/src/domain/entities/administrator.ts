@@ -20,7 +20,7 @@ export class Administrator extends Entity<AdministratorProps> {
     super(id, props)
   }
 
-  static create(props: AdministratorProps): Administrator | Error {
+  static create(props: AdministratorProps): Administrator | EntityCreationError {
     return new Administrator(Id.create(), props)
   }
 

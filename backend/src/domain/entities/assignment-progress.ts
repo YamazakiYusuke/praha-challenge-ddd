@@ -24,7 +24,7 @@ export class AssignmentProgress extends Entity<AssignmentProgressProps> {
     super(id, props)
   }
 
-  static create(props: AssignmentProgressProps): AssignmentProgress | Error {
+  static create(props: AssignmentProgressProps): AssignmentProgress | EntityCreationError {
     if (!props.assignmentId || !props.participantId || !props.assignmentProgressState) {
       return new Error("Invalid or missing properties");
     }

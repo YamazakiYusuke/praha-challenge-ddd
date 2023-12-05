@@ -28,7 +28,7 @@ export class Assignment extends Entity<AssignmentProps> {
     super(id, props)
   }
 
-  static create(props: AssignmentProps): Assignment | Error {
+  static create(props: AssignmentProps): Assignment | EntityCreationError {
     const { number, categoryId, title, introduction, content } = props
     if (!number) {
       throw new Error('Number is required')

@@ -29,7 +29,7 @@ export class Participant extends Entity<ParticipantProps> {
     super(id, props)
   }
 
-  static create(props: ParticipantProps): Participant | Error {
+  static create(props: ParticipantProps): Participant | EntityCreationError {
     if (!props.name) {
       throw new Error('Name is required');
     }

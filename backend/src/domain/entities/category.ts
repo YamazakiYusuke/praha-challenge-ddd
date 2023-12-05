@@ -18,7 +18,7 @@ export class Category extends Entity<CategoryProps> {
     super(id, value)
   }
 
-  static create(props: CategoryProps): Category | Error {
+  static create(props: CategoryProps): Category | EntityCreationError {
     if (!props.name) {
       return new Error('Name is required');
     }
