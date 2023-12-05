@@ -1,6 +1,6 @@
 import { Team } from "../entities/team";
 
 export interface ITeamRepository {
-  save(team: Team): Promise<Team>
-  getAll(): Promise<Team[]>
+  save(team: Team): Promise<Team | RepositoryError>
+  getAll(): Promise<Team[] | RepositoryError>
 }
