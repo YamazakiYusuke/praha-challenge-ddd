@@ -1,6 +1,7 @@
+import { EntityCreationError } from "../errors/entity_creation_error";
 import { Email } from "../values/email";
 import { Id } from "../values/id";
-import { Entity } from "./entity"
+import { Entity } from "./base/entity"
 
 export interface AdministratorProps {
   email: Email;

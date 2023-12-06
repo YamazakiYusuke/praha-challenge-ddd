@@ -1,4 +1,4 @@
-import { Id } from "../values/id";
+import { Id } from "../../values/id";
 
 export abstract class Entity<T> {
   protected id: Id;
@@ -12,7 +12,7 @@ export abstract class Entity<T> {
   public get getId(): Id {
     return this.id;
   }
-  
+
   public isEqual(other: any): boolean {
     if (!(other instanceof Entity)) return false;
     return this.id == other.id

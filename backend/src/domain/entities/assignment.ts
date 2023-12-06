@@ -1,6 +1,6 @@
-import { Category } from "./category"
 import { Id } from "../values/id"
-import { Entity } from "./entity"
+import { Entity } from "./base/entity"
+import { EntityCreationError } from "../errors/entity_creation_error";
 
 export interface AssignmentProps {
   number: number;

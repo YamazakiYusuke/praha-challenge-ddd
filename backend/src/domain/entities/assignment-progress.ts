@@ -1,6 +1,7 @@
+import { EntityCreationError } from "../errors/entity_creation_error";
 import { AssignmentProgressState } from "../values/assignment-progress-state";
 import { Id } from "../values/id"
-import { Entity } from "./entity"
+import { Entity } from "./base/entity"
 
 export interface AssignmentProgressProps {
   assignmentId: Id;

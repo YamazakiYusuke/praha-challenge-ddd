@@ -1,5 +1,6 @@
+import { EntityCreationError } from "../errors/entity_creation_error";
 import { Id } from "../values/id";
-import { Entity } from "./entity";
+import { Entity } from "./base/entity";
 
 export interface CategoryProps {
   name: string;

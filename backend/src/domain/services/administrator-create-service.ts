@@ -1,5 +1,6 @@
 import { IAdministratorRepository } from "src/domain/repositories/administrator-repository";
 import { Administrator, AdministratorProps } from "../entities/administrator";
+import { EntityCreationError } from "../errors/entity_creation_error";
 
 export class AdministratorCreateService {
   constructor(private readonly repo: IAdministratorRepository) {}

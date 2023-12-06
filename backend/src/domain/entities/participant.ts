@@ -1,8 +1,9 @@
+import { EntityCreationError } from "../errors/entity_creation_error";
 import { Email } from "../values/email"
 import { EnrollmentStatus } from "../values/enrollment-status";
 import { Id } from "../values/id"
 import { Name } from "../values/name"
-import { Entity } from "./entity"
+import { Entity } from "./base/entity"
 
 export interface ParticipantProps {
   name: Name;

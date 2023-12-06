@@ -1,6 +1,7 @@
+import { EntityCreationError } from "../errors/entity_creation_error";
 import { Id } from "../values/id"
 import { Name } from "../values/name";
-import { Entity } from "./entity"
+import { Entity } from "./base/entity"
 
 export interface TeamProps {
   name: Name;

@@ -1,4 +1,4 @@
-import { Value } from "./value";
+import { Value } from "./base/value";
 
 export class EnrollmentStatus extends Value<string> {
   private constructor(value: string) {
@@ -8,11 +8,11 @@ export class EnrollmentStatus extends Value<string> {
   static create(value: string): EnrollmentStatus | Error {
     if (!(value in EnrollmentStatusValue)) {
       console.error('Invalid value');
-    } 
+    }
     return new EnrollmentStatus(value);
   }
 
-  static restore(value: string): EnrollmentStatus  {
+  static restore(value: string): EnrollmentStatus {
     return new EnrollmentStatus(value);
   }
 

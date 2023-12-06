@@ -1,4 +1,4 @@
-import { Value } from "./value";
+import { Value } from "./base/value";
 
 export class Email extends Value<string> {
   private static readonly emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -14,7 +14,7 @@ export class Email extends Value<string> {
     return new Email(value);
   }
 
-  static restore(value: string): Email  {
+  static restore(value: string): Email {
     return new Email(value);
   }
 

@@ -1,4 +1,4 @@
-import { Value } from "./value";
+import { Value } from "./base/value";
 
 export class Name extends Value<string> {
   private constructor(value: string) {

@@ -1,4 +1,5 @@
 import { Administrator } from "../entities/administrator";
+import { RepositoryError } from "../errors/repository_error";
 import { Email } from "../values/email";
 
 export interface IAdministratorRepository {

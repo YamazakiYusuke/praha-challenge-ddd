@@ -1,5 +1,5 @@
 import { Category } from "../entities/category";
-import { Name } from "../values/name";
+import { RepositoryError } from "../errors/repository_error";
 
 export interface ICategoryRepository {
   save(category: Category): Promise<Category | RepositoryError>
