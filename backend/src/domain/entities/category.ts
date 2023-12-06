@@ -33,11 +33,12 @@ export class Category extends Entity<CategoryProps> {
     return this.props.name
   }
 
-  public changeName(newName: string): void | Error {
+  public changeName(newName: string): Category | Error {
     if (!newName) {
       throw new Error('Name is required');
     }
     this.props.name = newName
+    return this
   }
 }
 
