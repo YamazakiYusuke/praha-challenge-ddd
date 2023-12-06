@@ -1,9 +1,10 @@
 import { EntityCreationError } from "../errors/entity_creation_error";
 import { Id } from "../values/id";
+import { Name } from "../values/name";
 import { Entity } from "./base/entity";
 
 export interface CategoryProps {
-  name: string;
+  name: Name;
 }
 /**
  * **sample code**
@@ -20,9 +21,6 @@ export class Category extends Entity<CategoryProps> {
   }
 
   static create(props: CategoryProps): Category | EntityCreationError {
-    if (!props.name) {
-      return new Error('Name is required');
-    }
     return new Category(Id.create(), props);
   }
 
@@ -30,14 +28,11 @@ export class Category extends Entity<CategoryProps> {
     return new Category(id, props);
   }
 
-  public get name(): string {
+  public get name(): Name {
     return this.props.name
   }
 
-  public changeName(newName: string): Category | Error {
-    if (!newName) {
-      throw new Error('Name is required');
-    }
+  public changeName(newName: Name): Category | Error {
     this.props.name = newName
     return this
   }

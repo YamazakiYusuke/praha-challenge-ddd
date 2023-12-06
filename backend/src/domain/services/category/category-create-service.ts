@@ -1,8 +1,8 @@
 import { ICategoryRepository } from "src/domain/repositories/category-repository";
-import { Category, CategoryProps } from "../entities/category";
-import { EntityCreationError } from "../errors/entity_creation_error";
-import { RepositoryError } from "../errors/repository_error";
-import { EntityStateModificationError } from "../errors/entity_state_modification_error";
+import { Category, CategoryProps } from "../../entities/category";
+import { EntityCreationError } from "../../errors/entity_creation_error";
+import { RepositoryError } from "../../errors/repository_error";
+import { EntityStateModificationError } from "../../errors/entity_state_modification_error";
 
 export class CategoryCreateService {
   constructor(private readonly repo: ICategoryRepository) { }
