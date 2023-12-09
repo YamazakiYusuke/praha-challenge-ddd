@@ -3,13 +3,14 @@ import { Category, CategoryProps } from "../../entities/category";
 import { EntityCreationError } from "../../errors/entity_creation_error";
 import { RepositoryError } from "../../errors/repository_error";
 import { GetOneCategoryQuery } from "src/domain/commands/category/get-one-category-query";
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export class CategoryCreateService {
-  constructor(private readonly repo: ICategoryRepository) { }
+  constructor(private readonly getOneCategoryQuery: GetOneCategoryQuery) { }
 
   async execute(props: CategoryProps): Promise<Category | EntityCreationError | RepositoryError> {
-    const getOneCategoryQuery = new GetOneCategoryQuery(props.name, this.repo);
-    const existingCategory = await getOneCategoryQuery.execute();
+    const existingCategory = await this.getOneCategoryQuery.execute(props.name);
     if (existingCategory instanceof RepositoryError) {
       throw existingCategory;
     }
