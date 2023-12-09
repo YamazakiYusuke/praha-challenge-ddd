@@ -1,18 +1,21 @@
 import { EntityCreationError } from "../errors/entity_creation_error";
+import { EntityModificationError } from "../errors/entity_modification_error";
 import { Id } from "../values/id"
 import { Name } from "../values/name";
+import { Participants } from "../values/participants";
 import { Entity } from "./base/entity"
+import { Participant } from "./participant";
 
 export interface PairProps {
   name: Name;
-  member: Array<Id>;
+  participants: Participants;
 }
 /**
  * **sample code**
  * ```typescript
  * const props: PairProps = {
- *  name: new Name('Pair Name'),
- *  member: [participant_id1, participant_id2],
+ *  name: Name.create('Pair Name'),
+ *  participants: Participants.create([participant, participant]),
  * }
  * const pair = Pair.create(props);
  * ```
@@ -35,11 +38,11 @@ export class Pair extends Entity<PairProps> {
     return this.props.name;
   }
 
-  public get member(): Array<Id> {
-    return this.props.member;
+  public get participants(): Participants {
+    return this.props.participants;
   }
 
-  public changeMember(newMember: Array<Id>): void {
-    // TODO: 
+  public changeMember(newParticipants: Participants): void | EntityModificationError {
+    this.props.participants = newParticipants;
   }
 }
