@@ -4,10 +4,10 @@ import { RepositoryError } from "src/domain/errors/repository_error";
 import { Name } from "src/domain/values/name";
 import { IGetOneQuery } from "../base/get-one-query";
 
-export class GetOnePairQuery implements IGetOneQuery<Pair> {
-  constructor(private name: Name, private pairRepository: IPairRepository) { }
+export class GetOnePairQuery implements IGetOneQuery<Pair, Name> {
+  constructor(private pairRepository: IPairRepository) { }
 
-  async execute(): Promise<Pair | null | RepositoryError> {
-    return await this.pairRepository.get(this.name);
+  async execute(name: Name): Promise<Pair | null | RepositoryError> {
+    return await this.pairRepository.get(name);
   }
 }
