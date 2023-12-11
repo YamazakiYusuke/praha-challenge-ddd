@@ -4,19 +4,21 @@ import { EntityCreationError } from "../../errors/entity_creation_error";
 import { GetOneAdministratorQuery } from "src/domain/commands/administrator/get-one-administrator-query";
 import { Injectable } from "@nestjs/common";
 import { RepositoryError } from "src/domain/errors/repository_error";
+import { Email } from "src/domain/values/email";
 
 @Injectable()
-export class AdministratorCreateService {
+export class AdministratorChangeEmailService {
   constructor(private readonly getOneAdministratorQuery: GetOneAdministratorQuery) {}
 
-  async execute(props: AdministratorProps): Promise<Administrator | RepositoryError  | EntityCreationError> {
-    const existingAdministrator = await this.getOneAdministratorQuery.execute(props.email);
+  async execute(administrator: Administrator, newEmail: Email): Promise<Administrator| RepositoryError  | EntityCreationError> {
+    const existingAdministrator = await this.getOneAdministratorQuery.execute(newEmail);
     if (existingAdministrator instanceof RepositoryError) {
       throw existingAdministrator;
     }
     if (existingAdministrator != null) {
       throw new EntityCreationError('こちらのEmailは既に登録済みです');
     }
-    return Administrator.create(props);
+    const modifiedAdministrator = administrator.changeEmail(newEmail);
+    return modifiedAdministrator;
   }
 }
