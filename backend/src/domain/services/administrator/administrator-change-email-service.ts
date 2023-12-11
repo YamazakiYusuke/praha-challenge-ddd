@@ -12,9 +12,6 @@ export class AdministratorChangeEmailService {
 
   async execute(administrator: Administrator, newEmail: Email): Promise<Administrator| RepositoryError  | EntityCreationError> {
     const existingAdministrator = await this.getOneAdministratorQuery.execute(newEmail);
-    if (existingAdministrator instanceof RepositoryError) {
-      throw existingAdministrator;
-    }
     if (existingAdministrator != null) {
       throw new EntityCreationError('こちらのEmailは既に登録済みです');
     }

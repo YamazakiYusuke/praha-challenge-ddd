@@ -10,9 +10,6 @@ export class PairCreateService {
 
   async execute(props: PairProps): Promise<Pair | EntityCreationError | RepositoryError> {
     const existingPair = await this.getOnePairQuery.execute(props.name);
-    if (existingPair instanceof RepositoryError) {
-      throw existingPair;
-    }
     if (existingPair != null) {
       throw new EntityCreationError('このペア名は既に存在しています');
     }

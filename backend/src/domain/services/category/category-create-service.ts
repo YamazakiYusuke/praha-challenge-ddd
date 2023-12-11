@@ -11,9 +11,6 @@ export class CategoryCreateService {
 
   async execute(props: CategoryProps): Promise<Category | EntityCreationError | RepositoryError> {
     const existingCategory = await this.getOneCategoryQuery.execute(props.name);
-    if (existingCategory instanceof RepositoryError) {
-      throw existingCategory;
-    }
     if (existingCategory != null) {
       throw new EntityCreationError('このカテゴリー名は既に存在しています');
     }

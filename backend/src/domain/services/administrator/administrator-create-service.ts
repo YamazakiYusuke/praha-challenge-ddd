@@ -11,9 +11,6 @@ export class AdministratorCreateService {
 
   async execute(props: AdministratorProps): Promise<Administrator | RepositoryError  | EntityCreationError> {
     const existingAdministrator = await this.getOneAdministratorQuery.execute(props.email);
-    if (existingAdministrator instanceof RepositoryError) {
-      throw existingAdministrator;
-    }
     if (existingAdministrator != null) {
       throw new EntityCreationError('こちらのEmailは既に登録済みです');
     }
