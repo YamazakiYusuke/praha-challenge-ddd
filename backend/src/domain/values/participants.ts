@@ -7,8 +7,8 @@ export class Participants extends Value<Array<Participant>> {
   }
 
   static create(value: Array<Participant>) {
-    if (value.length < 2 || value.length > 3) {
-      throw new Error('Participants must consist of 2 to 3 participants');
+    if (value.length < 1 || value.length > 3) {
+      throw new Error('Participants must consist of 1 to 3 participants');
     }
     return new Participants(value);
   }
