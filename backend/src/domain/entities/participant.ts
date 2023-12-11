@@ -1,7 +1,6 @@
 import { EntityCreationError } from "../errors/entity_creation_error";
 import { EntityModificationError } from "../errors/entity_modification_error";
 import { Email } from "../values/email"
-import { EnrollmentStatus } from "../values/enrollment-status";
 import { Id } from "../values/id"
 import { Name } from "../values/name"
 import { Entity } from "./base/entity"
@@ -12,7 +11,7 @@ export interface ParticipantProps {
   email: Email;
   teamId: Id;
   pairId: Id;
-  enrollmentStatus: EnrollmentStatus;
+  enrollmentStatus: EnrollmentStatusValue;
 }
 /**
  * **sample code**
@@ -57,15 +56,15 @@ export class Participant extends Entity<ParticipantProps> {
     return this.props.pairId;
   }
 
-  public get enrollmentStatus(): EnrollmentStatus {
+  public get enrollmentStatus(): EnrollmentStatusValue {
     return this.props.enrollmentStatus;
   }
 
-  public changeEnrollmentStatus(newStatus: EnrollmentStatus): Participant | EntityModificationError {
+  public changeEnrollmentStatus(newStatus: EnrollmentStatusValue): Participant | EntityModificationError {
     if (!newStatus) {
       throw new EntityModificationError('New status is required');
     }
-    if (this.props.enrollmentStatus.value === EnrollmentStatusValue.Withdrawn) {
+    if (this.props.enrollmentStatus === EnrollmentStatusValue.Withdrawn) {
       throw new EntityModificationError('Cannot change status of a withdrawn participant');
     }
     this.props.enrollmentStatus = newStatus;
