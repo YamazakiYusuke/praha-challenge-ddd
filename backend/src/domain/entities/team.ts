@@ -41,7 +41,8 @@ export class Team extends Entity<TeamProps> {
     return this.props.member;
   }
 
-  public changeMember(newMember: Array<Id>): void {
+  public changeMember(newMember: Array<Id>): Team {
     // TODO: 
+    return this;
   }
 }

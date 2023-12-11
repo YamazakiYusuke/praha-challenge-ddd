@@ -43,7 +43,8 @@ export class Pair extends Entity<PairProps> {
     return this.props.participants;
   }
 
-  public changeMember(newParticipants: Participants): void | EntityModificationError {
+  public changeMember(newParticipants: Participants): Pair | EntityModificationError {
     this.props.participants = newParticipants;
+    return this;
   }
 }

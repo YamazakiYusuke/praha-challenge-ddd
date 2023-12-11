@@ -61,7 +61,7 @@ export class Participant extends Entity<ParticipantProps> {
     return this.props.enrollmentStatus;
   }
 
-  public changeEnrollmentStatus(newStatus: EnrollmentStatus): void | EntityModificationError {
+  public changeEnrollmentStatus(newStatus: EnrollmentStatus): Participant | EntityModificationError {
     if (!newStatus) {
       throw new EntityModificationError('New status is required');
     }
@@ -69,5 +69,6 @@ export class Participant extends Entity<ParticipantProps> {
       throw new EntityModificationError('Cannot change status of a withdrawn participant');
     }
     this.props.enrollmentStatus = newStatus;
+    return this;
   }
 }
