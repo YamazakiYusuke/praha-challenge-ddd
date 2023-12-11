@@ -34,7 +34,8 @@ export class Category extends Entity<CategoryProps> {
     return this.props.name
   }
 
-  public changeName(newName: Name): Category | Error {
+  public changeName(newName: Name): Category {
+    // TODO: 名前の重複確認
     this.props.name = newName
     return this
   }

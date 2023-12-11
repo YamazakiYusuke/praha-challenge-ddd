@@ -1,4 +1,5 @@
 import { EntityCreationError } from "../errors/entity_creation_error";
+import { EntityModificationError } from "../errors/entity_modification_error";
 import { Email } from "../values/email";
 import { Id } from "../values/id";
 import { Entity } from "./base/entity"
@@ -37,7 +38,7 @@ export class Administrator extends Entity<AdministratorProps> {
 
   public changeEmail(newEmail: Email): void {
     if (!newEmail) {
-      throw new Error('Email is required');
+      throw new EntityModificationError('Email is required');
     }
     this.props.email = newEmail;
   }

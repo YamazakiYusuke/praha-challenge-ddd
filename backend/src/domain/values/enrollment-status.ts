@@ -1,3 +1,4 @@
+import { ValueCreationError } from "../errors/value_creation_error";
 import { Value } from "./base/value";
 
 export class EnrollmentStatus extends Value<string> {
@@ -5,9 +6,9 @@ export class EnrollmentStatus extends Value<string> {
     super(value)
   }
 
-  static create(value: string): EnrollmentStatus | Error {
+  static create(value: string): EnrollmentStatus | ValueCreationError {
     if (!(value in EnrollmentStatusValue)) {
-      console.error('Invalid value');
+      throw new ValueCreationError('Invalid value');
     }
     return new EnrollmentStatus(value);
   }

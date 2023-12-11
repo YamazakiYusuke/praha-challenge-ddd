@@ -1,4 +1,5 @@
 import { EntityCreationError } from "../errors/entity_creation_error";
+import { EntityModificationError } from "../errors/entity_modification_error";
 import { Email } from "../values/email"
 import { EnrollmentStatus } from "../values/enrollment-status";
 import { Id } from "../values/id"
@@ -60,12 +61,12 @@ export class Participant extends Entity<ParticipantProps> {
     return this.props.enrollmentStatus;
   }
 
-  public changeEnrollmentStatus(newStatus: EnrollmentStatus): void | Error {
+  public changeEnrollmentStatus(newStatus: EnrollmentStatus): void | EntityModificationError {
     if (!newStatus) {
-      throw new Error('New status is required');
+      throw new EntityModificationError('New status is required');
     }
     if (this.props.enrollmentStatus.value === EnrollmentStatusValue.Withdrawn) {
-      throw new Error('Cannot change status of a withdrawn participant');
+      throw new EntityModificationError('Cannot change status of a withdrawn participant');
     }
     this.props.enrollmentStatus = newStatus;
   }

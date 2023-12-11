@@ -1,3 +1,4 @@
+import { ValueCreationError } from "../errors/value_creation_error";
 import { Value } from "./base/value";
 
 export class AssignmentProgressState extends Value<string> {
@@ -5,9 +6,9 @@ export class AssignmentProgressState extends Value<string> {
     super(value)
   }
 
-  static create(value: string): AssignmentProgressState | Error {
+  static create(value: string): AssignmentProgressState | ValueCreationError {
     if (!(value in AssignmentProgressStateValue)) {
-      console.error('Invalid value');
+      throw new ValueCreationError('Invalid value');
     }
     return new AssignmentProgressState(value);
   }

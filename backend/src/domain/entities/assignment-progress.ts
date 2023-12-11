@@ -1,4 +1,5 @@
 import { EntityCreationError } from "../errors/entity_creation_error";
+import { EntityModificationError } from "../errors/entity_modification_error";
 import { AssignmentProgressState } from "../values/assignment-progress-state";
 import { Id } from "../values/id"
 import { Entity } from "./base/entity"
@@ -28,9 +29,6 @@ export class AssignmentProgress extends Entity<AssignmentProgressProps> {
   }
 
   static create(props: AssignmentProgressProps): AssignmentProgress | EntityCreationError {
-    if (!props.assignmentId || !props.participantId || !props.assignmentProgressState) {
-      return new Error("Invalid or missing properties");
-    }
     return new AssignmentProgress(Id.create(), props)
   }
 
@@ -50,9 +48,9 @@ export class AssignmentProgress extends Entity<AssignmentProgressProps> {
     return this.props.assignmentProgressState;
   }
 
-  public changeAssignmentProgressState(newState: AssignmentProgressState): void | Error {
+  public changeAssignmentProgressState(newState: AssignmentProgressState): void | EntityModificationError {
     if (this.props.assignmentProgressState.value === AssignmentProgressStateValue.Completed) {
-      throw new Error("Cannot change state, assignment already completed");
+      throw new EntityModificationError("Cannot change state, assignment already completed");
     }
     this.props.assignmentProgressState = newState;
   }
