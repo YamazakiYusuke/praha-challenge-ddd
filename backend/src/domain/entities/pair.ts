@@ -4,7 +4,7 @@ import { Id } from "../values/id"
 import { Name } from "../values/name";
 import { Participants } from "../values/participants";
 import { Entity } from "./base/entity"
-import { Participant } from "./participant";
+import { validateProps } from "./utils/validate-props";
 
 export interface PairProps {
   name: Name;
@@ -23,6 +23,7 @@ export interface PairProps {
 export class Pair extends Entity<PairProps> {
 
   private constructor(id: Id, props: PairProps) {
+    validateProps(id, props);
     super(id, props)
   }
 

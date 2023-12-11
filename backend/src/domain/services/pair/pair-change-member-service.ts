@@ -8,7 +8,7 @@ import { Injectable } from "@nestjs/common";
 export class PairChangeMemberService {
   constructor(private readonly repo: IPairRepository) { }
 
-  async execute(props: PairProps): Promise<Pair | EntityCreationError | RepositoryError> {
-    // TODO
-  }
+  // async execute(props: PairProps): Promise<Pair | EntityCreationError | RepositoryError> {
+  //   // TODO: メンバーの在籍状況を変更する関数の実装後に実装
+  // }
 }

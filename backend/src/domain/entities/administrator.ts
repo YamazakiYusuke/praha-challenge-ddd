@@ -2,6 +2,7 @@ import { EntityCreationError } from "../errors/entity_creation_error";
 import { Email } from "../values/email";
 import { Id } from "../values/id";
 import { Entity } from "./base/entity"
+import { validateProps } from "./utils/validate-props";
 
 export interface AdministratorProps {
   email: Email;
@@ -18,6 +19,7 @@ export interface AdministratorProps {
 export class Administrator extends Entity<AdministratorProps> {
 
   private constructor(id: Id, props: AdministratorProps) {
+    validateProps(id, props);
     super(id, props)
   }
 

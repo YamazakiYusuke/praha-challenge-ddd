@@ -1,6 +1,7 @@
 import { Id } from "../values/id"
 import { Entity } from "./base/entity"
 import { EntityCreationError } from "../errors/entity_creation_error";
+import { validateProps } from "./utils/validate-props";
 
 export interface AssignmentProps {
   number: number;
@@ -25,26 +26,11 @@ export interface AssignmentProps {
 export class Assignment extends Entity<AssignmentProps> {
 
   private constructor(id: Id, props: AssignmentProps) {
+    validateProps(id, props);
     super(id, props)
   }
 
   static create(props: AssignmentProps): Assignment | EntityCreationError {
-    const { number, categoryId, title, introduction, content } = props
-    if (!number) {
-      throw new Error('Number is required')
-    }
-    if (!title || title.trim() === '') {
-      throw new Error('Title is required')
-    }
-    if (!categoryId) {
-      throw new Error('Category is required')
-    }
-    if (!introduction || introduction.trim() === '') {
-      throw new Error('Introduction is required')
-    }
-    if (!content || content.trim() === '') {
-      throw new Error('Content is required')
-    }
     return new Assignment(Id.create(), props)
   }
 

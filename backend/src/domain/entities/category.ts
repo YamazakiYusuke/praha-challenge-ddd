@@ -2,6 +2,7 @@ import { EntityCreationError } from "../errors/entity_creation_error";
 import { Id } from "../values/id";
 import { Name } from "../values/name";
 import { Entity } from "./base/entity";
+import { validateProps } from "./utils/validate-props";
 
 export interface CategoryProps {
   name: Name;
@@ -16,8 +17,9 @@ export interface CategoryProps {
  * ```
  */
 export class Category extends Entity<CategoryProps> {
-  private constructor(id: Id, value: CategoryProps) {
-    super(id, value)
+  private constructor(id: Id, props: CategoryProps) {
+    validateProps(id, props);
+    super(id, props)
   }
 
   static create(props: CategoryProps): Category | EntityCreationError {

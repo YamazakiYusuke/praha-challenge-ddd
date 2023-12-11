@@ -2,6 +2,7 @@ import { EntityCreationError } from "../errors/entity_creation_error";
 import { AssignmentProgressState } from "../values/assignment-progress-state";
 import { Id } from "../values/id"
 import { Entity } from "./base/entity"
+import { validateProps } from "./utils/validate-props";
 
 export interface AssignmentProgressProps {
   assignmentId: Id;
@@ -22,6 +23,7 @@ export interface AssignmentProgressProps {
 export class AssignmentProgress extends Entity<AssignmentProgressProps> {
 
   private constructor(id: Id, props: AssignmentProgressProps) {
+    validateProps(id, props);
     super(id, props)
   }
 

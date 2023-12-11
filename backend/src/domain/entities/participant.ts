@@ -4,6 +4,7 @@ import { EnrollmentStatus } from "../values/enrollment-status";
 import { Id } from "../values/id"
 import { Name } from "../values/name"
 import { Entity } from "./base/entity"
+import { validateProps } from "./utils/validate-props";
 
 export interface ParticipantProps {
   name: Name;
@@ -27,25 +28,11 @@ export interface ParticipantProps {
  */
 export class Participant extends Entity<ParticipantProps> {
   private constructor(id: Id, props: ParticipantProps) {
+    validateProps(id, props);
     super(id, props)
   }
 
   static create(props: ParticipantProps): Participant | EntityCreationError {
-    if (!props.name) {
-      throw new Error('Name is required');
-    }
-    if (!props.email) {
-      throw new Error('Email is required');
-    }
-    if (!props.teamId) {
-      throw new Error('Team ID is required');
-    }
-    if (!props.pairId) {
-      throw new Error('Pair ID is required');
-    }
-    if (!props.enrollmentStatus) {
-      throw new Error('Enrollment status is required');
-    }
     return new Participant(Id.create(), props);
   }
 

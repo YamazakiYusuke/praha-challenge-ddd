@@ -2,6 +2,7 @@ import { EntityCreationError } from "../errors/entity_creation_error";
 import { Id } from "../values/id"
 import { Name } from "../values/name";
 import { Entity } from "./base/entity"
+import { validateProps } from "./utils/validate-props";
 
 export interface TeamProps {
   name: Name;
@@ -20,6 +21,7 @@ export interface TeamProps {
 export class Team extends Entity<TeamProps> {
 
   private constructor(id: Id, props: TeamProps) {
+    validateProps(id, props);
     super(id, props)
   }
 
