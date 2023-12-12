@@ -4,6 +4,5 @@ import { Name } from "../values/name";
 
 export interface ICategoryRepository {
   save(category: Category): Promise<void | RepositoryError>
-  get(name: Name): Promise<Category | null | RepositoryError>
   getAll(): Promise<Category[] | RepositoryError>
 }

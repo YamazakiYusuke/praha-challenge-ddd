@@ -10,6 +10,8 @@ export class GetOneAdministratorQuery implements IGetOneQuery<Administrator, Ema
   constructor(private administratorRepository: IAdministratorRepository) { }
 
   async execute(email: Email): Promise<Administrator | null | RepositoryError> {
-    return await this.administratorRepository.get(email);
+    const result = await this.administratorRepository.getAll();
+    const administrators = result as Administrator[];
+    return administrators.find((admin: Administrator) => admin.email.isEqual(email)) || null;
   }
 }

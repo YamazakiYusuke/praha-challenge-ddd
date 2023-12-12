@@ -7,6 +7,7 @@ import { Entity } from "./base/entity"
 import { validateProps } from "./utils/validate-props";
 
 export interface PairProps {
+  teamId: Id;
   name: Name;
   participants: Participants;
 }
@@ -14,6 +15,7 @@ export interface PairProps {
  * **sample code**
  * ```typescript
  * const props: PairProps = {
+ *  teamId: Id.create(),
  *  name: Name.create('Pair Name'),
  *  participants: Participants.create([participant, participant]),
  * }
@@ -33,6 +35,10 @@ export class Pair extends Entity<PairProps> {
 
   static restore(id: Id, props: PairProps): Pair {
     return new Pair(id, props)
+  }
+
+  public get teamId(): Id {
+    return this.props.teamId;
   }
 
   public get name(): Name {

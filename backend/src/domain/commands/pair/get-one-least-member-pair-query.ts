@@ -4,14 +4,17 @@ import { RepositoryError } from "src/domain/errors/repository_error";
 import { Name } from "src/domain/values/name";
 import { IGetOneQuery } from "../base/get-one-query";
 import { Injectable } from "@nestjs/common";
+import { Id } from "src/domain/values/id";
 
 @Injectable()
-export class GetOnePairQuery implements IGetOneQuery<Pair, Name> {
+export class GetOnePairQuery implements IGetOneQuery<Pair, Name | undefined> {
   constructor(private pairRepository: IPairRepository) { }
 
-  async execute(name: Name): Promise<Pair | null | RepositoryError> {
-    const result = await this.pairRepository.getAll();
-    const pairs = result as Pair[];
-    return pairs.find((pair: Pair) => pair.name.isEqual(name)) || null;
+  async execute(teamId: Id | undefined): Promise<Pair | null | RepositoryError> {
+    if (teamId instanceof Id) {
+
+    } else {
+
+    }
   }
 }

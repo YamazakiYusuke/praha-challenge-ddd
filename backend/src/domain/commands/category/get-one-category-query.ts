@@ -10,6 +10,8 @@ export class GetOneCategoryQuery implements IGetOneQuery<Category, Name> {
   constructor(private categoryRepository: ICategoryRepository) { }
 
   async execute(name: Name): Promise<Category | null | RepositoryError> {
-    return await this.categoryRepository.get(name);
+    const result = await this.categoryRepository.getAll();
+    const categories = result as Category[];
+    return categories.find((category: Category) => category.name.isEqual(name)) || null;
   }
 }

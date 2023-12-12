@@ -32,7 +32,7 @@ export class Administrator extends Entity<AdministratorProps> {
     return new Administrator(id, props)
   }
 
-  public get number(): Email {
+  public get email(): Email {
     return this.props.email;
   }
 

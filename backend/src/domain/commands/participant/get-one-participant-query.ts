@@ -10,6 +10,8 @@ export class GetOneParticipantQuery implements IGetOneQuery<Participant, Email> 
   constructor(private participantRepository: IParticipantRepository) { }
 
   async execute(email: Email): Promise<Participant | null | RepositoryError> {
-    return await this.participantRepository.get(email);
+    const result = await this.participantRepository.getAll();
+    const participants = result as Participant[];
+    return participants.find((participant: Participant) => participant.email.isEqual(email)) || null;
   }
 }
