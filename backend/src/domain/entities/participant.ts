@@ -9,8 +9,8 @@ import { validateProps } from "./utils/validate-props";
 export interface ParticipantProps {
   name: Name;
   email: Email;
-  teamId: Id;
-  pairId: Id;
+  teamId: Id | undefined;
+  pairId: Id | undefined;
   enrollmentStatus: EnrollmentStatusValue;
 }
 /**
@@ -32,9 +32,10 @@ export class Participant extends Entity<ParticipantProps> {
     super(id, props)
   }
 
-  static create(props: ParticipantProps): Participant | EntityCreationError {
-    return new Participant(Id.create(), props);
-  }
+  // 新規参加者の追加はプラハのアプリからは行わず、管理システムから行う
+  // static create(props: ParticipantProps): Participant | EntityCreationError {
+  //   return new Participant(Id.create(), props);
+  // }
 
   static restore(id: Id, props: ParticipantProps): Participant {
     return new Participant(id, props);
@@ -48,11 +49,11 @@ export class Participant extends Entity<ParticipantProps> {
     return this.props.email;
   }
 
-  public get teamId(): Id {
+  public get teamId(): Id | undefined {
     return this.props.teamId;
   }
 
-  public get pairId(): Id {
+  public get pairId(): Id | undefined {
     return this.props.pairId;
   }
 
@@ -60,14 +61,40 @@ export class Participant extends Entity<ParticipantProps> {
     return this.props.enrollmentStatus;
   }
 
-  public changeEnrollmentStatus(newStatus: EnrollmentStatusValue): Participant | EntityModificationError {
-    if (!newStatus) {
-      throw new EntityModificationError('New status is required');
+  public changeEnrollmentStatusToEnrolled(pairId: Id, teamId: Id): Participant | EntityModificationError {
+    this.changeEnrollmentStatusValidation();
+    if (this.props.enrollmentStatus !== EnrollmentStatusValue.OnLeave) {
+      throw new EntityModificationError('EnrollmentStatus is not OnLeave');
     }
+    this.props.enrollmentStatus = EnrollmentStatusValue.Enrolled;
+    this.props.pairId = pairId;
+    this.props.teamId = teamId;
+    return this;
+  }
+
+  public changeEnrollmentStatusToOnLeave(): Participant | EntityModificationError {
+    this.changeEnrollmentStatusValidation();
+    if (this.props.enrollmentStatus !== EnrollmentStatusValue.Enrolled) {
+      throw new EntityModificationError('EnrollmentStatus is not Enrolled');
+    }
+    this.props.teamId = undefined;
+    this.props.pairId = undefined;
+    this.props.enrollmentStatus = EnrollmentStatusValue.OnLeave;
+    return this;
+  }
+
+  public changeEnrollmentStatusToWithDrawn(): Participant | EntityModificationError {
+    this.changeEnrollmentStatusValidation();
+    this.props.teamId = undefined;
+    this.props.pairId = undefined;
+    this.props.enrollmentStatus = EnrollmentStatusValue.Withdrawn;
+    return this;
+  }
+
+  private changeEnrollmentStatusValidation(): void | EntityModificationError {
     if (this.props.enrollmentStatus === EnrollmentStatusValue.Withdrawn) {
+      // 既に退会済みの場合
       throw new EntityModificationError('Cannot change status of a withdrawn participant');
     }
-    this.props.enrollmentStatus = newStatus;
-    return this;
   }
 }

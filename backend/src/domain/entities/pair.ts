@@ -1,9 +1,11 @@
 import { EntityCreationError } from "../errors/entity_creation_error";
 import { EntityModificationError } from "../errors/entity_modification_error";
+import { ValueCreationError } from "../errors/value_creation_error";
 import { Id } from "../values/id"
 import { Name } from "../values/name";
 import { Participants } from "../values/participants";
 import { Entity } from "./base/entity"
+import { Participant } from "./participant";
 import { validateProps } from "./utils/validate-props";
 
 export interface PairProps {
@@ -49,8 +51,23 @@ export class Pair extends Entity<PairProps> {
     return this.props.participants;
   }
 
-  public changeMember(newParticipants: Participants): Pair | EntityModificationError {
+  public get lastParticipant(): Participant {
+    return this.props.participants.last;
+  }
+
+  public appendAParticipant(participant: Participant): Pair | ValueCreationError {
+    const newParticipants = this.props.participants.getAppendedNewParticipant(participant) as Participants;
     this.props.participants = newParticipants;
     return this;
+  }
+
+  public removeParticipant(participant: Participant): Pair | ValueCreationError {
+    const newParticipants = this.props.participants.getRemovedNewParticipant(participant) as Participants;
+    this.props.participants = newParticipants;
+    return this;
+  }
+
+  public get participantsLength(): number {
+    return this.props.participants.length;
   }
 }
