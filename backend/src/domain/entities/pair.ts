@@ -55,7 +55,7 @@ export class Pair extends Entity<PairProps> {
     return this.props.participants.last;
   }
 
-  public appendAParticipant(participant: Participant): Pair | ValueCreationError {
+  public appendParticipant(participant: Participant): Pair | ValueCreationError {
     const newParticipants = this.props.participants.getAppendedNewParticipant(participant) as Participants;
     this.props.participants = newParticipants;
     return this;

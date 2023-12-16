@@ -8,39 +8,30 @@ import { Name } from "src/domain/values/name";
 import { Participants } from "src/domain/values/participants";
 import { GetPairsByTeamIdQuery } from "src/domain/commands/pair/get-pairs-by-team-id-query copy";
 import { EntityModificationError } from "src/domain/errors/entity_modification_error";
+import { ValueCreationError } from "src/domain/errors/value_creation_error";
 
 @Injectable()
 export class PairCreateService {
   constructor(private readonly getPairsByTeamIdQuery: GetPairsByTeamIdQuery, private readonly getOnePairQuery: GetOnePairQuery) { }
 
-  async execute(props: { teamId: Id; name?: Name; participants: Participants; }): Promise<Pair | EntityCreationError | RepositoryError> {
-    let nonNullName: Name;
-    if (props.name) {
-      const existingPair = await this.getOnePairQuery.execute(props.name);
-      if (existingPair != null) {
-        throw new EntityCreationError('このペア名は既に存在しています');
-      }
-      nonNullName = props.name;
-    } else {
-      const stringName = await (this.getNewPairName(props.teamId));
-      nonNullName = Name.create(stringName as string) as Name;
-    }
+  async execute(props: { teamId: Id; participants: Participants; }): Promise<Pair | EntityCreationError | RepositoryError> {
+    const name = await (this.getNewPairName(props.teamId)) as Name;
     const entityProps: PairProps = {
       teamId: props.teamId,
-      name: nonNullName,
+      name: name,
       participants: props.participants,
     }
     const newPair = Pair.create(entityProps);
     return newPair;
   }
 
-  private async  getNewPairName(teamId: Id): Promise<String | RepositoryError | EntityModificationError> {
+  private async getNewPairName(teamId: Id): Promise<Name | RepositoryError | EntityModificationError | ValueCreationError> {
     const allPairNames = await (this.getPairsByTeamIdQuery.execute(teamId)) as Pair[];
     const alphabet = 'abcdefghijklmnopqrstuvwxyz';
     for (let i = 0; i < alphabet.length; i++) {
       const potentialName = alphabet[i];
       if (!allPairNames.some(pair => pair.name.isEqual(potentialName))) {
-        return potentialName as String;
+        return Name.create(potentialName as string) as Name;
       }
     }
     throw new EntityModificationError('All pair names are taken.');

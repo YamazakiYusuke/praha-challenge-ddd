@@ -9,25 +9,24 @@ import { Participants } from "src/domain/values/participants";
 
 @Injectable()
 export class ParticipantChangeEnrollmentStatusToEnrolledService {
-  constructor(private readonly pairCreateService: PairCreateService ,private readonly getOneLeastMemberPairQuery: GetOneLeastMemberPairQuery) { }
+  constructor(private readonly pairCreateService: PairCreateService, private readonly getOneLeastMemberPairQuery: GetOneLeastMemberPairQuery) { }
 
   async execute(participant: Participant): Promise<Pair | EntityCreationError | RepositoryError> {
+    // ユースケース層に引っ越し？
     let enrolledPair: Pair;
     // 全ペアの中で一番人数の少ないペアを取得
     const smallestPair = await (this.getOneLeastMemberPairQuery.execute()) as Pair;
     if (smallestPair.participantsLength < 3) {
-      smallestPair.appendAParticipant(participant);
+      smallestPair.appendParticipant(participant);
       enrolledPair = smallestPair;
     } else {
       const mover = smallestPair.lastParticipant;
       const newParticipants = Participants.create([mover, participant]) as Participants;
-      const newPair = await this.pairCreateService.execute({teamId: smallestPair.teamId, participants: newParticipants});
+      const newPair = await this.pairCreateService.execute({ teamId: smallestPair.teamId, participants: newParticipants });
       smallestPair.removeParticipant(mover);
-      // TODO: データの永続化
       enrolledPair = newPair as Pair;
     }
     participant.changeEnrollmentStatusToEnrolled(enrolledPair.getId, enrolledPair.teamId);
-    // TODO: データの永続化
     return enrolledPair;
   }
 }

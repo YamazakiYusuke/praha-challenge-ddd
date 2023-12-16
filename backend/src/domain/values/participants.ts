@@ -1,7 +1,6 @@
 import { Value } from "./base/value";
 import { Participant } from "../entities/participant";
 import { ValueCreationError } from "../errors/value_creation_error";
-import { ValueModificationError } from "../errors/value_modification_error";
 
 export class Participants extends Value<Array<Participant>> {
   private constructor(value: Array<Participant>) {
