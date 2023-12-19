@@ -5,10 +5,10 @@ import { RepositoryError } from "src/domain/errors/repository_error";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
-export class SaveTeamCommand implements ICommand {
-  constructor(private team: Team, private teamRepository: ITeamRepository) {}
+export class SaveTeamCommand implements ICommand<Team> {
+  constructor(private readonly teamRepository: ITeamRepository) {}
 
-  async execute(): Promise<void | RepositoryError> {
-    await this.teamRepository.save(this.team);
+  async execute(team: Team): Promise<void | RepositoryError> {
+    await this.teamRepository.save(team);
   }
 }

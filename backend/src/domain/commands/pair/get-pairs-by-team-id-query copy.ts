@@ -8,7 +8,7 @@ import { Id } from "src/domain/values/id";
 
 @Injectable()
 export class GetPairsByTeamIdQuery implements IGetOneQuery<Pair[], Id> {
-  constructor(private pairRepository: IPairRepository) { }
+  constructor(private readonly pairRepository: IPairRepository) { }
 
   async execute(teamId: Id): Promise<Pair[] | RepositoryError> {
     const allPairs = await (this.pairRepository.getAll()) as Pair[];

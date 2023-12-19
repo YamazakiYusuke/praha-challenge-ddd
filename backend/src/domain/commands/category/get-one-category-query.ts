@@ -7,7 +7,7 @@ import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class GetOneCategoryQuery implements IGetOneQuery<Category, Name> {
-  constructor(private categoryRepository: ICategoryRepository) { }
+  constructor(private readonly categoryRepository: ICategoryRepository) { }
 
   async execute(name: Name): Promise<Category | null | RepositoryError> {
     const result = await this.categoryRepository.getAll();

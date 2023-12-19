@@ -5,10 +5,10 @@ import { RepositoryError } from "src/domain/errors/repository_error";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
-export class SavePairCommand implements ICommand {
-  constructor(private pair: Pair, private pairRepository: IPairRepository) {}
+export class SavePairCommand implements ICommand<Pair> {
+  constructor(private readonly pairRepository: IPairRepository) {}
 
-  async execute(): Promise<void | RepositoryError> {
-    await this.pairRepository.save(this.pair);
+  async execute(pair: Pair): Promise<void | RepositoryError> {
+    await this.pairRepository.save(pair);
   }
 }

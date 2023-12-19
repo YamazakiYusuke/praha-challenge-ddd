@@ -7,7 +7,7 @@ import { Email } from "src/domain/values/email";
 
 @Injectable()
 export class GetOneParticipantQuery implements IGetOneQuery<Participant, Email> {
-  constructor(private participantRepository: IParticipantRepository) { }
+  constructor(private readonly participantRepository: IParticipantRepository) { }
 
   async execute(email: Email): Promise<Participant | null | RepositoryError> {
     const result = await this.participantRepository.getAll();

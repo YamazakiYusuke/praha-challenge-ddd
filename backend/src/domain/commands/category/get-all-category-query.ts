@@ -6,7 +6,7 @@ import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class GetAllCategoryQuery implements IGetAllQuery<Category[]> {
-  constructor(private categoryRepository: ICategoryRepository) { }
+  constructor(private readonly categoryRepository: ICategoryRepository) { }
 
   async execute(): Promise<Category[] | RepositoryError> {
     return await this.categoryRepository.getAll();

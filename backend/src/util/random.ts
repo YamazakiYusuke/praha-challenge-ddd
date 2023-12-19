@@ -4,10 +4,11 @@ export const createRandomIdString = () => {
   return uuid()
 }
 
-export const createRandomNumber = (max: number | undefined) => {
-  if (max === undefined) {
-    return Math.random();
-  } else {
-    return Math.floor(Math.random() * max);
-  }
+export const createRandomNum = () => {
+  return Math.random();
 }
+
+export const createRandomNumUpTo = (max: number) => {
+  return Math.floor(Math.random() * max);
+}
+

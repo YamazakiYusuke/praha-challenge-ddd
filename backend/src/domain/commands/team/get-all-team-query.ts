@@ -6,7 +6,7 @@ import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class GetAllTeamsQuery implements IGetAllQuery<Team[]> {
-  constructor(private teamRepository: ITeamRepository) { }
+  constructor(private readonly teamRepository: ITeamRepository) { }
 
   async execute(): Promise<Team[] | RepositoryError> {
     return await this.teamRepository.getAll();

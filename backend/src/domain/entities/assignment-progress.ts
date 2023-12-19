@@ -48,11 +48,10 @@ export class AssignmentProgress extends Entity<AssignmentProgressProps> {
     return this.props.assignmentProgressState;
   }
 
-  public changeAssignmentProgressState(newState: AssignmentProgressState): AssignmentProgress | EntityModificationError {
+  public changeAssignmentProgressState(newState: AssignmentProgressState) {
     if (this.props.assignmentProgressState.value === AssignmentProgressStateValue.Completed) {
       throw new EntityModificationError("Cannot change state, assignment already completed");
     }
     this.props.assignmentProgressState = newState;
-    return this;
   }
 }

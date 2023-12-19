@@ -6,7 +6,7 @@ import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class GetAllAssignmentsQuery implements IGetAllQuery<Assignment[]> {
-  constructor(private assignmentRepository: IAssignmentRepository) { }
+  constructor(private readonly assignmentRepository: IAssignmentRepository) { }
 
   async execute(): Promise<Assignment[] | RepositoryError> {
     return await this.assignmentRepository.getAll();

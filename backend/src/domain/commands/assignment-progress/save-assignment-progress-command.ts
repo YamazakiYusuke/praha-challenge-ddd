@@ -5,10 +5,10 @@ import { RepositoryError } from "src/domain/errors/repository_error";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
-export class SaveAssignmentProgressCommand implements ICommand {
-  constructor(private assignmentProgress: AssignmentProgress, private assignmentProgressRepository: IAssignmentProgressRepository) {}
+export class SaveAssignmentProgressCommand implements ICommand<AssignmentProgress> {
+  constructor(private readonly assignmentProgressRepository: IAssignmentProgressRepository) { }
 
-  async execute(): Promise<void | RepositoryError> {
-    await this.assignmentProgressRepository.save(this.assignmentProgress);
+  async execute(assignmentProgress: AssignmentProgress): Promise<void | RepositoryError> {
+    await this.assignmentProgressRepository.save(assignmentProgress);
   }
 }

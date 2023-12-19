@@ -5,10 +5,10 @@ import { RepositoryError } from "src/domain/errors/repository_error";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
-export class SaveAdministratorCommand implements ICommand {
-  constructor(private administrator: Administrator, private administratorRepository: IAdministratorRepository) {}
+export class SaveAdministratorCommand implements ICommand<Administrator> {
+  constructor(private readonly administratorRepository: IAdministratorRepository) {}
 
-  async execute(): Promise<void | RepositoryError> {
-    await this.administratorRepository.save(this.administrator);
+  async execute(administrator: Administrator): Promise<void | RepositoryError> {
+    await this.administratorRepository.save(administrator);
   }
 }

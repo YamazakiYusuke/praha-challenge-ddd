@@ -7,7 +7,7 @@ import { Email } from "src/domain/values/email";
 
 @Injectable()
 export class GetOneAdministratorQuery implements IGetOneQuery<Administrator, Email> {
-  constructor(private administratorRepository: IAdministratorRepository) { }
+  constructor(private readonly administratorRepository: IAdministratorRepository) { }
 
   async execute(email: Email): Promise<Administrator | null | RepositoryError> {
     const result = await this.administratorRepository.getAll();

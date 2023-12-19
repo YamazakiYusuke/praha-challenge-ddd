@@ -6,7 +6,7 @@ import { RepositoryError } from "src/domain/errors/repository_error";
 
 @Injectable()
 export class GetAllParticipantsQuery implements IGetAllQuery<Participant[]> {
-  constructor(private participantRepository: IParticipantRepository) { }
+  constructor(private readonly participantRepository: IParticipantRepository) { }
 
   async execute(): Promise<Participant[] | RepositoryError> {
     return await this.participantRepository.getAll();

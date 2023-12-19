@@ -7,7 +7,7 @@ import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class GetOnePairQuery implements IGetOneQuery<Pair, Name> {
-  constructor(private pairRepository: IPairRepository) { }
+  constructor(private readonly pairRepository: IPairRepository) { }
 
   async execute(name: Name): Promise<Pair | null | RepositoryError> {
     const result = await this.pairRepository.getAll();
