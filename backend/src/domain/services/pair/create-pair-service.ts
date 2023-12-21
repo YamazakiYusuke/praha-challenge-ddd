@@ -1,26 +1,34 @@
 import { Pair, PairProps } from "../../entities/pair";
-import { EntityCreationError } from "../../errors/entity_creation_error";
-import { RepositoryError } from "../../errors/repository_error";
-import { GetOnePairQuery } from "src/domain/commands/pair/get-one-pair-query";
+import { GetPairsByTeamIdQuery } from "src/domain/commands/pair/get-pairs-by-team-id-query copy";
 import { Injectable } from "@nestjs/common";
 import { Id } from "src/domain/values/id";
 import { Name } from "src/domain/values/name";
 import { Participants } from "src/domain/values/participants";
-import { GetPairsByTeamIdQuery } from "src/domain/commands/pair/get-pairs-by-team-id-query copy";
-import { EntityModificationError } from "src/domain/errors/entity_modification_error";
-import { ValueCreationError } from "src/domain/errors/value_creation_error";
 
 @Injectable()
 export class CreatePairService {
-  constructor(private readonly getOnePairQuery: GetOnePairQuery) { }
+  constructor(private readonly getPairsByTeamIdQuery: GetPairsByTeamIdQuery) { }
 
-  async execute(props: { teamId: Id; name: Name; participants: Participants; }): Promise<Pair | EntityCreationError | RepositoryError> {
+  async execute(props: { teamId: Id; participants: Participants; }): Promise<Pair | Error> {
+    const name = await this.getName(props.teamId) as Name;
     const entityProps: PairProps = {
       teamId: props.teamId,
-      name: props.name,
+      name: name,
       participants: props.participants,
     }
     const newPair = Pair.create(entityProps);
     return newPair;
+  }
+
+  private async getName(teamId: Id): Promise<Name | Error> {
+    const allPairNames = await (this.getPairsByTeamIdQuery.execute(teamId)) as Pair[];
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+    for (let i = 0; i < alphabet.length; i++) {
+      const potentialName = alphabet[i];
+      if (!allPairNames.some(pair => pair.name.isEqual(potentialName))) {
+        return Name.create(potentialName as string) as Name;
+      }
+    }
+    throw new Error('All pair names are taken.');
   }
 }

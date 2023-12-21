@@ -1,4 +1,4 @@
-import { EntityCreationError } from "src/domain/errors/entity_creation_error";
+import { EntityCreationError } from "src/domain/errors/entity_error";
 import { Id } from "src/domain/values/id";
 
 export function validateProps<T extends object>(id: Id, props: T): void {

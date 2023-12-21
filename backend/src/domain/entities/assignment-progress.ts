@@ -1,5 +1,4 @@
-import { EntityCreationError } from "../errors/entity_creation_error";
-import { EntityModificationError } from "../errors/entity_modification_error";
+import { EntityError } from "../errors/entity_error";
 import { AssignmentProgressState } from "../values/assignment-progress-state";
 import { Id } from "../values/id"
 import { Entity } from "./base/entity"
@@ -28,7 +27,7 @@ export class AssignmentProgress extends Entity<AssignmentProgressProps> {
     super(id, props)
   }
 
-  static create(props: AssignmentProgressProps): AssignmentProgress | EntityCreationError {
+  static create(props: AssignmentProgressProps): AssignmentProgress | Error {
     return new AssignmentProgress(Id.create(), props)
   }
 
@@ -50,7 +49,7 @@ export class AssignmentProgress extends Entity<AssignmentProgressProps> {
 
   public changeAssignmentProgressState(newState: AssignmentProgressState) {
     if (this.props.assignmentProgressState.value === AssignmentProgressStateValue.Completed) {
-      throw new EntityModificationError("Cannot change state, assignment already completed");
+      throw new EntityError("Cannot change state, assignment already completed");
     }
     this.props.assignmentProgressState = newState;
   }

@@ -1,4 +1,3 @@
-import { EntityCreationError } from "../errors/entity_creation_error";
 import { Id } from "../values/id"
 import { Name } from "../values/name";
 import { Entity } from "./base/entity"
@@ -25,7 +24,7 @@ export class Team extends Entity<TeamProps> {
     super(id, props)
   }
 
-  static create(props: TeamProps): Team | EntityCreationError {
+  static create(props: TeamProps): Team | Error {
     return new Team(Id.create(), props)
   }
 

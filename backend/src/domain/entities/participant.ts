@@ -1,5 +1,4 @@
-import { EntityCreationError } from "../errors/entity_creation_error";
-import { EntityModificationError } from "../errors/entity_modification_error";
+import { EntityError } from "../errors/entity_error";
 import { Email } from "../values/email"
 import { Id } from "../values/id"
 import { Name } from "../values/name"
@@ -61,37 +60,37 @@ export class Participant extends Entity<ParticipantProps> {
     return this.props.enrollmentStatus;
   }
 
-  public changeEnrollmentStatusToEnrolled(pairId: Id, teamId: Id): void | EntityModificationError {
+  public changeEnrollmentStatusToEnrolled(pairId: Id, teamId: Id): void | Error {
     this.changeEnrollmentStatusValidation();
     if (this.props.enrollmentStatus !== EnrollmentStatusValue.OnLeave) {
-      throw new EntityModificationError('EnrollmentStatus is not OnLeave');
+      throw new EntityError('EnrollmentStatus is not OnLeave');
     }
     this.props.enrollmentStatus = EnrollmentStatusValue.Enrolled;
     this.props.pairId = pairId;
     this.props.teamId = teamId;
   }
 
-  public changeEnrollmentStatusToOnLeave(): void | EntityModificationError {
+  public changeEnrollmentStatusToOnLeave(): void | Error {
     this.changeEnrollmentStatusValidation();
     if (this.props.enrollmentStatus !== EnrollmentStatusValue.Enrolled) {
-      throw new EntityModificationError('EnrollmentStatus is not Enrolled');
+      throw new EntityError('EnrollmentStatus is not Enrolled');
     }
     this.props.teamId = undefined;
     this.props.pairId = undefined;
     this.props.enrollmentStatus = EnrollmentStatusValue.OnLeave;
   }
 
-  public changeEnrollmentStatusToWithDrawn(): void | EntityModificationError {
+  public changeEnrollmentStatusToWithDrawn(): void | Error {
     this.changeEnrollmentStatusValidation();
     this.props.teamId = undefined;
     this.props.pairId = undefined;
     this.props.enrollmentStatus = EnrollmentStatusValue.Withdrawn;
   }
 
-  private changeEnrollmentStatusValidation(): void | EntityModificationError {
+  private changeEnrollmentStatusValidation(): void | Error {
     if (this.props.enrollmentStatus === EnrollmentStatusValue.Withdrawn) {
       // 既に退会済みの場合
-      throw new EntityModificationError('Cannot change status of a withdrawn participant');
+      throw new EntityError('Cannot change status of a withdrawn participant');
     }
   }
 }

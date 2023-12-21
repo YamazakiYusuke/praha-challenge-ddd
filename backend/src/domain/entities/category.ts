@@ -1,4 +1,3 @@
-import { EntityCreationError } from "../errors/entity_creation_error";
 import { Id } from "../values/id";
 import { Name } from "../values/name";
 import { Entity } from "./base/entity";
@@ -22,7 +21,7 @@ export class Category extends Entity<CategoryProps> {
     super(id, props)
   }
 
-  static create(props: CategoryProps): Category | EntityCreationError {
+  static create(props: CategoryProps): Category | Error {
     return new Category(Id.create(), props);
   }
 

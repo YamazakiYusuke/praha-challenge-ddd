@@ -1,5 +1,4 @@
-import { EntityCreationError } from "../errors/entity_creation_error";
-import { EntityModificationError } from "../errors/entity_modification_error";
+import { EntityError } from "../errors/entity_error";
 import { Email } from "../values/email";
 import { Id } from "../values/id";
 import { Entity } from "./base/entity"
@@ -24,7 +23,7 @@ export class Administrator extends Entity<AdministratorProps> {
     super(id, props)
   }
 
-  static create(props: AdministratorProps): Administrator | EntityCreationError {
+  static create(props: AdministratorProps): Administrator | Error {
     return new Administrator(Id.create(), props)
   }
 
@@ -36,9 +35,9 @@ export class Administrator extends Entity<AdministratorProps> {
     return this.props.email;
   }
 
-  public changeEmail(newEmail: Email): void | EntityModificationError {
+  public changeEmail(newEmail: Email): void | Error {
     if (!newEmail) {
-      throw new EntityModificationError('Email is required');
+      throw new EntityError('Email is required');
     }
     this.props.email = newEmail;
   }

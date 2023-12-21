@@ -1,8 +1,7 @@
+import { EntityError } from "../errors/entity_error";
 import { Id } from "../values/id"
 import { Entity } from "./base/entity"
-import { EntityCreationError } from "../errors/entity_creation_error";
 import { validateProps } from "./utils/validate-props";
-import { EntityModificationError } from "../errors/entity_modification_error";
 
 export interface AssignmentProps {
   number: number;
@@ -31,7 +30,7 @@ export class Assignment extends Entity<AssignmentProps> {
     super(id, props)
   }
 
-  static create(props: AssignmentProps): Assignment | EntityCreationError {
+  static create(props: AssignmentProps): Assignment | Error {
     return new Assignment(Id.create(), props)
   }
 
@@ -59,37 +58,37 @@ export class Assignment extends Entity<AssignmentProps> {
     return this.props.content;
   }
 
-  public changeNumber(newNumber: number): void | EntityModificationError {
+  public changeNumber(newNumber: number): void | Error {
     if (!newNumber) {
-      throw new EntityModificationError('Number is required')
+      throw new EntityError('Number is required')
     }
     this.props.number = newNumber;
   }
 
-  public changeTitle(newTitle: string): void | EntityModificationError {
+  public changeTitle(newTitle: string): void | Error {
     if (!newTitle || newTitle.trim() === '') {
-      throw new EntityModificationError('Title is required')
+      throw new EntityError('Title is required')
     }
     this.props.title = newTitle;
   }
 
-  public changeCategory(newCategoryId: Id): void | EntityModificationError {
+  public changeCategory(newCategoryId: Id): void | Error {
     if (!newCategoryId) {
-      throw new EntityModificationError('Category is required')
+      throw new EntityError('Category is required')
     }
     this.props.categoryId = newCategoryId;
   }
 
-  public changeIntroduction(newIntroduction: string): void | EntityModificationError {
+  public changeIntroduction(newIntroduction: string): void | Error {
     if (!newIntroduction || newIntroduction.trim() === '') {
-      throw new EntityModificationError('Introduction is required')
+      throw new EntityError('Introduction is required')
     }
     this.props.introduction = newIntroduction;
   }
 
-  public changeContent(newContent: string): void | EntityModificationError {
+  public changeContent(newContent: string): void | Error {
     if (!newContent || newContent.trim() === '') {
-      throw new EntityModificationError('Content is required')
+      throw new EntityError('Content is required')
     }
     this.props.content = newContent;
   }

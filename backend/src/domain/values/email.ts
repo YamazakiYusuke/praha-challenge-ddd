@@ -1,4 +1,4 @@
-import { ValueCreationError } from "../errors/value_creation_error";
+import { ValueError } from "../errors/value_error";
 import { Value } from "./base/value";
 
 export class Email extends Value<string> {
@@ -8,9 +8,9 @@ export class Email extends Value<string> {
     super(value)
   }
 
-  static create(value: string): Email | ValueCreationError {
+  static create(value: string): Email | Error {
     if (!value || !Email.emailRegex.test(value)) {
-      throw new ValueCreationError('Invalid email format');
+      throw new ValueError('Invalid email format');
     }
     return new Email(value);
   }

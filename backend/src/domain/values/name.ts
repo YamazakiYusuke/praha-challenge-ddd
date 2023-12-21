@@ -1,4 +1,4 @@
-import { ValueCreationError } from "../errors/value_creation_error";
+import { ValueError } from "../errors/value_error";
 import { Value } from "./base/value";
 
 // 色々なContextで使用されている。HumanName CategoryNameなど
@@ -8,9 +8,9 @@ export class Name extends Value<string> {
     super(value)
   }
 
-  static create(value: string): Name | ValueCreationError {
+  static create(value: string): Name | Error {
     if (!value || value.trim() === '') {
-      throw new ValueCreationError('Value cannot be empty');
+      throw new ValueError('Value cannot be empty');
     }
     return new Name(value);
   }

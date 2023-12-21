@@ -1,6 +1,3 @@
-import { EntityCreationError } from "../errors/entity_creation_error";
-import { EntityModificationError } from "../errors/entity_modification_error";
-import { ValueCreationError } from "../errors/value_creation_error";
 import { Id } from "../values/id"
 import { Name } from "../values/name";
 import { Participants } from "../values/participants";
@@ -31,7 +28,7 @@ export class Pair extends Entity<PairProps> {
     super(id, props)
   }
 
-  static create(props: PairProps): Pair | EntityCreationError {
+  static create(props: PairProps): Pair | Error {
     return new Pair(Id.create(), props)
   }
 
@@ -55,12 +52,12 @@ export class Pair extends Entity<PairProps> {
     return this.props.participants.last;
   }
 
-  public appendParticipant(participant: Participant): void | ValueCreationError {
+  public appendParticipant(participant: Participant): void | Error {
     const newParticipants = this.props.participants.getAppendedNewParticipant(participant) as Participants;
     this.props.participants = newParticipants;
   }
 
-  public removeParticipant(participant: Participant): void | ValueCreationError {
+  public removeParticipant(participant: Participant): void | Error {
     const newParticipants = this.props.participants.getRemovedNewParticipant(participant) as Participants;
     this.props.participants = newParticipants;
   }

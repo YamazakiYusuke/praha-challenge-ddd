@@ -4,7 +4,6 @@ import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";
-import { GetPairNewNameService } from "src/domain/services/pair/get-pair-new-name-service";
 import { Name } from "src/domain/values/name";
 import { Participants } from "src/domain/values/participants";
 
@@ -13,33 +12,25 @@ export class ParticipantToOnLeaveUseCase {
   constructor(
     private readonly getOneLeastMemberPairQuery: GetOneLeastMemberPairQuery,
     private readonly savePairCommand: SavePairCommand,
-    private readonly getPairNewNameService: GetPairNewNameService,
     private readonly createPairService: CreatePairService,
   ) { }
 
-  async execute(participant: Participant): Promise<Pair> {
-    const smallestPair = await this.getOneLeastMemberPairQuery.execute() as Pair;
-    let enrolledPair: Pair;
+  async execute(participant: Participant): Promise<void | Error> {
+    // TODO 
+    // const smallestPair = await this.getOneLeastMemberPairQuery.execute() as Pair;
 
-    if (smallestPair.participantsLength < 3) {
-      smallestPair.appendParticipant(participant);
-      enrolledPair = smallestPair;
-    } else {
-      const mover = smallestPair.lastParticipant;
-      const newParticipants = Participants.create([mover, participant]) as Participants;
-      smallestPair.removeParticipant(mover);
-      const newPairName = await this.getPairNewNameService.execute(smallestPair.teamId) as Name;
-      enrolledPair = await (this.createPairService.execute({ teamId: smallestPair.teamId, name: newPairName, participants: newParticipants })) as Pair;
-    }
-
-    participant.changeEnrollmentStatusToEnrolled(enrolledPair.getId, enrolledPair.teamId);
-
-    // Save changes
-    if (smallestPair !== enrolledPair) {
-      await this.savePairCommand.execute(smallestPair);
-    }
-    await this.savePairCommand.execute(enrolledPair);
-
-    return enrolledPair;
+    // if (smallestPair.participantsLength < 3) {
+    //   smallestPair.appendParticipant(participant);
+    //   participant.changeEnrollmentStatusToEnrolled(smallestPair.getId, smallestPair.teamId);
+    //   await this.savePairCommand.execute(smallestPair);
+    // } else {
+    //   const mover = smallestPair.lastParticipant;
+    //   const newParticipants = Participants.create([mover, participant]) as Participants;
+    //   smallestPair.removeParticipant(mover);
+    //   const enrolledPair = await (this.createPairService.execute({ teamId: smallestPair.teamId, participants: newParticipants })) as Pair;
+    //   participant.changeEnrollmentStatusToEnrolled(enrolledPair.getId, enrolledPair.teamId);
+    //   await this.savePairCommand.execute(enrolledPair);
+    //   await this.savePairCommand.execute(smallestPair);
+    // }
   }
 }
