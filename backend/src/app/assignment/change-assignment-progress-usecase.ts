@@ -7,7 +7,6 @@ import { SuccessResponse } from "../responses/success-response";
 import { SaveAssignmentProgressCommand } from "src/domain/commands/assignment-progress/save-assignment-progress-command";
 import { debuglog } from "util";
 
-
 export class ChangeAssignmentProgressUsecase {
   constructor(
     private readonly getOneAssignmentProgressQuery: GetOneAssignmentProgressQuery,

@@ -11,21 +11,9 @@ import { EntityModificationError } from "src/domain/errors/entity_modification_e
 import { ValueCreationError } from "src/domain/errors/value_creation_error";
 
 @Injectable()
-export class PairCreateService {
-  constructor(private readonly getPairsByTeamIdQuery: GetPairsByTeamIdQuery, private readonly getOnePairQuery: GetOnePairQuery) { }
-
-  async execute(props: { teamId: Id; participants: Participants; }): Promise<Pair | EntityCreationError | RepositoryError> {
-    const name = await (this.getNewPairName(props.teamId)) as Name;
-    const entityProps: PairProps = {
-      teamId: props.teamId,
-      name: name,
-      participants: props.participants,
-    }
-    const newPair = Pair.create(entityProps);
-    return newPair;
-  }
-
-  private async getNewPairName(teamId: Id): Promise<Name | RepositoryError | EntityModificationError | ValueCreationError> {
+export class GetPairNewNameService {
+  constructor(private readonly getPairsByTeamIdQuery: GetPairsByTeamIdQuery) { }
+  async execute(teamId: Id): Promise<Name | RepositoryError | ValueCreationError> {
     const allPairNames = await (this.getPairsByTeamIdQuery.execute(teamId)) as Pair[];
     const alphabet = 'abcdefghijklmnopqrstuvwxyz';
     for (let i = 0; i < alphabet.length; i++) {

@@ -61,7 +61,7 @@ export class Participant extends Entity<ParticipantProps> {
     return this.props.enrollmentStatus;
   }
 
-  public changeEnrollmentStatusToEnrolled(pairId: Id, teamId: Id): Participant | EntityModificationError {
+  public changeEnrollmentStatusToEnrolled(pairId: Id, teamId: Id): void | EntityModificationError {
     this.changeEnrollmentStatusValidation();
     if (this.props.enrollmentStatus !== EnrollmentStatusValue.OnLeave) {
       throw new EntityModificationError('EnrollmentStatus is not OnLeave');
@@ -69,10 +69,9 @@ export class Participant extends Entity<ParticipantProps> {
     this.props.enrollmentStatus = EnrollmentStatusValue.Enrolled;
     this.props.pairId = pairId;
     this.props.teamId = teamId;
-    return this;
   }
 
-  public changeEnrollmentStatusToOnLeave(): Participant | EntityModificationError {
+  public changeEnrollmentStatusToOnLeave(): void | EntityModificationError {
     this.changeEnrollmentStatusValidation();
     if (this.props.enrollmentStatus !== EnrollmentStatusValue.Enrolled) {
       throw new EntityModificationError('EnrollmentStatus is not Enrolled');
@@ -80,15 +79,13 @@ export class Participant extends Entity<ParticipantProps> {
     this.props.teamId = undefined;
     this.props.pairId = undefined;
     this.props.enrollmentStatus = EnrollmentStatusValue.OnLeave;
-    return this;
   }
 
-  public changeEnrollmentStatusToWithDrawn(): Participant | EntityModificationError {
+  public changeEnrollmentStatusToWithDrawn(): void | EntityModificationError {
     this.changeEnrollmentStatusValidation();
     this.props.teamId = undefined;
     this.props.pairId = undefined;
     this.props.enrollmentStatus = EnrollmentStatusValue.Withdrawn;
-    return this;
   }
 
   private changeEnrollmentStatusValidation(): void | EntityModificationError {

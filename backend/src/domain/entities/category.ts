@@ -34,9 +34,8 @@ export class Category extends Entity<CategoryProps> {
     return this.props.name
   }
 
-  public changeName(newName: Name): Category {
+  public changeName(newName: Name): void {
     this.props.name = newName
-    return this
   }
 }
 

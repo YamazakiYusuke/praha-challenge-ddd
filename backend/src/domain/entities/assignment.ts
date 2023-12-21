@@ -59,43 +59,38 @@ export class Assignment extends Entity<AssignmentProps> {
     return this.props.content;
   }
 
-  public changeNumber(newNumber: number): Assignment | EntityModificationError {
+  public changeNumber(newNumber: number): void | EntityModificationError {
     if (!newNumber) {
       throw new EntityModificationError('Number is required')
     }
     this.props.number = newNumber;
-    return this;
   }
 
-  public changeTitle(newTitle: string): Assignment | EntityModificationError {
+  public changeTitle(newTitle: string): void | EntityModificationError {
     if (!newTitle || newTitle.trim() === '') {
       throw new EntityModificationError('Title is required')
     }
     this.props.title = newTitle;
-    return this;
   }
 
-  public changeCategory(newCategoryId: Id): Assignment | EntityModificationError {
+  public changeCategory(newCategoryId: Id): void | EntityModificationError {
     if (!newCategoryId) {
       throw new EntityModificationError('Category is required')
     }
     this.props.categoryId = newCategoryId;
-    return this;
   }
 
-  public changeIntroduction(newIntroduction: string): Assignment | EntityModificationError {
+  public changeIntroduction(newIntroduction: string): void | EntityModificationError {
     if (!newIntroduction || newIntroduction.trim() === '') {
       throw new EntityModificationError('Introduction is required')
     }
     this.props.introduction = newIntroduction;
-    return this;
   }
 
-  public changeContent(newContent: string): Assignment | EntityModificationError {
+  public changeContent(newContent: string): void | EntityModificationError {
     if (!newContent || newContent.trim() === '') {
       throw new EntityModificationError('Content is required')
     }
     this.props.content = newContent;
-    return this;
   }
 }

@@ -55,16 +55,14 @@ export class Pair extends Entity<PairProps> {
     return this.props.participants.last;
   }
 
-  public appendParticipant(participant: Participant): Pair | ValueCreationError {
+  public appendParticipant(participant: Participant): void | ValueCreationError {
     const newParticipants = this.props.participants.getAppendedNewParticipant(participant) as Participants;
     this.props.participants = newParticipants;
-    return this;
   }
 
-  public removeParticipant(participant: Participant): Pair | ValueCreationError {
+  public removeParticipant(participant: Participant): void | ValueCreationError {
     const newParticipants = this.props.participants.getRemovedNewParticipant(participant) as Participants;
     this.props.participants = newParticipants;
-    return this;
   }
 
   public get participantsLength(): number {

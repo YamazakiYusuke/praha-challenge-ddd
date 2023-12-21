@@ -36,11 +36,10 @@ export class Administrator extends Entity<AdministratorProps> {
     return this.props.email;
   }
 
-  public changeEmail(newEmail: Email): Administrator | EntityModificationError {
+  public changeEmail(newEmail: Email): void | EntityModificationError {
     if (!newEmail) {
       throw new EntityModificationError('Email is required');
     }
     this.props.email = newEmail;
-    return this;
   }
 }

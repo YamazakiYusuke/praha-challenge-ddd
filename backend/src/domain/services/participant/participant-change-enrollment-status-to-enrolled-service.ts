@@ -4,7 +4,7 @@ import { RepositoryError } from "../../errors/repository_error";
 import { Injectable } from "@nestjs/common";
 import { GetOneLeastMemberPairQuery } from "src/domain/commands/pair/get-one-least-member-pair-query";
 import { Pair } from "src/domain/entities/pair";
-import { PairCreateService } from "../pair/pair-create-service";
+import { PairCreateService } from "../pair/create-pair-service";
 import { Participants } from "src/domain/values/participants";
 
 @Injectable()
