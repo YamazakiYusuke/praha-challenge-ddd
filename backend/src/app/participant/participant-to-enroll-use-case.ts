@@ -23,15 +23,13 @@ export class ParticipantToEnrollUseCase {
 
     if (smallestPair.participantsLength < 3) {
       smallestPair.appendParticipant(participant);
-      await this.savePairCommand.execute(smallestPair);
+      await this.savePairCommand.execute([smallestPair]);
     } else {
       const mover = smallestPair.lastParticipant;
       smallestPair.removeParticipant(mover);
       const newParticipants = Participants.create([mover, participant]) as Participants;
       const enrolledPair = await (this.createPairService.execute({ teamId: smallestPair.teamId, participants: newParticipants })) as Pair;
-      // TODO: 1つのトランザクションにする
-      await this.savePairCommand.execute(smallestPair);
-      await this.savePairCommand.execute(enrolledPair);
+      await this.savePairCommand.execute([smallestPair, enrolledPair]);
     }
   }
 }
