@@ -5,7 +5,7 @@ import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";
 import { Name } from "src/domain/values/name";
-import { Participants } from "src/domain/values/participants";
+import { Participants } from "src/domain/entities/participants";
 
 @Injectable()
 export class ParticipantToOnLeaveUseCase {

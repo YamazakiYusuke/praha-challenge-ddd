@@ -62,9 +62,6 @@ export class Participant extends Entity<ParticipantProps> {
 
   public changeEnrollmentStatusToEnrolled(pairId: Id, teamId: Id): void | Error {
     this.changeEnrollmentStatusValidation();
-    if (this.props.enrollmentStatus !== EnrollmentStatusValue.OnLeave) {
-      throw new EntityError('EnrollmentStatus is not OnLeave');
-    }
     this.props.enrollmentStatus = EnrollmentStatusValue.Enrolled;
     this.props.pairId = pairId;
     this.props.teamId = teamId;
@@ -72,9 +69,6 @@ export class Participant extends Entity<ParticipantProps> {
 
   public changeEnrollmentStatusToOnLeave(): void | Error {
     this.changeEnrollmentStatusValidation();
-    if (this.props.enrollmentStatus !== EnrollmentStatusValue.Enrolled) {
-      throw new EntityError('EnrollmentStatus is not Enrolled');
-    }
     this.props.teamId = undefined;
     this.props.pairId = undefined;
     this.props.enrollmentStatus = EnrollmentStatusValue.OnLeave;

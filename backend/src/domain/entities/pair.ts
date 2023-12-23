@@ -1,6 +1,7 @@
+import { EntityError } from "../errors/entity_error";
 import { Id } from "../values/id"
 import { Name } from "../values/name";
-import { Participants } from "../values/participants";
+import { Participants } from "./participants";
 import { Entity } from "./base/entity"
 import { Participant } from "./participant";
 import { validateProps } from "./utils/validate-props";
@@ -27,15 +28,21 @@ export class Pair extends Entity<PairProps> {
     validateProps(id, props);
     super(id, props)
   }
-
+  /// Factory
   static create(props: PairProps): Pair | Error {
-    return new Pair(Id.create(), props)
+    const pair = new Pair(Id.create(), props);
+    for (let i = 0; i < pair.participants.length; i++) {
+      const participant = pair.participants.getByIndex(i);
+      pair.changeParticipantEnrollmentStatusToEnrolled(participant);
+    }
+    return pair;
   }
 
   static restore(id: Id, props: PairProps): Pair {
     return new Pair(id, props)
   }
 
+  /// Getter
   public get teamId(): Id {
     return this.props.teamId;
   }
@@ -49,20 +56,34 @@ export class Pair extends Entity<PairProps> {
   }
 
   public get lastParticipant(): Participant {
-    return this.props.participants.last;
-  }
-
-  public appendParticipant(participant: Participant): void | Error {
-    const newParticipants = this.props.participants.getAppendedNewParticipant(participant) as Participants;
-    this.props.participants = newParticipants;
-  }
-
-  public removeParticipant(participant: Participant): void | Error {
-    const newParticipants = this.props.participants.getRemovedNewParticipant(participant) as Participants;
-    this.props.participants = newParticipants;
+    return this.participants.last;
   }
 
   public get participantsLength(): number {
-    return this.props.participants.length;
+    return this.participants.length;
+  }
+
+  /// Method
+  public appendParticipant(participant: Participant): void | Error {
+    this.participants.appendParticipant(participant);
+    this.changeParticipantEnrollmentStatusToEnrolled(participant);
+  }
+
+  public removeParticipant(participant: Participant): void | Error {
+    this.participants.removeParticipant(participant);
+  }
+
+  private changeParticipantEnrollmentStatusToEnrolled(participant: Participant): void | Error {
+    this.participants.changeParticipantEnrollmentStatusToEnrolled(this.getId, this.teamId, participant);
+  }
+
+  public changeParticipantEnrollmentStatusToOnLeave(participant: Participant): void | Error {
+    this.participants.changeParticipantEnrollmentStatusToOnLeave(participant);
+    this.removeParticipant(participant);
+  }
+
+  public changeParticipantEnrollmentStatusToWithDrawn(participant: Participant): void | Error {
+    this.participants.changeParticipantEnrollmentStatusToWithDrawn(participant);
+    this.removeParticipant(participant);
   }
 }

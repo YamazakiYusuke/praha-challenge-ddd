@@ -4,7 +4,7 @@ import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";
-import { Participants } from "src/domain/values/participants";
+import { Participants } from "src/domain/entities/participants";
 
 @Injectable()
 export class ParticipantToWithDrownUseCase {

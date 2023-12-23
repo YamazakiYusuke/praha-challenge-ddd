@@ -3,7 +3,7 @@ import { GetPairsByTeamIdQuery } from "src/domain/commands/pair/get-pairs-by-tea
 import { Injectable } from "@nestjs/common";
 import { Id } from "src/domain/values/id";
 import { Name } from "src/domain/values/name";
-import { Participants } from "src/domain/values/participants";
+import { Participants } from "src/domain/entities/participants";
 
 @Injectable()
 export class CreatePairService {
