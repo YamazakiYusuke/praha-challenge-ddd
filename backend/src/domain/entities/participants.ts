@@ -36,17 +36,19 @@ export class Participants extends Entity<Array<Participant>> {
     return this.value[i] as Participant;
   }
 
-  public appendParticipant(participant: Participant): void | Error {
+  public append(pairId: Id, teamId: Id, participant: Participant): void | Error {
     if (this.hasParticipant(participant)) {
       throw new EntityError(`参加者${participant}は既にPairのメンバーです`);
     }
+    participant.changeEnrollmentStatusToEnrolled(pairId, teamId);
     this.props = [...this.value, participant];
   }
 
-  public removeParticipant(participant: Participant): void | Error {
+  public remove(participant: Participant): void | Error {
     if (!this.hasParticipant(participant)) {
       throw new EntityError(`参加者${participant}はPairのメンバーではありません`);
     }
+    participant.deleteTeamIdPairId();
     this.props = this.value.filter(p => !p.getId.isEqual(participant.getId));
   }
 
@@ -76,7 +78,7 @@ export class Participants extends Entity<Array<Participant>> {
   }
 
   private getParticipant(participant: Participant): Participant {
-    const result =  this.value.find(p => p.getId.isEqual(participant.getId));
+    const result = this.value.find(p => p.getId.isEqual(participant.getId));
     if (result === undefined) throw new EntityError('参加者ではありません');
     return result;
   }

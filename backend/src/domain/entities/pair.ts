@@ -65,12 +65,12 @@ export class Pair extends Entity<PairProps> {
 
   /// Method
   public appendParticipant(participant: Participant): void | Error {
-    this.participants.appendParticipant(participant);
+    this.participants.append(this.teamId, this.getId, participant);
     this.changeParticipantEnrollmentStatusToEnrolled(participant);
   }
 
   public removeParticipant(participant: Participant): void | Error {
-    this.participants.removeParticipant(participant);
+    this.participants.remove(participant);
   }
 
   private changeParticipantEnrollmentStatusToEnrolled(participant: Participant): void | Error {
