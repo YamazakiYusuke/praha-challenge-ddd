@@ -1,11 +1,11 @@
-import { AssignmentProgress } from "src/domain/entities/assignment-progress";
-import { IAssignmentProgressRepository } from "src/domain/repositories/assignment-progress-repository";
-import { RepositoryError } from "src/domain/errors/repository_error";
 import { Injectable } from "@nestjs/common";
+import { AssignmentProgress } from "src/domain/entities/assignment-progress";
+import { RepositoryError } from "src/domain/errors/repository_error";
+import { IAssignmentProgressRepository } from "src/domain/repositories/assignment-progress-repository";
 import { IGetOneQuery } from "../base/get-one-query";
 
 @Injectable()
-export class GetOneAssignmentProgressQuery implements IGetOneQuery<AssignmentProgress, string> {
+export class GetAssignmentProgressByIdQuery implements IGetOneQuery<AssignmentProgress, string> {
   constructor(private readonly assignmentProgressRepository: IAssignmentProgressRepository) { }
 
   async execute(assignmentProgressId: string): Promise<AssignmentProgress | null | RepositoryError> {

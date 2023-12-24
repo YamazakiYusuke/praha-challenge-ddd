@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { ErrorResponse } from "src/app/responses/error-response";
 import { GetPairWithFewestMembersQuery } from "src/domain/commands/pair/get-pair-with-fewest-members-query";
 import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
-import { GetOneParticipantByIdQuery } from "src/domain/commands/participant/get-one-participant-by-id-query";
+import { GetParticipantByIdQuery } from "src/domain/commands/participant/get-participant-by-id-query";
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
 import { Participants } from "src/domain/entities/participants";
@@ -13,7 +13,7 @@ import { debuglog } from "util";
 @Injectable()
 export class ParticipantToEnrollUseCase {
   constructor(
-    private readonly getOneParticipantQuery: GetOneParticipantByIdQuery,
+    private readonly getOneParticipantQuery: GetParticipantByIdQuery,
     private readonly getPairWithFewestMembersQuery: GetPairWithFewestMembersQuery,
     private readonly savePairCommand: SavePairCommand,
     private readonly createPairService: CreatePairService,

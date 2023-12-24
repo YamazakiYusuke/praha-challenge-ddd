@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { GetPairByIdQuery } from "src/domain/commands/pair/get-pair-by-id-query";
-import { GetOneParticipantByIdQuery } from "src/domain/commands/participant/get-one-participant-by-id-query";
+import { GetParticipantByIdQuery } from "src/domain/commands/participant/get-participant-by-id-query";
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
 import { Id } from "src/domain/values/id";
@@ -8,7 +8,7 @@ import { Id } from "src/domain/values/id";
 @Injectable()
 export class ParticipantToOnLeaveUseCase {
   constructor(
-    private readonly getOneParticipantQuery: GetOneParticipantByIdQuery,
+    private readonly getOneParticipantQuery: GetParticipantByIdQuery,
     private readonly getOnePairByIdQuery: GetPairByIdQuery,
   ) { }
 

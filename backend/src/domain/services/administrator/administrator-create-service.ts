@@ -1,13 +1,11 @@
-import { IAdministratorRepository } from "src/domain/repositories/administrator-repository";
-import { Administrator, AdministratorProps } from "../../entities/administrator";
-import { GetOneAdministratorQuery } from "src/domain/commands/administrator/get-one-administrator-query";
 import { Injectable } from "@nestjs/common";
-import { RepositoryError } from "src/domain/errors/repository_error";
+import { GetAdministratorByEmailQuery } from "src/domain/commands/administrator/get-administrator-by-email-query";
 import { EntityError } from "src/domain/errors/entity_error";
+import { Administrator, AdministratorProps } from "../../entities/administrator";
 
 @Injectable()
 export class AdministratorCreateService {
-  constructor(private readonly getOneAdministratorQuery: GetOneAdministratorQuery) { }
+  constructor(private readonly getOneAdministratorQuery: GetAdministratorByEmailQuery) { }
 
   async execute(props: AdministratorProps): Promise<Administrator | Error> {
     const existingAdministrator = await this.getOneAdministratorQuery.execute(props.email);

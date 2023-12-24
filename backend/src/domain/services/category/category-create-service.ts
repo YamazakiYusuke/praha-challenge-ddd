@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { GetOneCategoryQuery } from "src/domain/commands/category/get-one-category-query";
+import { GetCategoryByNameQuery } from "src/domain/commands/category/get-one-category-by-name-query";
 import { Category, CategoryProps } from "../../entities/category";
 import { EntityError } from "../../errors/entity_error";
 
 @Injectable()
 export class CategoryCreateService {
-  constructor(private readonly getOneCategoryQuery: GetOneCategoryQuery) { }
+  constructor(private readonly getOneCategoryQuery: GetCategoryByNameQuery) { }
 
   async execute(props: CategoryProps): Promise<Category | Error> {
     const existingCategory = await this.getOneCategoryQuery.execute(props.name);

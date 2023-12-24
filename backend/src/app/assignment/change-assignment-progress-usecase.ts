@@ -1,15 +1,15 @@
-import { GetOneAssignmentProgressQuery } from "src/domain/commands/assignment-progress/get-one-assignment-progress-query"
+import { GetAssignmentProgressByIdQuery } from "src/domain/commands/assignment-progress/get-assignment-progress-by-id-query";
+import { SaveAssignmentProgressCommand } from "src/domain/commands/assignment-progress/save-assignment-progress-command";
 import { AssignmentProgress } from "src/domain/entities/assignment-progress";
 import { UsecaseError } from "src/domain/errors/usecase_error";
 import { AssignmentProgressState } from "src/domain/values/assignment-progress-state";
+import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
 import { SuccessResponse } from "../responses/success-response";
-import { SaveAssignmentProgressCommand } from "src/domain/commands/assignment-progress/save-assignment-progress-command";
-import { debuglog } from "util";
 
 export class ChangeAssignmentProgressUsecase {
   constructor(
-    private readonly getOneAssignmentProgressQuery: GetOneAssignmentProgressQuery,
+    private readonly getOneAssignmentProgressQuery: GetAssignmentProgressByIdQuery,
     private readonly savAssignmentProgressCommand: SaveAssignmentProgressCommand,
   ) { }
 

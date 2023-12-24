@@ -1,12 +1,12 @@
-import { Category } from "../../entities/category";
-import { GetOneCategoryQuery } from "src/domain/commands/category/get-one-category-query";
 import { Injectable } from "@nestjs/common";
-import { Name } from "src/domain/values/name";
+import { GetCategoryByNameQuery } from "src/domain/commands/category/get-one-category-by-name-query";
 import { EntityError } from "src/domain/errors/entity_error";
+import { Name } from "src/domain/values/name";
+import { Category } from "../../entities/category";
 
 @Injectable()
 export class CategoryChangeNameService {
-  constructor(private readonly getOneCategoryQuery: GetOneCategoryQuery) { }
+  constructor(private readonly getOneCategoryQuery: GetCategoryByNameQuery) { }
 
   async execute(category: Category, newName: Name): Promise<void | Error> {
     const existingCategory = await this.getOneCategoryQuery.execute(newName);
