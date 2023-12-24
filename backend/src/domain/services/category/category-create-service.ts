@@ -5,10 +5,10 @@ import { EntityError } from "../../errors/entity_error";
 
 @Injectable()
 export class CategoryCreateService {
-  constructor(private readonly getOneCategoryQuery: GetCategoryByNameQuery) { }
+  constructor(private readonly getCategoryByNameQuery: GetCategoryByNameQuery) { }
 
   async execute(props: CategoryProps): Promise<Category | Error> {
-    const existingCategory = await this.getOneCategoryQuery.execute(props.name);
+    const existingCategory = await this.getCategoryByNameQuery.execute(props.name);
     if (existingCategory != null) {
       throw new EntityError('このカテゴリー名は既に存在しています');
     }

@@ -9,13 +9,13 @@ import { SuccessResponse } from "../responses/success-response";
 
 export class ChangeAssignmentProgressUsecase {
   constructor(
-    private readonly getOneAssignmentProgressQuery: GetAssignmentProgressByIdQuery,
+    private readonly getAssignmentProgressByIdQuery: GetAssignmentProgressByIdQuery,
     private readonly savAssignmentProgressCommand: SaveAssignmentProgressCommand,
   ) { }
 
   public async execute(assignmentProgressId: string, newStateStr: string): Promise<SuccessResponse | ErrorResponse> {
     try {
-      const assignmentProgress = await this.getOneAssignmentProgressQuery.execute(assignmentProgressId) as AssignmentProgress | null;
+      const assignmentProgress = await this.getAssignmentProgressByIdQuery.execute(assignmentProgressId) as AssignmentProgress | null;
       if (assignmentProgress == null) throw new UsecaseError(`AssignmentProgress${assignmentProgressId}が存在しません`);
       const newState = AssignmentProgressState.create(newStateStr) as AssignmentProgressState;
       assignmentProgress.changeAssignmentProgressState(newState);

@@ -14,7 +14,7 @@ import { debuglog } from "util";
 @Injectable()
 export class ParticipantToEnrollUseCase {
   constructor(
-    private readonly getOneParticipantQuery: GetParticipantByIdQuery,
+    private readonly getParticipantByIdQuery: GetParticipantByIdQuery,
     private readonly getPairWithFewestMembersQuery: GetPairWithFewestMembersQuery,
     private readonly savePairCommand: SavePairCommand,
     private readonly createPairService: CreatePairService,
@@ -22,7 +22,7 @@ export class ParticipantToEnrollUseCase {
 
   async execute(participantId: string): Promise<SuccessResponse | ErrorResponse> {
     try {
-      const participant = await this.getOneParticipantQuery.execute(Id.restore(participantId)) as Participant;
+      const participant = await this.getParticipantByIdQuery.execute(Id.restore(participantId)) as Participant;
       const smallestPair = await this.getPairWithFewestMembersQuery.execute() as Pair;
 
       if (smallestPair.participantsLength < 3) {

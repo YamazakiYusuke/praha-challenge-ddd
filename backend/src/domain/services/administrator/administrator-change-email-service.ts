@@ -6,10 +6,10 @@ import { Administrator } from "../../entities/administrator";
 
 @Injectable()
 export class AdministratorChangeEmailService {
-  constructor(private readonly getOneAdministratorQuery: GetAdministratorByEmailQuery) { }
+  constructor(private readonly getAdministratorByEmailQuery: GetAdministratorByEmailQuery) { }
 
   async execute(administrator: Administrator, newEmail: Email): Promise<void | Error> {
-    const existingAdministrator = await this.getOneAdministratorQuery.execute(newEmail);
+    const existingAdministrator = await this.getAdministratorByEmailQuery.execute(newEmail);
     if (existingAdministrator != null) {
       throw new EntityError('こちらのEmailは既に登録済みです');
     }

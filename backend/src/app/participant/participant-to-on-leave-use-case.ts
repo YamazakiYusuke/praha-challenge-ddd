@@ -8,19 +8,19 @@ import { Id } from "src/domain/values/id";
 @Injectable()
 export class ParticipantToOnLeaveUseCase {
   constructor(
-    private readonly getOneParticipantQuery: GetParticipantByIdQuery,
-    private readonly getOnePairByIdQuery: GetPairByIdQuery,
+    private readonly getParticipantByIdQuery: GetParticipantByIdQuery,
+    private readonly getPairByIdQuery: GetPairByIdQuery,
   ) { }
 
   async execute(participantId: string): Promise<void | Error> {
-    const participant = await this.getOneParticipantQuery.execute(Id.restore(participantId)) as Participant;
-    const pair = await this.getOnePairByIdQuery.execute(participant.getId) as Pair;
+    const participant = await this.getParticipantByIdQuery.execute(Id.restore(participantId)) as Participant;
+    const pair = await this.getPairByIdQuery.execute(participant.getId) as Pair;
     pair.changeParticipantEnrollmentStatusToOnLeave(participant);
     if (pair.participantsLength < 2) {
       // TODO: メール送信サービス　「どの参加者が減ったのか」「どのチームが2名以下になったのか」「そのチームの現在の参加者名」を記載する
     }
 
-    if (pair.participantsLength < 1) {
+    if (pair.participantsLength == 1) {
 
     }
   }

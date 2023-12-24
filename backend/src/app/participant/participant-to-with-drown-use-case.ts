@@ -5,7 +5,7 @@ import { Participant } from "src/domain/entities/participant";
 @Injectable()
 export class ParticipantToWithDrownUseCase {
   constructor(
-    private readonly getOneLeastMemberPairQuery: GetPairWithFewestMembersQuery,
+    private readonly getPairWithFewestMembersQuery: GetPairWithFewestMembersQuery,
   ) { }
 
   async execute(participant: Participant): Promise<void | Error> {
