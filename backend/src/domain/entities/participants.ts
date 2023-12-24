@@ -1,8 +1,7 @@
-import { Participant } from "./participant";
-import { Entity } from "./base/entity";
-import { Id } from "../values/id";
 import { EntityError } from "../errors/entity_error";
-import { Pair } from "./pair";
+import { Id } from "../values/id";
+import { Entity } from "./base/entity";
+import { Participant } from "./participant";
 
 export class Participants extends Entity<Array<Participant>> {
   private constructor(id: Id, prop: Array<Participant>) {

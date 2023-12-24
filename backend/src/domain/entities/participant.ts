@@ -1,30 +1,18 @@
+import { PersonName } from "src/domain/values/person-name";
 import { EntityError } from "../errors/entity_error";
-import { Email } from "../values/email"
-import { Id } from "../values/id"
-import { Name } from "../values/name"
-import { Entity } from "./base/entity"
+import { Email } from "../values/email";
+import { Id } from "../values/id";
+import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
 export interface ParticipantProps {
-  name: Name;
+  name: PersonName;
   email: Email;
   teamId: Id | undefined;
   pairId: Id | undefined;
   enrollmentStatus: EnrollmentStatusValue;
 }
-/**
- * **sample code**
- * ```typescript
- * const props = ParticipantProps {
- *  name: Name.create('Joe'),
- *  email: Email.create('sample@example.com'),
- *  teamId: teamId,
- *  pairId: pairId,
- *  enrollmentStatus: EnrollmentStatus(EnrollmentStatusValue.Enrolled),
- * }
- * const participant = Participant.create(props);
- * ```
- */
+
 export class Participant extends Entity<ParticipantProps> {
   private constructor(id: Id, props: ParticipantProps) {
     validateProps(id, props);
@@ -40,7 +28,7 @@ export class Participant extends Entity<ParticipantProps> {
     return new Participant(id, props);
   }
 
-  public get name(): Name {
+  public get name(): PersonName {
     return this.props.name;
   }
 

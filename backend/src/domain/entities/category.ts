@@ -1,20 +1,13 @@
+import { CategoryName } from "src/domain/values/category-name";
 import { Id } from "../values/id";
-import { Name } from "../values/name";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
+// TODO: rename
 export interface CategoryProps {
-  name: Name;
+  name: CategoryName;
 }
-/**
- * **sample code**
- * ```typescript
- * const props = CategoryProps {
- *  name: 'Sample Category',
- * }
- * const category = Category.create(props);
- * ```
- */
+
 export class Category extends Entity<CategoryProps> {
   private constructor(id: Id, props: CategoryProps) {
     validateProps(id, props);
@@ -29,11 +22,11 @@ export class Category extends Entity<CategoryProps> {
     return new Category(id, props);
   }
 
-  public get name(): Name {
+  public get name(): CategoryName {
     return this.props.name
   }
 
-  public changeName(newName: Name): void {
+  public changeName(newName: CategoryName): void {
     this.props.name = newName
   }
 }

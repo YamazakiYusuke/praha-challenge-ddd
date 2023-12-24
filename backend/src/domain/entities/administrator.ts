@@ -7,15 +7,7 @@ import { validateProps } from "./utils/validate-props";
 export interface AdministratorProps {
   email: Email;
 }
-/**
- * **sample code**
- * ```typescript
- * const props = AdministratorProps {
- *  email: Email.create('admin@example.com'),
- * }
- * const administrator = Administrator.create(props);
- * ```
- */
+
 export class Administrator extends Entity<AdministratorProps> {
 
   private constructor(id: Id, props: AdministratorProps) {

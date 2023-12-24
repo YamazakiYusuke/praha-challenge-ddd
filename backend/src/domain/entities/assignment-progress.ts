@@ -9,17 +9,7 @@ export interface AssignmentProgressProps {
   participantId: Id;
   assignmentProgressState: AssignmentProgressState;
 }
-/**
- * **sample code**
- * ```typescript
- * const props: AssignmentProgressProps = {
- *  assignmentId: assignmentId,
- *  participantId: participantId,
- *  assignmentProgressState: AssignmentProgressState.create('InProgress'),
- * }
- * const AssignmentProgress = AssignmentProgress.create(props);
- * ```
- */
+
 export class AssignmentProgress extends Entity<AssignmentProgressProps> {
 
   private constructor(id: Id, props: AssignmentProgressProps) {

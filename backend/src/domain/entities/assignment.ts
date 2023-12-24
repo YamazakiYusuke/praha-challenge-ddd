@@ -10,19 +10,7 @@ export interface AssignmentProps {
   introduction: string;
   content: string;
 }
-/**
- * **sample code**
- * ```typescript
- * const props = AssignmentProps {
- *  number: 1,
- *  title: 'Sample Assignment',
- *  categoryId: categoryId,
- *  introduction: 'This is a sample assignment',
- *  content: 'The content of the sample assignment goes here',
- * }
- * const assignment = Assignment.create(props);
- * ```
- */
+
 export class Assignment extends Entity<AssignmentProps> {
 
   private constructor(id: Id, props: AssignmentProps) {

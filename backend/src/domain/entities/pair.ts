@@ -1,27 +1,16 @@
-import { EntityError } from "../errors/entity_error";
-import { Id } from "../values/id"
-import { Name } from "../values/name";
-import { Participants } from "./participants";
-import { Entity } from "./base/entity"
+import { PairName } from "src/domain/values/pair-name";
+import { Id } from "../values/id";
+import { Entity } from "./base/entity";
 import { Participant } from "./participant";
+import { Participants } from "./participants";
 import { validateProps } from "./utils/validate-props";
 
 export interface PairProps {
   teamId: Id;
-  name: Name;
+  name: PairName;
   participants: Participants;
 }
-/**
- * **sample code**
- * ```typescript
- * const props: PairProps = {
- *  teamId: Id.create(),
- *  name: Name.create('Pair Name'),
- *  participants: Participants.create([participant, participant]),
- * }
- * const pair = Pair.create(props);
- * ```
- */
+
 export class Pair extends Entity<PairProps> {
 
   private constructor(id: Id, props: PairProps) {
@@ -47,7 +36,7 @@ export class Pair extends Entity<PairProps> {
     return this.props.teamId;
   }
 
-  public get name(): Name {
+  public get name(): PairName {
     return this.props.name;
   }
 
