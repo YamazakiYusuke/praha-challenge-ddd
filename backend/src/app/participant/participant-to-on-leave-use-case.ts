@@ -1,36 +1,27 @@
 import { Injectable } from "@nestjs/common";
-import { GetOneLeastMemberPairQuery } from "src/domain/commands/pair/get-one-least-member-pair-query";
-import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
+import { GetPairByIdQuery } from "src/domain/commands/pair/get-pair-by-id-query";
+import { GetOneParticipantByIdQuery } from "src/domain/commands/participant/get-one-participant-by-id-query";
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
-import { CreatePairService } from "src/domain/services/pair/create-pair-service";
-import { Name } from "src/domain/values/name";
-import { Participants } from "src/domain/entities/participants";
+import { Id } from "src/domain/values/id";
 
 @Injectable()
 export class ParticipantToOnLeaveUseCase {
   constructor(
-    private readonly getOneLeastMemberPairQuery: GetOneLeastMemberPairQuery,
-    private readonly savePairCommand: SavePairCommand,
-    private readonly createPairService: CreatePairService,
+    private readonly getOneParticipantQuery: GetOneParticipantByIdQuery,
+    private readonly getOnePairByIdQuery: GetPairByIdQuery,
   ) { }
 
-  async execute(participant: Participant): Promise<void | Error> {
-    // TODO 
-    // const smallestPair = await this.getOneLeastMemberPairQuery.execute() as Pair;
+  async execute(participantId: string): Promise<void | Error> {
+    const participant = await this.getOneParticipantQuery.execute(Id.restore(participantId)) as Participant;
+    const pair = await this.getOnePairByIdQuery.execute(participant.getId) as Pair;
+    pair.changeParticipantEnrollmentStatusToOnLeave(participant);
+    if (pair.participantsLength < 2) {
+      // TODO: メール送信サービス　「どの参加者が減ったのか」「どのチームが2名以下になったのか」「そのチームの現在の参加者名」を記載する
+    }
 
-    // if (smallestPair.participantsLength < 3) {
-    //   smallestPair.appendParticipant(participant);
-    //   participant.changeEnrollmentStatusToEnrolled(smallestPair.getId, smallestPair.teamId);
-    //   await this.savePairCommand.execute(smallestPair);
-    // } else {
-    //   const mover = smallestPair.lastParticipant;
-    //   const newParticipants = Participants.create([mover, participant]) as Participants;
-    //   smallestPair.removeParticipant(mover);
-    //   const enrolledPair = await (this.createPairService.execute({ teamId: smallestPair.teamId, participants: newParticipants })) as Pair;
-    //   participant.changeEnrollmentStatusToEnrolled(enrolledPair.getId, enrolledPair.teamId);
-    //   await this.savePairCommand.execute(enrolledPair);
-    //   await this.savePairCommand.execute(smallestPair);
-    // }
+    if (pair.participantsLength < 1) {
+
+    }
   }
 }

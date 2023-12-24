@@ -9,7 +9,7 @@ import { CommandError } from "src/domain/errors/command_error";
 import { createRandomNumUpTo } from "src/util/random";
 
 @Injectable()
-export class GetOneLeastMemberPairQuery implements IGetOneQuery<Pair, Name> {
+export class GetPairWithFewestMembersByTeamIdQuery implements IGetOneQuery<Pair, Name> {
   constructor(private readonly pairRepository: IPairRepository) { }
 
   async execute(teamId: Id): Promise<Pair | CommandError | RepositoryError> {
