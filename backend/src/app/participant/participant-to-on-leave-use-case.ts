@@ -33,7 +33,7 @@ export class ParticipantToOnLeaveUseCase {
       if (pair.participantsLength == 1) {
         const smallestPair = await this.getPairWithFewestMembersByTeamIdQuery.execute(pair.teamId) as Pair | null;
         if (smallestPair == null) {
-          // TODO: 管理者にメール
+          // TODO: 管理者にメール　「どの参加者が減ったのか」「どの参加者が合流先を探しているのか」
           throw Error('参加可能なペアがありません');
         }
         const pairs = await this.enrollParticipantService.execute(smallestPair, participant) as Pair[];

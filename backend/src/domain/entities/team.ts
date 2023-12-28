@@ -5,7 +5,6 @@ import { validateProps } from "./utils/validate-props";
 
 export interface TeamProps {
   name: TeamName;
-  member: Array<Id>;
 }
 
 export class Team extends Entity<TeamProps> {
@@ -25,13 +24,5 @@ export class Team extends Entity<TeamProps> {
 
   public get name(): TeamName {
     return this.props.name;
-  }
-
-  public get member(): Array<Id> {
-    return this.props.member;
-  }
-
-  public changeMember(newMember: Array<Id>): void {
-    // TODO: 
   }
 }
