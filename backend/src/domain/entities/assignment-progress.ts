@@ -1,7 +1,8 @@
+import { AssignmentProgressStateValue } from "src/util/enums";
 import { EntityError } from "../errors/entity_error";
 import { AssignmentProgressState } from "../values/assignment-progress-state";
-import { Id } from "../values/id"
-import { Entity } from "./base/entity"
+import { Id } from "../values/id";
+import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
 export interface AssignmentProgressProps {
@@ -38,7 +39,7 @@ export class AssignmentProgress extends Entity<AssignmentProgressProps> {
   }
 
   public changeAssignmentProgressState(newState: AssignmentProgressState) {
-    if (this.props.assignmentProgressState.value === AssignmentProgressStateValue.Completed) {
+    if (this.assignmentProgressState.isCompleted) {
       throw new EntityError("Cannot change state, assignment already completed");
     }
     this.props.assignmentProgressState = newState;

@@ -1,11 +1,11 @@
-enum EnrollmentStatusValue {
-    Enrolled = "在籍中",
-    OnLeave = "休会中",
-    Withdrawn = "退会済"
+export enum EnrollmentStatusValue {
+    Enrolled,
+    OnLeave,
+    Withdrawn,
 }
 
-enum AssignmentProgressStateValue {
-    NotStarted = "未着手",
-    InReview = "レビュー中",
-    Completed = "完了"
+export enum AssignmentProgressStateValue {
+    NotStarted,
+    InReview,
+    Completed,
 }

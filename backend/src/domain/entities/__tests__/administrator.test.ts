@@ -10,9 +10,10 @@ describe('# Administrator Entity UnitTest\n', () => {
       const email = Email.create('test@example.com') as Email;
       const props: AdministratorProps = { email };
       // 実行
-      const admin = Administrator.create(props);
+      const admin = Administrator.create(props) as Administrator;
       // 確認
       expect(admin).toBeInstanceOf(Administrator);
+      expect(admin.email).toEqual(email);
     }); 
   });
 
@@ -26,6 +27,8 @@ describe('# Administrator Entity UnitTest\n', () => {
       const admin = Administrator.restore(id, props);
       // 確認
       expect(admin).toBeInstanceOf(Administrator);
+      expect(admin.getId).toEqual(id);
+      expect(admin.email).toEqual(email);
     }); 
   });
 

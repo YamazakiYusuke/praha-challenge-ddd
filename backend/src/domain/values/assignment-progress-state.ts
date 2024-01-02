@@ -1,4 +1,4 @@
-import { ValueError } from "../errors/value_error";
+import { AssignmentProgressStateValue } from "src/util/enums";
 import { Value } from "./base/value";
 
 export class AssignmentProgressState extends Value<string> {
@@ -6,11 +6,8 @@ export class AssignmentProgressState extends Value<string> {
     super(value)
   }
 
-  static create(value: string): AssignmentProgressState | Error {
-    if (!(value in AssignmentProgressStateValue)) {
-      throw new ValueError('Invalid value');
-    }
-    return new AssignmentProgressState(value);
+  static create(): AssignmentProgressState | Error {
+    return new AssignmentProgressState(AssignmentProgressStateValue.NotStarted.toString());
   }
 
   static restore(value: string): AssignmentProgressState {
@@ -19,6 +16,10 @@ export class AssignmentProgressState extends Value<string> {
 
   public get value(): string {
     return this.props
+  }
+
+  public get isCompleted() {
+    return this.props === AssignmentProgressStateValue.Completed.toString();
   }
 }
 
