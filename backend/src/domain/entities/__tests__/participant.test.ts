@@ -4,26 +4,7 @@ import { Id } from "src/domain/values/id";
 import { PersonName } from "src/domain/values/person-name";
 import { EnrollmentStatusValue } from "src/util/enums";
 
-
-
-describe('# Participant Entity UnitTest \n', () => {
-  function getParticipant(): Participant {
-    const participantId = Id.restore('participantId');
-    const name = PersonName.restore('PersonName');
-    const email = Email.restore('test@example.com');
-    const teamId = undefined;
-    const pairId = undefined;
-    const enrollmentStatus = EnrollmentStatusValue.OnLeave;
-    const props = {
-      name: name,
-      email: email,
-      teamId: teamId,
-      pairId: pairId,
-      enrollmentStatus: enrollmentStatus,
-    };
-    return Participant.restore(participantId, props);
-  }
-  
+describe('# Participant Entity UnitTest \n', () => {  
   describe('## restore \n', () => {
     it('- Success create instance \n', () => {
       // 準備
@@ -50,6 +31,23 @@ describe('# Participant Entity UnitTest \n', () => {
       expect(participant.enrollmentStatus).toEqual(enrollmentStatus);
     });
   });
+
+  function getParticipant(): Participant {
+    const participantId = Id.restore('participantId');
+    const name = PersonName.restore('PersonName');
+    const email = Email.restore('test@example.com');
+    const teamId = undefined;
+    const pairId = undefined;
+    const enrollmentStatus = EnrollmentStatusValue.OnLeave;
+    const props = {
+      name: name,
+      email: email,
+      teamId: teamId,
+      pairId: pairId,
+      enrollmentStatus: enrollmentStatus,
+    };
+    return Participant.restore(participantId, props);
+  }
 
   describe('## changeEnrollmentStatusToEnrolled \n', () => {
     it('- Success change status \n', () => {
