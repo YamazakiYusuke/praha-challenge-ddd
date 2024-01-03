@@ -2,8 +2,8 @@ import { CategoryName } from "src/domain/values/category-name";
 import { Id } from "../values/id";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
+import { EntityError } from "src/domain/errors/entity_error";
 
-// TODO: rename
 export interface CategoryProps {
   name: CategoryName;
 }
@@ -27,6 +27,9 @@ export class Category extends Entity<CategoryProps> {
   }
 
   public changeName(newName: CategoryName): void {
+    if (!newName) {
+      throw new EntityError(`CategoryName is required`);
+    }
     this.props.name = newName
   }
 }

@@ -19,6 +19,15 @@ export class Assignment extends Entity<AssignmentProps> {
   }
 
   static create(props: AssignmentProps): Assignment | Error {
+    if (props.title.trim() === '') {
+      throw new EntityError('Title is required')
+    }
+    if (props.introduction.trim() === '') {
+      throw new EntityError('Introduction is required')
+    }
+    if (props.content.trim() === '') {
+      throw new EntityError('Content is required')
+    }
     return new Assignment(Id.create(), props)
   }
 
