@@ -1,4 +1,3 @@
-import { AssignmentProgressStateValue } from "src/util/enums";
 import { EntityError } from "../errors/entity_error";
 import { AssignmentProgressState } from "../values/assignment-progress-state";
 import { Id } from "../values/id";
