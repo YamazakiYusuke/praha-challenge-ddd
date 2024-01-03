@@ -1,7 +1,6 @@
 import { ValueError } from "../errors/value_error";
 import { Value } from "./base/value";
 
-// TODO: rename
 export class PersonName extends Value<string> {
   private constructor(value: string) {
     super(value)

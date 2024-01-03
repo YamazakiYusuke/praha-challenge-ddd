@@ -4,6 +4,7 @@ import { Email } from "../values/email";
 import { Id } from "../values/id";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
+import { EnrollmentStatusValue } from "src/util/enums";
 
 export interface ParticipantProps {
   name: PersonName;
@@ -15,7 +16,7 @@ export interface ParticipantProps {
 
 export class Participant extends Entity<ParticipantProps> {
   private constructor(id: Id, props: ParticipantProps) {
-    validateProps(id, props);
+    validateProps(id, props, ['teamId', 'pairId']);
     super(id, props)
   }
 
@@ -48,7 +49,7 @@ export class Participant extends Entity<ParticipantProps> {
     return this.props.enrollmentStatus;
   }
 
-  public changeEnrollmentStatusToEnrolled(pairId: Id, teamId: Id): void | Error {
+  public changeEnrollmentStatusToEnrolled(teamId: Id, pairId: Id): void | Error {
     this.changeEnrollmentStatusValidation();
     this.props.enrollmentStatus = EnrollmentStatusValue.Enrolled;
     this.setTeamIdPairId(pairId, teamId);

@@ -39,7 +39,7 @@ export class Participants extends Entity<Array<Participant>> {
     if (this.hasParticipant(participant)) {
       throw new EntityError(`参加者${participant}は既にPairのメンバーです`);
     }
-    participant.changeEnrollmentStatusToEnrolled(pairId, teamId);
+    participant.changeEnrollmentStatusToEnrolled(teamId, pairId);
     this.props = [...this.value, participant];
   }
 
@@ -55,7 +55,7 @@ export class Participants extends Entity<Array<Participant>> {
     if (!this.hasParticipant(participant)) {
       throw new EntityError(`参加者${participant}はPairのメンバーではありません`);
     }
-    this.getParticipant(participant).changeEnrollmentStatusToEnrolled(pairId, teamId);
+    this.getParticipant(participant).changeEnrollmentStatusToEnrolled(teamId, pairId);
   }
 
   public changeParticipantEnrollmentStatusToOnLeave(participant: Participant): void | Error {
