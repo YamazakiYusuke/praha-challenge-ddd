@@ -1,4 +1,5 @@
 import { Participant } from "src/domain/entities/participant";
+import { EntityError } from "src/domain/errors/entity_error";
 import { Email } from "src/domain/values/email";
 import { Id } from "src/domain/values/id";
 import { PersonName } from "src/domain/values/person-name";
@@ -32,13 +33,13 @@ describe('# Participant Entity UnitTest \n', () => {
     });
   });
 
-  function getParticipant(): Participant {
+  function getParticipant(enrollmentStatusValue: EnrollmentStatusValue): Participant {
     const participantId = Id.restore('participantId');
     const name = PersonName.restore('PersonName');
     const email = Email.restore('test@example.com');
-    const teamId = undefined;
-    const pairId = undefined;
-    const enrollmentStatus = EnrollmentStatusValue.OnLeave;
+    const teamId = enrollmentStatusValue == EnrollmentStatusValue.Enrolled ? Id.restore('teamId') : undefined;
+    const pairId = enrollmentStatusValue == EnrollmentStatusValue.Enrolled ? Id.restore('pairId') : undefined;
+    const enrollmentStatus = enrollmentStatusValue;
     const props = {
       name: name,
       email: email,
@@ -52,7 +53,7 @@ describe('# Participant Entity UnitTest \n', () => {
   describe('## changeEnrollmentStatusToEnrolled \n', () => {
     it('- Success change status \n', () => {
       // 準備
-      const participant = getParticipant();
+      const participant = getParticipant(EnrollmentStatusValue.OnLeave);
       const newTeamId = Id.restore('teamId');
       const newPairId = Id.restore('pairId');
       // 実行
@@ -62,12 +63,21 @@ describe('# Participant Entity UnitTest \n', () => {
       expect(participant.teamId).toEqual(newTeamId);
       expect(participant.pairId).toEqual(newPairId);
     });
+
+    it('- Failed change status \n', () => {
+      // 準備
+      const participant = getParticipant(EnrollmentStatusValue.Withdrawn);
+      const newTeamId = Id.restore('newTeamId');
+      const newPairId = Id.restore('newPairId');
+      // 実行・確認
+      expect(() => participant.changeEnrollmentStatusToEnrolled(newTeamId, newPairId)).toThrow(EntityError);
+    });
   });
 
   describe('## changeEnrollmentStatusToOnLeave \n', () => {
     it('- Success change status \n', () => {
       // 準備
-      const participant = getParticipant();
+      const participant = getParticipant(EnrollmentStatusValue.Enrolled);
       // 実行
       participant.changeEnrollmentStatusToOnLeave();
       // 確認
@@ -75,12 +85,19 @@ describe('# Participant Entity UnitTest \n', () => {
       expect(participant.teamId).toBeUndefined();
       expect(participant.pairId).toBeUndefined();
     });
+
+    it('- Failed change status \n', () => {
+      // 準備
+      const participant = getParticipant(EnrollmentStatusValue.Withdrawn);
+      // 実行・確認
+      expect(() => participant.changeEnrollmentStatusToOnLeave()).toThrow(EntityError);
+    });
   });
 
   describe('## changeEnrollmentStatusToWithDrawn \n', () => {
     it('- Success change status \n', () => {
       // 準備
-      const participant = getParticipant();
+      const participant = getParticipant(EnrollmentStatusValue.Enrolled);
       // 実行
       participant.changeEnrollmentStatusToWithDrawn();
       // 確認
@@ -88,12 +105,19 @@ describe('# Participant Entity UnitTest \n', () => {
       expect(participant.teamId).toBeUndefined();
       expect(participant.pairId).toBeUndefined();
     });
+
+    it('- Failed change status \n', () => {
+      // 準備
+      const participant = getParticipant(EnrollmentStatusValue.Withdrawn);
+      // 実行・確認
+      expect(() => participant.changeEnrollmentStatusToWithDrawn()).toThrow(EntityError);
+    });
   });
 
   describe('## deleteTeamIdPairId \n', () => {
     it('- Success change status \n', () => {
       // 準備
-      const participant = getParticipant();
+      const participant = getParticipant(EnrollmentStatusValue.Enrolled);
       // 実行
       participant.deleteTeamIdPairId();
       // 確認
