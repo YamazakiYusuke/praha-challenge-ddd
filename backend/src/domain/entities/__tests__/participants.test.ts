@@ -133,33 +133,29 @@ describe('# Participants Entity UnitTest \n', () => {
     });
   });
 
-  function getParticipants(pairId: Id, teamId: Id): Participants {
-    const participantsId = Id.restore('ParticipantsId');
-    const props1 = {
-      name: PersonName.restore('PersonName1'),
-      email: Email.restore('test1@example.com'),
-      teamId: teamId,
-      pairId: pairId,
-      enrollmentStatus: EnrollmentStatusValue.Enrolled,
-    };
-    const props2 = {
-      name: PersonName.restore('PersonName2'),
-      email: Email.restore('test2@example.com'),
-      teamId: teamId,
-      pairId: pairId,
-      enrollmentStatus: EnrollmentStatusValue.Enrolled,
-    };
-    const participant1 = Participant.restore(Id.restore('participantId1'), props1);
-    const participant2 = Participant.restore(Id.restore('participantId2'), props2);
-    return Participants.restore(participantsId, [participant1, participant2]);
-  }
-
   describe('## length \n', () => {
     it('- Success restore instance \n', () => {
       // 準備
       const teamId = Id.restore('teamId');
       const pairId = Id.restore('pairId');
-      const participants = getParticipants(teamId, pairId);
+      const participantsId = Id.restore('ParticipantsId');
+      const props1 = {
+        name: PersonName.restore('PersonName1'),
+        email: Email.restore('test1@example.com'),
+        teamId: teamId,
+        pairId: pairId,
+        enrollmentStatus: EnrollmentStatusValue.Enrolled,
+      };
+      const props2 = {
+        name: PersonName.restore('PersonName2'),
+        email: Email.restore('test2@example.com'),
+        teamId: teamId,
+        pairId: pairId,
+        enrollmentStatus: EnrollmentStatusValue.Enrolled,
+      };
+      const participant1 = Participant.restore(Id.restore('participantId1'), props1);
+      const participant2 = Participant.restore(Id.restore('participantId2'), props2);
+      const participants = Participants.restore(participantsId, [participant1, participant2]);
       // 実行・確認
       expect(participants.length).toBe(2);
     });
