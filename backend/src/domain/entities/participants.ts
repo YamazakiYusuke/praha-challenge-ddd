@@ -1,11 +1,13 @@
+import { validateProps } from "src/domain/entities/utils/validate-props";
 import { EntityError } from "../errors/entity_error";
 import { Id } from "../values/id";
 import { Entity } from "./base/entity";
 import { Participant } from "./participant";
 
 export class Participants extends Entity<Array<Participant>> {
-  private constructor(id: Id, prop: Array<Participant>) {
-    super(id, prop)
+  private constructor(id: Id, props: Array<Participant>) {
+    validateProps(id, props);
+    super(id, props)
   }
 
   static create(prop: Array<Participant>): Participants | Error {
@@ -31,11 +33,11 @@ export class Participants extends Entity<Array<Participant>> {
     return this.value[this.value.length - 1] as Participant;
   }
 
-  public getByIndex(i: number): Participant {
+  public getByIndex(i: number): Participant | undefined {
     return this.value[i] as Participant;
   }
 
-  public append(pairId: Id, teamId: Id, participant: Participant): void | Error {
+  public append(teamId: Id, pairId: Id, participant: Participant): void | Error {
     if (this.hasParticipant(participant)) {
       throw new EntityError(`参加者${participant}は既にPairのメンバーです`);
     }
@@ -51,7 +53,7 @@ export class Participants extends Entity<Array<Participant>> {
     this.props = this.value.filter(p => !p.getId.isEqual(participant.getId));
   }
 
-  public changeParticipantEnrollmentStatusToEnrolled(pairId: Id, teamId: Id, participant: Participant): void | Error {
+  public changeParticipantEnrollmentStatusToEnrolled(teamId: Id, pairId: Id, participant: Participant): void | Error {
     if (!this.hasParticipant(participant)) {
       throw new EntityError(`参加者${participant}はPairのメンバーではありません`);
     }

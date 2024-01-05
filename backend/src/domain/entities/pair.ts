@@ -21,7 +21,7 @@ export class Pair extends Entity<PairProps> {
   static create(props: PairProps): Pair | Error {
     const pair = new Pair(Id.create(), props);
     for (let i = 0; i < pair.participants.length; i++) {
-      const participant = pair.participants.getByIndex(i);
+      const participant = pair.participants.getByIndex(i) as Participant;
       pair.changeParticipantEnrollmentStatusToEnrolled(participant);
     }
     return pair;
@@ -63,7 +63,7 @@ export class Pair extends Entity<PairProps> {
   }
 
   private changeParticipantEnrollmentStatusToEnrolled(participant: Participant): void | Error {
-    this.participants.changeParticipantEnrollmentStatusToEnrolled(this.getId, this.teamId, participant);
+    this.participants.changeParticipantEnrollmentStatusToEnrolled(this.teamId, this.getId, participant);
   }
 
   public changeParticipantEnrollmentStatusToOnLeave(participant: Participant): void | Error {

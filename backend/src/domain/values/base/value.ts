@@ -10,6 +10,6 @@ export abstract class Value<T> {
     if (!(other instanceof Value)) {
       return false;
     }
-    return _.isEqual(other.props, this.props);
+    return other.props == this.props;
   }
 }
