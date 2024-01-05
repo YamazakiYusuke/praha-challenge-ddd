@@ -7,23 +7,6 @@ import { PersonName } from "src/domain/values/person-name";
 import { EnrollmentStatusValue } from "src/util/enums";
 
 describe('# Participants Entity UnitTest \n', () => {
-  function getParticipant(suffix: string, enrollmentStatusValue: EnrollmentStatusValue): Participant {
-    const participantId = Id.restore('participantId' + suffix);
-    const name = PersonName.restore('PersonName' + suffix);
-    const email = Email.restore(`test${suffix}@example.com`);
-    const teamId = enrollmentStatusValue == EnrollmentStatusValue.Enrolled ? Id.restore('teamId' + suffix) : undefined;
-    const pairId = enrollmentStatusValue == EnrollmentStatusValue.Enrolled ? Id.restore('pairId' + suffix) : undefined;
-    const enrollmentStatus = enrollmentStatusValue;
-    const props = {
-      name: name,
-      email: email,
-      teamId: teamId,
-      pairId: pairId,
-      enrollmentStatus: enrollmentStatus,
-    };
-    return Participant.restore(participantId, props);
-  }
-
   describe('## create \n', () => {
     it('- Success create instance \n', () => {
       // 準備
