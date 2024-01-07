@@ -75,7 +75,7 @@ export class Participants extends Entity<Array<Participant>> {
   }
 
   private hasParticipant(participant: Participant): boolean {
-    return this.value.includes(participant);
+    return this.value.some(p => p.getId.isEqual(participant.getId));
   }
 
   private getParticipant(participant: Participant): Participant {
