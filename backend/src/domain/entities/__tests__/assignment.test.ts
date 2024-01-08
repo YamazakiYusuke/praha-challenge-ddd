@@ -1,5 +1,5 @@
 import { EntityError } from "src/domain/errors/entity_error";
-import { Id } from "src/domain/values/id";
+import { AssignmentId, CategoryId, Id } from "src/domain/values/id";
 import { Assignment, AssignmentProps } from "../assignment";
 
 describe('# Assignment Entity UnitTest\n', () => {
@@ -9,7 +9,7 @@ describe('# Assignment Entity UnitTest\n', () => {
       // 準備・実行
       const number = 1;
       const title = "Test Assignment";
-      const categoryId = Id.create();
+      const categoryId = CategoryId.create();
       const introduction = "This is a test assignment";
       const content = "The content of the test assignment";
       const props: AssignmentProps = { number, title, categoryId, introduction, content };
@@ -27,10 +27,10 @@ describe('# Assignment Entity UnitTest\n', () => {
   describe('## restore\n', () => {
     test('- Success restore instance \n', () => {
       // 準備・実行
-      const id = Id.create();
+      const id = AssignmentId.create();
       const number = 1;
       const title = "Test Assignment";
-      const categoryId = Id.create();
+      const categoryId = CategoryId.create();
       const introduction = "This is a test assignment";
       const content = "The content of the test assignment";
       const props: AssignmentProps = { number, title, categoryId, introduction, content };
@@ -46,10 +46,10 @@ describe('# Assignment Entity UnitTest\n', () => {
   });
 
   function getAssignment(): Assignment {
-    const id = Id.create();
+    const id = AssignmentId.create();
     const number = 1;
     const title = "Test Assignment";
-    const categoryId = Id.create();
+    const categoryId = CategoryId.create();
     const introduction = "This is a test assignment";
     const content = "The content of the test assignment";
     const props: AssignmentProps = { number, title, categoryId, introduction, content };
@@ -100,7 +100,7 @@ describe('# Assignment Entity UnitTest\n', () => {
     test('- Success to change value \n', () => {
       // 準備
       const assignment = getAssignment();
-      const newCategoryId = Id.create();
+      const newCategoryId = CategoryId.create();
       // 実行
       assignment.changeCategory(newCategoryId);
       // 確認

@@ -8,7 +8,7 @@ import { GetParticipantByIdQuery } from "src/domain/commands/participant/get-par
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
 import { EnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
-import { Id } from "src/domain/values/id";
+import { ParticipantId } from "src/domain/values/id";
 import { debuglog } from "util";
 
 @Injectable()
@@ -23,7 +23,7 @@ export class ParticipantToOnLeaveUseCase {
 
   async execute(participantId: string): Promise<SuccessResponse | ErrorResponse> {
     try {
-      const participant = await this.getParticipantByIdQuery.execute(Id.restore(participantId)) as Participant;
+      const participant = await this.getParticipantByIdQuery.execute(ParticipantId.restore(participantId)) as Participant;
       const pair = await this.getPairByIdQuery.execute(participant.getId) as Pair;
       pair.changeParticipantEnrollmentStatusToOnLeave(participant);
       if (pair.participantsLength < 2) {

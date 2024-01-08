@@ -1,11 +1,11 @@
 import { validateProps } from "src/domain/entities/utils/validate-props";
 import { EntityError } from "../errors/entity_error";
-import { Id } from "../values/id";
+import { PairId, ParticipantsId, TeamId } from "../values/id";
 import { Entity } from "./base/entity";
 import { Participant } from "./participant";
 
 export class Participants extends Entity<Array<Participant>> {
-  private constructor(id: Id, props: Array<Participant>) {
+  private constructor(id: ParticipantsId, props: Array<Participant>) {
     validateProps(id, props);
     super(id, props)
   }
@@ -14,10 +14,10 @@ export class Participants extends Entity<Array<Participant>> {
     if (prop.length < 1 || prop.length > 3) {
       throw new EntityError('Participants must consist of 1 to 3 participants');
     }
-    return new Participants(Id.create(), prop);
+    return new Participants(ParticipantsId.create(), prop);
   }
 
-  static restore(id: Id, prop: Array<Participant>): Participants {
+  static restore(id: ParticipantsId, prop: Array<Participant>): Participants {
     return new Participants(id, prop);
   }
 
@@ -37,7 +37,7 @@ export class Participants extends Entity<Array<Participant>> {
     return this.value[i] as Participant;
   }
 
-  public append(teamId: Id, pairId: Id, participant: Participant): void | Error {
+  public append(teamId: TeamId, pairId: PairId, participant: Participant): void | Error {
     if (this.hasParticipant(participant)) {
       throw new EntityError(`参加者${participant}は既にPairのメンバーです`);
     }
@@ -53,7 +53,7 @@ export class Participants extends Entity<Array<Participant>> {
     this.props = this.value.filter(p => !p.getId.isEqual(participant.getId));
   }
 
-  public changeParticipantEnrollmentStatusToEnrolled(teamId: Id, pairId: Id, participant: Participant): void | Error {
+  public changeParticipantEnrollmentStatusToEnrolled(teamId: TeamId, pairId: PairId, participant: Participant): void | Error {
     if (!this.hasParticipant(participant)) {
       throw new EntityError(`参加者${participant}はPairのメンバーではありません`);
     }

@@ -1,6 +1,6 @@
 import { EntityError } from "../errors/entity_error";
 import { Email } from "../values/email";
-import { Id } from "../values/id";
+import { AdministratorId } from "../values/id";
 import { Entity } from "./base/entity"
 import { validateProps } from "./utils/validate-props";
 
@@ -10,16 +10,16 @@ export interface AdministratorProps {
 
 export class Administrator extends Entity<AdministratorProps> {
 
-  private constructor(id: Id, props: AdministratorProps) {
+  private constructor(id: AdministratorId, props: AdministratorProps) {
     validateProps(id, props);
     super(id, props)
   }
 
   static create(props: AdministratorProps): Administrator | Error {
-    return new Administrator(Id.create(), props)
+    return new Administrator(AdministratorId.create(), props)
   }
 
-  static restore(id: Id, props: AdministratorProps): Administrator {
+  static restore(id: AdministratorId, props: AdministratorProps): Administrator {
     return new Administrator(id, props)
   }
 

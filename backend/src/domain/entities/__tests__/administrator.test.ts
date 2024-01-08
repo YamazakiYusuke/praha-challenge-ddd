@@ -1,6 +1,6 @@
 import { EntityError } from "src/domain/errors/entity_error";
 import { Email } from "src/domain/values/email";
-import { Id } from "src/domain/values/id";
+import { AdministratorId } from "src/domain/values/id";
 import { Administrator, AdministratorProps } from "../administrator";
 
 describe('# Administrator Entity UnitTest\n', () => {
@@ -20,7 +20,7 @@ describe('# Administrator Entity UnitTest\n', () => {
   describe('## restore\n', () => {
     test('- Success create instance \n', () => {
       // 準備
-      const id = Id.restore('Id');
+      const id = AdministratorId.restore('Id');
       const email = Email.restore('test@example.com');
       const props: AdministratorProps = { email };
       // 実行
@@ -33,7 +33,7 @@ describe('# Administrator Entity UnitTest\n', () => {
   });
 
   function getAdmin(): Administrator {
-    const id = Id.restore('Id');
+    const id = AdministratorId.restore('Id');
     const email = Email.restore('test@example.com');
     const props: AdministratorProps = { email };
     return Administrator.restore(id, props);

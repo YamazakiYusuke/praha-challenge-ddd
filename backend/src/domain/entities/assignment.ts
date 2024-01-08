@@ -1,19 +1,19 @@
 import { EntityError } from "../errors/entity_error";
-import { Id } from "../values/id"
+import { AssignmentId } from "../values/id"
 import { Entity } from "./base/entity"
 import { validateProps } from "./utils/validate-props";
 
 export interface AssignmentProps {
   number: number;
   title: string;
-  categoryId: Id;
+  categoryId: AssignmentId;
   introduction: string;
   content: string;
 }
 
 export class Assignment extends Entity<AssignmentProps> {
 
-  private constructor(id: Id, props: AssignmentProps) {
+  private constructor(id: AssignmentId, props: AssignmentProps) {
     validateProps(id, props);
     super(id, props)
   }
@@ -28,10 +28,10 @@ export class Assignment extends Entity<AssignmentProps> {
     if (props.content.trim() === '') {
       throw new EntityError('Content is required')
     }
-    return new Assignment(Id.create(), props)
+    return new Assignment(AssignmentId.create(), props)
   }
 
-  static restore(id: Id, props: AssignmentProps): Assignment {
+  static restore(id: AssignmentId, props: AssignmentProps): Assignment {
     return new Assignment(id, props)
   }
 
@@ -43,7 +43,7 @@ export class Assignment extends Entity<AssignmentProps> {
     return this.props.title;
   }
 
-  public get category(): Id {
+  public get category(): AssignmentId {
     return this.props.categoryId;
   }
 
@@ -69,7 +69,7 @@ export class Assignment extends Entity<AssignmentProps> {
     this.props.title = newTitle;
   }
 
-  public changeCategory(newCategoryId: Id): void | Error {
+  public changeCategory(newCategoryId: AssignmentId): void | Error {
     if (!newCategoryId) {
       throw new EntityError('Category is required')
     }

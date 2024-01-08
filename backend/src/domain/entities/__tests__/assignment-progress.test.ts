@@ -1,6 +1,6 @@
 import { EntityError } from "src/domain/errors/entity_error";
 import { AssignmentProgressState } from "src/domain/values/assignment-progress-state";
-import { Id } from "src/domain/values/id";
+import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/id";
 import { AssignmentProgressStateValue } from "src/util/enums";
 import { AssignmentProgress, AssignmentProgressProps } from "../assignment-progress";
 
@@ -8,8 +8,8 @@ describe('# AssignmentProgress Entity UnitTest\n', () => {
   describe('## create\n', () => {
     test('- Success create instance \n', () => {
       // 準備
-      const assignmentId = Id.restore('assignmentId');
-      const participantId = Id.restore('participantId');
+      const assignmentId = AssignmentId.restore('assignmentId');
+      const participantId = ParticipantId.restore('participantId');
       const assignmentProgressState = AssignmentProgressState.restore(AssignmentProgressStateValue.NotStarted.toString());
       const props: AssignmentProgressProps = { assignmentId, participantId, assignmentProgressState };
       // 実行
@@ -25,9 +25,9 @@ describe('# AssignmentProgress Entity UnitTest\n', () => {
   describe('## restore\n', () => {
     test('- Success create instance \n', () => {
       // 準備
-      const id = Id.restore('Id');
-      const assignmentId = Id.restore('assignmentId');
-      const participantId = Id.restore('participantId');
+      const id = AssignmentProgressId.restore('Id');
+      const assignmentId = AssignmentId.restore('assignmentId');
+      const participantId = ParticipantId.restore('participantId');
       const assignmentProgressState = AssignmentProgressState.restore(AssignmentProgressStateValue.NotStarted.toString());
       const props: AssignmentProgressProps = { assignmentId, participantId, assignmentProgressState };
       // 実行
@@ -43,9 +43,9 @@ describe('# AssignmentProgress Entity UnitTest\n', () => {
   function getAssignmentProgress(
     assignmentProgressStateValue: AssignmentProgressStateValue = AssignmentProgressStateValue.NotStarted,
   ): AssignmentProgress {
-    const id = Id.restore('Id');
-    const assignmentId = Id.restore('assignmentId');
-    const participantId = Id.restore('participantId');
+    const id = AssignmentProgressId.restore('Id');
+    const assignmentId = AssignmentId.restore('assignmentId');
+    const participantId = ParticipantId.restore('participantId');
     const assignmentProgressState = AssignmentProgressState.restore(assignmentProgressStateValue.toString());
     const props: AssignmentProgressProps = { assignmentId, participantId, assignmentProgressState };
     return AssignmentProgress.restore(id, props);

@@ -2,30 +2,30 @@ import { PersonName } from "src/domain/values/name";
 import { EnrollmentStatusValue } from "src/util/enums";
 import { EntityError } from "../errors/entity_error";
 import { Email } from "../values/email";
-import { Id } from "../values/id";
+import { PairId, ParticipantId, TeamId } from "../values/id";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
 export interface ParticipantProps {
   name: PersonName;
   email: Email;
-  teamId: Id | undefined;
-  pairId: Id | undefined;
+  teamId: ParticipantId | undefined;
+  pairId: ParticipantId | undefined;
   enrollmentStatus: EnrollmentStatusValue;
 }
 
 export class Participant extends Entity<ParticipantProps> {
-  private constructor(id: Id, props: ParticipantProps) {
+  private constructor(id: ParticipantId, props: ParticipantProps) {
     validateProps(id, props, ['teamId', 'pairId']);
     super(id, props)
   }
 
   // 新規参加者の追加はプラハのアプリからは行わず、管理システムから行う
   // static create(props: ParticipantProps): Participant | EntityCreationError {
-  //   return new Participant(Id.create(), props);
+  //   return new Participant(ParticipantId.create(), props);
   // }
 
-  static restore(id: Id, props: ParticipantProps): Participant {
+  static restore(id: ParticipantId, props: ParticipantProps): Participant {
     return new Participant(id, props);
   }
 
@@ -37,11 +37,11 @@ export class Participant extends Entity<ParticipantProps> {
     return this.props.email;
   }
 
-  public get teamId(): Id | undefined {
+  public get teamId(): TeamId | undefined {
     return this.props.teamId;
   }
 
-  public get pairId(): Id | undefined {
+  public get pairId(): PairId | undefined {
     return this.props.pairId;
   }
 
@@ -49,7 +49,7 @@ export class Participant extends Entity<ParticipantProps> {
     return this.props.enrollmentStatus;
   }
 
-  public changeEnrollmentStatusToEnrolled(teamId: Id, pairId: Id): void | Error {
+  public changeEnrollmentStatusToEnrolled(teamId: TeamId, pairId: PairId): void | Error {
     this.changeEnrollmentStatusValidation();
     this.props.enrollmentStatus = EnrollmentStatusValue.Enrolled;
     this.setTeamIdPairId(pairId, teamId);
@@ -67,7 +67,7 @@ export class Participant extends Entity<ParticipantProps> {
     this.props.enrollmentStatus = EnrollmentStatusValue.Withdrawn;
   }
 
-  private setTeamIdPairId(pairId: Id, teamId: Id): void {
+  private setTeamIdPairId(pairId: PairId, teamId: TeamId): void {
     this.props.pairId = pairId;
     this.props.teamId = teamId;
   }

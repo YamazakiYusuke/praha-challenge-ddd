@@ -1,7 +1,7 @@
 import { Participant } from "src/domain/entities/participant";
 import { EntityError } from "src/domain/errors/entity_error";
 import { Email } from "src/domain/values/email";
-import { Id } from "src/domain/values/id";
+import { PairId, ParticipantId, TeamId } from "src/domain/values/id";
 import { PersonName } from "src/domain/values/name";
 import { EnrollmentStatusValue } from "src/util/enums";
 
@@ -9,11 +9,11 @@ describe('# Participant Entity UnitTest \n', () => {
   describe('## restore \n', () => {
     it('- Success create instance \n', () => {
       // 準備
-      const participantId = Id.restore('participantId');
+      const participantId = ParticipantId.restore('participantId');
       const name = PersonName.restore('PersonName');
       const email = Email.restore('test@example.com');
-      const teamId = Id.restore('teamId');
-      const pairId = Id.restore('pairId');
+      const teamId = TeamId.restore('teamId');
+      const pairId = PairId.restore('pairId');
       const enrollmentStatus = EnrollmentStatusValue.Enrolled;
       const props = {
         name: name,
@@ -34,11 +34,11 @@ describe('# Participant Entity UnitTest \n', () => {
   });
 
   function getParticipant(enrollmentStatusValue: EnrollmentStatusValue): Participant {
-    const participantId = Id.restore('participantId');
+    const participantId = ParticipantId.restore('participantId');
     const name = PersonName.restore('PersonName');
     const email = Email.restore('test@example.com');
-    const teamId = enrollmentStatusValue == EnrollmentStatusValue.Enrolled ? Id.restore('teamId') : undefined;
-    const pairId = enrollmentStatusValue == EnrollmentStatusValue.Enrolled ? Id.restore('pairId') : undefined;
+    const teamId = enrollmentStatusValue == EnrollmentStatusValue.Enrolled ? TeamId.restore('teamId') : undefined;
+    const pairId = enrollmentStatusValue == EnrollmentStatusValue.Enrolled ? PairId.restore('pairId') : undefined;
     const enrollmentStatus = enrollmentStatusValue;
     const props = {
       name: name,
@@ -54,8 +54,8 @@ describe('# Participant Entity UnitTest \n', () => {
     it('- Success change status \n', () => {
       // 準備
       const participant = getParticipant(EnrollmentStatusValue.OnLeave);
-      const newTeamId = Id.restore('teamId');
-      const newPairId = Id.restore('pairId');
+      const newTeamId = TeamId.restore('teamId');
+      const newPairId = PairId.restore('pairId');
       // 実行
       participant.changeEnrollmentStatusToEnrolled(newTeamId, newPairId);
       // 確認
@@ -67,8 +67,8 @@ describe('# Participant Entity UnitTest \n', () => {
     it('- Failed change status \n', () => {
       // 準備
       const participant = getParticipant(EnrollmentStatusValue.Withdrawn);
-      const newTeamId = Id.restore('newTeamId');
-      const newPairId = Id.restore('newPairId');
+      const newTeamId = TeamId.restore('newTeamId');
+      const newPairId = PairId.restore('newPairId');
       // 実行・確認
       expect(() => participant.changeEnrollmentStatusToEnrolled(newTeamId, newPairId)).toThrow(EntityError);
     });

@@ -1,5 +1,5 @@
 import { EntityError } from "src/domain/errors/entity_error";
-import { Id } from "src/domain/values/id";
+import { CategoryId, Id } from "src/domain/values/id";
 import { CategoryName } from "src/domain/values/name";
 import { Category, CategoryProps } from "../category";
 
@@ -20,7 +20,7 @@ describe('# Category Entity UnitTest\n', () => {
   describe('## restore\n', () => {
     test('- Success create instance \n', () => {
       // 準備
-      const id = Id.create();
+      const id = CategoryId.create();
       const name = CategoryName.create('Test Category') as CategoryName;
       const props: CategoryProps = { name };
       // 実行

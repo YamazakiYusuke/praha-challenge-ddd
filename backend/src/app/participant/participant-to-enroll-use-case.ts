@@ -2,14 +2,13 @@ import { Injectable } from "@nestjs/common";
 import { ErrorResponse } from "src/app/responses/error-response";
 import { SuccessResponse } from "src/app/responses/success-response";
 import { GetPairWithFewestMembersQuery } from "src/domain/commands/pair/get-pair-with-fewest-members-query";
+import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { GetParticipantByIdQuery } from "src/domain/commands/participant/get-participant-by-id-query";
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
-import { Participants } from "src/domain/entities/participants";
 import { EnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
-import { Id } from "src/domain/values/id";
+import { ParticipantId } from "src/domain/values/id";
 import { debuglog } from "util";
-import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
 
 @Injectable()
 export class ParticipantToEnrollUseCase {
@@ -23,7 +22,7 @@ export class ParticipantToEnrollUseCase {
   // Teamの更新
   async execute(participantId: string): Promise<SuccessResponse | ErrorResponse> {
     try {
-      const participant = await this.getParticipantByIdQuery.execute(Id.restore(participantId)) as Participant;
+      const participant = await this.getParticipantByIdQuery.execute(ParticipantId.restore(participantId)) as Participant;
       const smallestPair = await this.getPairWithFewestMembersQuery.execute() as Pair | null;
       if (smallestPair == null) {
         // TODO: 管理者にメール

@@ -1,6 +1,6 @@
 import { EntityError } from "src/domain/errors/entity_error";
 import { CategoryName } from "src/domain/values/name";
-import { Id } from "../values/id";
+import { CategoryId } from "../values/id";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
@@ -9,16 +9,16 @@ export interface CategoryProps {
 }
 
 export class Category extends Entity<CategoryProps> {
-  private constructor(id: Id, props: CategoryProps) {
+  private constructor(id: CategoryId, props: CategoryProps) {
     validateProps(id, props);
     super(id, props)
   }
 
   static create(props: CategoryProps): Category | Error {
-    return new Category(Id.create(), props);
+    return new Category(CategoryId.create(), props);
   }
 
-  static restore(id: Id, props: CategoryProps): Category {
+  static restore(id: CategoryId, props: CategoryProps): Category {
     return new Category(id, props);
   }
 

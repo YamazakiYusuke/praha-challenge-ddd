@@ -1,25 +1,25 @@
 import { PairName } from "src/domain/values/name";
-import { Id } from "../values/id";
+import { PairId, TeamId } from "../values/id";
 import { Entity } from "./base/entity";
 import { Participant } from "./participant";
 import { Participants } from "./participants";
 import { validateProps } from "./utils/validate-props";
 
 export interface PairProps {
-  teamId: Id;
+  teamId: PairId;
   name: PairName;
   participants: Participants;
 }
 
 export class Pair extends Entity<PairProps> {
 
-  private constructor(id: Id, props: PairProps) {
+  private constructor(id: PairId, props: PairProps) {
     validateProps(id, props);
     super(id, props)
   }
   /// Factory
   static create(props: PairProps): Pair | Error {
-    const pair = new Pair(Id.create(), props);
+    const pair = new Pair(PairId.create(), props);
     for (let i = 0; i < pair.participants.length; i++) {
       const participant = pair.participants.getByIndex(i) as Participant;
       pair.changeParticipantEnrollmentStatusToEnrolled(participant);
@@ -27,12 +27,12 @@ export class Pair extends Entity<PairProps> {
     return pair;
   }
 
-  static restore(id: Id, props: PairProps): Pair {
+  static restore(id: PairId, props: PairProps): Pair {
     return new Pair(id, props)
   }
 
   /// Getter
-  public get teamId(): Id {
+  public get teamId(): TeamId {
     return this.props.teamId;
   }
 
