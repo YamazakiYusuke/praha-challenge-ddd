@@ -3,7 +3,7 @@ import { Participants } from "src/domain/entities/participants";
 import { EntityError } from "src/domain/errors/entity_error";
 import { Email } from "src/domain/values/email";
 import { Id } from "src/domain/values/id";
-import { PersonName } from "src/domain/values/person-name";
+import { PersonName } from "src/domain/values/name";
 import { EnrollmentStatusValue } from "src/util/enums";
 
 describe('# Participants Entity UnitTest \n', () => {

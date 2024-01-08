@@ -1,4 +1,4 @@
-import { PairName } from "src/domain/values/pair-name";
+import { PairName } from "src/domain/values/name";
 import { Id } from "../values/id";
 import { Entity } from "./base/entity";
 import { Participant } from "./participant";

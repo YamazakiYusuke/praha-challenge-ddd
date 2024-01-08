@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { GetPairsByTeamIdQuery } from "src/domain/commands/pair/get-pairs-by-team-id-query copy";
 import { Participants } from "src/domain/entities/participants";
 import { Id } from "src/domain/values/id";
-import { PairName } from "src/domain/values/pair-name";
+import { PairName } from "src/domain/values/name";
 import { Pair, PairProps } from "../../entities/pair";
 
 @Injectable()

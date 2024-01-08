@@ -1,10 +1,10 @@
-import { PersonName } from "src/domain/values/person-name";
+import { PersonName } from "src/domain/values/name";
+import { EnrollmentStatusValue } from "src/util/enums";
 import { EntityError } from "../errors/entity_error";
 import { Email } from "../values/email";
 import { Id } from "../values/id";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
-import { EnrollmentStatusValue } from "src/util/enums";
 
 export interface ParticipantProps {
   name: PersonName;

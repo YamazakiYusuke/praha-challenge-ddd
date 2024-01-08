@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Category } from "src/domain/entities/category";
 import { ICategoryRepository } from "src/domain/repositories/category-repository";
-import { CategoryName } from "src/domain/values/category-name";
+import { CategoryName } from "src/domain/values/name";
 import { IGetOneQuery } from "../base/get-one-query";
 
 @Injectable()

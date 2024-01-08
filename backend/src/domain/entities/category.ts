@@ -1,8 +1,8 @@
-import { CategoryName } from "src/domain/values/category-name";
+import { EntityError } from "src/domain/errors/entity_error";
+import { CategoryName } from "src/domain/values/name";
 import { Id } from "../values/id";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
-import { EntityError } from "src/domain/errors/entity_error";
 
 export interface CategoryProps {
   name: CategoryName;

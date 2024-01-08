@@ -1,4 +1,4 @@
-import { TeamName } from "src/domain/values/team-name";
+import { TeamName } from "src/domain/values/name";
 import { Id } from "../values/id"
 import { Entity } from "./base/entity"
 import { validateProps } from "./utils/validate-props";

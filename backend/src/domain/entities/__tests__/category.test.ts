@@ -1,6 +1,6 @@
 import { EntityError } from "src/domain/errors/entity_error";
-import { CategoryName } from "src/domain/values/category-name";
 import { Id } from "src/domain/values/id";
+import { CategoryName } from "src/domain/values/name";
 import { Category, CategoryProps } from "../category";
 
 describe('# Category Entity UnitTest\n', () => {

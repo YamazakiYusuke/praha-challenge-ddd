@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { GetCategoryByNameQuery } from "src/domain/commands/category/get-one-category-by-name-query";
 import { EntityError } from "src/domain/errors/entity_error";
+import { CategoryName } from "src/domain/values/name";
 import { Category } from "../../entities/category";
-import { CategoryName } from "src/domain/values/category-name";
 
 @Injectable()
 export class CategoryChangeNameService {

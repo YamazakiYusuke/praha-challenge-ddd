@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Pair } from "src/domain/entities/pair";
 import { IPairRepository } from "src/domain/repositories/pair-repository";
-import { PairName } from "src/domain/values/pair-name";
+import { PairName } from "src/domain/values/name";
 import { IGetOneQuery } from "../base/get-one-query";
 
 @Injectable()

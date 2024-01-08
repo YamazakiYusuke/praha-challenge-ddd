@@ -2,10 +2,10 @@ import { Participant } from "src/domain/entities/participant";
 import { EntityError } from "src/domain/errors/entity_error";
 import { Email } from "src/domain/values/email";
 import { Id } from "src/domain/values/id";
-import { PersonName } from "src/domain/values/person-name";
+import { PersonName } from "src/domain/values/name";
 import { EnrollmentStatusValue } from "src/util/enums";
 
-describe('# Participant Entity UnitTest \n', () => {  
+describe('# Participant Entity UnitTest \n', () => {
   describe('## restore \n', () => {
     it('- Success create instance \n', () => {
       // 準備

@@ -1,8 +1,7 @@
 import { Pair } from "src/domain/entities/pair";
 import { Email } from "src/domain/values/email";
 import { Id } from "src/domain/values/id";
-import { PairName } from "src/domain/values/pair-name";
-import { PersonName } from "src/domain/values/person-name";
+import { PairName, PersonName } from "src/domain/values/name";
 import { EnrollmentStatusValue } from "src/util/enums";
 import { Participant } from "../participant";
 import { Participants } from "../participants";
