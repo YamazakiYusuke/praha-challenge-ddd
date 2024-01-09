@@ -21,7 +21,7 @@ export class AdministratorId extends Id {
     return new AdministratorId(id);
   }
 
-  isAdministratorId(): boolean {
+  get isAdministratorId(): boolean {
     return true;
   }
 }
@@ -36,7 +36,7 @@ export class AssignmentProgressId extends Id {
     return new AssignmentProgressId(id);
   }
 
-  isAssignmentProgressId(): boolean {
+  get isAssignmentProgressId(): boolean {
     return true;
   }
 }
@@ -51,7 +51,7 @@ export class AssignmentId extends Id {
     return new AssignmentId(id);
   }
 
-  isAssignmentId(): boolean {
+  get isAssignmentId(): boolean {
     return true;
   }
 }
@@ -66,7 +66,7 @@ export class CategoryId extends Id {
     return new CategoryId(id);
   }
 
-  isCategoryId(): boolean {
+  get isCategoryId(): boolean {
     return true;
   }
 }
@@ -81,7 +81,7 @@ export class PairId extends Id {
     return new PairId(id);
   }
 
-  isPairId(): boolean {
+  get isPairId(): boolean {
     return true;
   }
 }
@@ -96,7 +96,7 @@ export class ParticipantId extends Id {
     return new ParticipantId(id);
   }
 
-  isParticipantId(): boolean {
+  get isParticipantId(): boolean {
     return true;
   }
 }
@@ -111,7 +111,7 @@ export class ParticipantsId extends Id {
     return new ParticipantsId(id);
   }
 
-  isParticipantsId(): boolean {
+  get isParticipantsId(): boolean {
     return true;
   }
 }
@@ -126,7 +126,7 @@ export class TeamId extends Id {
     return new TeamId(id);
   }
 
-  isTeamId(): boolean {
+  get isTeamId(): boolean {
     return true;
   }
 }
