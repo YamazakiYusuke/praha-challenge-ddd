@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 export abstract class Value<T> {
   protected props: T;
   constructor(props: T) {
