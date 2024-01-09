@@ -1,16 +1,16 @@
 import { EntityError } from "../errors/entity_error";
 import { AssignmentProgressState } from "../values/assignment-progress-state";
-import { AssignmentProgressId } from "../values/id";
+import { AssignmentId, AssignmentProgressId, ParticipantId } from "../values/id";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
 export interface AssignmentProgressProps {
-  assignmentId: AssignmentProgressId;
-  participantId: AssignmentProgressId;
+  assignmentId: AssignmentId;
+  participantId: ParticipantId;
   assignmentProgressState: AssignmentProgressState;
 }
 
-export class AssignmentProgress extends Entity<AssignmentProgressProps> {
+export class AssignmentProgress extends Entity<AssignmentProgressId, AssignmentProgressProps> {
 
   private constructor(id: AssignmentProgressId, props: AssignmentProgressProps) {
     validateProps(id, props);
@@ -25,11 +25,11 @@ export class AssignmentProgress extends Entity<AssignmentProgressProps> {
     return new AssignmentProgress(id, props)
   }
 
-  public get assignmentId(): AssignmentProgressId {
+  public get assignmentId(): AssignmentId {
     return this.props.assignmentId;
   }
 
-  public get participantId(): AssignmentProgressId {
+  public get participantId(): ParticipantId {
     return this.props.participantId;
   }
 

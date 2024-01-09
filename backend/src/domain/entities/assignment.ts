@@ -1,17 +1,17 @@
 import { EntityError } from "../errors/entity_error";
-import { AssignmentId } from "../values/id"
+import { AssignmentId, CategoryId } from "../values/id"
 import { Entity } from "./base/entity"
 import { validateProps } from "./utils/validate-props";
 
 export interface AssignmentProps {
   number: number;
   title: string;
-  categoryId: AssignmentId;
+  categoryId: CategoryId;
   introduction: string;
   content: string;
 }
 
-export class Assignment extends Entity<AssignmentProps> {
+export class Assignment extends Entity<AssignmentId, AssignmentProps> {
 
   private constructor(id: AssignmentId, props: AssignmentProps) {
     validateProps(id, props);
@@ -43,7 +43,7 @@ export class Assignment extends Entity<AssignmentProps> {
     return this.props.title;
   }
 
-  public get category(): AssignmentId {
+  public get category(): CategoryId {
     return this.props.categoryId;
   }
 
@@ -69,7 +69,7 @@ export class Assignment extends Entity<AssignmentProps> {
     this.props.title = newTitle;
   }
 
-  public changeCategory(newCategoryId: AssignmentId): void | Error {
+  public changeCategory(newCategoryId: CategoryId): void | Error {
     if (!newCategoryId) {
       throw new EntityError('Category is required')
     }

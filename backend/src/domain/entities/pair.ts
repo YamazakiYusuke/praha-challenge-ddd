@@ -6,12 +6,12 @@ import { Participants } from "./participants";
 import { validateProps } from "./utils/validate-props";
 
 export interface PairProps {
-  teamId: PairId;
+  teamId: TeamId;
   name: PairName;
   participants: Participants;
 }
 
-export class Pair extends Entity<PairProps> {
+export class Pair extends Entity<PairId, PairProps> {
 
   private constructor(id: PairId, props: PairProps) {
     validateProps(id, props);

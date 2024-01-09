@@ -110,7 +110,7 @@ describe('# Assignment Entity UnitTest\n', () => {
     test('- Failed to change value \n', () => {
       // 準備
       const assignment = getAssignment();
-      const newCategoryId = null as unknown as Id;
+      const newCategoryId = null as unknown as CategoryId;
       // 実行・確認
       expect(() => assignment.changeCategory(newCategoryId)).toThrow(EntityError);
     });

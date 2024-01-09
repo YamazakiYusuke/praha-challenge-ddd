@@ -4,7 +4,7 @@ import { PairId, ParticipantsId, TeamId } from "../values/id";
 import { Entity } from "./base/entity";
 import { Participant } from "./participant";
 
-export class Participants extends Entity<Array<Participant>> {
+export class Participants extends Entity<ParticipantsId, Array<Participant>> {
   private constructor(id: ParticipantsId, props: Array<Participant>) {
     validateProps(id, props);
     super(id, props)

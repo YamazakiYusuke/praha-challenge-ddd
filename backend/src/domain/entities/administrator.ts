@@ -8,7 +8,7 @@ export interface AdministratorProps {
   email: Email;
 }
 
-export class Administrator extends Entity<AdministratorProps> {
+export class Administrator extends Entity<AdministratorId, AdministratorProps> {
 
   private constructor(id: AdministratorId, props: AdministratorProps) {
     validateProps(id, props);

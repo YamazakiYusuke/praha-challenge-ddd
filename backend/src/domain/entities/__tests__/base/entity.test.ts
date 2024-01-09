@@ -12,8 +12,8 @@ interface SameProps {
   name: string; 
   sex: Number;
 }
-class SameEntity extends Entity<SameProps> {
-  constructor(id: Id, props: SameProps) {
+class SameEntity extends Entity<SameId, SameProps> {
+  constructor(id: SameId, props: SameProps) {
     super(id, props);
   }
 }

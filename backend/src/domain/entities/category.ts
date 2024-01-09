@@ -8,7 +8,7 @@ export interface CategoryProps {
   name: CategoryName;
 }
 
-export class Category extends Entity<CategoryProps> {
+export class Category extends Entity<CategoryId, CategoryProps> {
   private constructor(id: CategoryId, props: CategoryProps) {
     validateProps(id, props);
     super(id, props)

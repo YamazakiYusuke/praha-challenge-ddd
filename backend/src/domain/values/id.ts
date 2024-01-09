@@ -20,6 +20,10 @@ export class AdministratorId extends Id {
   static restore(id: string): AdministratorId {
     return new AdministratorId(id);
   }
+
+  isAdministratorId(): boolean {
+    return true;
+  }
 }
 
 export class AssignmentProgressId extends Id {
@@ -30,6 +34,10 @@ export class AssignmentProgressId extends Id {
 
   static restore(id: string): AssignmentProgressId {
     return new AssignmentProgressId(id);
+  }
+
+  isAssignmentProgressId(): boolean {
+    return true;
   }
 }
 
@@ -42,6 +50,10 @@ export class AssignmentId extends Id {
   static restore(id: string): AssignmentId {
     return new AssignmentId(id);
   }
+
+  isAssignmentId(): boolean {
+    return true;
+  }
 }
 
 export class CategoryId extends Id {
@@ -52,6 +64,10 @@ export class CategoryId extends Id {
 
   static restore(id: string): CategoryId {
     return new CategoryId(id);
+  }
+
+  isCategoryId(): boolean {
+    return true;
   }
 }
 
@@ -64,6 +80,10 @@ export class PairId extends Id {
   static restore(id: string): PairId {
     return new PairId(id);
   }
+
+  isPairId(): boolean {
+    return true;
+  }
 }
 
 export class ParticipantId extends Id {
@@ -74,6 +94,10 @@ export class ParticipantId extends Id {
 
   static restore(id: string): ParticipantId {
     return new ParticipantId(id);
+  }
+
+  isParticipantId(): boolean {
+    return true;
   }
 }
 
@@ -86,6 +110,10 @@ export class ParticipantsId extends Id {
   static restore(id: string): ParticipantsId {
     return new ParticipantsId(id);
   }
+
+  isParticipantsId(): boolean {
+    return true;
+  }
 }
 
 export class TeamId extends Id {
@@ -96,5 +124,9 @@ export class TeamId extends Id {
 
   static restore(id: string): TeamId {
     return new TeamId(id);
+  }
+
+  isTeamId(): boolean {
+    return true;
   }
 }

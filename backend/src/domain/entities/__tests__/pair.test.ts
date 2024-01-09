@@ -55,7 +55,7 @@ describe('# Pair Entity UnitTest\n', () => {
       // 準備・実行
       const pair = Pair.create(
         {
-          teamId: PairId.restore('teamId'),
+          teamId: TeamId.restore('teamId'),
           name: PairName.restore('PairName'),
           participants: participants(EnrollmentStatusValue.OnLeave),
         },

@@ -7,7 +7,7 @@ export interface TeamProps {
   name: TeamName;
 }
 
-export class Team extends Entity<TeamProps> {
+export class Team extends Entity<TeamId, TeamProps> {
 
   private constructor(id: TeamId, props: TeamProps) {
     validateProps(id, props);

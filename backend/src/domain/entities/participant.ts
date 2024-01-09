@@ -9,12 +9,12 @@ import { validateProps } from "./utils/validate-props";
 export interface ParticipantProps {
   name: PersonName;
   email: Email;
-  teamId: ParticipantId | undefined;
-  pairId: ParticipantId | undefined;
+  teamId: TeamId | undefined;
+  pairId: PairId | undefined;
   enrollmentStatus: EnrollmentStatusValue;
 }
 
-export class Participant extends Entity<ParticipantProps> {
+export class Participant extends Entity<ParticipantId, ParticipantProps> {
   private constructor(id: ParticipantId, props: ParticipantProps) {
     validateProps(id, props, ['teamId', 'pairId']);
     super(id, props)

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { GetPairsByTeamIdQuery } from "src/domain/commands/pair/get-pairs-by-team-id-query copy";
 import { Participants } from "src/domain/entities/participants";
-import { Id } from "src/domain/values/id";
+import { Id, TeamId } from "src/domain/values/id";
 import { PairName } from "src/domain/values/name";
 import { Pair, PairProps } from "../../entities/pair";
 
@@ -9,7 +9,7 @@ import { Pair, PairProps } from "../../entities/pair";
 export class CreatePairService {
   constructor(private readonly getPairsByTeamIdQuery: GetPairsByTeamIdQuery) { }
 
-  async execute(props: { teamId: Id; participants: Participants; }): Promise<Pair | Error> {
+  async execute(props: { teamId: TeamId; participants: Participants; }): Promise<Pair | Error> {
     const name = await this.getName(props.teamId) as PairName;
     const entityProps: PairProps = {
       teamId: props.teamId,
@@ -20,7 +20,7 @@ export class CreatePairService {
     return newPair;
   }
 
-  private async getName(teamId: Id): Promise<PairName | Error> {
+  private async getName(teamId: TeamId): Promise<PairName | Error> {
     const allPairNames = await (this.getPairsByTeamIdQuery.execute(teamId)) as Pair[];
     const alphabet = 'abcdefghijklmnopqrstuvwxyz';
     for (let i = 0; i < alphabet.length; i++) {
