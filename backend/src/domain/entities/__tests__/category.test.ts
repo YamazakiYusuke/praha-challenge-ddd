@@ -1,5 +1,5 @@
 import { EntityError } from "src/domain/errors/entity_error";
-import { CategoryId, Id } from "src/domain/values/id";
+import { CategoryId } from "src/domain/values/id";
 import { CategoryName } from "src/domain/values/name";
 import { Category, CategoryProps } from "../category";
 

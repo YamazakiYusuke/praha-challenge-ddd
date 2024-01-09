@@ -26,6 +26,10 @@ export class CategoryName extends Name {
   static restore(value: string): CategoryName {
     return new CategoryName(value);
   }
+
+  get isCategoryName(): boolean {
+    return true;
+  }
 }
 
 export class PairName extends Name {
@@ -39,6 +43,10 @@ export class PairName extends Name {
 
   static restore(value: string): PairName {
     return new PairName(value);
+  }
+
+  get isPairName(): boolean {
+    return true;
   }
 }
 
@@ -54,6 +62,10 @@ export class PersonName extends Name {
   static restore(value: string): PersonName {
     return new PersonName(value);
   }
+
+  get isPersonName(): boolean {
+    return true;
+  }
 }
 
 export class TeamName extends Name {
@@ -67,6 +79,10 @@ export class TeamName extends Name {
 
   static restore(value: string): TeamName {
     return new TeamName(value);
+  }
+
+  get isTeamName(): boolean {
+    return true;
   }
 }
 
