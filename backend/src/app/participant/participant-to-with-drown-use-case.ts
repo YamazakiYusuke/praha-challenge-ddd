@@ -9,5 +9,6 @@ export class ParticipantToWithDrownUseCase {
   ) { }
 
   async execute(participant: Participant): Promise<void | Error> {
+    // TODO
   }
 }

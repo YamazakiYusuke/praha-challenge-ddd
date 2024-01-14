@@ -1,8 +1,8 @@
-import { GetAllPairsQuery } from "src/domain/commands/pair/get-all-pairs-query";
-import { ErrorResponse } from "../responses/error-response";
-import { debuglog } from "util";
-import { PairDTO } from "./pair-dto";
 import { Injectable } from "@nestjs/common";
+import { GetAllPairsQuery } from "src/domain/commands/pair/get-all-pairs-query";
+import { debuglog } from "util";
+import { ErrorResponse } from "../responses/error-response";
+import { PairDTO } from "./dto/pair-dto";
 
 @Injectable()
 export class GetAllPairsUsecase {

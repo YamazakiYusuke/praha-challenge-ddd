@@ -1,11 +1,11 @@
 import { Pair } from "src/domain/entities/pair";
-import { ParticipantDTO } from "../participant/participant-dto";
+import { ParticipantDTO } from "../../participant/dto/participant-dto";
 
 export class PairDTO {
   public readonly id: string
-  public readonly  teamId: string;
+  public readonly teamId: string;
   public readonly name: string;
-  public readonly  participants: ParticipantDTO[];
+  public readonly participants: ParticipantDTO[];
   constructor(pair: Pair) {
     this.id = pair.getId.value
     this.teamId = pair.teamId.value

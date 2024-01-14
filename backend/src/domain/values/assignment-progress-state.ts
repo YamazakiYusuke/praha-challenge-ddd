@@ -6,12 +6,12 @@ export class AssignmentProgressState extends Value<string> {
     super(value)
   }
 
-  static create(): AssignmentProgressState | Error {
-    return new AssignmentProgressState(AssignmentProgressStateValue.NotStarted.toString());
+  static create(value: AssignmentProgressStateValue): AssignmentProgressState | Error {
+    return new AssignmentProgressState(value.toString());
   }
 
-  static restore(value: string): AssignmentProgressState {
-    return new AssignmentProgressState(value);
+  static restore(value: AssignmentProgressStateValue): AssignmentProgressState {
+    return new AssignmentProgressState(value.toString());
   }
 
   public get value(): string {

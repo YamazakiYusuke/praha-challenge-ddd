@@ -1,4 +1,5 @@
 import { Participant } from "src/domain/entities/participant";
+import { EnrollmentStatusValue } from "src/util/enums";
 
 export class ParticipantDTO {
   public readonly id: string;
@@ -6,7 +7,7 @@ export class ParticipantDTO {
   public readonly email: string;
   public readonly teamId?: string;
   public readonly pairId?: string;
-  public readonly enrollmentStatus: string;
+  public readonly enrollmentStatus: EnrollmentStatusValue;
   public constructor(participant: Participant) {
     this.id = participant.getId.value
     this.name = participant.name.value

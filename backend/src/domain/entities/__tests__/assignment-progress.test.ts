@@ -10,7 +10,7 @@ describe('# AssignmentProgress Entity UnitTest\n', () => {
       // 準備
       const assignmentId = AssignmentId.restore('assignmentId');
       const participantId = ParticipantId.restore('participantId');
-      const assignmentProgressState = AssignmentProgressState.restore(AssignmentProgressStateValue.NotStarted.toString());
+      const assignmentProgressState = AssignmentProgressState.restore(AssignmentProgressStateValue.NotStarted);
       const props: AssignmentProgressProps = { assignmentId, participantId, assignmentProgressState };
       // 実行
       const assignmentProgress = AssignmentProgress.create(props) as AssignmentProgress;
@@ -28,7 +28,7 @@ describe('# AssignmentProgress Entity UnitTest\n', () => {
       const id = AssignmentProgressId.restore('Id');
       const assignmentId = AssignmentId.restore('assignmentId');
       const participantId = ParticipantId.restore('participantId');
-      const assignmentProgressState = AssignmentProgressState.restore(AssignmentProgressStateValue.NotStarted.toString());
+      const assignmentProgressState = AssignmentProgressState.restore(AssignmentProgressStateValue.NotStarted);
       const props: AssignmentProgressProps = { assignmentId, participantId, assignmentProgressState };
       // 実行
       const assignmentProgress = AssignmentProgress.restore(id, props);
@@ -46,7 +46,7 @@ describe('# AssignmentProgress Entity UnitTest\n', () => {
     const id = AssignmentProgressId.restore('Id');
     const assignmentId = AssignmentId.restore('assignmentId');
     const participantId = ParticipantId.restore('participantId');
-    const assignmentProgressState = AssignmentProgressState.restore(assignmentProgressStateValue.toString());
+    const assignmentProgressState = AssignmentProgressState.restore(assignmentProgressStateValue);
     const props: AssignmentProgressProps = { assignmentId, participantId, assignmentProgressState };
     return AssignmentProgress.restore(id, props);
   }
@@ -55,7 +55,7 @@ describe('# AssignmentProgress Entity UnitTest\n', () => {
     test('- Success to change value \n', () => {
       // 準備
       const assignmentProgress = getAssignmentProgress();
-      const newAssignmentProgressState = AssignmentProgressState.restore(AssignmentProgressStateValue.Completed.toString());
+      const newAssignmentProgressState = AssignmentProgressState.restore(AssignmentProgressStateValue.Completed);
       // 実行
       assignmentProgress.changeAssignmentProgressState(newAssignmentProgressState);
       // 確認
@@ -65,7 +65,7 @@ describe('# AssignmentProgress Entity UnitTest\n', () => {
     test('- Failed to change value \n', () => {
       // 準備
       const assignmentProgress = getAssignmentProgress(AssignmentProgressStateValue.Completed);
-      const newAssignmentProgressState = AssignmentProgressState.restore(AssignmentProgressStateValue.NotStarted.toString());
+      const newAssignmentProgressState = AssignmentProgressState.restore(AssignmentProgressStateValue.NotStarted);
       // 実行・確認
       expect(() => assignmentProgress.changeAssignmentProgressState(newAssignmentProgressState)).toThrow(EntityError);
     });

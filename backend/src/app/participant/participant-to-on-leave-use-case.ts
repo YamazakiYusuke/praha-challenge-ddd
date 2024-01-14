@@ -8,7 +8,7 @@ import { GetParticipantByIdQuery } from "src/domain/commands/participant/get-par
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
 import { EnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
-import { ParticipantId } from "src/domain/values/id";
+import { PairId, ParticipantId, TeamId } from "src/domain/values/id";
 import { debuglog } from "util";
 
 @Injectable()
@@ -21,17 +21,17 @@ export class ParticipantToOnLeaveUseCase {
     private readonly savePairCommand: SavePairCommand,
   ) { }
 
-  async execute(participantId: string): Promise<SuccessResponse | ErrorResponse> {
+  async execute(participantId: ParticipantId): Promise<SuccessResponse | ErrorResponse> {
     try {
-      const participant = await this.getParticipantByIdQuery.execute(ParticipantId.restore(participantId)) as Participant;
-      const pair = await this.getPairByIdQuery.execute(participant.getId) as Pair;
+      const participant = await this.getParticipantByIdQuery.execute(participantId) as Participant;
+      const pair = await this.getPairByIdQuery.execute(participant.pairId as PairId) as Pair;
       pair.changeParticipantEnrollmentStatusToOnLeave(participant);
       if (pair.participantsLength < 2) {
         // TODO: メール送信サービス　「どの参加者が減ったのか」「どのチームが2名以下になったのか」「そのチームの現在の参加者名」を記載する
       }
 
       if (pair.participantsLength == 1) {
-        const smallestPair = await this.getPairWithFewestMembersByTeamIdQuery.execute(pair.teamId) as Pair | null;
+        const smallestPair = await this.getPairWithFewestMembersByTeamIdQuery.execute(pair.teamId as TeamId) as Pair | null;
         if (smallestPair == null) {
           // TODO: 管理者にメール　「どの参加者が減ったのか」「どの参加者が合流先を探しているのか」
           throw Error('参加可能なペアがありません');

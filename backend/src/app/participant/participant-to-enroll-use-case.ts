@@ -20,9 +20,9 @@ export class ParticipantToEnrollUseCase {
   ) { }
 
   // Teamの更新
-  async execute(participantId: string): Promise<SuccessResponse | ErrorResponse> {
+  async execute(participantId: ParticipantId): Promise<SuccessResponse | ErrorResponse> {
     try {
-      const participant = await this.getParticipantByIdQuery.execute(ParticipantId.restore(participantId)) as Participant;
+      const participant = await this.getParticipantByIdQuery.execute(participantId) as Participant;
       const smallestPair = await this.getPairWithFewestMembersQuery.execute() as Pair | null;
       if (smallestPair == null) {
         // TODO: 管理者にメール

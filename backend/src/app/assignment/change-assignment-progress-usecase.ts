@@ -6,6 +6,8 @@ import { AssignmentProgressState } from "src/domain/values/assignment-progress-s
 import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
 import { SuccessResponse } from "../responses/success-response";
+import { AssignmentProgressStateValue } from "src/util/enums";
+import { AssignmentProgressId } from "src/domain/values/id";
 
 export class ChangeAssignmentProgressUsecase {
   constructor(
@@ -13,7 +15,7 @@ export class ChangeAssignmentProgressUsecase {
     private readonly savAssignmentProgressCommand: SaveAssignmentProgressCommand,
   ) { }
 
-  public async execute(assignmentProgressId: string, newStateStr: string): Promise<SuccessResponse | ErrorResponse> {
+  public async execute(assignmentProgressId: AssignmentProgressId, newStateStr: AssignmentProgressStateValue): Promise<SuccessResponse | ErrorResponse> {
     try {
       const assignmentProgress = await this.getAssignmentProgressByIdQuery.execute(assignmentProgressId) as AssignmentProgress | null;
       if (assignmentProgress == null) throw new UsecaseError(`AssignmentProgress${assignmentProgressId}が存在しません`);
