@@ -3,6 +3,7 @@ import { GetAllPairsQuery } from "src/domain/commands/pair/get-all-pairs-query";
 import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
 import { PairDTO } from "./dto/pair-dto";
+import { Pair } from "src/domain/entities/pair";
 
 @Injectable()
 export class GetAllPairsUsecase {
@@ -12,7 +13,7 @@ export class GetAllPairsUsecase {
 
   public async execute(): Promise<PairDTO[] | ErrorResponse> {
     try {
-      const pairs = await this.getAllPairsQuery.execute() as [];
+      const pairs = await this.getAllPairsQuery.execute() as Pair[];
       const pairDTOs = pairs.map(e => new PairDTO(e));
       return pairDTOs;
     } catch (e) {
