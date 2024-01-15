@@ -360,7 +360,7 @@ describe('# Participants Entity UnitTest \n', () => {
       const participant2 = Participant.restore(ParticipantId.restore('participantId2'), props2);
       const participants = Participants.restore(participantsId, [participant1, participant2]);
       // 実行
-      participants.changeParticipantEnrollmentStatusToEnrolled(teamId, pairId, participant2);
+      participants.changeParticipantEnrollmentStatusToEnrolled(teamId, pairId, participant2.getId);
       // 確認
       expect(participants.value).toHaveLength(2);
       expect(participants.value[0]).toBe(participant1);
@@ -402,7 +402,7 @@ describe('# Participants Entity UnitTest \n', () => {
       };
       const participant3 = Participant.restore(ParticipantId.restore('participantId3'), props3);
       // 実行・確認
-      expect(() => participants.changeParticipantEnrollmentStatusToEnrolled(teamId, pairId, participant3)).toThrow(EntityError);
+      expect(() => participants.changeParticipantEnrollmentStatusToEnrolled(teamId, pairId, participant3.getId)).toThrow(EntityError);
     });
   });
 
@@ -430,7 +430,7 @@ describe('# Participants Entity UnitTest \n', () => {
       const participant2 = Participant.restore(ParticipantId.restore('participantId2'), props2);
       const participants = Participants.restore(participantsId, [participant1, participant2]);
       // 実行
-      participants.changeParticipantEnrollmentStatusToOnLeave(participant2);
+      participants.changeParticipantEnrollmentStatusToOnLeave(participant2.getId);
       // 確認
       expect(participants.value).toHaveLength(2);
       expect(participants.value[0]).toBe(participant1);
@@ -472,7 +472,7 @@ describe('# Participants Entity UnitTest \n', () => {
       };
       const participant3 = Participant.restore(ParticipantId.restore('participantId3'), props3);
       // 実行・確認
-      expect(() => participants.changeParticipantEnrollmentStatusToOnLeave(participant3)).toThrow(EntityError);
+      expect(() => participants.changeParticipantEnrollmentStatusToOnLeave(participant3.getId)).toThrow(EntityError);
     });
   });
 
@@ -500,7 +500,7 @@ describe('# Participants Entity UnitTest \n', () => {
       const participant2 = Participant.restore(ParticipantId.restore('participantId2'), props2);
       const participants = Participants.restore(participantsId, [participant1, participant2]);
       // 実行
-      participants.changeParticipantEnrollmentStatusToWithDrawn(participant2);
+      participants.changeParticipantEnrollmentStatusToWithDrawn(participant2.getId);
       // 確認
       expect(participants.value).toHaveLength(2);
       expect(participants.value[0]).toBe(participant1);
@@ -542,7 +542,7 @@ describe('# Participants Entity UnitTest \n', () => {
       };
       const participant3 = Participant.restore(ParticipantId.restore('participantId3'), props3);
       // 実行・確認
-      expect(() => participants.changeParticipantEnrollmentStatusToWithDrawn(participant3)).toThrow(EntityError);
+      expect(() => participants.changeParticipantEnrollmentStatusToWithDrawn(participant3.getId)).toThrow(EntityError);
     });
   });
 });

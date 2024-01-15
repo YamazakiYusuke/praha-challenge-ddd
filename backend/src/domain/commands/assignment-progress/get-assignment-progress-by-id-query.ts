@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { AssignmentProgress } from "src/domain/entities/assignment-progress";
 import { IAssignmentProgressRepository } from "src/domain/repositories/assignment-progress-repository";
-import { IGetOneQuery } from "../base/get-one-query";
 import { AssignmentProgressId } from "src/domain/values/id";
+import { IGetOneQuery } from "../base/get-one-query";
 
 @Injectable()
 export class GetAssignmentProgressByIdQuery implements IGetOneQuery<AssignmentProgress, AssignmentProgressId> {

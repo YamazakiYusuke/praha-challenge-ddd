@@ -1,5 +1,5 @@
 import { PairName } from "src/domain/values/name";
-import { PairId, TeamId } from "../values/id";
+import { PairId, ParticipantId, TeamId } from "../values/id";
 import { Entity } from "./base/entity";
 import { Participant } from "./participant";
 import { Participants } from "./participants";
@@ -22,7 +22,7 @@ export class Pair extends Entity<PairId, PairProps> {
     const pair = new Pair(PairId.create(), props);
     for (let i = 0; i < pair.participants.length; i++) {
       const participant = pair.participants.getByIndex(i) as Participant;
-      pair.changeParticipantEnrollmentStatusToEnrolled(participant);
+      pair.changeParticipantEnrollmentStatusToEnrolled(participant.getId);
     }
     return pair;
   }
@@ -53,26 +53,46 @@ export class Pair extends Entity<PairId, PairProps> {
   }
 
   /// Method
+  /**
+   * Pairに所属している参加者を在籍状態にする
+   * @param participant 
+   */
   public appendParticipant(participant: Participant): void | Error {
     this.participants.append(this.teamId, this.getId, participant);
-    this.changeParticipantEnrollmentStatusToEnrolled(participant);
+    this.changeParticipantEnrollmentStatusToEnrolled(participant.getId);
   }
 
+  /**
+   * Pairに所属している参加者を取り除く
+   * @param participant 
+   */
   public removeParticipant(participant: Participant): void | Error {
     this.participants.remove(participant);
   }
 
-  private changeParticipantEnrollmentStatusToEnrolled(participant: Participant): void | Error {
-    this.participants.changeParticipantEnrollmentStatusToEnrolled(this.teamId, this.getId, participant);
+  /**
+   * Pairに所属している参加者を在籍状態にする
+   * @param participantId 
+   */
+  private changeParticipantEnrollmentStatusToEnrolled(participantId: ParticipantId): void | Error {
+    this.participants.changeParticipantEnrollmentStatusToEnrolled(this.teamId, this.getId, participantId);
   }
 
+  /**
+   * Pairに所属している参加者を休会させる
+   * @param participant 
+   */
   public changeParticipantEnrollmentStatusToOnLeave(participant: Participant): void | Error {
-    this.participants.changeParticipantEnrollmentStatusToOnLeave(participant);
+    this.participants.changeParticipantEnrollmentStatusToOnLeave(participant.getId);
     this.removeParticipant(participant);
   }
 
+  /**
+   * Pairに所属している参加者を退会させる
+   * @param participant 
+   */
   public changeParticipantEnrollmentStatusToWithDrawn(participant: Participant): void | Error {
-    this.participants.changeParticipantEnrollmentStatusToWithDrawn(participant);
+    this.participants.changeParticipantEnrollmentStatusToWithDrawn(participant.getId);
     this.removeParticipant(participant);
   }
 }

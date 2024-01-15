@@ -1,6 +1,6 @@
 import { validateProps } from "src/domain/entities/utils/validate-props";
 import { EntityError } from "../errors/entity_error";
-import { PairId, ParticipantsId, TeamId } from "../values/id";
+import { PairId, ParticipantId, ParticipantsId, TeamId } from "../values/id";
 import { Entity } from "./base/entity";
 import { Participant } from "./participant";
 
@@ -38,48 +38,49 @@ export class Participants extends Entity<ParticipantsId, Array<Participant>> {
   }
 
   public append(teamId: TeamId, pairId: PairId, participant: Participant): void | Error {
-    if (this.hasParticipant(participant)) {
-      throw new EntityError(`参加者${participant}は既にPairのメンバーです`);
-    }
+    this.checkParticipantNotExists(participant.getId)
     participant.changeEnrollmentStatusToEnrolled(teamId, pairId);
     this.props = [...this.value, participant];
   }
 
-  public remove(participant: Participant): void | Error {
-    if (!this.hasParticipant(participant)) {
-      throw new EntityError(`参加者${participant}はPairのメンバーではありません`);
-    }
-    participant.deleteTeamIdPairId();
+  public remove(participant: Participant): Participant | Error {
+    this.checkParticipantExists(participant.getId)
     this.props = this.value.filter(p => !p.getId.isEqual(participant.getId));
+    participant.deleteTeamIdPairId();
+    return participant;
   }
 
-  public changeParticipantEnrollmentStatusToEnrolled(teamId: TeamId, pairId: PairId, participant: Participant): void | Error {
-    if (!this.hasParticipant(participant)) {
-      throw new EntityError(`参加者${participant}はPairのメンバーではありません`);
+  public changeParticipantEnrollmentStatusToEnrolled(teamId: TeamId, pairId: PairId, participantId: ParticipantId): void | Error {
+    this.checkParticipantExists(participantId)
+    this.getParticipant(participantId).changeEnrollmentStatusToEnrolled(teamId, pairId);
+  }
+
+  public changeParticipantEnrollmentStatusToOnLeave(participantId: ParticipantId): void | Error {
+    this.checkParticipantExists(participantId)
+    this.getParticipant(participantId).changeEnrollmentStatusToOnLeave();
+  }
+
+  public changeParticipantEnrollmentStatusToWithDrawn(participantId: ParticipantId): void | Error {
+    this.checkParticipantExists(participantId)
+    this.getParticipant(participantId).changeEnrollmentStatusToWithDrawn();
+  }
+
+  private checkParticipantExists(participantId: ParticipantId): void | Error {
+    const hasParticipant = this.value.some(p => p.getId.isEqual(participantId));
+    if (!hasParticipant) {
+      throw new EntityError(`participantId: ${participantId}は存在しません`);
     }
-    this.getParticipant(participant).changeEnrollmentStatusToEnrolled(teamId, pairId);
   }
 
-  public changeParticipantEnrollmentStatusToOnLeave(participant: Participant): void | Error {
-    if (!this.hasParticipant(participant)) {
-      throw new EntityError(`参加者${participant}はPairのメンバーではありません`);
+  private checkParticipantNotExists(participantId: ParticipantId): void | Error {
+    const hasParticipant = this.value.some(p => p.getId.isEqual(participantId));
+    if (hasParticipant) {
+      throw new EntityError(`participantId: ${participantId}は既に存在します`);
     }
-    this.getParticipant(participant).changeEnrollmentStatusToOnLeave();
   }
 
-  public changeParticipantEnrollmentStatusToWithDrawn(participant: Participant): void | Error {
-    if (!this.hasParticipant(participant)) {
-      throw new EntityError(`参加者${participant}はPairのメンバーではありません`);
-    }
-    this.getParticipant(participant).changeEnrollmentStatusToWithDrawn();
-  }
-
-  private hasParticipant(participant: Participant): boolean {
-    return this.value.some(p => p.getId.isEqual(participant.getId));
-  }
-
-  private getParticipant(participant: Participant): Participant {
-    const result = this.value.find(p => p.getId.isEqual(participant.getId));
+  private getParticipant(participantId: ParticipantId): Participant {
+    const result = this.value.find(p => p.getId.isEqual(participantId));
     if (result === undefined) throw new EntityError('参加者ではありません');
     return result;
   }
