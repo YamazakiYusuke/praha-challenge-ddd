@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { Administrator } from "src/domain/entities/administrator";
 import { IAdministratorRepository } from "src/domain/repositories/administrator-repository";
-import { IGetAllQuery } from "../base/get-all-query";
+import { IGetQuery } from "../base/get-query";
 
 @Injectable()
-export class GetAllAdministratorsQuery implements IGetAllQuery<Administrator[]> {
+export class GetAllAdministratorsQuery implements IGetQuery<Administrator[]> {
   constructor(private readonly administratorRepository: IAdministratorRepository) { }
 
   async execute(): Promise<Administrator[] | Error> {

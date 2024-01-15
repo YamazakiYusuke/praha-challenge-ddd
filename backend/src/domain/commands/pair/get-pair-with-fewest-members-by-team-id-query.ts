@@ -4,10 +4,10 @@ import { CommandError } from "src/domain/errors/command_error";
 import { IPairRepository } from "src/domain/repositories/pair-repository";
 import { TeamId } from "src/domain/values/id";
 import { createRandomNumUpTo } from "src/util/random";
-import { IGetOneQuery } from "../base/get-one-query";
+import { IGetQuery } from "../base/get-query";
 
 @Injectable()
-export class GetPairWithFewestMembersByTeamIdQuery implements IGetOneQuery<Pair, TeamId> {
+export class GetPairWithFewestMembersByTeamIdQuery implements IGetQuery<Pair, TeamId> {
   constructor(private readonly pairRepository: IPairRepository) { }
 
   async execute(teamId: TeamId): Promise<Pair | null | Error> {

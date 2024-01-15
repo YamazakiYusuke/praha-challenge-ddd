@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { Pair } from "src/domain/entities/pair";
 import { IPairRepository } from "src/domain/repositories/pair-repository";
-import { IGetAllQuery } from "../base/get-all-query";
+import { IGetQuery } from "../base/get-query";
 
 @Injectable()
-export class GetAllPairsQuery implements IGetAllQuery<Pair[]> {
+export class GetAllPairsQuery implements IGetQuery<Pair[]> {
   constructor(private readonly pairRepository: IPairRepository) { }
 
   async execute(): Promise<Pair[] | Error> {

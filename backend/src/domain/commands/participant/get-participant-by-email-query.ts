@@ -2,10 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { Participant } from "src/domain/entities/participant";
 import { IParticipantRepository } from "src/domain/repositories/participant-repository";
 import { Email } from "src/domain/values/email";
-import { IGetOneQuery } from "../base/get-one-query";
+import { IGetQuery } from "../base/get-query";
 
 @Injectable()
-export class GetParticipantByEmailQuery implements IGetOneQuery<Participant, Email> {
+export class GetParticipantByEmailQuery implements IGetQuery<Participant, Email> {
   constructor(private readonly participantRepository: IParticipantRepository) { }
 
   async execute(email: Email): Promise<Participant | null | Error> {

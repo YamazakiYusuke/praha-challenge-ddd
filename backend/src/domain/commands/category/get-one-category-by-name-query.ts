@@ -2,10 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { Category } from "src/domain/entities/category";
 import { ICategoryRepository } from "src/domain/repositories/category-repository";
 import { CategoryName } from "src/domain/values/name";
-import { IGetOneQuery } from "../base/get-one-query";
+import { IGetQuery } from "../base/get-query";
 
 @Injectable()
-export class GetCategoryByNameQuery implements IGetOneQuery<Category, CategoryName> {
+export class GetCategoryByNameQuery implements IGetQuery<Category, CategoryName> {
   constructor(private readonly categoryRepository: ICategoryRepository) { }
 
   async execute(name: CategoryName): Promise<Category | null | Error> {

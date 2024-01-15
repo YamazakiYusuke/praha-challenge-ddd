@@ -2,10 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { Pair } from "src/domain/entities/pair";
 import { IPairRepository } from "src/domain/repositories/pair-repository";
 import { PairName } from "src/domain/values/name";
-import { IGetOneQuery } from "../base/get-one-query";
+import { IGetQuery } from "../base/get-query";
 
 @Injectable()
-export class GetPairByNameQuery implements IGetOneQuery<Pair, PairName> {
+export class GetPairByNameQuery implements IGetQuery<Pair, PairName> {
   constructor(private readonly pairRepository: IPairRepository) { }
 
   async execute(name: PairName): Promise<Pair | null | Error> {
