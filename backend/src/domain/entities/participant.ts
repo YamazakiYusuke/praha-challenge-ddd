@@ -20,10 +20,9 @@ export class Participant extends Entity<ParticipantId, ParticipantProps> {
     super(id, props)
   }
 
-  // 新規参加者の追加はプラハのアプリからは行わず、管理システムから行う
-  // static create(props: ParticipantProps): Participant | EntityCreationError {
-  //   return new Participant(ParticipantId.create(), props);
-  // }
+  static create(props: ParticipantProps): Participant | EntityError {
+    return new Participant(ParticipantId.create(), props);
+  }
 
   static restore(id: ParticipantId, props: ParticipantProps): Participant {
     return new Participant(id, props);
