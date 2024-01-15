@@ -4,7 +4,7 @@ export class TeamDTO {
   public readonly id: string
   public readonly name: string;
   constructor(team: Team) {
-    this.id = team.getId.value
+    this.id = team.id.value
     this.name = team.name.value;
   }
 }

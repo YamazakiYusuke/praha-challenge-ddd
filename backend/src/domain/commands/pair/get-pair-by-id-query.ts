@@ -11,6 +11,6 @@ export class GetPairByIdQuery implements IGetOneQuery<Pair, PairId> {
   async execute(id: PairId): Promise<Pair | null | Error> {
     const result = await this.pairRepository.getAll();
     const pairs = result as Pair[];
-    return pairs.find((pair: Pair) => pair.getId.isEqual(id)) || null;
+    return pairs.find((pair: Pair) => pair.id.isEqual(id)) || null;
   }
 }

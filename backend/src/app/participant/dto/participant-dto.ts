@@ -9,7 +9,7 @@ export class ParticipantDTO {
   public readonly pairId?: string;
   public readonly enrollmentStatus: EnrollmentStatusValue;
   public constructor(participant: Participant) {
-    this.id = participant.getId.value
+    this.id = participant.id.value
     this.name = participant.name.value
     this.email = participant.email.value
     this.teamId = participant.teamId?.value

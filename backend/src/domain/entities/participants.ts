@@ -38,14 +38,14 @@ export class Participants extends Entity<ParticipantsId, Array<Participant>> {
   }
 
   public append(teamId: TeamId, pairId: PairId, participant: Participant): void | Error {
-    this.checkParticipantNotExists(participant.getId)
+    this.checkParticipantNotExists(participant.id)
     participant.changeEnrollmentStatusToEnrolled(teamId, pairId);
     this.props = [...this.value, participant];
   }
 
   public remove(participant: Participant): Participant | Error {
-    this.checkParticipantExists(participant.getId)
-    this.props = this.value.filter(p => !p.getId.isEqual(participant.getId));
+    this.checkParticipantExists(participant.id)
+    this.props = this.value.filter(p => !p.id.isEqual(participant.id));
     participant.deleteTeamIdPairId();
     return participant;
   }
@@ -66,21 +66,21 @@ export class Participants extends Entity<ParticipantsId, Array<Participant>> {
   }
 
   private checkParticipantExists(participantId: ParticipantId): void | Error {
-    const hasParticipant = this.value.some(p => p.getId.isEqual(participantId));
+    const hasParticipant = this.value.some(p => p.id.isEqual(participantId));
     if (!hasParticipant) {
       throw new EntityError(`participantId: ${participantId}は存在しません`);
     }
   }
 
   private checkParticipantNotExists(participantId: ParticipantId): void | Error {
-    const hasParticipant = this.value.some(p => p.getId.isEqual(participantId));
+    const hasParticipant = this.value.some(p => p.id.isEqual(participantId));
     if (hasParticipant) {
       throw new EntityError(`participantId: ${participantId}は既に存在します`);
     }
   }
 
   private getParticipant(participantId: ParticipantId): Participant {
-    const result = this.value.find(p => p.getId.isEqual(participantId));
+    const result = this.value.find(p => p.id.isEqual(participantId));
     if (result === undefined) throw new EntityError('参加者ではありません');
     return result;
   }

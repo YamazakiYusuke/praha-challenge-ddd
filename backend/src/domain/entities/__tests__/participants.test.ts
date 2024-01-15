@@ -2,7 +2,7 @@ import { Participant } from "src/domain/entities/participant";
 import { Participants } from "src/domain/entities/participants";
 import { EntityError } from "src/domain/errors/entity_error";
 import { Email } from "src/domain/values/email";
-import { Id, PairId, ParticipantId, ParticipantsId, TeamId } from "src/domain/values/id";
+import { PairId, ParticipantId, ParticipantsId, TeamId } from "src/domain/values/id";
 import { PersonName } from "src/domain/values/name";
 import { EnrollmentStatusValue } from "src/util/enums";
 
@@ -110,7 +110,7 @@ describe('# Participants Entity UnitTest \n', () => {
       // 確認
       expect(participants).toBeInstanceOf(Participants);
       expect(participants.value).toHaveLength(2);
-      expect(participants.getId).toBe(participantsId);
+      expect(participants.id).toBe(participantsId);
       expect(participants.value[0]).toBe(participant1);
       expect(participants.value[1]).toBe(participant2);
     });
@@ -360,7 +360,7 @@ describe('# Participants Entity UnitTest \n', () => {
       const participant2 = Participant.restore(ParticipantId.restore('participantId2'), props2);
       const participants = Participants.restore(participantsId, [participant1, participant2]);
       // 実行
-      participants.changeParticipantEnrollmentStatusToEnrolled(teamId, pairId, participant2.getId);
+      participants.changeParticipantEnrollmentStatusToEnrolled(teamId, pairId, participant2.id);
       // 確認
       expect(participants.value).toHaveLength(2);
       expect(participants.value[0]).toBe(participant1);
@@ -402,7 +402,7 @@ describe('# Participants Entity UnitTest \n', () => {
       };
       const participant3 = Participant.restore(ParticipantId.restore('participantId3'), props3);
       // 実行・確認
-      expect(() => participants.changeParticipantEnrollmentStatusToEnrolled(teamId, pairId, participant3.getId)).toThrow(EntityError);
+      expect(() => participants.changeParticipantEnrollmentStatusToEnrolled(teamId, pairId, participant3.id)).toThrow(EntityError);
     });
   });
 
@@ -430,7 +430,7 @@ describe('# Participants Entity UnitTest \n', () => {
       const participant2 = Participant.restore(ParticipantId.restore('participantId2'), props2);
       const participants = Participants.restore(participantsId, [participant1, participant2]);
       // 実行
-      participants.changeParticipantEnrollmentStatusToOnLeave(participant2.getId);
+      participants.changeParticipantEnrollmentStatusToOnLeave(participant2.id);
       // 確認
       expect(participants.value).toHaveLength(2);
       expect(participants.value[0]).toBe(participant1);
@@ -472,7 +472,7 @@ describe('# Participants Entity UnitTest \n', () => {
       };
       const participant3 = Participant.restore(ParticipantId.restore('participantId3'), props3);
       // 実行・確認
-      expect(() => participants.changeParticipantEnrollmentStatusToOnLeave(participant3.getId)).toThrow(EntityError);
+      expect(() => participants.changeParticipantEnrollmentStatusToOnLeave(participant3.id)).toThrow(EntityError);
     });
   });
 
@@ -500,7 +500,7 @@ describe('# Participants Entity UnitTest \n', () => {
       const participant2 = Participant.restore(ParticipantId.restore('participantId2'), props2);
       const participants = Participants.restore(participantsId, [participant1, participant2]);
       // 実行
-      participants.changeParticipantEnrollmentStatusToWithDrawn(participant2.getId);
+      participants.changeParticipantEnrollmentStatusToWithDrawn(participant2.id);
       // 確認
       expect(participants.value).toHaveLength(2);
       expect(participants.value[0]).toBe(participant1);
@@ -542,7 +542,7 @@ describe('# Participants Entity UnitTest \n', () => {
       };
       const participant3 = Participant.restore(ParticipantId.restore('participantId3'), props3);
       // 実行・確認
-      expect(() => participants.changeParticipantEnrollmentStatusToWithDrawn(participant3.getId)).toThrow(EntityError);
+      expect(() => participants.changeParticipantEnrollmentStatusToWithDrawn(participant3.id)).toThrow(EntityError);
     });
   });
 });

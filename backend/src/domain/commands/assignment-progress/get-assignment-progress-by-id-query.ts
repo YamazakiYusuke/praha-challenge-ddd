@@ -10,6 +10,6 @@ export class GetAssignmentProgressByIdQuery implements IGetOneQuery<AssignmentPr
 
   async execute(assignmentProgressId: AssignmentProgressId): Promise<AssignmentProgress | null | Error> {
     const result = await this.assignmentProgressRepository.getAll() as AssignmentProgress[];
-    return result.find((element: AssignmentProgress) => element.getId.isEqual(assignmentProgressId)) || null;
+    return result.find((element: AssignmentProgress) => element.id.isEqual(assignmentProgressId)) || null;
   }
 }

@@ -11,6 +11,6 @@ export class GetParticipantByIdQuery implements IGetOneQuery<Participant, Partic
   async execute(id: ParticipantId): Promise<Participant | null | Error> {
     const result = await this.participantRepository.getAll();
     const participants = result as Participant[];
-    return participants.find((participant: Participant) => participant.getId.isEqual(id)) || null;
+    return participants.find((participant: Participant) => participant.id.isEqual(id)) || null;
   }
 }

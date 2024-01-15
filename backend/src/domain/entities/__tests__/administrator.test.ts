@@ -27,7 +27,7 @@ describe('# Administrator Entity UnitTest\n', () => {
       const admin = Administrator.restore(id, props);
       // 確認
       expect(admin).toBeInstanceOf(Administrator);
-      expect(admin.getId).toEqual(id);
+      expect(admin.id).toEqual(id);
       expect(admin.email).toEqual(email);
     });
   });

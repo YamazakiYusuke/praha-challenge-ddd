@@ -27,7 +27,7 @@ describe('# Category Entity UnitTest\n', () => {
       const category = Category.restore(id, props);
       // 確認
       expect(category).toBeInstanceOf(Category);
-      expect(category.getId).toEqual(id);
+      expect(category.id).toEqual(id);
       expect(category.name).toEqual(name);
     });
   });

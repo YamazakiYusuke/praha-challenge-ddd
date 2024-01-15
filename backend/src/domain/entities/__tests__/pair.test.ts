@@ -1,6 +1,6 @@
 import { Pair } from "src/domain/entities/pair";
 import { Email } from "src/domain/values/email";
-import { Id, PairId, ParticipantId, ParticipantsId, TeamId } from "src/domain/values/id";
+import { PairId, ParticipantId, ParticipantsId, TeamId } from "src/domain/values/id";
 import { PairName, PersonName } from "src/domain/values/name";
 import { EnrollmentStatusValue } from "src/util/enums";
 import { Participant } from "../participant";
@@ -65,13 +65,13 @@ describe('# Pair Entity UnitTest\n', () => {
       expect(pair.teamId).toEqual(TeamId.restore('teamId'));
       expect(pair.name).toEqual(PairName.restore('PairName'));
       expect(pair.participants.value).toHaveLength(2);
-      expect(pair.participants.value[0]?.getId).toEqual(ParticipantId.restore('participantId1'));
+      expect(pair.participants.value[0]?.id).toEqual(ParticipantId.restore('participantId1'));
       expect(pair.participants.value[0]?.name).toEqual(PersonName.restore('PersonName1'));
       expect(pair.participants.value[0]?.email).toEqual(Email.restore('test1@example.com'));
       expect(pair.participants.value[0]?.teamId).toBeDefined();
       expect(pair.participants.value[0]?.pairId).toBeDefined();
       expect(pair.participants.value[0]?.enrollmentStatus).toEqual(EnrollmentStatusValue.Enrolled);
-      expect(pair.participants.value[1]?.getId).toEqual(ParticipantId.restore('participantId2'));
+      expect(pair.participants.value[1]?.id).toEqual(ParticipantId.restore('participantId2'));
       expect(pair.participants.value[1]?.name).toEqual(PersonName.restore('PersonName2'));
       expect(pair.participants.value[1]?.email).toEqual(Email.restore('test2@example.com'));
       expect(pair.participants.value[1]?.teamId).toBeDefined();
@@ -93,17 +93,17 @@ describe('# Pair Entity UnitTest\n', () => {
       );
       // 確認
       expect(pair).toBeInstanceOf(Pair);
-      expect(pair.getId).toEqual(PairId.restore('PairId'));
+      expect(pair.id).toEqual(PairId.restore('PairId'));
       expect(pair.teamId).toEqual(TeamId.restore('teamId'));
       expect(pair.name).toEqual(PairName.restore('PairName'));
       expect(pair.participants.value).toHaveLength(2);
-      expect(pair.participants.value[0]?.getId).toEqual(ParticipantId.restore('participantId1'));
+      expect(pair.participants.value[0]?.id).toEqual(ParticipantId.restore('participantId1'));
       expect(pair.participants.value[0]?.name).toEqual(PersonName.restore('PersonName1'));
       expect(pair.participants.value[0]?.email).toEqual(Email.restore('test1@example.com'));
       expect(pair.participants.value[0]?.teamId).toEqual(TeamId.restore('teamId1'));
       expect(pair.participants.value[0]?.pairId).toEqual(PairId.restore('pairId1'));
       expect(pair.participants.value[0]?.enrollmentStatus).toEqual(EnrollmentStatusValue.Enrolled);
-      expect(pair.participants.value[1]?.getId).toEqual(ParticipantsId.restore('participantId2'));
+      expect(pair.participants.value[1]?.id).toEqual(ParticipantsId.restore('participantId2'));
       expect(pair.participants.value[1]?.name).toEqual(PersonName.restore('PersonName2'));
       expect(pair.participants.value[1]?.email).toEqual(Email.restore('test2@example.com'));
       expect(pair.participants.value[1]?.teamId).toEqual(TeamId.restore('teamId2'));

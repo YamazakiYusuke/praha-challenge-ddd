@@ -22,7 +22,7 @@ export class Pair extends Entity<PairId, PairProps> {
     const pair = new Pair(PairId.create(), props);
     for (let i = 0; i < pair.participants.length; i++) {
       const participant = pair.participants.getByIndex(i) as Participant;
-      pair.changeParticipantEnrollmentStatusToEnrolled(participant.getId);
+      pair.changeParticipantEnrollmentStatusToEnrolled(participant.id);
     }
     return pair;
   }
@@ -58,8 +58,8 @@ export class Pair extends Entity<PairId, PairProps> {
    * @param participant 
    */
   public appendParticipant(participant: Participant): void | Error {
-    this.participants.append(this.teamId, this.getId, participant);
-    this.changeParticipantEnrollmentStatusToEnrolled(participant.getId);
+    this.participants.append(this.teamId, this.id, participant);
+    this.changeParticipantEnrollmentStatusToEnrolled(participant.id);
   }
 
   /**
@@ -75,7 +75,7 @@ export class Pair extends Entity<PairId, PairProps> {
    * @param participantId 
    */
   private changeParticipantEnrollmentStatusToEnrolled(participantId: ParticipantId): void | Error {
-    this.participants.changeParticipantEnrollmentStatusToEnrolled(this.teamId, this.getId, participantId);
+    this.participants.changeParticipantEnrollmentStatusToEnrolled(this.teamId, this.id, participantId);
   }
 
   /**
@@ -83,7 +83,7 @@ export class Pair extends Entity<PairId, PairProps> {
    * @param participant 
    */
   public changeParticipantEnrollmentStatusToOnLeave(participant: Participant): void | Error {
-    this.participants.changeParticipantEnrollmentStatusToOnLeave(participant.getId);
+    this.participants.changeParticipantEnrollmentStatusToOnLeave(participant.id);
     this.removeParticipant(participant);
   }
 
@@ -92,7 +92,7 @@ export class Pair extends Entity<PairId, PairProps> {
    * @param participant 
    */
   public changeParticipantEnrollmentStatusToWithDrawn(participant: Participant): void | Error {
-    this.participants.changeParticipantEnrollmentStatusToWithDrawn(participant.getId);
+    this.participants.changeParticipantEnrollmentStatusToWithDrawn(participant.id);
     this.removeParticipant(participant);
   }
 }
