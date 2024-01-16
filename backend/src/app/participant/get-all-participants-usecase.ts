@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
 import { ParticipantDTO } from "./dto/participant-dto";
-import { GetAllParticipantsQuery } from "src/domain/commands/participant/get-all-participant-query";
+import { GetAllParticipantsQuery } from "src/domain/commands/participant/get-all-participants-query";
 import { Participant } from "src/domain/entities/participant";
 
 @Injectable()
