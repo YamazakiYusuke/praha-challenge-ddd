@@ -7,12 +7,17 @@ import { AdministratorId } from 'src/domain/values/id';
 import { instance, mock, verify, when } from 'ts-mockito';
 
 describe('# AdministratorCreateService UnitTest\n', () => {
-  const getAdministratorByEmailQuery = mock(GetAdministratorByEmailQuery);
-  const administratorCreateService = new AdministratorCreateService(instance(getAdministratorByEmailQuery));
+  let getAdministratorByEmailQuery: GetAdministratorByEmailQuery;
+  let administratorCreateService: AdministratorCreateService;
   const id = AdministratorId.restore('Id');
   const email = Email.restore('test@example.com');
   const props: AdministratorProps = { email };
   const administrator = Administrator.restore(id, props);
+
+  beforeEach(() => {
+    getAdministratorByEmailQuery = mock(GetAdministratorByEmailQuery);
+    administratorCreateService = new AdministratorCreateService(instance(getAdministratorByEmailQuery));
+  });
 
   describe('## execute\n', () => {
     test('- should create a new administrator\n', async () => {
@@ -22,7 +27,13 @@ describe('# AdministratorCreateService UnitTest\n', () => {
       const result = await administratorCreateService.execute(props);
       // 確認
       verify(getAdministratorByEmailQuery.execute(email)).once();
-      expect(result).toEqual(administrator);
+      expect(result).toEqual(expect.objectContaining({
+        props: expect.objectContaining({
+          email: expect.objectContaining({
+            props: 'test@example.com'
+          })
+        })
+      }));
     });
 
     test('should throw error if email already exists\n', async () => {

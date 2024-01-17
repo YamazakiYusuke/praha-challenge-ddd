@@ -8,12 +8,17 @@ import { instance, mock, verify, when } from 'ts-mockito';
 
 
 describe('# AdministratorChangeEmailService UnitTest\n', () => {
-  const getAdministratorByEmailQuery = mock(GetAdministratorByEmailQuery);
-  const administratorChangeEmailService = new AdministratorChangeEmailService(instance(getAdministratorByEmailQuery));
+  let getAdministratorByEmailQuery: GetAdministratorByEmailQuery;
+  let administratorChangeEmailService: AdministratorChangeEmailService;
   const id = AdministratorId.restore('Id');
   const email = Email.restore('test@example.com');
   const administrator = Administrator.restore(id, { email });
   const newEmail = Email.restore('newtest@example.com');
+
+  beforeEach(() => {
+    getAdministratorByEmailQuery = mock(GetAdministratorByEmailQuery);
+    administratorChangeEmailService = new AdministratorChangeEmailService(instance(getAdministratorByEmailQuery));
+  });
 
   describe('## execute\n', () => {
     test('- should change email of administrator\n', async () => {
