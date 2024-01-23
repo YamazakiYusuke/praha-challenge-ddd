@@ -1,19 +1,22 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Inject } from "@nestjs/common";
 import { ErrorResponse } from "src/app/responses/error-response";
 import { SuccessResponse } from "src/app/responses/success-response";
-import { GetPairWithFewestMembersQuery } from "src/domain/commands/pair/get-pair-with-fewest-members-query";
-import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
+import { IGetPairWithFewestMembersQuery } from "src/domain/commands/pair/get-pair-with-fewest-members-query";
+import { ISavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { Pair } from "src/domain/entities/pair";
 import { Participant, ParticipantProps } from "src/domain/entities/participant";
-import { EnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
+import { IEnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
 import { debuglog } from "util";
 
 @Injectable()
 export class AddNewParticipantUsecase {
   constructor(
-    private readonly getPairWithFewestMembersQuery: GetPairWithFewestMembersQuery,
-    private readonly enrollParticipantService: EnrollParticipantService,
-    private readonly savePairCommand: SavePairCommand,
+    @Inject('IGetPairWithFewestMembersQuery')
+    private readonly getPairWithFewestMembersQuery: IGetPairWithFewestMembersQuery,
+    @Inject('IEnrollParticipantService')
+    private readonly enrollParticipantService: IEnrollParticipantService,
+    @Inject('ISavePairCommand')
+    private readonly savePairCommand: ISavePairCommand,
   ) { }
 
   async execute(props: ParticipantProps): Promise<SuccessResponse | ErrorResponse> {

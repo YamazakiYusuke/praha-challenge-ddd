@@ -1,14 +1,15 @@
-import { Injectable } from "@nestjs/common";
-import { GetAllPairsQuery } from "src/domain/commands/pair/get-all-pairs-query";
+import { Injectable, Inject } from "@nestjs/common";
+import { IGetAllPairsQuery } from "src/domain/commands/pair/get-all-pairs-query";
+import { Pair } from "src/domain/entities/pair";
 import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
 import { PairDTO } from "./dto/pair-dto";
-import { Pair } from "src/domain/entities/pair";
 
 @Injectable()
 export class GetAllPairsUsecase {
   constructor(
-    private readonly getAllPairsQuery: GetAllPairsQuery,
+    @Inject('IGetAllPairsQuery')
+    private readonly getAllPairsQuery: IGetAllPairsQuery,
   ) { }
 
   public async execute(): Promise<PairDTO[] | ErrorResponse> {

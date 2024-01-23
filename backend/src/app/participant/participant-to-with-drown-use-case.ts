@@ -1,24 +1,29 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Inject } from "@nestjs/common";
 import { ErrorResponse } from "src/app/responses/error-response";
 import { SuccessResponse } from "src/app/responses/success-response";
-import { GetPairByIdQuery } from "src/domain/commands/pair/get-pair-by-id-query";
-import { GetPairWithFewestMembersByTeamIdQuery } from "src/domain/commands/pair/get-pair-with-fewest-members-by-team-id-query";
-import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
-import { GetParticipantByIdQuery } from "src/domain/commands/participant/get-participant-by-id-query";
+import { IGetPairByIdQuery } from "src/domain/commands/pair/get-pair-by-id-query";
+import { IGetPairWithFewestMembersByTeamIdQuery } from "src/domain/commands/pair/get-pair-with-fewest-members-by-team-id-query";
+import { ISavePairCommand } from "src/domain/commands/pair/save-pair-command";
+import { IGetParticipantByIdQuery } from "src/domain/commands/participant/get-participant-by-id-query";
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
-import { EnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
+import { IEnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
 import { PairId, ParticipantId, TeamId } from "src/domain/values/id";
 import { debuglog } from "util";
 
 @Injectable()
 export class ParticipantToWithDrownUseCase {
   constructor(
-    private readonly getParticipantByIdQuery: GetParticipantByIdQuery,
-    private readonly getPairByIdQuery: GetPairByIdQuery,
-    private readonly getPairWithFewestMembersByTeamIdQuery: GetPairWithFewestMembersByTeamIdQuery,
-    private readonly enrollParticipantService: EnrollParticipantService,
-    private readonly savePairCommand: SavePairCommand,
+    @Inject('IGetParticipantByIdQuery')
+    private readonly getParticipantByIdQuery: IGetParticipantByIdQuery,
+    @Inject('IGetPairByIdQuery')
+    private readonly getPairByIdQuery: IGetPairByIdQuery,
+    @Inject('IGetPairWithFewestMembersByTeamIdQuery')
+    private readonly getPairWithFewestMembersByTeamIdQuery: IGetPairWithFewestMembersByTeamIdQuery,
+    @Inject('IEnrollParticipantService')
+    private readonly enrollParticipantService: IEnrollParticipantService,
+    @Inject('ISavePairCommand')
+    private readonly savePairCommand: ISavePairCommand,
   ) { }
 
   async execute(participantId: ParticipantId): Promise<SuccessResponse | ErrorResponse> {

@@ -1,8 +1,9 @@
-import { ValidationPipe } from '@nestjs/common'
-import { NestFactory } from '@nestjs/core'
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
+import { ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-import { AppModule } from './app.module'
+import { setupDI } from 'src/infra/di/di';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -21,3 +22,6 @@ async function bootstrap() {
   await app.listen(Number(process.env.PORT) || 3001)
 }
 bootstrap()
+
+setupDI();
+

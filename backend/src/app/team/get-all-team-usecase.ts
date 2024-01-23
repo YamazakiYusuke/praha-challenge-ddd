@@ -1,14 +1,15 @@
-import { debuglog } from "util";
-import { GetAllTeamsQuery } from "src/domain/commands/team/get-all-team-query";
-import { TeamDTO } from "./team-dto";
-import { ErrorResponse } from "../responses/error-response";
-import { Injectable } from "@nestjs/common";
+import { Injectable, Inject } from "@nestjs/common";
+import { IGetAllTeamsQuery } from "src/domain/commands/team/get-all-team-query";
 import { Team } from "src/domain/entities/team";
+import { debuglog } from "util";
+import { ErrorResponse } from "../responses/error-response";
+import { TeamDTO } from "./team-dto";
 
 @Injectable()
 export class GetAllTeamsUsecase {
   constructor(
-    private readonly getAllTeamsQuery: GetAllTeamsQuery,
+    @Inject('IGetAllTeamsQuery')
+    private readonly getAllTeamsQuery: IGetAllTeamsQuery,
   ) { }
 
   public async execute(): Promise<TeamDTO[] | ErrorResponse> {

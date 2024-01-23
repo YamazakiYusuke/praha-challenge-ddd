@@ -1,11 +1,18 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { Administrator } from "src/domain/entities/administrator";
 import { IAdministratorRepository } from "src/domain/repositories/administrator-repository";
 import { ICommand } from "../base/command";
 
+export interface ISaveAdministratorCommand extends ICommand<Administrator> {
+  execute(administrator: Administrator): Promise<void | Error>;
+}
+
 @Injectable()
-export class SaveAdministratorCommand implements ICommand<Administrator> {
-  constructor(private readonly administratorRepository: IAdministratorRepository) { }
+export class SaveAdministratorCommand implements ISaveAdministratorCommand {
+  constructor(
+    @Inject('IAdministratorRepository')
+    private readonly administratorRepository: IAdministratorRepository
+  ) { }
 
   async execute(administrator: Administrator): Promise<void | Error> {
     await this.administratorRepository.save(administrator);

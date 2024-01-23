@@ -1,13 +1,21 @@
-import { Injectable } from "@nestjs/common";
-import { GetPairsByTeamIdQuery } from "src/domain/commands/pair/get-pairs-by-team-id-query copy";
+import { Inject, Injectable } from "@nestjs/common";
+import { IGetPairsByTeamIdQuery } from "src/domain/commands/pair/get-pairs-by-team-id-query";
 import { Participants } from "src/domain/entities/participants";
-import { Id, TeamId } from "src/domain/values/id";
+import { TeamId } from "src/domain/values/id";
 import { PairName } from "src/domain/values/name";
+import { debuglog } from "util";
 import { Pair, PairProps } from "../../entities/pair";
 
+export interface ICreatePairService {
+  execute(props: { teamId: TeamId; participants: Participants; }): Promise<Pair | Error>;
+}
+
 @Injectable()
-export class CreatePairService {
-  constructor(private readonly getPairsByTeamIdQuery: GetPairsByTeamIdQuery) { }
+export class CreatePairService implements ICreatePairService {
+  constructor(
+    @Inject('IGetPairsByTeamIdQuery')
+    private readonly getPairsByTeamIdQuery: IGetPairsByTeamIdQuery
+  ) { }
 
   async execute(props: { teamId: TeamId; participants: Participants; }): Promise<Pair | Error> {
     const name = await this.getName(props.teamId) as PairName;
@@ -16,6 +24,7 @@ export class CreatePairService {
       name: name,
       participants: props.participants,
     }
+    debuglog(`entityProps: ${entityProps}`);
     const newPair = Pair.create(entityProps);
     return newPair;
   }

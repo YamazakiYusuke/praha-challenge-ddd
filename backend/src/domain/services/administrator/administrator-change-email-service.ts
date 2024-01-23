@@ -1,12 +1,19 @@
-import { Injectable } from "@nestjs/common";
-import { GetAdministratorByEmailQuery } from "src/domain/commands/administrator/get-administrator-by-email-query";
+import { Inject, Injectable } from "@nestjs/common";
+import { IGetAdministratorByEmailQuery } from "src/domain/commands/administrator/get-administrator-by-email-query";
 import { EntityError } from "src/domain/errors/entity_error";
 import { Email } from "src/domain/values/email";
 import { Administrator } from "../../entities/administrator";
 
+export interface IAdministratorChangeEmailService {
+  execute(administrator: Administrator, newEmail: Email): Promise<void | Error>;
+}
+
 @Injectable()
-export class AdministratorChangeEmailService {
-  constructor(private readonly getAdministratorByEmailQuery: GetAdministratorByEmailQuery) { }
+export class AdministratorChangeEmailService implements IAdministratorChangeEmailService {
+  constructor(
+    @Inject('IGetAdministratorByEmailQuery')
+    private readonly getAdministratorByEmailQuery: IGetAdministratorByEmailQuery
+  ) { }
 
   async execute(administrator: Administrator, newEmail: Email): Promise<void | Error> {
     const existingAdministrator = await this.getAdministratorByEmailQuery.execute(newEmail);

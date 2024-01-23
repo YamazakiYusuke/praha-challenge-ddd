@@ -1,4 +1,4 @@
-import { GetPairsByTeamIdQuery } from "src/domain/commands/pair/get-pairs-by-team-id-query copy";
+import { GetPairsByTeamIdQuery } from "src/domain/commands/pair/get-pairs-by-team-id-query";
 import { Participant } from "src/domain/entities/participant";
 import { Participants } from "src/domain/entities/participants";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";

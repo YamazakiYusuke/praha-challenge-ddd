@@ -1,13 +1,18 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
 import { Participants } from "src/domain/entities/participants";
-import { CreatePairService } from "src/domain/services/pair/create-pair-service";
+import { ICreatePairService } from "src/domain/services/pair/create-pair-service";
+
+export interface IEnrollParticipantService {
+  execute(smallestPair: Pair, participant: Participant): Promise<Pair[] | Error>;
+}
 
 @Injectable()
-export class EnrollParticipantService {
+export class EnrollParticipantService implements IEnrollParticipantService {
   constructor(
-    private readonly createPairService: CreatePairService,
+    @Inject('ICreatePairService')
+    private readonly createPairService: ICreatePairService,
   ) { }
 
   async execute(smallestPair: Pair, participant: Participant): Promise<Pair[] | Error> {
@@ -18,7 +23,8 @@ export class EnrollParticipantService {
       const mover = smallestPair.lastParticipant;
       smallestPair.removeParticipant(mover);
       const newParticipants = Participants.create([mover, participant]) as Participants;
-      const enrolledPair = await (this.createPairService.execute({ teamId: smallestPair.teamId, participants: newParticipants })) as Pair;
+      // ここまでは正常
+      const enrolledPair = await this.createPairService.execute({ teamId: smallestPair.teamId, participants: newParticipants }) as Pair;
       return [smallestPair, enrolledPair];
     }
   }

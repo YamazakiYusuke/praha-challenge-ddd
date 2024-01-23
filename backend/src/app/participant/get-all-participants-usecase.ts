@@ -1,14 +1,15 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Inject } from "@nestjs/common";
+import { IGetAllParticipantsQuery } from "src/domain/commands/participant/get-all-participants-query";
+import { Participant } from "src/domain/entities/participant";
 import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
 import { ParticipantDTO } from "./dto/participant-dto";
-import { GetAllParticipantsQuery } from "src/domain/commands/participant/get-all-participants-query";
-import { Participant } from "src/domain/entities/participant";
 
 @Injectable()
 export class GetAllParticipantsUsecase {
   constructor(
-    private readonly getAllParticipantsQuery: GetAllParticipantsQuery,
+    @Inject('IGetAllParticipantsQuery')
+    private readonly getAllParticipantsQuery: IGetAllParticipantsQuery,
   ) { }
 
   public async execute(): Promise<ParticipantDTO[] | ErrorResponse> {

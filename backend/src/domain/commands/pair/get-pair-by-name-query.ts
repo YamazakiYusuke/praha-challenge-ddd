@@ -1,12 +1,19 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { Pair } from "src/domain/entities/pair";
 import { IPairRepository } from "src/domain/repositories/pair-repository";
 import { PairName } from "src/domain/values/name";
 import { IGetQuery } from "../base/get-query";
 
+export interface IGetPairByNameQuery extends IGetQuery<Pair, PairName> {
+  execute(name: PairName): Promise<Pair | null | Error>;
+}
+
 @Injectable()
-export class GetPairByNameQuery implements IGetQuery<Pair, PairName> {
-  constructor(private readonly pairRepository: IPairRepository) { }
+export class GetPairByNameQuery implements IGetPairByNameQuery {
+  constructor(
+    @Inject('IPairRepository')
+    private readonly pairRepository: IPairRepository
+  ) { }
 
   async execute(name: PairName): Promise<Pair | null | Error> {
     const result = await this.pairRepository.getAll();
