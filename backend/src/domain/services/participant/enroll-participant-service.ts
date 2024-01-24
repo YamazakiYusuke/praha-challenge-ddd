@@ -23,7 +23,6 @@ export class EnrollParticipantService implements IEnrollParticipantService {
       const mover = smallestPair.lastParticipant;
       smallestPair.removeParticipant(mover);
       const newParticipants = Participants.create([mover, participant]) as Participants;
-      // ここまでは正常
       const enrolledPair = await this.createPairService.execute({ teamId: smallestPair.teamId, participants: newParticipants }) as Pair;
       return [smallestPair, enrolledPair];
     }
