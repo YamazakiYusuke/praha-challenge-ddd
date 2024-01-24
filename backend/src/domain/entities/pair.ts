@@ -52,6 +52,18 @@ export class Pair extends Entity<PairId, PairProps> {
     return this.participants.length;
   }
 
+  public get hasValidNumberOfParticipants(): boolean {
+    return this.participants.isValidLength;
+  }
+
+  public get hasExceededMaxParticipants(): boolean {
+    return this.participants.isAboveMaxNumber;
+  }
+
+  public get hasInsufficientMinParticipants(): boolean {
+    return this.participants.isBelowMinNumber;
+  }
+
   /// Method
   /**
    * Pairに所属している参加者を在籍状態にする

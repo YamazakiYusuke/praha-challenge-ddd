@@ -5,13 +5,16 @@ import { Entity } from "./base/entity";
 import { Participant } from "./participant";
 
 export class Participants extends Entity<ParticipantsId, Array<Participant>> {
+  static readonly maxNumber = 3;
+  static readonly minNumber = 1;
+
   private constructor(id: ParticipantsId, props: Array<Participant>) {
     validateProps(id, props);
     super(id, props)
   }
 
   static create(prop: Array<Participant>): Participants | Error {
-    if (prop.length < 1 || prop.length > 3) {
+    if (prop.length < this.minNumber || prop.length > this.maxNumber) {
       throw new EntityError('Participants must consist of 1 to 3 participants');
     }
     return new Participants(ParticipantsId.create(), prop);
@@ -31,6 +34,18 @@ export class Participants extends Entity<ParticipantsId, Array<Participant>> {
 
   public get last(): Participant {
     return this.value[this.value.length - 1] as Participant;
+  }
+
+  public get isValidLength(): boolean {
+    return this.value.length >= Participants.minNumber && this.value.length <= Participants.maxNumber;
+  }
+
+  public get isAboveMaxNumber(): boolean {
+    return this.value.length > Participants.maxNumber;
+  }
+
+  public get isBelowMinNumber(): boolean {
+    return this.value.length < Participants.minNumber;
   }
 
   public getByIndex(i: number): Participant | undefined {

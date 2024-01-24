@@ -31,11 +31,9 @@ export class ParticipantToWithDrownUseCase {
       const participant = await this.getParticipantByIdQuery.execute(participantId) as Participant;
       const pair = await this.getPairByIdQuery.execute(participant.pairId as PairId) as Pair;
       pair.changeParticipantEnrollmentStatusToWithDrawn(participant);
-      if (pair.participantsLength < 2) {
-        // TODO: メール送信サービス　「どの参加者が減ったのか」「どのチームが2名以下になったのか」「そのチームの現在の参加者名」を記載する
-      }
 
-      if (pair.participantsLength == 1) {
+      if (pair.hasInsufficientMinParticipants) {
+        // TODO: メール送信サービス　「どの参加者が減ったのか」「どのチームが2名以下になったのか」「そのチームの現在の参加者名」を記載する
         const smallestPair = await this.getPairWithFewestMembersByTeamIdQuery.execute(pair.teamId as TeamId) as Pair | null;
         if (smallestPair == null) {
           // TODO: 管理者にメール　「どの参加者が減ったのか」「どの参加者が合流先を探しているのか」

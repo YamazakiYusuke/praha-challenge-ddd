@@ -19,7 +19,7 @@ export class GetPairWithFewestMembersQuery implements IGetPairWithFewestMembersQ
   async execute(): Promise<Pair | null | Error> {
     const result = await this.pairRepository.getAll();
     const allPairs = result as Pair[];
-    if (allPairs.length === 0) throw new CommandError('ペアが存在しません');
-    return allPairs[createRandomNumUpTo(allPairs.length)] ?? null;
+    if (allPairs.length === 0) return null;
+    return allPairs[createRandomNumUpTo(allPairs.length)] as Pair;
   }
 }
