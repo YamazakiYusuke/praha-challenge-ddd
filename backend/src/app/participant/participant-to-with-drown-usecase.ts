@@ -1,39 +1,29 @@
-import { Injectable, Inject } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { ErrorResponse } from "src/app/responses/error-response";
 import { SuccessResponse } from "src/app/responses/success-response";
-import { IGetPairWithFewestMembersQuery } from "src/domain/commands/pair/get-pair-with-fewest-members-query";
+import { IGetPairByIdQuery } from "src/domain/commands/pair/get-pair-by-id-query";
+import { IGetPairWithFewestMembersByTeamIdQuery } from "src/domain/commands/pair/get-pair-with-fewest-members-by-team-id-query";
 import { ISavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { IGetParticipantByIdQuery } from "src/domain/commands/participant/get-participant-by-id-query";
-import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
 import { IEnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
+import { IParticipantToWithDrownService } from "src/domain/services/participant/participant-to-with-drown-service";
 import { ParticipantId } from "src/domain/values/id";
 import { debuglog } from "util";
 
 @Injectable()
-export class ParticipantToEnrollUseCase {
+export class ParticipantToWithDrownUseCase {
   constructor(
     @Inject('IGetParticipantByIdQuery')
     private readonly getParticipantByIdQuery: IGetParticipantByIdQuery,
-    @Inject('IGetPairWithFewestMembersQuery')
-    private readonly getPairWithFewestMembersQuery: IGetPairWithFewestMembersQuery,
-    @Inject('IEnrollParticipantService')
-    private readonly enrollParticipantService: IEnrollParticipantService,
-    @Inject('ISavePairCommand')
-    private readonly savePairCommand: ISavePairCommand,
+    @Inject('IParticipantToWithDrownService')
+    private readonly participantToWithDrownService: IParticipantToWithDrownService,
   ) { }
 
-  // Teamの更新
   async execute(participantId: ParticipantId): Promise<SuccessResponse | ErrorResponse> {
     try {
       const participant = await this.getParticipantByIdQuery.execute(participantId) as Participant;
-      const smallestPair = await this.getPairWithFewestMembersQuery.execute() as Pair | null;
-      if (smallestPair == null) {
-        // TODO: 管理者にメール
-        throw Error('参加可能なペアがありません');
-      }
-      const pairs = await this.enrollParticipantService.execute(smallestPair, participant) as Pair[];
-      await this.savePairCommand.execute(pairs);
+      await this.participantToWithDrownService.execute(participant);
       return new SuccessResponse('参加者のステータス更新に成功失敗しました');
     } catch (e) {
       debuglog(`Exception: ${e}`);

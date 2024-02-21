@@ -28,6 +28,9 @@ import { CategoryChangeNameService } from "src/domain/services/category/category
 import { CategoryCreateService } from "src/domain/services/category/category-create-service";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";
 import { EnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
+import { ParticipantToEnrollService } from "src/domain/services/participant/participant-to-enroll-service";
+import { ParticipantToOnLeaveService } from "src/domain/services/participant/participant-to-on-leave-service";
+import { ParticipantToWithDrownService } from "src/domain/services/participant/participant-to-with-drown-service";
 import { InMemoryAdministratorRepository } from "src/infra/db/repositories/in-memory/administrator-repository";
 import { InMemoryAssignmentProgressRepository } from "src/infra/db/repositories/in-memory/assignment-progress-repository";
 import { InMemoryAssignmentRepository } from "src/infra/db/repositories/in-memory/assignment-repository";
@@ -158,6 +161,18 @@ export function setupDI() {
 
   container.register('IEnrollParticipantService', {
     useClass: EnrollParticipantService
+  })
+
+  container.register('IParticipantToEnrollService', {
+    useClass: ParticipantToEnrollService
+  })
+
+  container.register('IParticipantToOnLeaveService', {
+    useClass: ParticipantToOnLeaveService
+  })
+
+  container.register('IParticipantToWithDrownService', {
+    useClass: ParticipantToWithDrownService
   })
 
   container.register('IAdministratorRepository', {

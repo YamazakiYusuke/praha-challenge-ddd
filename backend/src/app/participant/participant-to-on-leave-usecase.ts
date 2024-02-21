@@ -8,44 +8,28 @@ import { IGetParticipantByIdQuery } from "src/domain/commands/participant/get-pa
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
 import { IEnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
+import { IParticipantToOnLeaveService } from "src/domain/services/participant/participant-to-on-leave-service";
 import { PairId, ParticipantId, TeamId } from "src/domain/values/id";
 import { debuglog } from "util";
 
 @Injectable()
-export class ParticipantToWithDrownUseCase {
+export class ParticipantToOnLeaveUseCase {
   constructor(
     @Inject('IGetParticipantByIdQuery')
     private readonly getParticipantByIdQuery: IGetParticipantByIdQuery,
-    @Inject('IGetPairByIdQuery')
-    private readonly getPairByIdQuery: IGetPairByIdQuery,
-    @Inject('IGetPairWithFewestMembersByTeamIdQuery')
-    private readonly getPairWithFewestMembersByTeamIdQuery: IGetPairWithFewestMembersByTeamIdQuery,
-    @Inject('IEnrollParticipantService')
-    private readonly enrollParticipantService: IEnrollParticipantService,
-    @Inject('ISavePairCommand')
-    private readonly savePairCommand: ISavePairCommand,
+    @Inject('IParticipantToOnLeaveService')
+    private readonly participantToOnLeaveService: IParticipantToOnLeaveService,
   ) { }
 
   async execute(participantId: ParticipantId): Promise<SuccessResponse | ErrorResponse> {
     try {
       const participant = await this.getParticipantByIdQuery.execute(participantId) as Participant;
-      const pair = await this.getPairByIdQuery.execute(participant.pairId as PairId) as Pair;
-      pair.changeParticipantEnrollmentStatusToWithDrawn(participant);
-
-      if (pair.hasInsufficientMinParticipants) {
-        // TODO: メール送信サービス　「どの参加者が減ったのか」「どのチームが2名以下になったのか」「そのチームの現在の参加者名」を記載する
-        const smallestPair = await this.getPairWithFewestMembersByTeamIdQuery.execute(pair.teamId as TeamId) as Pair | null;
-        if (smallestPair == null) {
-          // TODO: 管理者にメール　「どの参加者が減ったのか」「どの参加者が合流先を探しているのか」
-          throw Error('参加可能なペアがありません');
-        }
-        const pairs = await this.enrollParticipantService.execute(smallestPair, participant) as Pair[];
-        await this.savePairCommand.execute(pairs);
-      }
+      await this.participantToOnLeaveService.execute(participant);
       return new SuccessResponse('参加者のステータス更新に成功失敗しました');
     } catch (e) {
       debuglog(`Exception: ${e}`);
       return new ErrorResponse('参加者のステータス更新に失敗しました');
     }
+
   }
 }
