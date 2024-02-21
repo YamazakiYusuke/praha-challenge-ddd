@@ -35,6 +35,7 @@ import { InMemoryCategoryRepository } from "src/infra/db/repositories/in-memory/
 import { InMemoryPairRepository } from "src/infra/db/repositories/in-memory/pair-repository";
 import { InMemoryParticipantRepository } from "src/infra/db/repositories/in-memory/participant-repository";
 import { InMemoryTeamRepository } from "src/infra/db/repositories/in-memory/team-repository";
+import { MockAdminEmailSendService } from "src/infra/mail/repositories/mock/mock-amin-email-send-service";
 import { container } from "tsyringe";
 
 export function setupDI() {
@@ -185,5 +186,9 @@ export function setupDI() {
 
   container.register('ITeamRepository', {
     useClass: InMemoryTeamRepository
+  })
+
+  container.register('IMailSenderRepository', {
+    useClass: MockAdminEmailSendService
   })
 }

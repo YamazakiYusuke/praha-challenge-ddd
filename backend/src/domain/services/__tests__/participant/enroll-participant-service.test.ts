@@ -80,6 +80,7 @@ describe('# EnrollParticipantService UnitTest\n', () => {
       expect(result[1]?.participants.length).toEqual(2);
       expect(result[0]).toEqual(getPair([participant1(), participant2()]));
       // テストが失敗する
+      // TODO: 原因究明対応
       // expect(result[1]).toEqual(getPair([participant3(), newParticipant(teamId(), pairId())]));
     });
   });

@@ -130,3 +130,18 @@ export class TeamId extends Id {
     return true;
   }
 }
+
+export class AdminEmailId extends Id {
+  static create(): AdminEmailId {
+    let id = createRandomIdString();
+    return new AdminEmailId(id);
+  }
+
+  static restore(id: string): AdminEmailId {
+    return new AdminEmailId(id);
+  }
+
+  get isAdminEmailId(): boolean {
+    return true;
+  }
+}
