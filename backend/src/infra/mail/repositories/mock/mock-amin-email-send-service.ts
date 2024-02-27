@@ -10,7 +10,7 @@ export class MockAdminEmailSendService implements IMailSenderRepository {
     // Simulate email sending
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const isSuccess = Math.random() > 0.1; // 90% success rate
+        const isSuccess = Math.random() > 0.01; // 99% success rate
         if (isSuccess) {
           console.log("Mock email sent successfully.");
           resolve();
