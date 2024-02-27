@@ -3,6 +3,7 @@ import { IGetPairWithFewestMembersQuery } from "src/domain/commands/pair/get-pai
 import { ISavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
+import { EntityError } from "src/domain/errors/entity_error";
 import { IEnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
 
 export interface IParticipantToEnrollService {
@@ -24,7 +25,7 @@ export class ParticipantToEnrollService implements IParticipantToEnrollService {
     const smallestPair = await this.getPairWithFewestMembersQuery.execute() as Pair | null;
     if (smallestPair == null) {
       // TODO: 管理者にメール
-      throw Error('参加可能なペアがありません');
+      throw new EntityError('参加可能なペアがありません');
     }
     const pairs = await this.enrollParticipantService.execute(smallestPair, participant) as Pair[];
     await this.savePairCommand.execute(pairs);

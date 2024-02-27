@@ -4,6 +4,7 @@ import { IGetPairWithFewestMembersByTeamIdQuery } from "src/domain/commands/pair
 import { ISavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
+import { EntityError } from "src/domain/errors/entity_error";
 import { IEnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
 import { PairId, TeamId } from "src/domain/values/id";
 
@@ -32,7 +33,7 @@ export class ParticipantToWithDrownService implements IParticipantToWithDrownSer
       const smallestPair = await this.getPairWithFewestMembersByTeamIdQuery.execute(pair.teamId as TeamId) as Pair | null;
       if (smallestPair == null) {
         // TODO: 管理者にメール　「どの参加者が減ったのか」「どの参加者が合流先を探しているのか」
-        throw Error('参加可能なペアがありません');
+        throw new EntityError('参加可能なペアがありません');
       }
       const pairs = await this.enrollParticipantService.execute(smallestPair, participant) as Pair[];
       await this.savePairCommand.execute(pairs);
