@@ -1,28 +1,13 @@
 import { GetPairsByTeamIdQuery } from "src/domain/commands/pair/get-pairs-by-team-id-query";
-import { Participant } from "src/domain/entities/participant";
-import { Participants } from "src/domain/entities/participants";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";
-import { Email } from "src/domain/values/email";
-import { PairId, ParticipantId, ParticipantsId, TeamId } from "src/domain/values/id";
-import { PersonName } from "src/domain/values/name";
-import { EnrollmentStatusValue } from "src/util/enums";
+import { ParticipantId, ParticipantsId, TeamId } from "src/domain/values/id";
 import { instance, mock, verify, when } from 'ts-mockito';
 
 describe('# CreatePairService UnitTest\n', () => {
   let getPairsByTeamIdQuery: GetPairsByTeamIdQuery;
   let createPairService: CreatePairService;
   const teamId = TeamId.restore('teamId');
-  const participantsId = ParticipantsId.restore('participantsId');
-  const participant = Participant.restore(ParticipantId.restore('participantId'), {
-    name: PersonName.restore('John Doe'),
-    email: Email.restore('john.doe@example.com'),
-    teamId: TeamId.restore('teamId'),
-    pairId: PairId.restore('pairId'),
-    enrollmentStatus: EnrollmentStatusValue.Enrolled
-  });
-  const participants = Participants.restore(participantsId, [
-    participant,
-  ]);
+  const participantIds = [ParticipantId.restore('participantId1'), ParticipantId.restore('participantId2')];
 
   beforeEach(() => {
     getPairsByTeamIdQuery = mock(GetPairsByTeamIdQuery);
@@ -34,7 +19,7 @@ describe('# CreatePairService UnitTest\n', () => {
       // 準備
       when(getPairsByTeamIdQuery.execute(teamId)).thenResolve([]);
       // 実行
-      const result = await createPairService.execute({ teamId, participants });
+      const result = await createPairService.execute({ teamId, participantIds });
       // 確認
       verify(getPairsByTeamIdQuery.execute(teamId)).once();
       expect(result).toEqual(expect.objectContaining({
@@ -46,14 +31,10 @@ describe('# CreatePairService UnitTest\n', () => {
           name: expect.objectContaining({
             props: 'a'
           }),
-          participants: expect.objectContaining({
-            _id: expect.objectContaining({
-              props: 'participantsId'
-            }),
-            props: expect.arrayContaining([
-              participant
-            ])
-          })
+          participantIds: [
+            { props: 'participantId1' },
+            { props: 'participantId2' }
+          ]
         }
       }));
     });
