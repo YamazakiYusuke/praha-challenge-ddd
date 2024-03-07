@@ -2,17 +2,18 @@ import { PairName } from "src/domain/values/name";
 import { PairId, ParticipantId, TeamId } from "../values/id";
 import { Entity } from "./base/entity";
 import { Participant } from "./participant";
-import { Participants } from "./participants";
 import { validateProps } from "./utils/validate-props";
+import { EntityError } from "src/domain/errors/entity_error";
 
 export interface PairProps {
   teamId: TeamId;
   name: PairName;
-  participants: Participants;
+  participantIds: ParticipantId[];
 }
 
 export class Pair extends Entity<PairId, PairProps> {
-
+  static readonly maxNumber = 3;
+  static readonly minNumber = 1;
   private constructor(id: PairId, props: PairProps) {
     validateProps(id, props);
     super(id, props)
@@ -20,10 +21,6 @@ export class Pair extends Entity<PairId, PairProps> {
   /// Factory
   static create(props: PairProps): Pair | Error {
     const pair = new Pair(PairId.create(), props);
-    for (let i = 0; i < pair.participants.length; i++) {
-      const participant = pair.participants.getByIndex(i) as Participant;
-      pair.changeParticipantEnrollmentStatusToEnrolled(participant.id);
-    }
     return pair;
   }
 
@@ -40,71 +37,54 @@ export class Pair extends Entity<PairId, PairProps> {
     return this.props.name;
   }
 
-  public get participants(): Participants {
-    return this.props.participants;
+  public get participantIds(): ParticipantId[] {
+    return this.props.participantIds;
   }
 
-  public get lastParticipant(): Participant {
-    return this.participants.last;
+  public get lastParticipant(): ParticipantId {
+    return this.participantIds[this.participantIds.length - 1] as ParticipantId;
   }
 
   public get participantsLength(): number {
-    return this.participants.length;
+    return this.participantIds.length;
   }
 
   public get hasValidNumberOfParticipants(): boolean {
-    return this.participants.isValidLength;
+    return this.participantsLength >= Pair.minNumber && this.participantsLength <= Pair.maxNumber;
   }
 
   public get hasExceededMaxParticipants(): boolean {
-    return this.participants.isAboveMaxNumber;
+    return this.participantsLength > Pair.maxNumber;
   }
 
   public get hasInsufficientMinParticipants(): boolean {
-    return this.participants.isBelowMinNumber;
+    return this.participantsLength < Pair.minNumber;
   }
 
   /// Method
+  public participantIndexAt(index: number): ParticipantId | null {
+    return this.participantIds[index] ?? null;
+  }
+
   /**
    * Pairに所属している参加者を在籍状態にする
    * @param participant 
    */
-  public appendParticipant(participant: Participant): void | Error {
-    this.participants.append(this.teamId, this.id, participant);
-    this.changeParticipantEnrollmentStatusToEnrolled(participant.id);
+  public appendParticipant(participantId: ParticipantId): void | Error {
+    if (this.participantIds.includes(participantId)) {
+      throw new EntityError("Participant ID already exists in the pair.");
+    }
+    this.participantIds.push(participantId);
   }
 
   /**
    * Pairに所属している参加者を取り除く
    * @param participant 
    */
-  public removeParticipant(participant: Participant): void | Error {
-    this.participants.remove(participant);
-  }
-
-  /**
-   * Pairに所属している参加者を在籍状態にする
-   * @param participantId 
-   */
-  private changeParticipantEnrollmentStatusToEnrolled(participantId: ParticipantId): void | Error {
-    this.participants.changeParticipantEnrollmentStatusToEnrolled(this.teamId, this.id, participantId);
-  }
-
-  /**
-   * Pairに所属している参加者を休会させる
-   * @param participant 
-   */
-  public changeParticipantEnrollmentStatusToOnLeave(participant: Participant): void | Error {
-    this.participants.changeParticipantEnrollmentStatusToOnLeave(participant.id);
-    this.removeParticipant(participant);
-  }
-
-  /**
-   * Pairに所属している参加者を退会させる
-   * @param participant 
-   */
-  public changeParticipantEnrollmentStatusToWithDrawn(participant: Participant): void | Error {
-    this.participants.changeParticipantEnrollmentStatusToWithDrawn(participant.id);
-    this.removeParticipant(participant);
+  public removeParticipant(participantId: ParticipantId): void | Error {
+    if (!this.participantIds.includes(participantId)) {
+      throw new EntityError("Participant ID does not exist in the pair.");
+    }
+    this.props.participantIds = this.participantIds.filter(id => id !== participantId);
   }
 }

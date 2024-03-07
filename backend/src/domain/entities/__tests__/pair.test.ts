@@ -1,163 +1,141 @@
 import { Pair } from "src/domain/entities/pair";
-import { Email } from "src/domain/values/email";
-import { PairId, ParticipantId, ParticipantsId, TeamId } from "src/domain/values/id";
-import { PairName, PersonName } from "src/domain/values/name";
-import { EnrollmentStatusValue } from "src/util/enums";
-import { Participant } from "../participant";
-import { Participants } from "../participants";
+import { PairId, ParticipantId, TeamId } from "src/domain/values/id";
+import { PairName } from "src/domain/values/name";
 
 describe('# Pair Entity UnitTest\n', () => {
-  const participant1 = (enrollmentStatus: EnrollmentStatusValue) => Participant.restore(
-    ParticipantId.restore('participantId1'),
-    {
-      name: PersonName.restore('PersonName1'),
-      email: Email.restore('test1@example.com'),
-      teamId: enrollmentStatus == EnrollmentStatusValue.Enrolled ? TeamId.restore('teamId1') : undefined,
-      pairId: enrollmentStatus == EnrollmentStatusValue.Enrolled ? PairId.restore('pairId1') : undefined,
-      enrollmentStatus: enrollmentStatus,
-    },
-  );
-  const participant2 = (enrollmentStatus: EnrollmentStatusValue) => Participant.restore(
-    ParticipantId.restore('participantId2'),
-    {
-      name: PersonName.restore('PersonName2'),
-      email: Email.restore('test2@example.com'),
-      teamId: enrollmentStatus == EnrollmentStatusValue.Enrolled ? TeamId.restore('teamId2') : undefined,
-      pairId: enrollmentStatus == EnrollmentStatusValue.Enrolled ? PairId.restore('pairId2') : undefined,
-      enrollmentStatus: enrollmentStatus,
-    },
-  );
-  const participant3 = (enrollmentStatus: EnrollmentStatusValue) => Participant.restore(
-    ParticipantId.restore('participantId3'),
-    {
-      name: PersonName.restore('PersonName3'),
-      email: Email.restore('test3@example.com'),
-      teamId: enrollmentStatus == EnrollmentStatusValue.Enrolled ? TeamId.restore('teamId3') : undefined,
-      pairId: enrollmentStatus == EnrollmentStatusValue.Enrolled ? PairId.restore('pairId3') : undefined,
-      enrollmentStatus: enrollmentStatus,
-    },
-  );
-  const participants = (enrollmentStatus: EnrollmentStatusValue) => Participants.restore(
-    ParticipantsId.restore('ParticipantsId'),
-    [participant1(enrollmentStatus), participant2(enrollmentStatus)],
-  );
-  const pair = () => Pair.restore(
+  const participantId1 = ParticipantId.restore('participantId1');
+  const participantId2 = ParticipantId.restore('participantId2');
+  const participantId3 = ParticipantId.restore('participantId3');
+
+  const pairInstance = () => Pair.restore(
     PairId.restore('PairId'),
     {
       teamId: TeamId.restore('teamId'),
       name: PairName.restore('PairName'),
-      participants: participants(EnrollmentStatusValue.Enrolled),
+      participantIds: [participantId1, participantId2],
     },
   );
 
-  describe('## create\n', () => {
-    test('- Success create instance \n', () => {
-      // 準備・実行
-      const pair = Pair.create(
-        {
-          teamId: TeamId.restore('teamId'),
-          name: PairName.restore('PairName'),
-          participants: participants(EnrollmentStatusValue.OnLeave),
-        },
-      ) as Pair;
-      // 確認
-      expect(pair).toBeInstanceOf(Pair);
-      expect(pair.teamId).toEqual(TeamId.restore('teamId'));
-      expect(pair.name).toEqual(PairName.restore('PairName'));
-      expect(pair.participants.value).toHaveLength(2);
-      expect(pair.participants.value[0]?.id).toEqual(ParticipantId.restore('participantId1'));
-      expect(pair.participants.value[0]?.name).toEqual(PersonName.restore('PersonName1'));
-      expect(pair.participants.value[0]?.email).toEqual(Email.restore('test1@example.com'));
-      expect(pair.participants.value[0]?.teamId).toBeDefined();
-      expect(pair.participants.value[0]?.pairId).toBeDefined();
-      expect(pair.participants.value[0]?.enrollmentStatus).toEqual(EnrollmentStatusValue.Enrolled);
-      expect(pair.participants.value[1]?.id).toEqual(ParticipantId.restore('participantId2'));
-      expect(pair.participants.value[1]?.name).toEqual(PersonName.restore('PersonName2'));
-      expect(pair.participants.value[1]?.email).toEqual(Email.restore('test2@example.com'));
-      expect(pair.participants.value[1]?.teamId).toBeDefined();
-      expect(pair.participants.value[1]?.pairId).toBeDefined();
-      expect(pair.participants.value[1]?.enrollmentStatus).toEqual(EnrollmentStatusValue.Enrolled);
+  describe('## Factory\n', () => {
+    describe('### create\n', () => {
+      test('- Success create instance \n', () => {
+        // 準備・実行
+        const pair = Pair.create(
+          {
+            teamId: TeamId.restore('teamId'),
+            name: PairName.restore('PairName'),
+            participantIds: [participantId1, participantId2],
+          },
+        ) as Pair;
+        // 確認
+        expect(pair).toBeInstanceOf(Pair);
+        expect(pair.teamId).toEqual(TeamId.restore('teamId'));
+        expect(pair.name).toEqual(PairName.restore('PairName'));
+        expect(pair.participantIds).toHaveLength(2);
+        expect(pair.participantIds[0]).toEqual(participantId1);
+        expect(pair.participantIds[1]).toEqual(participantId2);
+      });
+    });
+
+    describe('### restore\n', () => {
+      test('- Success restore instance \n', () => {
+        // 準備・実行
+        const pair = Pair.restore(
+          PairId.restore('PairId'),
+          {
+            teamId: TeamId.restore('teamId'),
+            name: PairName.restore('PairName'),
+            participantIds: [participantId1, participantId2],
+          },
+        );
+        // 確認
+        expect(pair).toBeInstanceOf(Pair);
+        expect(pair.id).toEqual(PairId.restore('PairId'));
+        expect(pair.teamId).toEqual(TeamId.restore('teamId'));
+        expect(pair.name).toEqual(PairName.restore('PairName'));
+        expect(pair.participantIds).toHaveLength(2);
+        expect(pair.participantIds[0]).toEqual(participantId1);
+        expect(pair.participantIds[1]).toEqual(participantId2);
+      });
     });
   });
 
-  describe('## restore\n', () => {
-    test('- Success restore instance \n', () => {
-      // 準備・実行
-      const pair = Pair.restore(
-        PairId.restore('PairId'),
-        {
-          teamId: TeamId.restore('teamId'),
-          name: PairName.restore('PairName'),
-          participants: participants(EnrollmentStatusValue.Enrolled),
-        },
-      );
-      // 確認
-      expect(pair).toBeInstanceOf(Pair);
-      expect(pair.id).toEqual(PairId.restore('PairId'));
-      expect(pair.teamId).toEqual(TeamId.restore('teamId'));
-      expect(pair.name).toEqual(PairName.restore('PairName'));
-      expect(pair.participants.value).toHaveLength(2);
-      expect(pair.participants.value[0]?.id).toEqual(ParticipantId.restore('participantId1'));
-      expect(pair.participants.value[0]?.name).toEqual(PersonName.restore('PersonName1'));
-      expect(pair.participants.value[0]?.email).toEqual(Email.restore('test1@example.com'));
-      expect(pair.participants.value[0]?.teamId).toEqual(TeamId.restore('teamId1'));
-      expect(pair.participants.value[0]?.pairId).toEqual(PairId.restore('pairId1'));
-      expect(pair.participants.value[0]?.enrollmentStatus).toEqual(EnrollmentStatusValue.Enrolled);
-      expect(pair.participants.value[1]?.id).toEqual(ParticipantsId.restore('participantId2'));
-      expect(pair.participants.value[1]?.name).toEqual(PersonName.restore('PersonName2'));
-      expect(pair.participants.value[1]?.email).toEqual(Email.restore('test2@example.com'));
-      expect(pair.participants.value[1]?.teamId).toEqual(TeamId.restore('teamId2'));
-      expect(pair.participants.value[1]?.pairId).toEqual(PairId.restore('pairId2'));
-      expect(pair.participants.value[1]?.enrollmentStatus).toEqual(EnrollmentStatusValue.Enrolled);
-    });
-  });
+  describe('## Getter \n', () => {
+    describe('## appendParticipant\n', () => {
+      test('- teamId \n', () => {
+        // 準備
+        const pair = pairInstance();
+        // 実行 確認
+        expect(pair.teamId).toEqual(TeamId.restore('teamId'));
+      });
 
-  describe('## appendParticipant\n', () => {
-    test('- Success create instance \n', () => {
-      // 準備
-      const pairInstance = pair();
-      const newParticipant = participant3(EnrollmentStatusValue.OnLeave);
-      // 実行
-      pairInstance.appendParticipant(newParticipant);
-      // 確認
-      expect(pairInstance.participants.value).toHaveLength(3);
-      expect(pairInstance.participants.getByIndex(2)).toEqual(newParticipant);
-    });
-  });
+      test('- name \n', () => {
+        // 準備
+        const pair = pairInstance();
+        // 実行 確認
+        expect(pair.name).toEqual(PairName.restore('PairName'));
+      });
 
-  describe('## removeParticipant\n', () => {
-    test('- Success create instance \n', () => {
-      // 準備
-      const pairInstance = pair();
-      // 実行
-      pairInstance.removeParticipant(participant2(EnrollmentStatusValue.Enrolled));
-      // 確認
-      expect(pairInstance.participants.value).toHaveLength(1);
-      expect(pairInstance.participants.getByIndex(1)).toBeUndefined();
-    });
-  });
+      test('- participantIds \n', () => {
+        // 準備
+        const pair = pairInstance();
+        // 実行 確認
+        expect(pair.participantIds).toEqual([participantId1, participantId2]);
+      });
 
-  describe('## changeParticipantEnrollmentStatusToOnLeave\n', () => {
-    test('- Success restore instance \n', () => {
-      // 準備
-      const pairInstance = pair();
-      // 実行
-      pairInstance.changeParticipantEnrollmentStatusToOnLeave(participant2(EnrollmentStatusValue.Enrolled));
-      // 確認
-      expect(pairInstance.participants.value).toHaveLength(1);
-      expect(pairInstance.participants.getByIndex(1)).toBeUndefined();
-    });
-  });
+      test('- lastParticipant \n', () => {
+        // 準備
+        const pair = pairInstance();
+        // 実行 確認
+        expect(pair.lastParticipant).toEqual(participantId2);
+      });
 
-  describe('## changeParticipantEnrollmentStatusToWithDrawn\n', () => {
-    test('- Success restore instance \n', () => {
-      // 準備
-      const pairInstance = pair();
-      // 実行
-      pairInstance.changeParticipantEnrollmentStatusToWithDrawn(participant2(EnrollmentStatusValue.Enrolled));
-      // 確認
-      expect(pairInstance.participants.value).toHaveLength(1);
-      expect(pairInstance.participants.getByIndex(1)).toBeUndefined();
+      test('- participantsLength \n', () => {
+        // 準備
+        const pair = pairInstance();
+        // 実行 確認
+        expect(pair.participantsLength).toEqual(2);
+      });
+
+      test('- hasValidNumberOfParticipants \n', () => {
+        // 準備
+        const pair = pairInstance();
+        // 実行 確認
+        expect(pair.hasValidNumberOfParticipants).toEqual(true);
+      });
+
+      test('- hasExceededMaxParticipants \n', () => {
+        // 準備
+        const pair = pairInstance();
+        // 実行 確認
+        expect(pair.hasExceededMaxParticipants).toEqual(false);
+      });
+    });
+
+    describe('## Method\n', () => {
+      describe('### appendParticipant\n', () => {
+        test('- Success create instance \n', () => {
+          // 準備
+          const pair = pairInstance();
+          // 実行
+          pair.appendParticipant(participantId3);
+          // 確認
+          expect(pair.participantIds).toHaveLength(3);
+          expect(pair.participantIndexAt(2)).toEqual(participantId3);
+        });
+      });
+
+      describe('## removeParticipant\n', () => {
+        test('- Success create instance \n', () => {
+          // 準備
+          const pair = pairInstance();
+          // 実行
+          pair.removeParticipant(participantId2);
+          // 確認
+          expect(pair.participantIds).toHaveLength(1);
+          expect(pair.participantIndexAt(1)).toBeNull();
+        });
+      });
     });
   });
 });
