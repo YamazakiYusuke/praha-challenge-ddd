@@ -3,6 +3,7 @@ import { IGetAdministratorByEmailQuery } from "src/domain/commands/administrator
 import { EntityError } from "src/domain/errors/entity_error";
 import { Email } from "src/domain/values/email";
 import { Administrator } from "../../entities/administrator";
+import { SaveAdministratorCommand } from "src/domain/commands/administrator/save-administrator-command";
 
 export interface IAdministratorChangeEmailService {
   execute(administrator: Administrator, newEmail: Email): Promise<void | Error>;
@@ -12,7 +13,9 @@ export interface IAdministratorChangeEmailService {
 export class AdministratorChangeEmailService implements IAdministratorChangeEmailService {
   constructor(
     @Inject('IGetAdministratorByEmailQuery')
-    private readonly getAdministratorByEmailQuery: IGetAdministratorByEmailQuery
+    private readonly getAdministratorByEmailQuery: IGetAdministratorByEmailQuery,
+    @Inject('ISaveAdministratorCommand')
+    private readonly saveAdministratorCommand: SaveAdministratorCommand,
   ) { }
 
   async execute(administrator: Administrator, newEmail: Email): Promise<void | Error> {
@@ -21,5 +24,6 @@ export class AdministratorChangeEmailService implements IAdministratorChangeEmai
       throw new EntityError('こちらのEmailは既に登録済みです');
     }
     administrator.changeEmail(newEmail);
+    await this.saveAdministratorCommand.execute(administrator);
   }
 }
