@@ -47,7 +47,7 @@ describe('# AdministratorCreateService UnitTest\n', () => {
       verify(getAdministratorByEmailQuery.execute(email)).once();
     });
 
-    test('should throw error if email already exists\n', async () => {
+    test('should throw error if fail to save \n', async () => {
       // 準備
       when(getAdministratorByEmailQuery.execute(email)).thenResolve(null);
       when(saveAdministratorCommand.execute(anything())).thenThrow(Error());
