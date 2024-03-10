@@ -3,8 +3,8 @@ import { Pair } from "src/domain/entities/pair";
 import { IPairRepository } from "src/domain/repositories/pair-repository";
 import { ICommand } from "../base/command";
 
-export interface ISavePairCommand extends ICommand<Pair[]> {
-  execute(pairs: Pair[]): Promise<void | Error>;
+export interface ISavePairCommand extends ICommand<Pair> {
+  execute(pair: Pair): Promise<void | Error>;
 }
 
 @Injectable()
@@ -14,7 +14,7 @@ export class SavePairCommand implements ISavePairCommand {
     private readonly pairRepository: IPairRepository
   ) { }
 
-  async execute(pairs: Pair[]): Promise<void | Error> {
-    await this.pairRepository.save(pairs);
+  async execute(pair: Pair): Promise<void | Error> {
+    await this.pairRepository.save(pair);
   }
 }

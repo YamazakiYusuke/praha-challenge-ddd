@@ -28,7 +28,7 @@ export class CreatePairService implements ICreatePairService {
     }
     debuglog(`entityProps: ${entityProps}`);
     const newPair = Pair.create(entityProps) as Pair;
-    await this.savePairCommand.execute([newPair]);
+    await this.savePairCommand.execute(newPair);
     return newPair;
   }
 

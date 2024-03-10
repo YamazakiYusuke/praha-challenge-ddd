@@ -6,7 +6,6 @@ import { CategoryCreateService } from 'src/domain/services/category/category-cre
 import { CategoryId } from 'src/domain/values/id';
 import { CategoryName } from 'src/domain/values/name';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
-import { inspect } from 'util';
 
 describe('# CategoryCreateService UnitTest\n', () => {
   let getCategoryByNameQuery: GetCategoryByNameQuery;
@@ -20,7 +19,7 @@ describe('# CategoryCreateService UnitTest\n', () => {
     saveCategoryCommand = mock(SaveCategoryCommand);
     categoryCreateService = new CategoryCreateService(instance(getCategoryByNameQuery), instance(saveCategoryCommand));
   });
-  
+
   describe('## execute\n', () => {
     test('- should create a new category\n', async () => {
       // 準備
