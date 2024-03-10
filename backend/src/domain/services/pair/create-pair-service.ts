@@ -4,6 +4,7 @@ import { ParticipantId, TeamId } from "src/domain/values/id";
 import { PairName } from "src/domain/values/name";
 import { debuglog } from "util";
 import { Pair, PairProps } from "../../entities/pair";
+import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
 
 export interface ICreatePairService {
   execute(props: { teamId: TeamId; participantIds: ParticipantId[]; }): Promise<Pair | Error>;
@@ -13,7 +14,9 @@ export interface ICreatePairService {
 export class CreatePairService implements ICreatePairService {
   constructor(
     @Inject('IGetPairsByTeamIdQuery')
-    private readonly getPairsByTeamIdQuery: IGetPairsByTeamIdQuery
+    private readonly getPairsByTeamIdQuery: IGetPairsByTeamIdQuery,
+    @Inject('ISavePairCommand')
+    private readonly savePairCommand: SavePairCommand,
   ) { }
 
   async execute(props: { teamId: TeamId; participantIds: ParticipantId[]; }): Promise<Pair | Error> {
@@ -24,7 +27,8 @@ export class CreatePairService implements ICreatePairService {
       participantIds: props.participantIds,
     }
     debuglog(`entityProps: ${entityProps}`);
-    const newPair = Pair.create(entityProps);
+    const newPair = Pair.create(entityProps) as Pair;
+    await this.savePairCommand.execute([newPair]);
     return newPair;
   }
 
