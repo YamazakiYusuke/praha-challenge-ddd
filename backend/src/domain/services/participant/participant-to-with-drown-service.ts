@@ -5,8 +5,7 @@ import { ISavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { ISaveParticipantCommand } from "src/domain/commands/participant/save-participant-command";
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
-import { EntityError } from "src/domain/errors/entity_error";
-import { PairId, TeamId } from "src/domain/values/id";
+import { PairId } from "src/domain/values/id";
 
 export interface IParticipantToWithDrownService {
   execute(participant: Participant): Promise<void | Error>;
@@ -17,8 +16,6 @@ export class ParticipantToWithDrownService implements IParticipantToWithDrownSer
   constructor(
     @Inject('IGetPairByIdQuery')
     private readonly getPairByIdQuery: IGetPairByIdQuery,
-    @Inject('IGetPairWithFewestMembersByTeamIdQuery')
-    private readonly getPairWithFewestMembersByTeamIdQuery: IGetPairWithFewestMembersByTeamIdQuery,
     @Inject('ISavePairCommand')
     private readonly savePairCommand: ISavePairCommand,
     @Inject('ISaveParticipantCommand')
