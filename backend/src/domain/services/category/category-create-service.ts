@@ -1,8 +1,8 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { IGetCategoryByNameQuery } from "src/domain/commands/category/get-one-category-by-name-query";
+import { ISaveCategoryCommand, SaveCategoryCommand } from "src/domain/commands/category/save-category-command";
 import { Category, CategoryProps } from "../../entities/category";
 import { EntityError } from "../../errors/entity_error";
-import { SaveCategoryCommand } from "src/domain/commands/category/save-category-command";
 
 export interface ICategoryCreateService {
   execute(props: CategoryProps): Promise<Category | Error>;
@@ -14,7 +14,7 @@ export class CategoryCreateService implements ICategoryCreateService {
     @Inject('IGetCategoryByNameQuery')
     private readonly getCategoryByNameQuery: IGetCategoryByNameQuery,
     @Inject(SaveCategoryCommand)
-    private readonly saveCategoryCommand: SaveCategoryCommand,
+    private readonly saveCategoryCommand: ISaveCategoryCommand,
   ) { }
 
   async execute(props: CategoryProps): Promise<Category | Error> {

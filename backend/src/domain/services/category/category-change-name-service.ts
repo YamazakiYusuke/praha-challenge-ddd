@@ -1,9 +1,9 @@
-import { Injectable, Inject } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { GetCategoryByNameQuery, IGetCategoryByNameQuery } from "src/domain/commands/category/get-one-category-by-name-query";
+import { ISaveCategoryCommand, SaveCategoryCommand } from "src/domain/commands/category/save-category-command";
 import { EntityError } from "src/domain/errors/entity_error";
 import { CategoryName } from "src/domain/values/name";
 import { Category } from "../../entities/category";
-import { SaveCategoryCommand } from "src/domain/commands/category/save-category-command";
 
 export interface ICategoryChangeNameService {
   execute(category: Category, newName: CategoryName): Promise<void | Error>;
@@ -12,10 +12,10 @@ export interface ICategoryChangeNameService {
 @Injectable()
 export class CategoryChangeNameService implements ICategoryChangeNameService {
   constructor(
-    @Inject(GetCategoryByNameQuery) 
+    @Inject(GetCategoryByNameQuery)
     private readonly getCategoryByNameQuery: IGetCategoryByNameQuery,
     @Inject(SaveCategoryCommand)
-    private readonly saveCategoryCommand: SaveCategoryCommand,
+    private readonly saveCategoryCommand: ISaveCategoryCommand,
   ) { }
 
   async execute(category: Category, newName: CategoryName): Promise<void | Error> {

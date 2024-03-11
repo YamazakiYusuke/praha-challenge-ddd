@@ -1,9 +1,9 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { IGetAdministratorByEmailQuery } from "src/domain/commands/administrator/get-administrator-by-email-query";
+import { ISaveAdministratorCommand } from "src/domain/commands/administrator/save-administrator-command";
 import { EntityError } from "src/domain/errors/entity_error";
 import { Email } from "src/domain/values/email";
 import { Administrator } from "../../entities/administrator";
-import { SaveAdministratorCommand } from "src/domain/commands/administrator/save-administrator-command";
 
 export interface IAdministratorChangeEmailService {
   execute(administrator: Administrator, newEmail: Email): Promise<void | Error>;
@@ -15,7 +15,7 @@ export class AdministratorChangeEmailService implements IAdministratorChangeEmai
     @Inject('IGetAdministratorByEmailQuery')
     private readonly getAdministratorByEmailQuery: IGetAdministratorByEmailQuery,
     @Inject('ISaveAdministratorCommand')
-    private readonly saveAdministratorCommand: SaveAdministratorCommand,
+    private readonly saveAdministratorCommand: ISaveAdministratorCommand,
   ) { }
 
   async execute(administrator: Administrator, newEmail: Email): Promise<void | Error> {

@@ -4,7 +4,7 @@ import { ParticipantId, TeamId } from "src/domain/values/id";
 import { PairName } from "src/domain/values/name";
 import { debuglog } from "util";
 import { Pair, PairProps } from "../../entities/pair";
-import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
+import { ISavePairCommand, SavePairCommand } from "src/domain/commands/pair/save-pair-command";
 
 export interface ICreatePairService {
   execute(props: { teamId: TeamId; participantIds: ParticipantId[]; }): Promise<Pair | Error>;
@@ -16,7 +16,7 @@ export class CreatePairService implements ICreatePairService {
     @Inject('IGetPairsByTeamIdQuery')
     private readonly getPairsByTeamIdQuery: IGetPairsByTeamIdQuery,
     @Inject('ISavePairCommand')
-    private readonly savePairCommand: SavePairCommand,
+    private readonly savePairCommand: ISavePairCommand,
   ) { }
 
   async execute(props: { teamId: TeamId; participantIds: ParticipantId[]; }): Promise<Pair | Error> {
