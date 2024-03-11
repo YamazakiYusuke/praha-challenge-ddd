@@ -51,7 +51,7 @@ export class Participant extends Entity<ParticipantId, ParticipantProps> {
   public changeEnrollmentStatusToEnrolled(teamId: TeamId, pairId: PairId): void | Error {
     this.changeEnrollmentStatusValidation();
     this.props.enrollmentStatus = EnrollmentStatusValue.Enrolled;
-    this.setTeamIdPairId(pairId, teamId);
+    this.changeTeamIdPairId(pairId, teamId);
   }
 
   public changeEnrollmentStatusToOnLeave(): void | Error {
@@ -66,12 +66,12 @@ export class Participant extends Entity<ParticipantId, ParticipantProps> {
     this.props.enrollmentStatus = EnrollmentStatusValue.Withdrawn;
   }
 
-  private setTeamIdPairId(pairId: PairId, teamId: TeamId): void {
+  public changeTeamIdPairId(pairId: PairId, teamId: TeamId): void {
     this.props.pairId = pairId;
     this.props.teamId = teamId;
   }
 
-  public deleteTeamIdPairId(): void {
+  private deleteTeamIdPairId(): void {
     this.props.teamId = undefined;
     this.props.pairId = undefined;
   }

@@ -27,7 +27,7 @@ import { AdministratorCreateService } from "src/domain/services/administrator/ad
 import { CategoryChangeNameService } from "src/domain/services/category/category-change-name-service";
 import { CategoryCreateService } from "src/domain/services/category/category-create-service";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";
-import { EnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
+import { PairParticipantAdjustmentService } from "src/domain/services/pair/pair-participant-adjustment-service";
 import { ParticipantToEnrollService } from "src/domain/services/participant/participant-to-enroll-service";
 import { ParticipantToOnLeaveService } from "src/domain/services/participant/participant-to-on-leave-service";
 import { ParticipantToWithDrownService } from "src/domain/services/participant/participant-to-with-drown-service";
@@ -159,8 +159,8 @@ export function setupDI() {
     useClass: CreatePairService
   })
 
-  container.register('IEnrollParticipantService', {
-    useClass: EnrollParticipantService
+  container.register('IPairParticipantAdjustmentService', {
+    useClass: PairParticipantAdjustmentService
   })
 
   container.register('IParticipantToEnrollService', {
