@@ -13,7 +13,7 @@ export interface PairProps {
 
 export class Pair extends Entity<PairId, PairProps> {
   static readonly maxNumber = 3;
-  static readonly minNumber = 1;
+  static readonly minNumber = 2;
   private constructor(id: PairId, props: PairProps) {
     validateProps(id, props);
     super(id, props)
