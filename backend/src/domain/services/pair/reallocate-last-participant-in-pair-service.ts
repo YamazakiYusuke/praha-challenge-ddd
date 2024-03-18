@@ -5,14 +5,15 @@ import { IGetParticipantByIdQuery } from "src/domain/commands/participant/get-pa
 import { ISaveParticipantCommand } from "src/domain/commands/participant/save-participant-command";
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
+import { ServiceError } from "src/domain/errors/service_error";
 import { ICreatePairService } from "src/domain/services/pair/create-pair-service";
 
-export interface IPairParticipantAdjustmentService {
+export interface IReallocateLastParticipantInPairService {
   execute(pair: Pair): Promise<void | Error>;
 }
 
 @Injectable()
-export class PairParticipantAdjustmentService implements IPairParticipantAdjustmentService {
+export class ReallocateLastParticipantInPairService implements IReallocateLastParticipantInPairService {
   constructor(
     @Inject('IGetParticipantByIdQuery')
     private readonly getParticipantByIdQuery: IGetParticipantByIdQuery,
@@ -27,37 +28,16 @@ export class PairParticipantAdjustmentService implements IPairParticipantAdjustm
   ) { }
 
   async execute(pair: Pair): Promise<void | Error> {
-    if (pair.hasExceededMaxParticipants) {
-      await this.adjustPairCaseHasExceededMaxParticipants(pair);
-    } else if (pair.hasInsufficientMinParticipants) {
-      await this.adjustPairCaseHasInsufficientMinParticipants(pair);
-    }
-  }
+    if (!pair.hasInsufficientMinParticipants) return;
 
-  private async adjustPairCaseHasExceededMaxParticipants(pair: Pair): Promise<void> {
-    const moverId1 = pair.lastParticipant;
-    const moverId2 = pair.lastParticipant;
-    const mover1 = await this.getParticipantByIdQuery.execute(moverId1) as Participant;
-    const mover2 = await this.getParticipantByIdQuery.execute(moverId2) as Participant;
-
-    pair.removeParticipant(moverId1);
-    pair.removeParticipant(moverId2);
-    const newPair = await this.createPairService.execute({ teamId: pair.teamId, participantIds: [moverId1, moverId2] }) as Pair;
-    mover1.changeTeamIdPairId(newPair.id, newPair.teamId);
-    mover2.changeTeamIdPairId(newPair.id, newPair.teamId);
-
-    // TODO: トランザクションにする
-    await this.saveParticipantCommand.execute(mover1);
-    await this.saveParticipantCommand.execute(mover2);
-    await this.savePairCommand.execute(pair);
-    await this.savePairCommand.execute(newPair);
-  }
-
-  private async adjustPairCaseHasInsufficientMinParticipants(pair: Pair): Promise<void> {
     const lastParticipantId = pair.lastParticipant;
     const lastParticipant = await this.getParticipantByIdQuery.execute(lastParticipantId) as Participant;
     const fewestPair = await this.getPairWithFewestMembersByTeamIdQuery.execute(pair.teamId, pair.id) as Pair;
-    if (fewestPair.participantsLength == 3) {
+    if (!fewestPair.hasValidNumberOfParticipants) {
+      // TODO: 合流可能なペアがない為管理者にメール  メール文に「どの参加者が減ったのか」「どの参加者が合流先を探しているのか」を記載
+      throw new ServiceError('合流可能なペアーがありません');
+    }
+    if (fewestPair.participantsLength == Pair.maxNumber) {
       const moverId = fewestPair.lastParticipant;
       const mover = await this.getParticipantByIdQuery.execute(moverId) as Participant;
 

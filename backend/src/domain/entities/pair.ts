@@ -1,9 +1,8 @@
+import { EntityError } from "src/domain/errors/entity_error";
 import { PairName } from "src/domain/values/name";
 import { PairId, ParticipantId, TeamId } from "../values/id";
 import { Entity } from "./base/entity";
-import { Participant } from "./participant";
 import { validateProps } from "./utils/validate-props";
-import { EntityError } from "src/domain/errors/entity_error";
 
 export interface PairProps {
   teamId: TeamId;

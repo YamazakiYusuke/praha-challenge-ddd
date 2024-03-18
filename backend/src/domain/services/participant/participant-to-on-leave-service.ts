@@ -4,6 +4,8 @@ import { ISavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { ISaveParticipantCommand } from "src/domain/commands/participant/save-participant-command";
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
+import { IReallocateLastParticipantInPairService } from "src/domain/services/pair/reallocate-last-participant-in-pair-service";
+import { ITeamMemberValidationService } from "src/domain/services/team/team-member-validation-service";
 import { PairId } from "src/domain/values/id";
 
 export interface IParticipantToOnLeaveService {
@@ -19,6 +21,10 @@ export class ParticipantToOnLeaveService implements IParticipantToOnLeaveService
     private readonly savePairCommand: ISavePairCommand,
     @Inject('ISaveParticipantCommand')
     private readonly saveParticipantCommand: ISaveParticipantCommand,
+    @Inject('ITeamMemberValidationService')
+    private readonly teamMemberValidationService: ITeamMemberValidationService,
+    @Inject('IReallocateLastParticipantInPairService')
+    private readonly reallocateLastParticipantInPairService: IReallocateLastParticipantInPairService,
   ) { }
 
   async execute(participant: Participant): Promise<void | Error> {
@@ -29,13 +35,7 @@ export class ParticipantToOnLeaveService implements IParticipantToOnLeaveService
     await this.saveParticipantCommand.execute(participant);
     await this.savePairCommand.execute(pair);
 
-    // if (pair.hasInsufficientMinParticipants) {
-    //   // TODO: メール送信サービス　「どの参加者が減ったのか」「どのチームが2名以下になったのか」「そのチームの現在の参加者名」を記載する
-    //   const smallestPair = await this.getPairWithFewestMembersByTeamIdQuery.execute(pair.teamId as TeamId) as Pair | null;
-    //   if (smallestPair == null) {
-    //     // TODO: 管理者にメール　「どの参加者が減ったのか」「どの参加者が合流先を探しているのか」
-    //     throw new EntityError('参加可能なペアがありません');
-    //   }
-    // }
+    await this.teamMemberValidationService.execute(pair.teamId);
+    await this.reallocateLastParticipantInPairService.execute(pair);
   }
 }

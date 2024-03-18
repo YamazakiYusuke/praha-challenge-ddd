@@ -21,16 +21,18 @@ import { GetParticipantByEmailQuery } from "src/domain/commands/participant/get-
 import { GetParticipantByIdQuery } from "src/domain/commands/participant/get-participant-by-id-query";
 import { GetParticipantsWithAssignmentsPagedQuery } from "src/domain/commands/participant/get-participants-paged-query";
 import { GetAllTeamsQuery } from "src/domain/commands/team/get-all-team-query";
+import { GetTeamByIdQuery } from "src/domain/commands/team/get-team-by-id-query";
 import { SaveTeamCommand } from "src/domain/commands/team/save-team-command";
 import { AdministratorChangeEmailService } from "src/domain/services/administrator/administrator-change-email-service";
 import { AdministratorCreateService } from "src/domain/services/administrator/administrator-create-service";
 import { CategoryChangeNameService } from "src/domain/services/category/category-change-name-service";
 import { CategoryCreateService } from "src/domain/services/category/category-create-service";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";
-import { PairParticipantAdjustmentService } from "src/domain/services/pair/pair-participant-adjustment-service";
+import { ReallocateLastParticipantInPairService } from "src/domain/services/pair/reallocate-last-participant-in-pair-service";
 import { ParticipantToEnrollService } from "src/domain/services/participant/participant-to-enroll-service";
 import { ParticipantToOnLeaveService } from "src/domain/services/participant/participant-to-on-leave-service";
 import { ParticipantToWithDrownService } from "src/domain/services/participant/participant-to-with-drown-service";
+import { TeamMemberValidationService } from "src/domain/services/team/team-member-validation-service";
 import { InMemoryAdministratorRepository } from "src/infra/db/repositories/in-memory/administrator-repository";
 import { InMemoryAssignmentProgressRepository } from "src/infra/db/repositories/in-memory/assignment-progress-repository";
 import { InMemoryAssignmentRepository } from "src/infra/db/repositories/in-memory/assignment-repository";
@@ -135,6 +137,10 @@ export function setupDI() {
     useClass: GetAllTeamsQuery
   })
 
+  container.register('IGetTeamByIdQuery', {
+    useClass: GetTeamByIdQuery
+  })
+
   container.register('ISaveTeamCommand', {
     useClass: SaveTeamCommand
   })
@@ -159,8 +165,12 @@ export function setupDI() {
     useClass: CreatePairService
   })
 
-  container.register('IPairParticipantAdjustmentService', {
-    useClass: PairParticipantAdjustmentService
+  container.register('IReallocateLastParticipantInPairService', {
+    useClass: ReallocateLastParticipantInPairService
+  })
+
+  container.register('ITeamMemberValidationService', {
+    useClass: TeamMemberValidationService
   })
 
   container.register('IParticipantToEnrollService', {
@@ -191,6 +201,10 @@ export function setupDI() {
     useClass: InMemoryCategoryRepository
   })
 
+  container.register('IMailSenderRepository', {
+    useClass: MockAdminEmailSendService
+  })
+
   container.register('IPairRepository', {
     useClass: InMemoryPairRepository
   })
@@ -203,7 +217,7 @@ export function setupDI() {
     useClass: InMemoryTeamRepository
   })
 
-  container.register('IMailSenderRepository', {
-    useClass: MockAdminEmailSendService
+  container.register('ITransactionCallback', {
+    useClass: InMemoryTeamRepository
   })
 }
