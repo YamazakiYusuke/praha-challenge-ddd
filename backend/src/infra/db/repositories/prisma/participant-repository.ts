@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { AssignmentProgress, AssignmentProgressProps } from "src/domain/entities/assignment-progress";
 import { Participant } from "src/domain/entities/participant";
 import { IParticipantRepository, ParticipantWithAssignments } from "src/domain/repositories/participant-repository";
@@ -9,7 +10,7 @@ export class PrismaParticipantRepository implements IParticipantRepository {
 
   private participants: Participant[] = [];
 
-  async save(participant: Participant): Promise<void | Error> {
+  async save(participant: Participant, tx?: Prisma.TransactionClient): Promise<void | Error> {
     this.participants.push(participant);
     return;
   }

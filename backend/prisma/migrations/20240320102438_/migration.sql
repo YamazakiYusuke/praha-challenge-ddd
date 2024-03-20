@@ -1,9 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `SomeData` table. If the table is not empty, all the data it contains will be lost.
-
-*/
 -- CreateTable
 CREATE TABLE "Team" (
     "id" TEXT NOT NULL,
@@ -11,7 +5,7 @@ CREATE TABLE "Team" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    PRIMARY KEY ("id")
+    CONSTRAINT "Team_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -22,7 +16,7 @@ CREATE TABLE "Pair" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    PRIMARY KEY ("id")
+    CONSTRAINT "Pair_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -32,7 +26,7 @@ CREATE TABLE "Category" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    PRIMARY KEY ("id")
+    CONSTRAINT "Category_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -46,7 +40,7 @@ CREATE TABLE "Assignment" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    PRIMARY KEY ("id")
+    CONSTRAINT "Assignment_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -59,7 +53,7 @@ CREATE TABLE "Participant" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    PRIMARY KEY ("id")
+    CONSTRAINT "Participant_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -71,7 +65,7 @@ CREATE TABLE "AssignmentProgress" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    PRIMARY KEY ("id")
+    CONSTRAINT "AssignmentProgress_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -81,7 +75,7 @@ CREATE TABLE "Administrator" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    PRIMARY KEY ("id")
+    CONSTRAINT "Administrator_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -95,7 +89,7 @@ CREATE TABLE "AdminEmail" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    PRIMARY KEY ("id")
+    CONSTRAINT "AdminEmail_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -105,29 +99,26 @@ CREATE TABLE "AdminEmailSender" (
     "adminEmailId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    PRIMARY KEY ("id")
+    CONSTRAINT "AdminEmailSender_pkey" PRIMARY KEY ("id")
 );
 
--- DropTable
-DROP TABLE "SomeData";
+-- AddForeignKey
+ALTER TABLE "Pair" ADD CONSTRAINT "Pair_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Pair" ADD FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Assignment" ADD CONSTRAINT "Assignment_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Assignment" ADD FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Participant" ADD CONSTRAINT "Participant_pairId_fkey" FOREIGN KEY ("pairId") REFERENCES "Pair"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Participant" ADD FOREIGN KEY ("pairId") REFERENCES "Pair"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "AssignmentProgress" ADD CONSTRAINT "AssignmentProgress_participantId_fkey" FOREIGN KEY ("participantId") REFERENCES "Participant"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "AssignmentProgress" ADD FOREIGN KEY ("participantId") REFERENCES "Participant"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "AssignmentProgress" ADD CONSTRAINT "AssignmentProgress_assignmentId_fkey" FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "AssignmentProgress" ADD FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "AdminEmailSender" ADD CONSTRAINT "AdminEmailSender_administratorId_fkey" FOREIGN KEY ("administratorId") REFERENCES "Administrator"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "AdminEmailSender" ADD FOREIGN KEY ("administratorId") REFERENCES "Administrator"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "AdminEmailSender" ADD FOREIGN KEY ("adminEmailId") REFERENCES "AdminEmail"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "AdminEmailSender" ADD CONSTRAINT "AdminEmailSender_adminEmailId_fkey" FOREIGN KEY ("adminEmailId") REFERENCES "AdminEmail"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -757,22 +757,46 @@
   "resolved" "https://registry.npmjs.org/@pkgjs/parseargs/-/parseargs-0.11.0.tgz"
   "version" "0.11.0"
 
-"@prisma/client@^2.16.0":
-  "integrity" "sha512-q02/IKwUIN+9Kl+Oayfb6x38NQ4ROvLoPSE+V0DRlJehTAJoxgRUWuPwaiOkksVnnmK4XHvKS/TR5EmQHUVxYw=="
-  "resolved" "https://registry.npmjs.org/@prisma/client/-/client-2.16.0.tgz"
-  "version" "2.16.0"
+"@prisma/client@^5.11.0":
+  "integrity" "sha512-SWshvS5FDXvgJKM/a0y9nDC1rqd7KG0Q6ZVzd+U7ZXK5soe73DJxJJgbNBt2GNXOa+ysWB4suTpdK5zfFPhwiw=="
+  "resolved" "https://registry.npmjs.org/@prisma/client/-/client-5.11.0.tgz"
+  "version" "5.11.0"
+
+"@prisma/debug@5.11.0":
+  "integrity" "sha512-N6yYr3AbQqaiUg+OgjkdPp3KPW1vMTAgtKX6+BiB/qB2i1TjLYCrweKcUjzOoRM5BriA4idrkTej9A9QqTfl3A=="
+  "resolved" "https://registry.npmjs.org/@prisma/debug/-/debug-5.11.0.tgz"
+  "version" "5.11.0"
+
+"@prisma/engines-version@5.11.0-15.efd2449663b3d73d637ea1fd226bafbcf45b3102":
+  "integrity" "sha512-WXCuyoymvrS4zLz4wQagSsc3/nE6CHy8znyiMv8RKazKymOMd5o9FP5RGwGHAtgoxd+aB/BWqxuP/Ckfu7/3MA=="
+  "resolved" "https://registry.npmjs.org/@prisma/engines-version/-/engines-version-5.11.0-15.efd2449663b3d73d637ea1fd226bafbcf45b3102.tgz"
+  "version" "5.11.0-15.efd2449663b3d73d637ea1fd226bafbcf45b3102"
+
+"@prisma/engines@5.11.0":
+  "integrity" "sha512-gbrpQoBTYWXDRqD+iTYMirDlF9MMlQdxskQXbhARhG6A/uFQjB7DZMYocMQLoiZXO/IskfDOZpPoZE8TBQKtEw=="
+  "resolved" "https://registry.npmjs.org/@prisma/engines/-/engines-5.11.0.tgz"
+  "version" "5.11.0"
   dependencies:
-    "@prisma/engines-version" "2.16.0-44.854c8ba7f0dce66f115af36af24e66989a8c02a1"
+    "@prisma/debug" "5.11.0"
+    "@prisma/engines-version" "5.11.0-15.efd2449663b3d73d637ea1fd226bafbcf45b3102"
+    "@prisma/fetch-engine" "5.11.0"
+    "@prisma/get-platform" "5.11.0"
 
-"@prisma/engines-version@2.16.0-44.854c8ba7f0dce66f115af36af24e66989a8c02a1":
-  "integrity" "sha512-/gcqWJDXoo0vsYi7fhdhdyjfMXxJPjKl8K7oc/k2BH7IQuXUB1A+ZnFgqRcT/rKuyU4xH8+N+l+C4boWlqYvgQ=="
-  "resolved" "https://registry.npmjs.org/@prisma/engines-version/-/engines-version-2.16.0-44.854c8ba7f0dce66f115af36af24e66989a8c02a1.tgz"
-  "version" "2.16.0-44.854c8ba7f0dce66f115af36af24e66989a8c02a1"
+"@prisma/fetch-engine@5.11.0":
+  "integrity" "sha512-994viazmHTJ1ymzvWugXod7dZ42T2ROeFuH6zHPcUfp/69+6cl5r9u3NFb6bW8lLdNjwLYEVPeu3hWzxpZeC0w=="
+  "resolved" "https://registry.npmjs.org/@prisma/fetch-engine/-/fetch-engine-5.11.0.tgz"
+  "version" "5.11.0"
+  dependencies:
+    "@prisma/debug" "5.11.0"
+    "@prisma/engines-version" "5.11.0-15.efd2449663b3d73d637ea1fd226bafbcf45b3102"
+    "@prisma/get-platform" "5.11.0"
 
-"@prisma/engines@2.16.0-44.854c8ba7f0dce66f115af36af24e66989a8c02a1":
-  "integrity" "sha512-vt8w+vqCEaTUGZes7mrY5BkF3zZIPTQ9x+C9Ynmr9d+WW54vTqJt7lDFS6eps0LYoqdcCHEs3r/SydCqjII+OQ=="
-  "resolved" "https://registry.npmjs.org/@prisma/engines/-/engines-2.16.0-44.854c8ba7f0dce66f115af36af24e66989a8c02a1.tgz"
-  "version" "2.16.0-44.854c8ba7f0dce66f115af36af24e66989a8c02a1"
+"@prisma/get-platform@5.11.0":
+  "integrity" "sha512-rxtHpMLxNTHxqWuGOLzR2QOyQi79rK1u1XYAVLZxDGTLz/A+uoDnjz9veBFlicrpWjwuieM4N6jcnjj/DDoidw=="
+  "resolved" "https://registry.npmjs.org/@prisma/get-platform/-/get-platform-5.11.0.tgz"
+  "version" "5.11.0"
+  dependencies:
+    "@prisma/debug" "5.11.0"
 
 "@sinonjs/commons@^1.7.0":
   "integrity" "sha512-sruwd86RJHdsVf/AtBoijDmUqJp3B6hF/DGC23C+JaegnDHaZyewCjoVGTdg3J0uz3Zs7NnIT05OBOmML72lQw=="
@@ -4800,12 +4824,12 @@
     "ansi-styles" "^4.0.0"
     "react-is" "^17.0.1"
 
-"prisma@^2.16.0", "prisma@>=2.15.0":
-  "integrity" "sha512-tV+28U0dfmuC0lRWZlqI3PLx+5U2UFw4h5fikBexglXsMOE60S732UDnQPOKS/wztJE7EDS36lk6FInFVDpkPQ=="
-  "resolved" "https://registry.npmjs.org/prisma/-/prisma-2.16.0.tgz"
-  "version" "2.16.0"
+"prisma@*", "prisma@^5.11.0":
+  "integrity" "sha512-KCLiug2cs0Je7kGkQBN9jDWoZ90ogE/kvZTUTgz2h94FEo8pczCkPH7fPNXkD1sGU7Yh65risGGD1HQ5DF3r3g=="
+  "resolved" "https://registry.npmjs.org/prisma/-/prisma-5.11.0.tgz"
+  "version" "5.11.0"
   dependencies:
-    "@prisma/engines" "2.16.0-44.854c8ba7f0dce66f115af36af24e66989a8c02a1"
+    "@prisma/engines" "5.11.0"
 
 "process-nextick-args@~2.0.0":
   "integrity" "sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag=="

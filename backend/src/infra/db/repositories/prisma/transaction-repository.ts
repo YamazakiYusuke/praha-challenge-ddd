@@ -1,7 +1,11 @@
+import { Prisma, PrismaClient } from '@prisma/client';
 import { ITransactionRepository } from "src/domain/repositories/transaction-repository";
 
-export class InMemoryTeamRepository implements ITransactionRepository {
-  async execute(callback: () => Promise<void>): Promise<void | Error> {
-    await callback();
+export class PrismaTransactionRepository implements ITransactionRepository {
+  private readonly prisma = new PrismaClient();
+  async execute(callback: (tx: Prisma.TransactionClient) => Promise<void>): Promise<void | Error> {
+    await this.prisma.$transaction(async (tx) => {
+      return await callback(tx);
+    });
   }
 }
