@@ -5,7 +5,8 @@ import { AssignmentProgressState } from "src/domain/values/assignment-progress-s
 import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/id";
 import { AssignmentProgressStateValue } from "src/util/enums";
 
-export class InMemoryParticipantRepository implements IParticipantRepository {
+export class PrismaParticipantRepository implements IParticipantRepository {
+
   private participants: Participant[] = [];
 
   async save(participant: Participant): Promise<void | Error> {
