@@ -1,5 +1,5 @@
 import { EntityError } from "src/domain/errors/entity_error";
-import { AssignmentId, CategoryId, Id } from "src/domain/values/id";
+import { AssignmentId, CategoryId } from "src/domain/values/id";
 import { Assignment, AssignmentProps } from "../assignment";
 
 describe('# Assignment Entity UnitTest\n', () => {
@@ -18,7 +18,7 @@ describe('# Assignment Entity UnitTest\n', () => {
       expect(assignment).toBeInstanceOf(Assignment);
       expect(assignment.number).toEqual(number);
       expect(assignment.title).toEqual(title);
-      expect(assignment.category).toEqual(categoryId);
+      expect(assignment.categoryId).toEqual(categoryId);
       expect(assignment.introduction).toEqual(introduction);
       expect(assignment.content).toEqual(content);
     });
@@ -39,7 +39,7 @@ describe('# Assignment Entity UnitTest\n', () => {
       expect(assignment).toBeInstanceOf(Assignment);
       expect(assignment.number).toEqual(number);
       expect(assignment.title).toEqual(title);
-      expect(assignment.category).toEqual(categoryId);
+      expect(assignment.categoryId).toEqual(categoryId);
       expect(assignment.introduction).toEqual(introduction);
       expect(assignment.content).toEqual(content);
     });
@@ -104,7 +104,7 @@ describe('# Assignment Entity UnitTest\n', () => {
       // 実行
       assignment.changeCategory(newCategoryId);
       // 確認
-      expect(assignment.category).toEqual(newCategoryId);
+      expect(assignment.categoryId).toEqual(newCategoryId);
     });
 
     test('- Failed to change value \n', () => {

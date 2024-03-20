@@ -1,6 +1,6 @@
 import { EntityError } from "../errors/entity_error";
-import { AssignmentId, CategoryId } from "../values/id"
-import { Entity } from "./base/entity"
+import { AssignmentId, CategoryId } from "../values/id";
+import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
 export interface AssignmentProps {
@@ -43,7 +43,7 @@ export class Assignment extends Entity<AssignmentId, AssignmentProps> {
     return this.props.title;
   }
 
-  public get category(): CategoryId {
+  public get categoryId(): CategoryId {
     return this.props.categoryId;
   }
 
