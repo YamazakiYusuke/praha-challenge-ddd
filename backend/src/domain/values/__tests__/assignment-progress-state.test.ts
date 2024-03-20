@@ -15,7 +15,7 @@ describe('# AssignmentProgressState UnitTest \n', () => {
   describe('## restore \n', () => {
     it('- Success restore instance \n', () => {
       // 準備
-      const assignmentProgressState = AssignmentProgressState.restore(AssignmentProgressStateValue.Completed);
+      const assignmentProgressState = AssignmentProgressState.restore(AssignmentProgressStateValue.Completed.toString());
       // 実行・確認
       expect(assignmentProgressState).toBeInstanceOf(AssignmentProgressState);
       expect(assignmentProgressState.value).toEqual(AssignmentProgressStateValue.Completed.toString());
@@ -25,14 +25,14 @@ describe('# AssignmentProgressState UnitTest \n', () => {
   describe('## isCompleted \n', () => {
     it('- Check if completed \n', () => {
       // 準備
-      const assignmentProgressState = AssignmentProgressState.restore(AssignmentProgressStateValue.Completed);
+      const assignmentProgressState = AssignmentProgressState.restore(AssignmentProgressStateValue.Completed.toString());
       // 実行・確認
       expect(assignmentProgressState.isCompleted).toBe(true);
     });
 
     it('- Check if not completed \n', () => {
       // 準備
-      const assignmentProgressState = AssignmentProgressState.restore(AssignmentProgressStateValue.NotStarted);
+      const assignmentProgressState = AssignmentProgressState.restore(AssignmentProgressStateValue.NotStarted.toString());
       // 実行・確認
       expect(assignmentProgressState.isCompleted).toBe(false);
     });

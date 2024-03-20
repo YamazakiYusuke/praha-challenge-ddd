@@ -10,8 +10,8 @@ export class AssignmentProgressState extends Value<string> {
     return new AssignmentProgressState(value.toString());
   }
 
-  static restore(value: AssignmentProgressStateValue): AssignmentProgressState {
-    return new AssignmentProgressState(value.toString());
+  static restore(value: string): AssignmentProgressState {
+    return new AssignmentProgressState(value);
   }
 
   public get value(): string {
