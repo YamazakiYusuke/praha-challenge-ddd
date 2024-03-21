@@ -71,7 +71,7 @@ CREATE TABLE "Participant" (
 -- CreateTable
 CREATE TABLE "AssignmentProgress" (
     "id" TEXT NOT NULL,
-    "state" TEXT NOT NULL,
+    "state" INTEGER NOT NULL,
     "participantId" TEXT NOT NULL,
     "assignmentId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -96,7 +96,7 @@ CREATE TABLE "AdminEmail" (
     "title" TEXT NOT NULL,
     "body" TEXT NOT NULL,
     "sentDateTime" TIMESTAMP(3) NOT NULL,
-    "status" TEXT NOT NULL,
+    "status" INTEGER NOT NULL,
     "errorMessage" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
