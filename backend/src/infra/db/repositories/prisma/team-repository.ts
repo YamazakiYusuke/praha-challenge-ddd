@@ -19,40 +19,34 @@ export class PrismaTeamRepository implements ITeamRepository {
       create: {
         id: team.id.value,
         name: team.name.value,
+        generationId: team.generationId,
       }
     });
   }
 
   async getAll(): Promise<Team[] | Error> {
-    const rowData = await this.prisma.team.findMany({
-      select: {
-        id: true,
-        name: true,
-        createdAt: true,
-        updatedAt: true,
+    const teams = await this.prisma.team.findMany({
+      include: {
         pairs: {
-          select: {
-            participants: {
-              select: {
-                id: true
-              }
-            }
+          include: {
+            participants: true,
           }
-        }
+        },
       }
     });
-    return rowData.map(data => {
-      const participantIds = data.pairs.flatMap(pair =>
+    return teams.map(team => {
+      const participantIds = team.pairs.flatMap(pair =>
         pair.participants.map(participant =>
           ParticipantId.restore(participant.id)
         )
       );
 
       return Team.restore(
-        TeamId.restore(data.id),
+        TeamId.restore(team.id),
         {
-          name: TeamName.restore(data.name),
-          participantIds,
+          name: TeamName.restore(team.name),
+          participantIds: participantIds,
+          generationId: team.generationId,
         }
       );
     });
