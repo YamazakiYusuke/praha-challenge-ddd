@@ -1,32 +1,81 @@
-import { Prisma } from "@prisma/client";
-import { AssignmentProgress, AssignmentProgressProps } from "src/domain/entities/assignment-progress";
+import { Prisma, PrismaClient } from "@prisma/client";
+import { AssignmentProgress } from "src/domain/entities/assignment-progress";
 import { Participant } from "src/domain/entities/participant";
 import { IParticipantRepository, ParticipantWithAssignments } from "src/domain/repositories/participant-repository";
 import { AssignmentProgressState } from "src/domain/values/assignment-progress-state";
-import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/id";
-import { AssignmentProgressStateValue } from "src/util/enums";
+import { Email } from "src/domain/values/email";
+import { AssignmentId, AssignmentProgressId, PairId, ParticipantId, TeamId } from "src/domain/values/id";
+import { PersonName } from "src/domain/values/name";
+import { restoreAssignmentProgressStateValue, restoreEnrollmentStatusValue } from "src/util/enums";
 
 export class PrismaParticipantRepository implements IParticipantRepository {
-
-  private participants: Participant[] = [];
+  private readonly prisma = new PrismaClient();
 
   async save(participant: Participant, tx?: Prisma.TransactionClient): Promise<void | Error> {
-    this.participants.push(participant);
-    return;
+    const prismaClient = tx ?? this.prisma;
+    try {
+      await prismaClient.participant.create({
+        data: {
+          id: participant.id.value,
+          name: participant.name.value,
+          email: participant.email.value,
+          pairId: participant.pairId?.value,
+          teamId: participant.teamId?.value,
+          enrollmentStatus: participant.enrollmentStatus,
+        },
+      });
+    } catch (error) {
+      return error as Error;
+    }
   }
 
   async getAll(): Promise<Participant[] | Error> {
-    return this.participants;
+    const participants = await this.prisma.participant.findMany();
+    
+    return participants.map(participant => 
+      Participant.restore(
+        ParticipantId.restore(participant.id),
+        {
+          name: PersonName.restore(participant.name),
+          email: Email.restore(participant.email),
+          pairId: participant.pairId ? PairId.restore(participant.pairId) : undefined,
+          teamId: participant.teamId ? TeamId.restore(participant.teamId) : undefined,
+          enrollmentStatus: restoreEnrollmentStatusValue(participant.enrollmentStatus),
+        }
+      )
+    );
   }
 
-  async getAllWithAssignments(): Promise<Error | ParticipantWithAssignments[]> {
-    const id = AssignmentProgressId.restore('Id');
-    const assignmentId = AssignmentId.restore('assignmentId');
-    const participantId = ParticipantId.restore('participantId');
-    const assignmentProgressState = AssignmentProgressState.restore(AssignmentProgressStateValue.NotStarted);
-    const props: AssignmentProgressProps = { assignmentId, participantId, assignmentProgressState };
-    const assignmentProgress = AssignmentProgress.restore(id, props);
-    return this.participants.map((participant) =>
-      new ParticipantWithAssignments(participant, [assignmentProgress]));
+  async getAllWithAssignments(): Promise<ParticipantWithAssignments[] | Error> {
+    const participants = await this.prisma.participant.findMany({
+      include: {
+        progresses: true,
+      },
+    });
+    
+    return participants.map(participant => 
+      new ParticipantWithAssignments(
+        Participant.restore(
+          ParticipantId.restore(participant.id),
+          {
+            name: PersonName.restore(participant.name),
+            email: Email.restore(participant.email),
+            pairId: participant.pairId ? PairId.restore(participant.pairId) : undefined,
+            teamId: participant.teamId ? TeamId.restore(participant.teamId) : undefined,
+            enrollmentStatus: restoreEnrollmentStatusValue(participant.enrollmentStatus),
+          }
+        ),
+        participant.progresses.map(progress => 
+          AssignmentProgress.restore(
+            AssignmentProgressId.restore(progress.id),
+            {
+              assignmentId: AssignmentId.restore(progress.assignmentId),
+              participantId: ParticipantId.restore(progress.participantId),
+              assignmentProgressState: AssignmentProgressState.restore(restoreAssignmentProgressStateValue(progress.state)),
+            }
+          )
+        ),
+      )
+    );
   }
 }
