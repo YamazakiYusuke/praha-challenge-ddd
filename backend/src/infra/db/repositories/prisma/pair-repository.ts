@@ -31,19 +31,12 @@ export class PrismaPairRepository implements IPairRepository {
 
   async getAll(): Promise<Pair[] | Error> {
     const pairsData = await this.prisma.pair.findMany({
-      select: {
-        id: true,
-        name: true,
-        teamId: true,
-        participants: {
-          select: {
-            id: true,
-          },
-        },
+      include: {
+        participants: true,
       },
     });
 
-    return pairsData.map(data => 
+    return pairsData.map(data =>
       Pair.restore(
         PairId.restore(data.id),
         {
