@@ -6,6 +6,7 @@ import { validateProps } from "./utils/validate-props";
 export interface TeamProps {
   name: TeamName;
   participantIds: ParticipantId[];
+  generation: String,
 }
 
 export class Team extends Entity<TeamId, TeamProps> {
@@ -35,9 +36,14 @@ export class Team extends Entity<TeamId, TeamProps> {
     return this.participantIds.length;
   }
 
+  public get generation(): String {
+    return this.props.generation;
+  }
+
   public get hasValidNumberOfParticipants(): boolean {
     return this.participantsLength >= Team.minNumber;
   }
+  
   public get hasInsufficientMinParticipants(): boolean {
     return this.participantsLength < Team.minNumber;
   }

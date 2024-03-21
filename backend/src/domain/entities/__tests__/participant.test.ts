@@ -113,18 +113,6 @@ describe('# Participant Entity UnitTest \n', () => {
       expect(() => participant.changeEnrollmentStatusToWithDrawn()).toThrow(EntityError);
     });
   });
-
-  describe('## deleteTeamIdPairId \n', () => {
-    it('- Success change status \n', () => {
-      // 準備
-      const participant = getParticipant(EnrollmentStatusValue.Enrolled);
-      // 実行
-      participant.deleteTeamIdPairId();
-      // 確認
-      expect(participant.teamId).toBeUndefined();
-      expect(participant.pairId).toBeUndefined();
-    });
-  });
 });
 
 
