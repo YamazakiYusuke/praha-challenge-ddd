@@ -7,8 +7,8 @@ import { AdministratorId } from "src/domain/values/id";
 export class PrismaAdministratorRepository implements IAdministratorRepository {
   private readonly prisma = new PrismaClient();
 
-  async save(administrator: Administrator, tx?: Prisma.TransactionClient): Promise<void | Error> {
-    const prismaClient = tx ?? this.prisma;
+  async save(administrator: Administrator, transaction?: Prisma.TransactionClient): Promise<void | Error> {
+    const prismaClient = transaction ?? this.prisma;
     await prismaClient.administrator.upsert({
       where: {
         id: administrator.id.value,

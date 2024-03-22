@@ -11,8 +11,8 @@ import { restoreAssignmentProgressStateValue, restoreEnrollmentStatusValue } fro
 export class PrismaParticipantRepository implements IParticipantRepository {
   private readonly prisma = new PrismaClient();
 
-  async save(participant: Participant, tx?: Prisma.TransactionClient): Promise<void | Error> {
-    const prismaClient = tx ?? this.prisma;
+  async save(participant: Participant, transaction?: Prisma.TransactionClient): Promise<void | Error> {
+    const prismaClient = transaction ?? this.prisma;
     try {
       await prismaClient.participant.create({
         data: {

@@ -7,8 +7,8 @@ import { TeamName } from "src/domain/values/name";
 export class PrismaTeamRepository implements ITeamRepository {
   private readonly prisma = new PrismaClient();
 
-  async save(team: Team, tx?: Prisma.TransactionClient): Promise<void | Error> {
-    const prismaClient = tx ?? this.prisma;
+  async save(team: Team, transaction?: Prisma.TransactionClient): Promise<void | Error> {
+    const prismaClient = transaction ?? this.prisma;
     await prismaClient.team.upsert({
       where: {
         id: team.id.value,

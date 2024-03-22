@@ -3,9 +3,9 @@ import { ITransactionRepository } from "src/domain/repositories/transaction-repo
 
 export class PrismaTransactionRepository implements ITransactionRepository {
   private readonly prisma = new PrismaClient();
-  async execute(callback: (tx: Prisma.TransactionClient) => Promise<void>): Promise<void | Error> {
-    await this.prisma.$transaction(async (tx) => {
-      return await callback(tx);
+  async execute(callback: (transaction: Prisma.TransactionClient) => Promise<void>): Promise<void | Error> {
+    await this.prisma.$transaction(async (transaction) => {
+      return await callback(transaction);
     });
   }
 }

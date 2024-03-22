@@ -7,8 +7,8 @@ import { PairName } from "src/domain/values/name";
 export class PrismaPairRepository implements IPairRepository {
   private readonly prisma = new PrismaClient();
 
-  async save(pair: Pair, tx?: Prisma.TransactionClient): Promise<void | Error> {
-    const prismaClient = tx ?? this.prisma;
+  async save(pair: Pair, transaction?: Prisma.TransactionClient): Promise<void | Error> {
+    const prismaClient = transaction ?? this.prisma;
     await prismaClient.pair.upsert({
       where: { id: pair.id.value },
       update: {

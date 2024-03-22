@@ -7,8 +7,8 @@ import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/va
 export class PrismaAssignmentProgressRepository implements IAssignmentProgressRepository {
   private readonly prisma = new PrismaClient();
 
-  async save(assignmentProgress: AssignmentProgress, tx?: Prisma.TransactionClient): Promise<void | Error> {
-    const prismaClient = tx ?? this.prisma;
+  async save(assignmentProgress: AssignmentProgress, transaction?: Prisma.TransactionClient): Promise<void | Error> {
+    const prismaClient = transaction ?? this.prisma;
     await prismaClient.assignmentProgress.upsert({
       where: { id: assignmentProgress.id.value },
       update: { state: assignmentProgress.assignmentProgressState.value },

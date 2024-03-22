@@ -7,8 +7,8 @@ import { CategoryName } from "src/domain/values/name";
 export class PrismaCategoryRepository implements ICategoryRepository {
   private readonly prisma = new PrismaClient();
 
-  async save(category: Category, tx?: Prisma.TransactionClient): Promise<void | Error> {
-    const prismaClient = tx ?? this.prisma;
+  async save(category: Category, transaction?: Prisma.TransactionClient): Promise<void | Error> {
+    const prismaClient = transaction ?? this.prisma;
 
     await prismaClient.category.upsert({
       where: { 
