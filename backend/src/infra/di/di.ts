@@ -33,13 +33,14 @@ import { ParticipantToEnrollService } from "src/domain/services/participant/part
 import { ParticipantToOnLeaveService } from "src/domain/services/participant/participant-to-on-leave-service";
 import { ParticipantToWithDrownService } from "src/domain/services/participant/participant-to-with-drown-service";
 import { TeamMemberValidationService } from "src/domain/services/team/team-member-validation-service";
-import { InMemoryAdministratorRepository } from "src/infra/db/repositories/in-memory/administrator-repository";
-import { InMemoryAssignmentProgressRepository } from "src/infra/db/repositories/in-memory/assignment-progress-repository";
-import { InMemoryAssignmentRepository } from "src/infra/db/repositories/in-memory/assignment-repository";
-import { InMemoryCategoryRepository } from "src/infra/db/repositories/in-memory/category-repository";
-import { InMemoryPairRepository } from "src/infra/db/repositories/in-memory/pair-repository";
-import { InMemoryParticipantRepository } from "src/infra/db/repositories/in-memory/participant-repository";
-import { InMemoryTeamRepository } from "src/infra/db/repositories/in-memory/team-repository";
+import { PrismaAdministratorRepository } from "src/infra/db/repositories/prisma/administrator-repository";
+import { PrismaAssignmentProgressRepository } from "src/infra/db/repositories/prisma/assignment-progress-repository";
+import { PrismaAssignmentRepository } from "src/infra/db/repositories/prisma/assignment-repository";
+import { PrismaCategoryRepository } from "src/infra/db/repositories/prisma/category-repository";
+import { PrismaPairRepository } from "src/infra/db/repositories/prisma/pair-repository";
+import { PrismaParticipantRepository } from "src/infra/db/repositories/prisma/participant-repository";
+import { PrismaTeamRepository } from "src/infra/db/repositories/prisma/team-repository";
+import { PrismaTransactionRepository } from "src/infra/db/repositories/prisma/transaction-repository";
 import { MockAdminEmailSendService } from "src/infra/mail/repositories/mock/mock-amin-email-send-service";
 import { container } from "tsyringe";
 
@@ -186,19 +187,19 @@ export function setupDI() {
   })
 
   container.register('IAdministratorRepository', {
-    useClass: InMemoryAdministratorRepository
+    useClass: PrismaAdministratorRepository
   })
 
   container.register('IAssignmentProgressRepository', {
-    useClass: InMemoryAssignmentProgressRepository
+    useClass: PrismaAssignmentProgressRepository
   })
 
   container.register('IAssignmentRepository', {
-    useClass: InMemoryAssignmentRepository
+    useClass: PrismaAssignmentRepository
   })
 
   container.register('ICategoryRepository', {
-    useClass: InMemoryCategoryRepository
+    useClass: PrismaCategoryRepository
   })
 
   container.register('IMailSenderRepository', {
@@ -206,18 +207,18 @@ export function setupDI() {
   })
 
   container.register('IPairRepository', {
-    useClass: InMemoryPairRepository
+    useClass: PrismaPairRepository
   })
 
   container.register('IParticipantRepository', {
-    useClass: InMemoryParticipantRepository
+    useClass: PrismaParticipantRepository
   })
 
   container.register('ITeamRepository', {
-    useClass: InMemoryTeamRepository
+    useClass: PrismaTeamRepository
   })
 
   container.register('ITransactionCallback', {
-    useClass: InMemoryTeamRepository
+    useClass: PrismaTransactionRepository
   })
 }
