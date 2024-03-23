@@ -6,6 +6,7 @@ import { ISaveParticipantCommand } from "src/domain/commands/participant/save-pa
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
 import { ServiceError } from "src/domain/errors/service_error";
+import { ITransactionRepository } from "src/domain/repositories/transaction-repository";
 import { ICreatePairService } from "src/domain/services/pair/create-pair-service";
 
 export interface IReallocateLastParticipantInPairService {
@@ -25,6 +26,8 @@ export class ReallocateLastParticipantInPairService implements IReallocateLastPa
     private readonly savePairCommand: ISavePairCommand,
     @Inject('ISaveParticipantCommand')
     private readonly saveParticipantCommand: ISaveParticipantCommand,
+    @Inject('ITransactionRepository')
+    private readonly transactionRepository: ITransactionRepository,
   ) { }
 
   async execute(pair: Pair): Promise<void | Error> {
@@ -46,18 +49,21 @@ export class ReallocateLastParticipantInPairService implements IReallocateLastPa
       lastParticipant.changeTeamIdPairId(newPair.id, newPair.teamId);
       mover.changeTeamIdPairId(newPair.id, newPair.teamId);
 
-      // TODO: トランザクションにする
-      await this.saveParticipantCommand.execute(lastParticipant);
-      await this.saveParticipantCommand.execute(mover);
-      await this.savePairCommand.execute(fewestPair);
-      await this.savePairCommand.execute(newPair);
+      await this.transactionRepository.execute(async (tx) => {
+        await this.saveParticipantCommand.execute(lastParticipant, tx);
+        await this.saveParticipantCommand.execute(mover, tx);
+        await this.savePairCommand.execute(fewestPair, tx);
+        await this.savePairCommand.execute(newPair, tx);
+      })
+
     } else {
       fewestPair.appendParticipant(lastParticipantId);
       lastParticipant.changeTeamIdPairId(fewestPair.id, fewestPair.teamId);
 
-      // TODO: トランザクションにする
-      await this.saveParticipantCommand.execute(lastParticipant);
-      await this.savePairCommand.execute(fewestPair);
+      await this.transactionRepository.execute(async (tx) => {
+        await this.saveParticipantCommand.execute(lastParticipant, tx);
+        await this.savePairCommand.execute(fewestPair, tx);
+      })
     }
   }
 }

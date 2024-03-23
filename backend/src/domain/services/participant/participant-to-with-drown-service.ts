@@ -4,6 +4,7 @@ import { ISavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { ISaveParticipantCommand } from "src/domain/commands/participant/save-participant-command";
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
+import { ITransactionRepository } from "src/domain/repositories/transaction-repository";
 import { IReallocateLastParticipantInPairService } from "src/domain/services/pair/reallocate-last-participant-in-pair-service";
 import { ITeamMemberValidationService } from "src/domain/services/team/team-member-validation-service";
 import { PairId } from "src/domain/values/id";
@@ -25,15 +26,19 @@ export class ParticipantToWithDrownService implements IParticipantToWithDrownSer
     private readonly teamMemberValidationService: ITeamMemberValidationService,
     @Inject('IReallocateLastParticipantInPairService')
     private readonly reallocateLastParticipantInPairService: IReallocateLastParticipantInPairService,
+    @Inject('ITransactionRepository')
+    private readonly transactionRepository: ITransactionRepository,
   ) { }
 
   async execute(participant: Participant): Promise<void | Error> {
     const pair = await this.getPairByIdQuery.execute(participant.pairId as PairId) as Pair;
     participant.changeEnrollmentStatusToWithDrawn();
     pair.removeParticipant(participant.id);
-    // TODO: トランザクションにする
-    this.saveParticipantCommand.execute(participant);
-    this.savePairCommand.execute(pair);
+    
+    await this.transactionRepository.execute(async(tx) => {
+      await this.saveParticipantCommand.execute(participant, tx);
+      await this.savePairCommand.execute(pair, tx);
+    })
 
     await this.teamMemberValidationService.execute(pair.teamId);
     await this.reallocateLastParticipantInPairService.execute(pair);

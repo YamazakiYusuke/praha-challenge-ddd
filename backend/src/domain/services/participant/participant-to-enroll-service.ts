@@ -5,6 +5,7 @@ import { ISaveParticipantCommand } from "src/domain/commands/participant/save-pa
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
 import { EntityError } from "src/domain/errors/entity_error";
+import { ITransactionRepository } from "src/domain/repositories/transaction-repository";
 
 export interface IParticipantToEnrollService {
   execute(participant: Participant): Promise<void | Error>;
@@ -19,6 +20,8 @@ export class ParticipantToEnrollService implements IParticipantToEnrollService {
     private readonly savePairCommand: ISavePairCommand,
     @Inject('ISaveParticipantCommand')
     private readonly saveParticipantCommand: ISaveParticipantCommand,
+    @Inject('ITransactionRepository')
+    private readonly transactionRepository: ITransactionRepository,
   ) { }
 
   async execute(participant: Participant): Promise<void | Error> {
@@ -29,8 +32,11 @@ export class ParticipantToEnrollService implements IParticipantToEnrollService {
     }
     participant.changeEnrollmentStatusToEnrolled(smallestPair.teamId, smallestPair.id);
     smallestPair.appendParticipant(participant.id);
-    // TODO: トランザクションにする
-    await this.saveParticipantCommand.execute(participant);
-    await this.savePairCommand.execute(smallestPair);
+    
+    await this.transactionRepository.execute(async (tx) => {
+      await this.saveParticipantCommand.execute(participant, tx);
+      await this.savePairCommand.execute(smallestPair, tx);
+    })
+
   }
 }
