@@ -13,26 +13,23 @@ export class PrismaParticipantRepository implements IParticipantRepository {
 
   async save(participant: Participant, transaction?: Prisma.TransactionClient): Promise<void | Error> {
     const prismaClient = transaction ?? this.prisma;
-    try {
-      await prismaClient.participant.create({
-        data: {
-          id: participant.id.value,
-          name: participant.name.value,
-          email: participant.email.value,
-          pairId: participant.pairId?.value,
-          teamId: participant.teamId?.value,
-          enrollmentStatus: participant.enrollmentStatus,
-        },
-      });
-    } catch (error) {
-      return error as Error;
-    }
+
+    await prismaClient.participant.create({
+      data: {
+        id: participant.id.value,
+        name: participant.name.value,
+        email: participant.email.value,
+        pairId: participant.pairId?.value,
+        teamId: participant.teamId?.value,
+        enrollmentStatus: participant.enrollmentStatus,
+      },
+    });
   }
 
   async getAll(): Promise<Participant[] | Error> {
     const participants = await this.prisma.participant.findMany();
-    
-    return participants.map(participant => 
+
+    return participants.map(participant =>
       Participant.restore(
         ParticipantId.restore(participant.id),
         {
@@ -52,8 +49,8 @@ export class PrismaParticipantRepository implements IParticipantRepository {
         progresses: true,
       },
     });
-    
-    return participants.map(participant => 
+
+    return participants.map(participant =>
       new ParticipantWithAssignments(
         Participant.restore(
           ParticipantId.restore(participant.id),
@@ -65,7 +62,7 @@ export class PrismaParticipantRepository implements IParticipantRepository {
             enrollmentStatus: restoreEnrollmentStatusValue(participant.enrollmentStatus),
           }
         ),
-        participant.progresses.map(progress => 
+        participant.progresses.map(progress =>
           AssignmentProgress.restore(
             AssignmentProgressId.restore(progress.id),
             {
