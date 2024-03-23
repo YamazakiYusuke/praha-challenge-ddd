@@ -2,7 +2,6 @@ import { Inject, Injectable } from "@nestjs/common";
 import { IGetPairWithFewestMembersQuery } from "src/domain/commands/pair/get-pair-with-fewest-members-query";
 import { ISavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { ISaveParticipantCommand } from "src/domain/commands/participant/save-participant-command";
-import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
 import { EntityError } from "src/domain/errors/entity_error";
 import { ITransactionRepository } from "src/domain/repositories/transaction-repository";
@@ -25,7 +24,7 @@ export class ParticipantToEnrollService implements IParticipantToEnrollService {
   ) { }
 
   async execute(participant: Participant): Promise<void> {
-    const smallestPair = await this.getPairWithFewestMembersQuery.execute() as Pair | null;
+    const smallestPair = await this.getPairWithFewestMembersQuery.execute();
     if (smallestPair == null) {
       // TODO: 管理者にメール
       throw new EntityError('参加可能なペアがありません');

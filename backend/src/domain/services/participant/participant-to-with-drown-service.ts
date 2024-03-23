@@ -2,8 +2,8 @@ import { Inject, Injectable } from "@nestjs/common";
 import { IGetPairByIdQuery } from "src/domain/commands/pair/get-pair-by-id-query";
 import { ISavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { ISaveParticipantCommand } from "src/domain/commands/participant/save-participant-command";
-import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
+import { EntityError } from "src/domain/errors/entity_error";
 import { ITransactionRepository } from "src/domain/repositories/transaction-repository";
 import { IReallocateLastParticipantInPairService } from "src/domain/services/pair/reallocate-last-participant-in-pair-service";
 import { ITeamMemberValidationService } from "src/domain/services/team/team-member-validation-service";
@@ -31,7 +31,10 @@ export class ParticipantToWithDrownService implements IParticipantToWithDrownSer
   ) { }
 
   async execute(participant: Participant): Promise<void> {
-    const pair = await this.getPairByIdQuery.execute(participant.pairId as PairId) as Pair;
+    const pair = await this.getPairByIdQuery.execute(participant.pairId as PairId);
+    if (pair == null) {
+      throw new EntityError('ペアが存在しません');
+    }
     participant.changeEnrollmentStatusToWithDrawn();
     pair.removeParticipant(participant.id);
 

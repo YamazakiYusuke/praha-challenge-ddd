@@ -1,9 +1,8 @@
-import { Injectable, Inject } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { IGetAllPairsQuery } from "src/domain/commands/pair/get-all-pairs-query";
 import { Pair } from "src/domain/entities/pair";
 import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
-import { PairDTO } from "./dto/pair-dto";
 
 @Injectable()
 export class GetAllPairsUsecase {
@@ -12,11 +11,9 @@ export class GetAllPairsUsecase {
     private readonly getAllPairsQuery: IGetAllPairsQuery,
   ) { }
 
-  public async execute(): Promise<PairDTO[] | ErrorResponse> {
+  public async execute(): Promise<Pair[] | ErrorResponse> {
     try {
-      const pairs = await this.getAllPairsQuery.execute() as Pair[];
-      const pairDTOs = pairs.map(e => new PairDTO(e));
-      return pairDTOs;
+      return await this.getAllPairsQuery.execute();
     } catch (e) {
       debuglog(`Exception: ${e}`);
       return new ErrorResponse('ペアの取得に失敗しました');

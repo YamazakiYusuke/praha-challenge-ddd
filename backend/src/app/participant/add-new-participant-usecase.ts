@@ -1,23 +1,20 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ErrorResponse } from "src/app/responses/error-response";
 import { SuccessResponse } from "src/app/responses/success-response";
-import { IGetPairWithFewestMembersQuery } from "src/domain/commands/pair/get-pair-with-fewest-members-query";
-import { ISavePairCommand } from "src/domain/commands/pair/save-pair-command";
-import { ParticipantProps } from "src/domain/entities/participant";
+import { Participant } from "src/domain/entities/participant";
+import { IParticipantToEnrollService } from "src/domain/services/participant/participant-to-enroll-service";
 import { debuglog } from "util";
 
 @Injectable()
 export class AddNewParticipantUsecase {
   constructor(
-    @Inject('IGetPairWithFewestMembersQuery')
-    private readonly getPairWithFewestMembersQuery: IGetPairWithFewestMembersQuery,
-    @Inject('ISavePairCommand')
-    private readonly savePairCommand: ISavePairCommand,
+    @Inject('IParticipantToEnrollService')
+    private readonly participantToEnrollService: IParticipantToEnrollService
   ) { }
 
-  async execute(props: ParticipantProps): Promise<SuccessResponse | ErrorResponse> {
+  async execute(participant: Participant): Promise<SuccessResponse | ErrorResponse> {
     try {
-      // TODO: 処理の実装
+      await this.participantToEnrollService.execute(participant);
       return new SuccessResponse('新規参加者の追加に成功しました');
     } catch (e) {
       debuglog(`Exception: ${e}`);

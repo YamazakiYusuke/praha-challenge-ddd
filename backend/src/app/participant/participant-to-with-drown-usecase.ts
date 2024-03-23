@@ -9,14 +9,19 @@ import { debuglog } from "util";
 @Injectable()
 export class ParticipantToWithDrownUseCase {
   constructor(
-    @Inject('IGetParticipantByIdQuery')
-    private readonly getParticipantByIdQuery: IGetParticipantByIdQuery,
     @Inject('IParticipantToWithDrownService')
     private readonly participantToWithDrownService: IParticipantToWithDrownService,
+    @Inject('IGetParticipantByIdQuery')
+    private readonly getParticipantByIdQuery: IGetParticipantByIdQuery,
   ) { }
 
   async execute(participantId: ParticipantId): Promise<SuccessResponse | ErrorResponse> {
     try {
+      const participant = await this.getParticipantByIdQuery.execute(participantId);
+      if (participant == null) {
+        throw Error('参加者が見つかりませんでした');
+      }
+      await this.participantToWithDrownService.execute(participant);
       return new SuccessResponse('参加者のステータス更新に成功失敗しました');
     } catch (e) {
       debuglog(`Exception: ${e}`);
