@@ -10,7 +10,7 @@ import { ITeamMemberValidationService } from "src/domain/services/team/team-memb
 import { PairId } from "src/domain/values/id";
 
 export interface IParticipantToWithDrownService {
-  execute(participant: Participant): Promise<void | Error>;
+  execute(participant: Participant): Promise<void>;
 }
 
 @Injectable()
@@ -30,12 +30,12 @@ export class ParticipantToWithDrownService implements IParticipantToWithDrownSer
     private readonly transactionRepository: ITransactionRepository,
   ) { }
 
-  async execute(participant: Participant): Promise<void | Error> {
+  async execute(participant: Participant): Promise<void> {
     const pair = await this.getPairByIdQuery.execute(participant.pairId as PairId) as Pair;
     participant.changeEnrollmentStatusToWithDrawn();
     pair.removeParticipant(participant.id);
-    
-    await this.transactionRepository.execute(async(tx) => {
+
+    await this.transactionRepository.execute(async (tx) => {
       await this.saveParticipantCommand.execute(participant, tx);
       await this.savePairCommand.execute(pair, tx);
     })

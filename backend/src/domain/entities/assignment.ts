@@ -18,7 +18,7 @@ export class Assignment extends Entity<AssignmentId, AssignmentProps> {
     super(id, props)
   }
 
-  static create(props: AssignmentProps): Assignment | Error {
+  static create(props: AssignmentProps): Assignment {
     if (props.title.trim() === '') {
       throw new EntityError('Title is required')
     }
@@ -55,35 +55,35 @@ export class Assignment extends Entity<AssignmentId, AssignmentProps> {
     return this.props.content;
   }
 
-  public changeNumber(newNumber: number): void | Error {
+  public changeNumber(newNumber: number): void {
     if (!newNumber) {
       throw new EntityError('Number is required')
     }
     this.props.number = newNumber;
   }
 
-  public changeTitle(newTitle: string): void | Error {
+  public changeTitle(newTitle: string): void {
     if (!newTitle || newTitle.trim() === '') {
       throw new EntityError('Title is required')
     }
     this.props.title = newTitle;
   }
 
-  public changeCategory(newCategoryId: CategoryId): void | Error {
+  public changeCategory(newCategoryId: CategoryId): void {
     if (!newCategoryId) {
       throw new EntityError('Category is required')
     }
     this.props.categoryId = newCategoryId;
   }
 
-  public changeIntroduction(newIntroduction: string): void | Error {
+  public changeIntroduction(newIntroduction: string): void {
     if (!newIntroduction || newIntroduction.trim() === '') {
       throw new EntityError('Introduction is required')
     }
     this.props.introduction = newIntroduction;
   }
 
-  public changeContent(newContent: string): void | Error {
+  public changeContent(newContent: string): void {
     if (!newContent || newContent.trim() === '') {
       throw new EntityError('Content is required')
     }

@@ -7,7 +7,7 @@ import { createRandomNumUpTo } from "src/util/random";
 import { IGetQuery } from "../base/get-query";
 
 export interface IGetPairWithFewestMembersByTeamIdQuery extends IGetQuery<Pair, TeamId> {
-  execute(teamId: TeamId, excludePairId?: PairId): Promise<Pair | null | Error>;
+  execute(teamId: TeamId, excludePairId?: PairId): Promise<Pair | null>;
 }
 
 @Injectable()
@@ -17,7 +17,7 @@ export class GetPairWithFewestMembersByTeamIdQuery implements IGetPairWithFewest
     private readonly pairRepository: IPairRepository
   ) { }
 
-  async execute(teamId: TeamId, excludePairId?: PairId): Promise<Pair | null | Error> {
+  async execute(teamId: TeamId, excludePairId?: PairId): Promise<Pair | null> {
     const result = await this.pairRepository.getAll();
     const allPairs = result as Pair[];
     const pairs = allPairs.filter((pair: Pair) => pair.teamId.isEqual(teamId) && pair.id !== excludePairId);

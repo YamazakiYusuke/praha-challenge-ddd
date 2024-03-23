@@ -6,7 +6,7 @@ export class AssignmentProgressState extends Value<number> {
     super(value)
   }
 
-  static create(value: AssignmentProgressStateValue): AssignmentProgressState | Error {
+  static create(value: AssignmentProgressStateValue): AssignmentProgressState {
     return new AssignmentProgressState(value);
   }
 

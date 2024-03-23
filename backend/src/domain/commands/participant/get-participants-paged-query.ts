@@ -1,4 +1,4 @@
-import { Injectable, Inject } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { IGetQuery } from "src/domain/commands/base/get-query";
 import { Participant } from "src/domain/entities/participant";
 import { IParticipantRepository, ParticipantWithAssignments } from "src/domain/repositories/participant-repository";
@@ -17,7 +17,7 @@ export interface AssignmentStateProps {
 }
 
 export interface IGetParticipantsWithAssignmentsPagedQuery extends IGetQuery<Participant[], ParticipantPaginationProps> {
-  execute(props: ParticipantPaginationProps): Promise<Participant[] | Error>;
+  execute(props: ParticipantPaginationProps): Promise<Participant[]>;
 }
 
 @Injectable()
@@ -27,7 +27,7 @@ export class GetParticipantsWithAssignmentsPagedQuery implements IGetParticipant
     private readonly participantRepository: IParticipantRepository
   ) { }
 
-  async execute(props: ParticipantPaginationProps): Promise<Participant[] | Error> {
+  async execute(props: ParticipantPaginationProps): Promise<Participant[]> {
     const all = await this.participantRepository.getAllWithAssignments() as ParticipantWithAssignments[];
     const filtered = this.filterParticipantsByAssignmentState(all, props.assignmentStates);
     const paginated = this.paginateParticipants(filtered, props.page, props.size);

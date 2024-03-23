@@ -14,7 +14,7 @@ export class Category extends Entity<CategoryId, CategoryProps> {
     super(id, props)
   }
 
-  static create(props: CategoryProps): Category | Error {
+  static create(props: CategoryProps): Category {
     return new Category(CategoryId.create(), props);
   }
 

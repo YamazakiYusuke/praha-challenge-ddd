@@ -4,7 +4,7 @@ import { IAssignmentProgressRepository } from "src/domain/repositories/assignmen
 import { IGetQuery } from "../base/get-query";
 
 export interface IGetAllAssignmentProgressQuery extends IGetQuery<AssignmentProgress[]> {
-  execute(): Promise<AssignmentProgress[] | Error>;
+  execute(): Promise<AssignmentProgress[]>;
 }
 
 @Injectable()
@@ -14,7 +14,7 @@ export class GetAllAssignmentProgressQuery implements IGetAllAssignmentProgressQ
     private readonly assignmentProgressRepository: IAssignmentProgressRepository
   ) { }
 
-  async execute(): Promise<AssignmentProgress[] | Error> {
+  async execute(): Promise<AssignmentProgress[]> {
     return await this.assignmentProgressRepository.getAll();
   }
 }

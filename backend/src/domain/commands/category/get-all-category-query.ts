@@ -4,7 +4,7 @@ import { ICategoryRepository } from "src/domain/repositories/category-repository
 import { IGetQuery } from "../base/get-query";
 
 export interface IGetAllCategoryQuery extends IGetQuery<Category[]> {
-  execute(): Promise<Category[] | Error>;
+  execute(): Promise<Category[]>;
 }
 
 @Injectable()
@@ -14,7 +14,7 @@ export class GetAllCategoryQuery implements IGetAllCategoryQuery {
     private readonly categoryRepository: ICategoryRepository
   ) { }
 
-  async execute(): Promise<Category[] | Error> {
+  async execute(): Promise<Category[]> {
     return await this.categoryRepository.getAll();
   }
 }

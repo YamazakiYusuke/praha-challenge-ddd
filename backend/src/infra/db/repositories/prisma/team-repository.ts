@@ -7,7 +7,7 @@ import { TeamName } from "src/domain/values/name";
 export class PrismaTeamRepository implements ITeamRepository {
   private readonly prisma = new PrismaClient();
 
-  async save(team: Team, transaction?: Prisma.TransactionClient): Promise<void | Error> {
+  async save(team: Team, transaction?: Prisma.TransactionClient): Promise<void> {
     const prismaClient = transaction ?? this.prisma;
     await prismaClient.team.upsert({
       where: {
@@ -24,7 +24,7 @@ export class PrismaTeamRepository implements ITeamRepository {
     });
   }
 
-  async getAll(): Promise<Team[] | Error> {
+  async getAll(): Promise<Team[]> {
     const teams = await this.prisma.team.findMany({
       include: {
         pairs: {

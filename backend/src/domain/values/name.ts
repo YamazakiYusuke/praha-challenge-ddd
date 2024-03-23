@@ -19,7 +19,7 @@ export class CategoryName extends Name {
     super(value);
   }
 
-  static create(value: string): CategoryName | Error {
+  static create(value: string): CategoryName {
     return new CategoryName(value);
   }
 
@@ -37,7 +37,7 @@ export class PairName extends Name {
     super(value);
   }
 
-  static create(value: string): PairName | Error {
+  static create(value: string): PairName {
     return new PairName(value);
   }
 
@@ -55,7 +55,7 @@ export class PersonName extends Name {
     super(value);
   }
 
-  static create(value: string): PersonName | Error {
+  static create(value: string): PersonName {
     return new PersonName(value);
   }
 
@@ -73,7 +73,7 @@ export class TeamName extends Name {
     super(value);
   }
 
-  static create(value: string): TeamName | Error {
+  static create(value: string): TeamName {
     return new TeamName(value);
   }
 

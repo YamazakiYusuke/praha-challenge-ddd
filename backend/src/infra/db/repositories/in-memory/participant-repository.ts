@@ -8,12 +8,12 @@ import { AssignmentProgressStateValue } from "src/util/enums";
 export class InMemoryParticipantRepository implements IParticipantRepository {
   private participants: Participant[] = [];
 
-  async save(participant: Participant): Promise<void | Error> {
+  async save(participant: Participant): Promise<void> {
     this.participants.push(participant);
     return;
   }
 
-  async getAll(): Promise<Participant[] | Error> {
+  async getAll(): Promise<Participant[]> {
     return this.participants;
   }
 

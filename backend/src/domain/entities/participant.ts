@@ -20,7 +20,7 @@ export class Participant extends Entity<ParticipantId, ParticipantProps> {
     super(id, props)
   }
 
-  static create(props: ParticipantProps): Participant | EntityError {
+  static create(props: ParticipantProps): Participant {
     return new Participant(ParticipantId.create(), props);
   }
 
@@ -48,19 +48,19 @@ export class Participant extends Entity<ParticipantId, ParticipantProps> {
     return this.props.enrollmentStatus;
   }
 
-  public changeEnrollmentStatusToEnrolled(teamId: TeamId, pairId: PairId): void | Error {
+  public changeEnrollmentStatusToEnrolled(teamId: TeamId, pairId: PairId): void {
     this.changeEnrollmentStatusValidation();
     this.props.enrollmentStatus = EnrollmentStatusValue.Enrolled;
     this.changeTeamIdPairId(pairId, teamId);
   }
 
-  public changeEnrollmentStatusToOnLeave(): void | Error {
+  public changeEnrollmentStatusToOnLeave(): void {
     this.changeEnrollmentStatusValidation();
     this.deleteTeamIdPairId();
     this.props.enrollmentStatus = EnrollmentStatusValue.OnLeave;
   }
 
-  public changeEnrollmentStatusToWithDrawn(): void | Error {
+  public changeEnrollmentStatusToWithDrawn(): void {
     this.changeEnrollmentStatusValidation();
     this.deleteTeamIdPairId();
     this.props.enrollmentStatus = EnrollmentStatusValue.Withdrawn;
@@ -76,7 +76,7 @@ export class Participant extends Entity<ParticipantId, ParticipantProps> {
     this.props.pairId = undefined;
   }
 
-  private changeEnrollmentStatusValidation(): void | Error {
+  private changeEnrollmentStatusValidation(): void {
     if (this.props.enrollmentStatus === EnrollmentStatusValue.Withdrawn) {
       // 既に退会済みの場合
       throw new EntityError('Cannot change status of a withdrawn participant');

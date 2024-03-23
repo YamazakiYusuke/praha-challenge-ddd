@@ -1,6 +1,6 @@
 import { TeamName } from "src/domain/values/name";
-import { ParticipantId, TeamId } from "../values/id"
-import { Entity } from "./base/entity"
+import { ParticipantId, TeamId } from "../values/id";
+import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
 export interface TeamProps {
@@ -16,7 +16,7 @@ export class Team extends Entity<TeamId, TeamProps> {
     super(id, props)
   }
 
-  static create(props: TeamProps): Team | Error {
+  static create(props: TeamProps): Team {
     return new Team(TeamId.create(), props)
   }
 
@@ -43,7 +43,7 @@ export class Team extends Entity<TeamId, TeamProps> {
   public get hasValidNumberOfParticipants(): boolean {
     return this.participantsLength >= Team.minNumber;
   }
-  
+
   public get hasInsufficientMinParticipants(): boolean {
     return this.participantsLength < Team.minNumber;
   }

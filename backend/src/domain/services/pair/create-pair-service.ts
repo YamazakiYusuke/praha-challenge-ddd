@@ -1,13 +1,13 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { IGetPairsByTeamIdQuery } from "src/domain/commands/pair/get-pairs-by-team-id-query";
+import { ISavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { ParticipantId, TeamId } from "src/domain/values/id";
 import { PairName } from "src/domain/values/name";
 import { debuglog } from "util";
 import { Pair, PairProps } from "../../entities/pair";
-import { ISavePairCommand, SavePairCommand } from "src/domain/commands/pair/save-pair-command";
 
 export interface ICreatePairService {
-  execute(props: { teamId: TeamId; participantIds: ParticipantId[]; }): Promise<Pair | Error>;
+  execute(props: { teamId: TeamId; participantIds: ParticipantId[]; }): Promise<Pair>;
 }
 
 @Injectable()
@@ -19,7 +19,7 @@ export class CreatePairService implements ICreatePairService {
     private readonly savePairCommand: ISavePairCommand,
   ) { }
 
-  async execute(props: { teamId: TeamId; participantIds: ParticipantId[]; }): Promise<Pair | Error> {
+  async execute(props: { teamId: TeamId; participantIds: ParticipantId[]; }): Promise<Pair> {
     const name = await this.getName(props.teamId) as PairName;
     const entityProps: PairProps = {
       teamId: props.teamId,
@@ -32,7 +32,7 @@ export class CreatePairService implements ICreatePairService {
     return newPair;
   }
 
-  private async getName(teamId: TeamId): Promise<PairName | Error> {
+  private async getName(teamId: TeamId): Promise<PairName> {
     const allPairNames = await (this.getPairsByTeamIdQuery.execute(teamId)) as Pair[];
     const alphabet = 'abcdefghijklmnopqrstuvwxyz';
     for (let i = 0; i < alphabet.length; i++) {

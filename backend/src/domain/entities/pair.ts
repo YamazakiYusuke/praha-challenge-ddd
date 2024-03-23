@@ -18,7 +18,7 @@ export class Pair extends Entity<PairId, PairProps> {
     super(id, props)
   }
   /// Factory
-  static create(props: PairProps): Pair | Error {
+  static create(props: PairProps): Pair {
     const pair = new Pair(PairId.create(), props);
     return pair;
   }
@@ -69,7 +69,7 @@ export class Pair extends Entity<PairId, PairProps> {
    * Pairに所属している参加者を在籍状態にする
    * @param participant 
    */
-  public appendParticipant(participantId: ParticipantId): void | Error {
+  public appendParticipant(participantId: ParticipantId): void {
     if (this.participantIds.includes(participantId)) {
       throw new EntityError("Participant ID already exists in the pair.");
     }
@@ -80,7 +80,7 @@ export class Pair extends Entity<PairId, PairProps> {
    * Pairに所属している参加者を取り除く
    * @param participant 
    */
-  public removeParticipant(participantId: ParticipantId): void | Error {
+  public removeParticipant(participantId: ParticipantId): void {
     if (!this.participantIds.includes(participantId)) {
       throw new EntityError("Participant ID does not exist in the pair.");
     }

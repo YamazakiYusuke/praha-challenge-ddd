@@ -4,7 +4,7 @@ import { IAssignmentRepository } from "src/domain/repositories/assignment-reposi
 import { IGetQuery } from "../base/get-query";
 
 export interface IGetAllAssignmentsQuery extends IGetQuery<Assignment[]> {
-  execute(): Promise<Assignment[] | Error>;
+  execute(): Promise<Assignment[]>;
 }
 
 @Injectable()
@@ -14,7 +14,7 @@ export class GetAllAssignmentsQuery implements IGetAllAssignmentsQuery {
     private readonly assignmentRepository: IAssignmentRepository
   ) { }
 
-  async execute(): Promise<Assignment[] | Error> {
+  async execute(): Promise<Assignment[]> {
     return await this.assignmentRepository.getAll();
   }
 }

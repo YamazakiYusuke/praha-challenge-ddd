@@ -7,7 +7,7 @@ import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/va
 export class PrismaAssignmentProgressRepository implements IAssignmentProgressRepository {
   private readonly prisma = new PrismaClient();
 
-  async save(assignmentProgress: AssignmentProgress, transaction?: Prisma.TransactionClient): Promise<void | Error> {
+  async save(assignmentProgress: AssignmentProgress, transaction?: Prisma.TransactionClient): Promise<void> {
     const prismaClient = transaction ?? this.prisma;
     await prismaClient.assignmentProgress.upsert({
       where: { id: assignmentProgress.id.value },
@@ -21,14 +21,14 @@ export class PrismaAssignmentProgressRepository implements IAssignmentProgressRe
     });
   }
 
-  async getAll(): Promise<AssignmentProgress[] | Error> {
+  async getAll(): Promise<AssignmentProgress[]> {
     const progresses = await this.prisma.assignmentProgress.findMany();
     return progresses.map(progress => AssignmentProgress.restore(
       AssignmentProgressId.restore(progress.id), {
-        assignmentId: AssignmentId.restore(progress.assignmentId),
-        participantId: ParticipantId.restore(progress.participantId),
-        assignmentProgressState: AssignmentProgressState.restore(progress.state),
-      }
+      assignmentId: AssignmentId.restore(progress.assignmentId),
+      participantId: ParticipantId.restore(progress.participantId),
+      assignmentProgressState: AssignmentProgressState.restore(progress.state),
+    }
     ));
   }
 }

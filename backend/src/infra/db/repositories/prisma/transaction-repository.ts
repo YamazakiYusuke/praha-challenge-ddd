@@ -3,7 +3,7 @@ import { ITransactionRepository } from "src/domain/repositories/transaction-repo
 
 export class PrismaTransactionRepository implements ITransactionRepository {
   private readonly prisma = new PrismaClient();
-  async execute(callback: (transaction: Prisma.TransactionClient) => Promise<void>): Promise<void | Error> {
+  async execute(callback: (transaction: Prisma.TransactionClient) => Promise<void>): Promise<void> {
     await this.prisma.$transaction(async (transaction) => {
       return await callback(transaction);
     });

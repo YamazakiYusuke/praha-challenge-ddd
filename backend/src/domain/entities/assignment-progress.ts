@@ -17,7 +17,7 @@ export class AssignmentProgress extends Entity<AssignmentProgressId, AssignmentP
     super(id, props)
   }
 
-  static create(props: AssignmentProgressProps): AssignmentProgress | Error {
+  static create(props: AssignmentProgressProps): AssignmentProgress {
     return new AssignmentProgress(AssignmentProgressId.create(), props)
   }
 

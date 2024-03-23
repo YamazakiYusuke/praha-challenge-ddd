@@ -5,7 +5,7 @@ import { Email } from "src/domain/values/email";
 import { IGetQuery } from "../base/get-query";
 
 export interface IGetAdministratorByEmailQuery extends IGetQuery<Administrator, Email> {
-  execute(email: Email): Promise<Administrator | null | Error>;
+  execute(email: Email): Promise<Administrator | null>;
 }
 
 @Injectable()
@@ -15,7 +15,7 @@ export class GetAdministratorByEmailQuery implements IGetAdministratorByEmailQue
     private readonly administratorRepository: IAdministratorRepository
   ) { }
 
-  async execute(email: Email): Promise<Administrator | null | Error> {
+  async execute(email: Email): Promise<Administrator | null> {
     const result = await this.administratorRepository.getAll();
     const administrators = result as Administrator[];
     return administrators.find((admin: Administrator) => admin.email.isEqual(email)) || null;

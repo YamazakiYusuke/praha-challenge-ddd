@@ -10,7 +10,7 @@ import { ITransactionRepository } from "src/domain/repositories/transaction-repo
 import { ICreatePairService } from "src/domain/services/pair/create-pair-service";
 
 export interface IReallocateLastParticipantInPairService {
-  execute(pair: Pair): Promise<void | Error>;
+  execute(pair: Pair): Promise<void>;
 }
 
 @Injectable()
@@ -30,7 +30,7 @@ export class ReallocateLastParticipantInPairService implements IReallocateLastPa
     private readonly transactionRepository: ITransactionRepository,
   ) { }
 
-  async execute(pair: Pair): Promise<void | Error> {
+  async execute(pair: Pair): Promise<void> {
     if (!pair.hasInsufficientMinParticipants) return;
 
     const lastParticipantId = pair.lastParticipant;

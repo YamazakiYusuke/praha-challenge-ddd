@@ -1,10 +1,10 @@
-import { Injectable, Inject } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { Team } from "src/domain/entities/team";
 import { ITeamRepository } from "src/domain/repositories/team-repository";
 import { IGetQuery } from "../base/get-query";
 
 export interface IGetAllTeamsQuery extends IGetQuery<Team[]> {
-  execute(): Promise<Team[] | Error>;
+  execute(): Promise<Team[]>;
 }
 
 @Injectable()
@@ -14,7 +14,7 @@ export class GetAllTeamsQuery implements IGetAllTeamsQuery {
     private readonly teamRepository: ITeamRepository
   ) { }
 
-  async execute(): Promise<Team[] | Error> {
+  async execute(): Promise<Team[]> {
     return await this.teamRepository.getAll();
   }
 }

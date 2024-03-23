@@ -8,7 +8,7 @@ import { EntityError } from "src/domain/errors/entity_error";
 import { ITransactionRepository } from "src/domain/repositories/transaction-repository";
 
 export interface IParticipantToEnrollService {
-  execute(participant: Participant): Promise<void | Error>;
+  execute(participant: Participant): Promise<void>;
 }
 
 @Injectable()
@@ -24,7 +24,7 @@ export class ParticipantToEnrollService implements IParticipantToEnrollService {
     private readonly transactionRepository: ITransactionRepository,
   ) { }
 
-  async execute(participant: Participant): Promise<void | Error> {
+  async execute(participant: Participant): Promise<void> {
     const smallestPair = await this.getPairWithFewestMembersQuery.execute() as Pair | null;
     if (smallestPair == null) {
       // TODO: 管理者にメール
@@ -32,7 +32,7 @@ export class ParticipantToEnrollService implements IParticipantToEnrollService {
     }
     participant.changeEnrollmentStatusToEnrolled(smallestPair.teamId, smallestPair.id);
     smallestPair.appendParticipant(participant.id);
-    
+
     await this.transactionRepository.execute(async (tx) => {
       await this.saveParticipantCommand.execute(participant, tx);
       await this.savePairCommand.execute(smallestPair, tx);

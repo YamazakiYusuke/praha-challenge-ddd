@@ -4,12 +4,12 @@ import { IAdministratorRepository } from "src/domain/repositories/administrator-
 export class InMemoryAdministratorRepository implements IAdministratorRepository {
   private administrators: Administrator[] = [];
 
-  async save(administrator: Administrator): Promise<void | Error> {
+  async save(administrator: Administrator): Promise<void> {
     this.administrators.push(administrator);
     return;
   }
 
-  async getAll(): Promise<Administrator[] | Error> {
+  async getAll(): Promise<Administrator[]> {
     return this.administrators;
   }
 }

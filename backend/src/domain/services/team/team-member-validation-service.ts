@@ -4,7 +4,7 @@ import { Team } from "src/domain/entities/team";
 import { TeamId } from "src/domain/values/id";
 
 export interface ITeamMemberValidationService {
-  execute(teamId: TeamId): Promise<void | Error>;
+  execute(teamId: TeamId): Promise<void>;
 }
 
 @Injectable()
@@ -14,7 +14,7 @@ export class TeamMemberValidationService implements ITeamMemberValidationService
     private readonly getTeamByIdQuery: IGetTeamByIdQuery,
   ) { }
 
-  async execute(teamId: TeamId): Promise<void | Error> {
+  async execute(teamId: TeamId): Promise<void> {
     const team = await this.getTeamByIdQuery.execute(teamId) as Team;
   }
 }

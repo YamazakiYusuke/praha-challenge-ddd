@@ -1,7 +1,7 @@
 import { EntityError } from "../errors/entity_error";
 import { Email } from "../values/email";
 import { AdministratorId } from "../values/id";
-import { Entity } from "./base/entity"
+import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
 export interface AdministratorProps {
@@ -15,7 +15,7 @@ export class Administrator extends Entity<AdministratorId, AdministratorProps> {
     super(id, props)
   }
 
-  static create(props: AdministratorProps): Administrator | Error {
+  static create(props: AdministratorProps): Administrator {
     return new Administrator(AdministratorId.create(), props)
   }
 
@@ -27,7 +27,7 @@ export class Administrator extends Entity<AdministratorId, AdministratorProps> {
     return this.props.email;
   }
 
-  public changeEmail(newEmail: Email): void | Error {
+  public changeEmail(newEmail: Email): void {
     if (!newEmail) {
       throw new EntityError('Email is required');
     }

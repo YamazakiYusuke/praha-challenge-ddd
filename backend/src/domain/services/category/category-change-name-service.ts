@@ -6,7 +6,7 @@ import { CategoryName } from "src/domain/values/name";
 import { Category } from "../../entities/category";
 
 export interface ICategoryChangeNameService {
-  execute(category: Category, newName: CategoryName): Promise<void | Error>;
+  execute(category: Category, newName: CategoryName): Promise<void>;
 }
 
 @Injectable()
@@ -18,7 +18,7 @@ export class CategoryChangeNameService implements ICategoryChangeNameService {
     private readonly saveCategoryCommand: ISaveCategoryCommand,
   ) { }
 
-  async execute(category: Category, newName: CategoryName): Promise<void | Error> {
+  async execute(category: Category, newName: CategoryName): Promise<void> {
     const existingCategory = await this.getCategoryByNameQuery.execute(newName);
     if (existingCategory != null) {
       throw new EntityError('このカテゴリー名は既に存在しています');

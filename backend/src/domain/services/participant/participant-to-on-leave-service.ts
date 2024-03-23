@@ -10,7 +10,7 @@ import { ITeamMemberValidationService } from "src/domain/services/team/team-memb
 import { PairId } from "src/domain/values/id";
 
 export interface IParticipantToOnLeaveService {
-  execute(participant: Participant): Promise<void | Error>;
+  execute(participant: Participant): Promise<void>;
 }
 
 @Injectable()
@@ -30,7 +30,7 @@ export class ParticipantToOnLeaveService implements IParticipantToOnLeaveService
     private readonly transactionRepository: ITransactionRepository,
   ) { }
 
-  async execute(participant: Participant): Promise<void | Error> {
+  async execute(participant: Participant): Promise<void> {
     const pair = await this.getPairByIdQuery.execute(participant.pairId as PairId) as Pair;
     participant.changeEnrollmentStatusToOnLeave();
     pair.removeParticipant(participant.id);

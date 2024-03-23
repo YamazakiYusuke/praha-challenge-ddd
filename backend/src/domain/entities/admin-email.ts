@@ -1,11 +1,11 @@
+import { Administrator } from "src/domain/entities/administrator";
+import { EntityError } from "src/domain/errors/entity_error";
+import { Email } from "src/domain/values/email";
 import { EmailContent } from "src/domain/values/email_content";
+import { EmailStatus } from "src/util/enums";
 import { AdminEmailId } from "../values/id";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
-import { Administrator } from "src/domain/entities/administrator";
-import { EmailStatus } from "src/util/enums";
-import { Email } from "src/domain/values/email";
-import { EntityError } from "src/domain/errors/entity_error";
 
 export interface AdminEmailProps {
   content: EmailContent;
@@ -22,7 +22,7 @@ export class AdminEmail extends Entity<AdminEmailId, AdminEmailProps> {
     super(id, props)
   }
 
-  static create(props: AdminEmailProps): AdminEmail | Error {
+  static create(props: AdminEmailProps): AdminEmail {
     return new AdminEmail(AdminEmailId.create(), props)
   }
 

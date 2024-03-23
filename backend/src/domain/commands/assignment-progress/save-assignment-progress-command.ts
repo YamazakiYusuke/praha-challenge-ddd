@@ -4,7 +4,7 @@ import { IAssignmentProgressRepository } from "src/domain/repositories/assignmen
 import { ICommand } from "../base/command";
 
 export interface ISaveAssignmentProgressCommand extends ICommand<AssignmentProgress> {
-  execute(assignmentProgress: AssignmentProgress, transaction?: any): Promise<void | Error>;
+  execute(assignmentProgress: AssignmentProgress, transaction?: any): Promise<void>;
 }
 
 @Injectable()
@@ -14,7 +14,7 @@ export class SaveAssignmentProgressCommand implements ISaveAssignmentProgressCom
     private readonly assignmentProgressRepository: IAssignmentProgressRepository
   ) { }
 
-  async execute(assignmentProgress: AssignmentProgress, transaction?: any): Promise<void | Error> {
+  async execute(assignmentProgress: AssignmentProgress, transaction?: any): Promise<void> {
     await this.assignmentProgressRepository.save(assignmentProgress, transaction);
   }
 }

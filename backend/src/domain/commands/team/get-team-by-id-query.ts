@@ -5,7 +5,7 @@ import { TeamId } from "src/domain/values/id";
 import { IGetQuery } from "../base/get-query";
 
 export interface IGetTeamByIdQuery extends IGetQuery<Team, TeamId> {
-  execute(id: TeamId): Promise<Team | null | Error>;
+  execute(id: TeamId): Promise<Team | null>;
 }
 
 @Injectable()
@@ -15,7 +15,7 @@ export class GetTeamByIdQuery implements IGetTeamByIdQuery {
     private readonly teamRepository: ITeamRepository
   ) { }
 
-  async execute(id: TeamId): Promise<Team | null | Error> {
+  async execute(id: TeamId): Promise<Team | null> {
     const teams = await this.teamRepository.getAll() as Team[];
     return teams.find((team: Team) => team.id.isEqual(id)) || null;
   }

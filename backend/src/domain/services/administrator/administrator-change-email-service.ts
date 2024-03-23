@@ -6,7 +6,7 @@ import { Email } from "src/domain/values/email";
 import { Administrator } from "../../entities/administrator";
 
 export interface IAdministratorChangeEmailService {
-  execute(administrator: Administrator, newEmail: Email): Promise<void | Error>;
+  execute(administrator: Administrator, newEmail: Email): Promise<void>;
 }
 
 @Injectable()
@@ -18,7 +18,7 @@ export class AdministratorChangeEmailService implements IAdministratorChangeEmai
     private readonly saveAdministratorCommand: ISaveAdministratorCommand,
   ) { }
 
-  async execute(administrator: Administrator, newEmail: Email): Promise<void | Error> {
+  async execute(administrator: Administrator, newEmail: Email): Promise<void> {
     const existingAdministrator = await this.getAdministratorByEmailQuery.execute(newEmail);
     if (existingAdministrator != null) {
       throw new EntityError('こちらのEmailは既に登録済みです');

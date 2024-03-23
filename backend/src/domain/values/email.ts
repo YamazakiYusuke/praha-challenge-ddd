@@ -8,7 +8,7 @@ export class Email extends Value<string> {
     super(value)
   }
 
-  static create(value: string): Email | Error {
+  static create(value: string): Email {
     if (!value || !Email.emailRegex.test(value)) {
       throw new ValueError('Invalid email format');
     }

@@ -4,12 +4,12 @@ import { IAssignmentRepository } from "src/domain/repositories/assignment-reposi
 export class InMemoryAssignmentRepository implements IAssignmentRepository {
   private assignments: Assignment[] = [];
 
-  async save(assignment: Assignment): Promise<void | Error> {
+  async save(assignment: Assignment): Promise<void> {
     this.assignments.push(assignment);
     return;
   }
 
-  async getAll(): Promise<Assignment[] | Error> {
+  async getAll(): Promise<Assignment[]> {
     return this.assignments;
   }
 }

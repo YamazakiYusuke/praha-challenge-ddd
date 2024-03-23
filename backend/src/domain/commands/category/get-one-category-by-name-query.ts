@@ -5,7 +5,7 @@ import { CategoryName } from "src/domain/values/name";
 import { IGetQuery } from "../base/get-query";
 
 export interface IGetCategoryByNameQuery extends IGetQuery<Category, CategoryName> {
-  execute(name: CategoryName): Promise<Category | null | Error>;
+  execute(name: CategoryName): Promise<Category | null>;
 }
 
 @Injectable()
@@ -15,7 +15,7 @@ export class GetCategoryByNameQuery implements IGetCategoryByNameQuery {
     private readonly categoryRepository: ICategoryRepository
   ) { }
 
-  async execute(name: CategoryName): Promise<Category | null | Error> {
+  async execute(name: CategoryName): Promise<Category | null> {
     const result = await this.categoryRepository.getAll();
     const categories = result as Category[];
     return categories.find((category: Category) => category.name.isEqual(name)) || null;

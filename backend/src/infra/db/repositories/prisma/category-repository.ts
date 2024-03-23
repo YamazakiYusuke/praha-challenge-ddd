@@ -7,15 +7,15 @@ import { CategoryName } from "src/domain/values/name";
 export class PrismaCategoryRepository implements ICategoryRepository {
   private readonly prisma = new PrismaClient();
 
-  async save(category: Category, transaction?: Prisma.TransactionClient): Promise<void | Error> {
+  async save(category: Category, transaction?: Prisma.TransactionClient): Promise<void> {
     const prismaClient = transaction ?? this.prisma;
 
     await prismaClient.category.upsert({
-      where: { 
-        id: category.id.value 
+      where: {
+        id: category.id.value
       },
-      update: { 
-        name: category.name.value 
+      update: {
+        name: category.name.value
       },
       create: {
         id: category.id.value,
@@ -23,13 +23,13 @@ export class PrismaCategoryRepository implements ICategoryRepository {
       },
     });
   }
-  
-  async getAll(): Promise<Category[] | Error> {
+
+  async getAll(): Promise<Category[]> {
     const categoriesData = await this.prisma.category.findMany();
 
-    return categoriesData.map(data => 
+    return categoriesData.map(data =>
       Category.restore(
-        CategoryId.restore(data.id), 
+        CategoryId.restore(data.id),
         { name: CategoryName.restore(data.name) }
       )
     );

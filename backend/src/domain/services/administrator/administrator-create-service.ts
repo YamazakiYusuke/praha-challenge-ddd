@@ -5,7 +5,7 @@ import { EntityError } from "src/domain/errors/entity_error";
 import { Administrator, AdministratorProps } from "../../entities/administrator";
 
 export interface IAdministratorCreateService {
-  execute(props: AdministratorProps): Promise<Administrator | Error>;
+  execute(props: AdministratorProps): Promise<Administrator>;
 }
 
 @Injectable()
@@ -17,7 +17,7 @@ export class AdministratorCreateService implements IAdministratorCreateService {
     private readonly saveAdministratorCommand: ISaveAdministratorCommand,
   ) { }
 
-  async execute(props: AdministratorProps): Promise<Administrator | Error> {
+  async execute(props: AdministratorProps): Promise<Administrator> {
     const existingAdministrator = await this.getAdministratorByEmailQuery.execute(props.email);
     if (existingAdministrator != null) {
       throw new EntityError('こちらのEmailは既に登録済みです');

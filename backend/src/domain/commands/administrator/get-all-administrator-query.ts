@@ -4,7 +4,7 @@ import { IAdministratorRepository } from "src/domain/repositories/administrator-
 import { IGetQuery } from "../base/get-query";
 
 export interface IGetAllAdministratorsQuery extends IGetQuery<Administrator[]> {
-  execute(): Promise<Administrator[] | Error>;
+  execute(): Promise<Administrator[]>;
 }
 
 @Injectable()
@@ -14,7 +14,7 @@ export class GetAllAdministratorsQuery implements IGetAllAdministratorsQuery {
     private readonly administratorRepository: IAdministratorRepository
   ) { }
 
-  async execute(): Promise<Administrator[] | Error> {
+  async execute(): Promise<Administrator[]> {
     return await this.administratorRepository.getAll();
   }
 }

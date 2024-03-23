@@ -11,7 +11,7 @@ import { restoreAssignmentProgressStateValue, restoreEnrollmentStatusValue } fro
 export class PrismaParticipantRepository implements IParticipantRepository {
   private readonly prisma = new PrismaClient();
 
-  async save(participant: Participant, transaction?: Prisma.TransactionClient): Promise<void | Error> {
+  async save(participant: Participant, transaction?: Prisma.TransactionClient): Promise<void> {
     const prismaClient = transaction ?? this.prisma;
 
     await prismaClient.participant.create({
@@ -26,7 +26,7 @@ export class PrismaParticipantRepository implements IParticipantRepository {
     });
   }
 
-  async getAll(): Promise<Participant[] | Error> {
+  async getAll(): Promise<Participant[]> {
     const participants = await this.prisma.participant.findMany();
 
     return participants.map(participant =>
@@ -43,7 +43,7 @@ export class PrismaParticipantRepository implements IParticipantRepository {
     );
   }
 
-  async getAllWithAssignments(): Promise<ParticipantWithAssignments[] | Error> {
+  async getAllWithAssignments(): Promise<ParticipantWithAssignments[]> {
     const participants = await this.prisma.participant.findMany({
       include: {
         progresses: true,

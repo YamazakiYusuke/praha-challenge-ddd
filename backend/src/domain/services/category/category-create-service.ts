@@ -5,7 +5,7 @@ import { Category, CategoryProps } from "../../entities/category";
 import { EntityError } from "../../errors/entity_error";
 
 export interface ICategoryCreateService {
-  execute(props: CategoryProps): Promise<Category | Error>;
+  execute(props: CategoryProps): Promise<Category>;
 }
 
 @Injectable()
@@ -17,7 +17,7 @@ export class CategoryCreateService implements ICategoryCreateService {
     private readonly saveCategoryCommand: ISaveCategoryCommand,
   ) { }
 
-  async execute(props: CategoryProps): Promise<Category | Error> {
+  async execute(props: CategoryProps): Promise<Category> {
     const existingCategory = await this.getCategoryByNameQuery.execute(props.name);
     if (existingCategory != null) {
       throw new EntityError('このカテゴリー名は既に存在しています');

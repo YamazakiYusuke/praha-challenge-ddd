@@ -10,7 +10,7 @@ export class EmailContent extends Value<EmailContentProps> {
     super(props);
   }
 
-  static create(props: EmailContentProps): EmailContent | Error {
+  static create(props: EmailContentProps): EmailContent {
     if (!props.title || !props.body) {
       return new Error("Title and body are required for EmailContent.");
     }

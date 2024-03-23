@@ -7,7 +7,7 @@ import { PairName } from "src/domain/values/name";
 export class PrismaPairRepository implements IPairRepository {
   private readonly prisma = new PrismaClient();
 
-  async save(pair: Pair, transaction?: Prisma.TransactionClient): Promise<void | Error> {
+  async save(pair: Pair, transaction?: Prisma.TransactionClient): Promise<void> {
     const prismaClient = transaction ?? this.prisma;
     await prismaClient.pair.upsert({
       where: { id: pair.id.value },
@@ -29,7 +29,7 @@ export class PrismaPairRepository implements IPairRepository {
     });
   }
 
-  async getAll(): Promise<Pair[] | Error> {
+  async getAll(): Promise<Pair[]> {
     const pairsData = await this.prisma.pair.findMany({
       include: {
         participants: true,

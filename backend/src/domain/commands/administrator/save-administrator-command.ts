@@ -4,7 +4,7 @@ import { IAdministratorRepository } from "src/domain/repositories/administrator-
 import { ICommand } from "../base/command";
 
 export interface ISaveAdministratorCommand extends ICommand<Administrator> {
-  execute(administrator: Administrator, transaction?: any): Promise<void | Error>;
+  execute(administrator: Administrator, transaction?: any): Promise<void>;
 }
 
 @Injectable()
@@ -14,7 +14,7 @@ export class SaveAdministratorCommand implements ISaveAdministratorCommand {
     private readonly administratorRepository: IAdministratorRepository
   ) { }
 
-  async execute(administrator: Administrator, transaction?: any): Promise<void | Error> {
+  async execute(administrator: Administrator, transaction?: any): Promise<void> {
     await this.administratorRepository.save(administrator, transaction);
   }
 }

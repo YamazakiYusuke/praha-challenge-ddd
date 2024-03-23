@@ -6,7 +6,7 @@ import { AssignmentId, CategoryId } from "src/domain/values/id";
 export class PrismaAssignmentRepository implements IAssignmentRepository {
   private readonly prisma = new PrismaClient();
 
-  async save(assignment: Assignment, transaction?: Prisma.TransactionClient): Promise<void | Error> {
+  async save(assignment: Assignment, transaction?: Prisma.TransactionClient): Promise<void> {
     const prismaClient = transaction ?? this.prisma;
     await prismaClient.assignment.create({
       data: {
@@ -20,7 +20,7 @@ export class PrismaAssignmentRepository implements IAssignmentRepository {
     });
   }
 
-  async getAll(): Promise<Assignment[] | Error> {
+  async getAll(): Promise<Assignment[]> {
     const assignments = await this.prisma.assignment.findMany();
     return assignments.map(assignment => Assignment.restore(
       AssignmentId.restore(assignment.id),

@@ -4,12 +4,12 @@ import { IAssignmentProgressRepository } from "src/domain/repositories/assignmen
 export class InMemoryAssignmentProgressRepository implements IAssignmentProgressRepository {
   private assignmentProgresses: AssignmentProgress[] = [];
 
-  async save(assignmentProgress: AssignmentProgress): Promise<void | Error> {
+  async save(assignmentProgress: AssignmentProgress): Promise<void> {
     this.assignmentProgresses.push(assignmentProgress);
     return;
   }
 
-  async getAll(): Promise<AssignmentProgress[] | Error> {
+  async getAll(): Promise<AssignmentProgress[]> {
     return this.assignmentProgresses;
   }
 }

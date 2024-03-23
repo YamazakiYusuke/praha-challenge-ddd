@@ -9,7 +9,7 @@ export class ParticipantWithAssignments {
 }
 
 export interface IParticipantRepository {
-  getAll(): Promise<Participant[] | Error>
-  getAllWithAssignments(): Promise<ParticipantWithAssignments[] | Error>
-  save(participant: Participant, transaction?: any): Promise<void | Error>
+  getAll(): Promise<Participant[]>
+  getAllWithAssignments(): Promise<ParticipantWithAssignments[]>
+  save(participant: Participant, transaction?: any): Promise<void>
 }

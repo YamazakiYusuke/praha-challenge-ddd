@@ -5,7 +5,7 @@ import { PairId } from "src/domain/values/id";
 import { IGetQuery } from "../base/get-query";
 
 export interface IGetPairByIdQuery extends IGetQuery<Pair, PairId> {
-  execute(id: PairId): Promise<Pair | null | Error>;
+  execute(id: PairId): Promise<Pair | null>;
 }
 
 @Injectable()
@@ -15,7 +15,7 @@ export class GetPairByIdQuery implements IGetPairByIdQuery {
     private readonly pairRepository: IPairRepository
   ) { }
 
-  async execute(id: PairId): Promise<Pair | null | Error> {
+  async execute(id: PairId): Promise<Pair | null> {
     const result = await this.pairRepository.getAll();
     const pairs = result as Pair[];
     return pairs.find((pair: Pair) => pair.id.isEqual(id)) || null;

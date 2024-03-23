@@ -4,7 +4,7 @@ import { IParticipantRepository } from "src/domain/repositories/participant-repo
 import { IGetQuery } from "../base/get-query";
 
 export interface IGetAllParticipantsQuery extends IGetQuery<Participant[]> {
-  execute(): Promise<Participant[] | Error>;
+  execute(): Promise<Participant[]>;
 }
 
 @Injectable()
@@ -14,7 +14,7 @@ export class GetAllParticipantsQuery implements IGetAllParticipantsQuery {
     private readonly participantRepository: IParticipantRepository
   ) { }
 
-  async execute(): Promise<Participant[] | Error> {
+  async execute(): Promise<Participant[]> {
     return await this.participantRepository.getAll();
   }
 }
