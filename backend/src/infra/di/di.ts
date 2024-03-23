@@ -218,7 +218,7 @@ export function setupDI() {
     useClass: PrismaTeamRepository
   })
 
-  container.register('ITransactionCallback', {
+  container.register('ITransactionRepository', {
     useClass: PrismaTransactionRepository
   })
 }
