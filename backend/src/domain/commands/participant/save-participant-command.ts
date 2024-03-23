@@ -4,7 +4,7 @@ import { ICommand } from "../base/command";
 import { IParticipantRepository } from "src/domain/repositories/participant-repository";
 
 export interface ISaveParticipantCommand extends ICommand<Participant> {
-  execute(participant: Participant, transaction: any): Promise<void | Error>;
+  execute(participant: Participant, transaction?: any): Promise<void | Error>;
 }
 
 @Injectable()
