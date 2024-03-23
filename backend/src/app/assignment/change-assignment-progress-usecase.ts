@@ -9,23 +9,18 @@ import { AssignmentProgressStateValue } from "src/util/enums";
 import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
 import { SuccessResponse } from "../responses/success-response";
+import { IChangeAssignmentProgressService } from "src/domain/services/assignment/change-assignment-progress-service";
 
 @Injectable()
 export class ChangeAssignmentProgressUsecase {
   constructor(
-    @Inject('IGetAssignmentProgressByIdQuery')
-    private readonly getAssignmentProgressByIdQuery: IGetAssignmentProgressByIdQuery,
-    @Inject('ISaveAssignmentProgressCommand')
-    private readonly saveAssignmentProgressCommand: ISaveAssignmentProgressCommand,
+    @Inject('IChangeAssignmentProgressService')
+    private readonly changeAssignmentProgressService: IChangeAssignmentProgressService,
   ) { }
 
-  public async execute(assignmentProgressId: AssignmentProgressId, newStateStr: AssignmentProgressStateValue): Promise<SuccessResponse | ErrorResponse> {
+  public async execute(assignmentProgressId: AssignmentProgressId, newState: AssignmentProgressState): Promise<SuccessResponse | ErrorResponse> {
     try {
-      const assignmentProgress = await this.getAssignmentProgressByIdQuery.execute(assignmentProgressId) as AssignmentProgress | null;
-      if (assignmentProgress == null) throw new UsecaseError(`AssignmentProgress${assignmentProgressId}が存在しません`);
-      const newState = AssignmentProgressState.create(newStateStr) as AssignmentProgressState;
-      assignmentProgress.changeAssignmentProgressState(newState);
-      await this.saveAssignmentProgressCommand.execute(assignmentProgress);
+      await this.changeAssignmentProgressService.execute(assignmentProgressId, newState);
       return new SuccessResponse('課題のステータスの変更に成功しました');
     } catch (e) {
       debuglog(`Exception: ${e}`);

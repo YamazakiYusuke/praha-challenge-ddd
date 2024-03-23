@@ -25,6 +25,7 @@ import { GetTeamByIdQuery } from "src/domain/commands/team/get-team-by-id-query"
 import { SaveTeamCommand } from "src/domain/commands/team/save-team-command";
 import { AdministratorChangeEmailService } from "src/domain/services/administrator/administrator-change-email-service";
 import { AdministratorCreateService } from "src/domain/services/administrator/administrator-create-service";
+import { ChangeAssignmentProgressService } from "src/domain/services/assignment/change-assignment-progress-service";
 import { CategoryChangeNameService } from "src/domain/services/category/category-change-name-service";
 import { CategoryCreateService } from "src/domain/services/category/category-create-service";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";
@@ -164,6 +165,10 @@ export function setupDI() {
 
   container.register('ICreatePairService', {
     useClass: CreatePairService
+  })
+
+  container.register('IChangeAssignmentProgressService', {
+    useValue: ChangeAssignmentProgressService
   })
 
   container.register('IReallocateLastParticipantInPairService', {
