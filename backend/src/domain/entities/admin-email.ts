@@ -8,11 +8,11 @@ import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
 export interface AdminEmailProps {
-  content: EmailContent;
-  recipients: Administrator[];
-  sentDateTime?: Date;
-  status: EmailStatus;
-  errorMessage?: string;
+  readonly content: EmailContent;
+  readonly recipients: Administrator[];
+  readonly sentDateTime?: Date;
+  readonly status: EmailStatus;
+  readonly errorMessage?: string;
 }
 
 export class AdminEmail extends Entity<AdminEmailId, AdminEmailProps> {
@@ -55,17 +55,20 @@ export class AdminEmail extends Entity<AdminEmailId, AdminEmailProps> {
   }
 
   public setSentDateTime(newSentDateTime: Date) {
-    this.props.sentDateTime = newSentDateTime;
+    const newProps = { ...this.props, sentDateTime: newSentDateTime };
+    this.setProps(newProps);
   }
 
   public setStatus(newEmailStatus: EmailStatus) {
     if (this.status == EmailStatus.Sent) {
       throw new EntityError('Current status is already sent.');
     }
-    this.props.status = newEmailStatus;
+    const newProps = { ...this.props, status: newEmailStatus };
+    this.setProps(newProps);
   }
 
   public setErrorMessage(newErrorMessage: string) {
-    this.props.errorMessage = newErrorMessage;
+    const newProps = { ...this.props, errorMessage: newErrorMessage };
+    this.setProps(newProps);
   }
 }
