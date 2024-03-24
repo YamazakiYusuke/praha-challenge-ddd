@@ -6,12 +6,12 @@ import { Participant } from "src/domain/entities/participant";
 import { EntityError } from "src/domain/errors/entity_error";
 import { ITransactionRepository } from "src/domain/repositories/transaction-repository";
 
-export interface IParticipantToEnrollService {
+export interface IEnrollParticipantService {
   execute(participant: Participant): Promise<void>;
 }
 
 @Injectable()
-export class ParticipantToEnrollService implements IParticipantToEnrollService {
+export class EnrollParticipantService implements IEnrollParticipantService {
   constructor(
     @Inject('IGetPairWithFewestMembersQuery')
     private readonly getPairWithFewestMembersQuery: IGetPairWithFewestMembersQuery,

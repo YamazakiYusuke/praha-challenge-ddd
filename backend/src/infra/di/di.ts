@@ -30,7 +30,7 @@ import { ChangeCategoryNameService } from "src/domain/services/category/change-c
 import { CreateCategoryService } from "src/domain/services/category/create-category-service";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";
 import { ReallocateLastParticipantInPairService } from "src/domain/services/pair/reallocate-last-participant-in-pair-service";
-import { ParticipantToEnrollService } from "src/domain/services/participant/participant-to-enroll-service";
+import { EnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
 import { ParticipantToOnLeaveService } from "src/domain/services/participant/participant-to-on-leave-service";
 import { ParticipantToWithDrownService } from "src/domain/services/participant/participant-to-with-drown-service";
 import { TeamMemberValidationService } from "src/domain/services/team/team-member-validation-service";
@@ -179,8 +179,8 @@ export function setupDI() {
     useClass: TeamMemberValidationService
   })
 
-  container.register('IParticipantToEnrollService', {
-    useClass: ParticipantToEnrollService
+  container.register('IEnrollParticipantService', {
+    useClass: EnrollParticipantService
   })
 
   container.register('IParticipantToOnLeaveService', {
