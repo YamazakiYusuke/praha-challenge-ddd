@@ -16,7 +16,7 @@ export abstract class Entity<I, P> {
     return this._id;
   }
 
-  public get props(): P {
+  protected get props(): P {
     return this._props;
   }
 
