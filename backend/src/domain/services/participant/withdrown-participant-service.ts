@@ -9,12 +9,12 @@ import { IReallocateLastParticipantInPairService } from "src/domain/services/pai
 import { ITeamMemberValidationService } from "src/domain/services/team/team-member-validation-service";
 import { PairId } from "src/domain/values/id";
 
-export interface IParticipantToWithDrownService {
+export interface IWithdrownParticipantService {
   execute(participant: Participant): Promise<void>;
 }
 
 @Injectable()
-export class ParticipantToWithDrownService implements IParticipantToWithDrownService {
+export class WithdrownParticipantService implements IWithdrownParticipantService {
   constructor(
     @Inject('IGetPairByIdQuery')
     private readonly getPairByIdQuery: IGetPairByIdQuery,
