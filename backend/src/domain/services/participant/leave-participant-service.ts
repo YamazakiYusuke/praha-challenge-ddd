@@ -9,12 +9,12 @@ import { IReallocateLastParticipantInPairService } from "src/domain/services/pai
 import { ITeamMemberValidationService } from "src/domain/services/team/team-member-validation-service";
 import { PairId } from "src/domain/values/id";
 
-export interface IParticipantToOnLeaveService {
+export interface ILeaveParticipantService {
   execute(participant: Participant): Promise<void>;
 }
 
 @Injectable()
-export class ParticipantToOnLeaveService implements IParticipantToOnLeaveService {
+export class LeaveParticipantService implements ILeaveParticipantService {
   constructor(
     @Inject('IGetPairByIdQuery')
     private readonly getPairByIdQuery: IGetPairByIdQuery,
