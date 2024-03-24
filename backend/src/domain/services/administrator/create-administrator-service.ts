@@ -4,12 +4,12 @@ import { ISaveAdministratorCommand } from "src/domain/commands/administrator/sav
 import { EntityError } from "src/domain/errors/entity_error";
 import { Administrator, AdministratorProps } from "../../entities/administrator";
 
-export interface IAdministratorCreateService {
+export interface ICreateAdministratorService {
   execute(props: AdministratorProps): Promise<Administrator>;
 }
 
 @Injectable()
-export class AdministratorCreateService implements IAdministratorCreateService {
+export class CreateAdministratorService implements ICreateAdministratorService {
   constructor(
     @Inject('IGetAdministratorByEmailQuery')
     private readonly getAdministratorByEmailQuery: IGetAdministratorByEmailQuery,

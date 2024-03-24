@@ -23,8 +23,8 @@ import { GetParticipantsWithAssignmentsPagedQuery } from "src/domain/commands/pa
 import { GetAllTeamsQuery } from "src/domain/commands/team/get-all-team-query";
 import { GetTeamByIdQuery } from "src/domain/commands/team/get-team-by-id-query";
 import { SaveTeamCommand } from "src/domain/commands/team/save-team-command";
-import { AdministratorCreateService } from "src/domain/services/administrator/administrator-create-service";
 import { ChangeAdministratorEmailService } from "src/domain/services/administrator/change-administrator-email-service";
+import { CreateAdministratorService } from "src/domain/services/administrator/create-administrator-service";
 import { ChangeAssignmentProgressService } from "src/domain/services/assignment/change-assignment-progress-service";
 import { CategoryChangeNameService } from "src/domain/services/category/category-change-name-service";
 import { CategoryCreateService } from "src/domain/services/category/category-create-service";
@@ -151,8 +151,8 @@ export function setupDI() {
     useClass: ChangeAdministratorEmailService
   })
 
-  container.register('IAdministratorCreateService', {
-    useClass: AdministratorCreateService
+  container.register('ICreateAdministratorService', {
+    useClass: CreateAdministratorService
   })
 
   container.register('ICategoryChangeNameService', {
