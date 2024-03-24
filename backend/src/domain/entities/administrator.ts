@@ -5,7 +5,7 @@ import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
 export interface AdministratorProps {
-  email: Email;
+  readonly email: Email;
 }
 
 export class Administrator extends Entity<AdministratorId, AdministratorProps> {
@@ -31,6 +31,7 @@ export class Administrator extends Entity<AdministratorId, AdministratorProps> {
     if (!newEmail) {
       throw new EntityError('Email is required');
     }
-    this.props.email = newEmail;
+    const newProps = { ...this.props, email: newEmail };
+    this.setProps(newProps);
   }
 }

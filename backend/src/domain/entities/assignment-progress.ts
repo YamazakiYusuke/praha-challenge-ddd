@@ -5,9 +5,9 @@ import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
 export interface AssignmentProgressProps {
-  assignmentId: AssignmentId;
-  participantId: ParticipantId;
-  assignmentProgressState: AssignmentProgressState;
+  readonly assignmentId: AssignmentId;
+  readonly participantId: ParticipantId;
+  readonly assignmentProgressState: AssignmentProgressState;
 }
 
 export class AssignmentProgress extends Entity<AssignmentProgressId, AssignmentProgressProps> {
@@ -41,6 +41,7 @@ export class AssignmentProgress extends Entity<AssignmentProgressId, AssignmentP
     if (this.assignmentProgressState.isCompleted) {
       throw new EntityError("Cannot change state, assignment already completed");
     }
-    this.props.assignmentProgressState = newState;
+    const newProps = { ...this.props, assignmentProgressState: newState };
+    this.setProps(newProps);
   }
 }

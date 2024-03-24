@@ -4,11 +4,11 @@ import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
 export interface AssignmentProps {
-  number: number;
-  title: string;
-  categoryId: CategoryId;
-  introduction: string;
-  content: string;
+  readonly number: number;
+  readonly title: string;
+  readonly categoryId: CategoryId;
+  readonly introduction: string;
+  readonly content: string;
 }
 
 export class Assignment extends Entity<AssignmentId, AssignmentProps> {
@@ -59,34 +59,39 @@ export class Assignment extends Entity<AssignmentId, AssignmentProps> {
     if (!newNumber) {
       throw new EntityError('Number is required')
     }
-    this.props.number = newNumber;
+    const newProps = { ...this.props, number: newNumber };
+    this.setProps(newProps);
   }
 
   public changeTitle(newTitle: string): void {
     if (!newTitle || newTitle.trim() === '') {
       throw new EntityError('Title is required')
     }
-    this.props.title = newTitle;
+    const newProps = { ...this.props, title: newTitle };
+    this.setProps(newProps);
   }
 
   public changeCategory(newCategoryId: CategoryId): void {
     if (!newCategoryId) {
       throw new EntityError('Category is required')
     }
-    this.props.categoryId = newCategoryId;
+    const newProps = { ...this.props, categoryId: newCategoryId };
+    this.setProps(newProps);
   }
 
   public changeIntroduction(newIntroduction: string): void {
     if (!newIntroduction || newIntroduction.trim() === '') {
       throw new EntityError('Introduction is required')
     }
-    this.props.introduction = newIntroduction;
+    const newProps = { ...this.props, introduction: newIntroduction };
+    this.setProps(newProps);
   }
 
   public changeContent(newContent: string): void {
     if (!newContent || newContent.trim() === '') {
       throw new EntityError('Content is required')
     }
-    this.props.content = newContent;
+    const newProps = { ...this.props, content: newContent };
+    this.setProps(newProps);
   }
 }

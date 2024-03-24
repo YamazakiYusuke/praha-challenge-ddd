@@ -7,11 +7,11 @@ import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
 export interface ParticipantProps {
-  name: PersonName;
-  email: Email;
-  teamId: TeamId | undefined;
-  pairId: PairId | undefined;
-  enrollmentStatus: EnrollmentStatusValue;
+  readonly name: PersonName;
+  readonly email: Email;
+  readonly teamId: TeamId | undefined;
+  readonly pairId: PairId | undefined;
+  readonly enrollmentStatus: EnrollmentStatusValue;
 }
 
 export class Participant extends Entity<ParticipantId, ParticipantProps> {
@@ -50,30 +50,33 @@ export class Participant extends Entity<ParticipantId, ParticipantProps> {
 
   public changeEnrollmentStatusToEnrolled(teamId: TeamId, pairId: PairId): void {
     this.changeEnrollmentStatusValidation();
-    this.props.enrollmentStatus = EnrollmentStatusValue.Enrolled;
+    const newProps = { ...this.props, enrollmentStatus: EnrollmentStatusValue.Enrolled };
+    this.setProps(newProps);
     this.changeTeamIdPairId(pairId, teamId);
   }
 
   public changeEnrollmentStatusToOnLeave(): void {
     this.changeEnrollmentStatusValidation();
     this.deleteTeamIdPairId();
-    this.props.enrollmentStatus = EnrollmentStatusValue.OnLeave;
+    const newProps = { ...this.props, enrollmentStatus: EnrollmentStatusValue.OnLeave };
+    this.setProps(newProps);
   }
 
   public changeEnrollmentStatusToWithDrawn(): void {
     this.changeEnrollmentStatusValidation();
     this.deleteTeamIdPairId();
-    this.props.enrollmentStatus = EnrollmentStatusValue.Withdrawn;
+    const newProps = { ...this.props, enrollmentStatus: EnrollmentStatusValue.Withdrawn };
+    this.setProps(newProps);
   }
 
   public changeTeamIdPairId(pairId: PairId, teamId: TeamId): void {
-    this.props.pairId = pairId;
-    this.props.teamId = teamId;
+    const newProps = { ...this.props, pairId: pairId, teamId: teamId };
+    this.setProps(newProps);
   }
 
   private deleteTeamIdPairId(): void {
-    this.props.teamId = undefined;
-    this.props.pairId = undefined;
+    const newProps = { ...this.props, pairId: undefined, teamId: undefined };
+    this.setProps(newProps);
   }
 
   private changeEnrollmentStatusValidation(): void {

@@ -5,9 +5,9 @@ import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
 export interface PairProps {
-  teamId: TeamId;
-  name: PairName;
-  participantIds: ParticipantId[];
+  readonly teamId: TeamId;
+  readonly name: PairName;
+  readonly participantIds: ParticipantId[];
 }
 
 export class Pair extends Entity<PairId, PairProps> {
@@ -84,6 +84,8 @@ export class Pair extends Entity<PairId, PairProps> {
     if (!this.participantIds.includes(participantId)) {
       throw new EntityError("Participant ID does not exist in the pair.");
     }
-    this.props.participantIds = this.participantIds.filter(id => id !== participantId);
+    const newParticipantIds = this.participantIds.filter(id => id !== participantId);
+    const newProps = { ...this.props, participantIds: newParticipantIds };
+    this.setProps(newProps);
   }
 }

@@ -4,9 +4,9 @@ import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
 export interface TeamProps {
-  name: TeamName;
-  participantIds: ParticipantId[];
-  generationId: string,
+  readonly name: TeamName;
+  readonly participantIds: ParticipantId[];
+  readonly generationId: string,
 }
 
 export class Team extends Entity<TeamId, TeamProps> {

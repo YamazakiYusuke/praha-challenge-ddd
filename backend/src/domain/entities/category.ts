@@ -5,7 +5,7 @@ import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
 export interface CategoryProps {
-  name: CategoryName;
+  readonly name: CategoryName;
 }
 
 export class Category extends Entity<CategoryId, CategoryProps> {
@@ -30,7 +30,8 @@ export class Category extends Entity<CategoryId, CategoryProps> {
     if (!newName) {
       throw new EntityError(`CategoryName is required`);
     }
-    this.props.name = newName
+    const newProps = { ...this.props, name: newName };
+    this.setProps(newProps);
   }
 }
 
