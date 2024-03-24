@@ -5,12 +5,12 @@ import { EntityError } from "src/domain/errors/entity_error";
 import { CategoryName } from "src/domain/values/name";
 import { Category } from "../../entities/category";
 
-export interface ICategoryChangeNameService {
+export interface IChangeCategoryNameService {
   execute(category: Category, newName: CategoryName): Promise<void>;
 }
 
 @Injectable()
-export class CategoryChangeNameService implements ICategoryChangeNameService {
+export class ChangeCategoryNameService implements IChangeCategoryNameService {
   constructor(
     @Inject(GetCategoryByNameQuery)
     private readonly getCategoryByNameQuery: IGetCategoryByNameQuery,
