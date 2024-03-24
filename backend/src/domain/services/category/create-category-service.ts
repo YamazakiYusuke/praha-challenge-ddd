@@ -4,12 +4,12 @@ import { ISaveCategoryCommand, SaveCategoryCommand } from "src/domain/commands/c
 import { Category, CategoryProps } from "../../entities/category";
 import { EntityError } from "../../errors/entity_error";
 
-export interface ICategoryCreateService {
+export interface ICreateCategoryService {
   execute(props: CategoryProps): Promise<Category>;
 }
 
 @Injectable()
-export class CategoryCreateService implements ICategoryCreateService {
+export class CreateCategoryService implements ICreateCategoryService {
   constructor(
     @Inject('IGetCategoryByNameQuery')
     private readonly getCategoryByNameQuery: IGetCategoryByNameQuery,
