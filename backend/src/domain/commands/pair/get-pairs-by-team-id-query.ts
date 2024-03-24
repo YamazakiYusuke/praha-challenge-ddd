@@ -16,7 +16,7 @@ export class GetPairsByTeamIdQuery implements IGetPairsByTeamIdQuery {
   ) { }
 
   async execute(teamId: TeamId): Promise<Pair[]> {
-    const allPairs = await (this.pairRepository.getAll()) as Pair[];
-    return allPairs.filter(pair => pair.teamId === teamId);
+    const allPairs = await this.pairRepository.getAll();
+    return allPairs.filter(pair => pair.teamId.isEqual(teamId));
   }
 }

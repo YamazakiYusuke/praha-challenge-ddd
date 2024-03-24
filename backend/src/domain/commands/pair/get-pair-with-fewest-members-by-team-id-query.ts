@@ -18,10 +18,20 @@ export class GetPairWithFewestMembersByTeamIdQuery implements IGetPairWithFewest
   ) { }
 
   async execute(teamId: TeamId, excludePairId?: PairId): Promise<Pair | null> {
-    const result = await this.pairRepository.getAll();
-    const allPairs = result as Pair[];
-    const pairs = allPairs.filter((pair: Pair) => pair.teamId.isEqual(teamId) && pair.id !== excludePairId);
-    if (pairs.length === 0) throw new CommandError(`チーム${teamId}にペアが存在しません`);
-    return pairs[createRandomNumUpTo(pairs.length)] ?? null;
+    const allPairs = await this.pairRepository.getAll();
+    const filteredPairs = allPairs.filter((pair: Pair) => 
+      pair.teamId.isEqual(teamId) && pair.id !== excludePairId
+    );
+
+    if (filteredPairs.length === 0) {
+      throw new CommandError(`チーム${teamId}にペアが存在しません`);
+    }
+
+    // 最もメンバー数が少ないペアを見つける
+    const pairWithFewestMembers = filteredPairs.reduce((prev, current) => 
+      (prev.participantsLength < current.participantsLength) ? prev : current
+    );
+
+    return pairWithFewestMembers ?? null;
   }
 }

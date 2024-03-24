@@ -16,8 +16,7 @@ export class GetParticipantByIdQuery implements IGetParticipantByIdQuery {
   ) { }
 
   async execute(id: ParticipantId): Promise<Participant | null> {
-    const result = await this.participantRepository.getAll();
-    const participants = result as Participant[];
-    return participants.find((participant: Participant) => participant.id.isEqual(id)) || null;
+    const participants = await this.participantRepository.getAll();
+    return participants.find(participant => participant.id.isEqual(id)) || null;
   }
 }

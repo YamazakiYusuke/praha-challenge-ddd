@@ -16,8 +16,7 @@ export class GetAdministratorByEmailQuery implements IGetAdministratorByEmailQue
   ) { }
 
   async execute(email: Email): Promise<Administrator | null> {
-    const result = await this.administratorRepository.getAll();
-    const administrators = result as Administrator[];
-    return administrators.find((admin: Administrator) => admin.email.isEqual(email)) || null;
+    const administrators = await this.administratorRepository.getAll();
+    return administrators.find(admin => admin.email.isEqual(email)) || null;
   }
 }

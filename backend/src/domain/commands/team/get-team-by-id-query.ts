@@ -16,7 +16,7 @@ export class GetTeamByIdQuery implements IGetTeamByIdQuery {
   ) { }
 
   async execute(id: TeamId): Promise<Team | null> {
-    const teams = await this.teamRepository.getAll() as Team[];
+    const teams = await this.teamRepository.getAll();
     return teams.find((team: Team) => team.id.isEqual(id)) || null;
   }
 }

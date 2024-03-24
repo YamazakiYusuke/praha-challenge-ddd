@@ -4,7 +4,7 @@ import { IMailSenderRepository } from "src/domain/repositories/mail-sender-repos
 import { EmailStatus } from "src/util/enums";
 
 export interface IAdminEmailSendService {
-  execute(adminEmail: AdminEmail): Promise<AdminEmail>;
+  execute(adminEmail: AdminEmail): Promise<void>;
 }
 
 @Injectable()
@@ -14,7 +14,7 @@ export class AdminEmailSendService implements IAdminEmailSendService {
     private readonly mailSenderRepository: IMailSenderRepository
   ) { }
 
-  async execute(adminEmail: AdminEmail): Promise<AdminEmail> {
+  async execute(adminEmail: AdminEmail): Promise<void> {
     try {
       adminEmail.setStatus(EmailStatus.Sending);
       await this.mailSenderRepository.send(adminEmail);
@@ -24,6 +24,6 @@ export class AdminEmailSendService implements IAdminEmailSendService {
       adminEmail.setErrorMessage(error.message);
       adminEmail.setStatus(EmailStatus.Error);
     }
-    return adminEmail;
+    // TODO: adminEmail　永続化
   }
 }

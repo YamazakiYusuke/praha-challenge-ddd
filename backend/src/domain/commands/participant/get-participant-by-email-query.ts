@@ -16,8 +16,7 @@ export class GetParticipantByEmailQuery implements IGetParticipantByEmailQuery {
   ) { }
 
   async execute(email: Email): Promise<Participant | null> {
-    const result = await this.participantRepository.getAll();
-    const participants = result as Participant[];
-    return participants.find((participant: Participant) => participant.email.isEqual(email)) || null;
+    const participants = await this.participantRepository.getAll();
+    return participants.find(participant => participant.email.isEqual(email)) || null;
   }
 }

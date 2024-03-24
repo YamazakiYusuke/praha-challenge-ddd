@@ -28,25 +28,25 @@ export class GetParticipantsWithAssignmentsPagedQuery implements IGetParticipant
   ) { }
 
   async execute(props: ParticipantPaginationProps): Promise<Participant[]> {
-    const all = await this.participantRepository.getAllWithAssignments() as ParticipantWithAssignments[];
-    const filtered = this.filterParticipantsByAssignmentState(all, props.assignmentStates);
-    const paginated = this.paginateParticipants(filtered, props.page, props.size);
-    return paginated.map((e) => e.participant);
+    const allParticipants = await this.participantRepository.getAllWithAssignments() as ParticipantWithAssignments[];
+    const filteredParticipants = this.filterByAssignmentState(allParticipants, props.assignmentStates);
+    const paginatedParticipants = this.paginate(filteredParticipants, props.page, props.size);
+    return paginatedParticipants.map(participantWithAssignments => participantWithAssignments.participant);
   }
 
-  private filterParticipantsByAssignmentState(participants: ParticipantWithAssignments[], assignmentStates: AssignmentStateProps[]): ParticipantWithAssignments[] {
-    return participants.filter(pwa => {
-      return assignmentStates.every(as => {
-        return pwa.assignmentProgress.some(a => {
-          return a.assignmentId.isEqual(as.assignmentId) && a.assignmentProgressState.isEqual(as.assignmentProgressState);
-        });
-      });
-    });
+  private filterByAssignmentState(participants: ParticipantWithAssignments[], assignmentStates: AssignmentStateProps[]): ParticipantWithAssignments[] {
+    return participants.filter(participant => 
+      assignmentStates.every(state => 
+        participant.assignmentProgress.some(assignment => 
+          assignment.assignmentId.isEqual(state.assignmentId) && assignment.assignmentProgressState.isEqual(state.assignmentProgressState)
+        )
+      )
+    );
   }
 
-  private paginateParticipants(participants: ParticipantWithAssignments[], page: number, size: number): ParticipantWithAssignments[] {
-    const start = (page - 1) * size;
-    const end = start + size;
-    return participants.slice(start, end);
+  private paginate(participants: ParticipantWithAssignments[], page: number, size: number): ParticipantWithAssignments[] {
+    const startIndex = (page - 1) * size;
+    const endIndex = startIndex + size;
+    return participants.slice(startIndex, endIndex);
   }
 }

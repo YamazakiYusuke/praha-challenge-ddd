@@ -16,9 +16,14 @@ export class GetPairWithFewestMembersQuery implements IGetPairWithFewestMembersQ
   ) { }
 
   async execute(): Promise<Pair | null> {
-    const result = await this.pairRepository.getAll();
-    const allPairs = result as Pair[];
+    const allPairs = await this.pairRepository.getAll();
     if (allPairs.length === 0) return null;
-    return allPairs[createRandomNumUpTo(allPairs.length)] as Pair;
+
+    // 最もメンバーが少ないペアを見つける
+    const pairWithFewestMembers = allPairs.reduce((prev, current) => {
+      return (prev.participantsLength < current.participantsLength) ? prev : current;
+    });
+
+    return pairWithFewestMembers;
   }
 }

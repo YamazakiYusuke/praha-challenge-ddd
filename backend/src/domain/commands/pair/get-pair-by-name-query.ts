@@ -16,8 +16,7 @@ export class GetPairByNameQuery implements IGetPairByNameQuery {
   ) { }
 
   async execute(name: PairName): Promise<Pair | null> {
-    const result = await this.pairRepository.getAll();
-    const pairs = result as Pair[];
+    const pairs = await this.pairRepository.getAll();
     return pairs.find((pair: Pair) => pair.name.isEqual(name)) || null;
   }
 }

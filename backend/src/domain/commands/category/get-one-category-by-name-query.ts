@@ -16,8 +16,7 @@ export class GetCategoryByNameQuery implements IGetCategoryByNameQuery {
   ) { }
 
   async execute(name: CategoryName): Promise<Category | null> {
-    const result = await this.categoryRepository.getAll();
-    const categories = result as Category[];
+    const categories = await this.categoryRepository.getAll();
     return categories.find((category: Category) => category.name.isEqual(name)) || null;
   }
 }
