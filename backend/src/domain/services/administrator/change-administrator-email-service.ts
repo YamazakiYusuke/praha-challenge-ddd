@@ -5,12 +5,12 @@ import { EntityError } from "src/domain/errors/entity_error";
 import { Email } from "src/domain/values/email";
 import { Administrator } from "../../entities/administrator";
 
-export interface IAdministratorChangeEmailService {
+export interface IChangeAdministratorEmailService {
   execute(administrator: Administrator, newEmail: Email): Promise<void>;
 }
 
 @Injectable()
-export class AdministratorChangeEmailService implements IAdministratorChangeEmailService {
+export class ChangeAdministratorEmailService implements IChangeAdministratorEmailService {
   constructor(
     @Inject('IGetAdministratorByEmailQuery')
     private readonly getAdministratorByEmailQuery: IGetAdministratorByEmailQuery,

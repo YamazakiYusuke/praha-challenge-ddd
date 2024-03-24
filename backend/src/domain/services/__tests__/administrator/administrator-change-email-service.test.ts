@@ -2,16 +2,16 @@ import { GetAdministratorByEmailQuery } from 'src/domain/commands/administrator/
 import { SaveAdministratorCommand } from 'src/domain/commands/administrator/save-administrator-command';
 import { Administrator } from 'src/domain/entities/administrator';
 import { EntityError } from 'src/domain/errors/entity_error';
-import { AdministratorChangeEmailService } from 'src/domain/services/administrator/administrator-change-email-service';
+import { ChangeAdministratorEmailService } from 'src/domain/services/administrator/change-administrator-email-service';
 import { Email } from 'src/domain/values/email';
 import { AdministratorId } from 'src/domain/values/id';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 
 
-describe('# AdministratorChangeEmailService UnitTest\n', () => {
+describe('# ChangeAdministratorEmailService UnitTest\n', () => {
   let getAdministratorByEmailQuery: GetAdministratorByEmailQuery;
   let saveAdministratorCommand: SaveAdministratorCommand;
-  let administratorChangeEmailService: AdministratorChangeEmailService;
+  let changeAdministratorEmailService: ChangeAdministratorEmailService;
   const id = AdministratorId.restore('Id');
   const email = Email.restore('test@example.com');
   const administrator = Administrator.restore(id, { email });
@@ -20,7 +20,7 @@ describe('# AdministratorChangeEmailService UnitTest\n', () => {
   beforeEach(() => {
     getAdministratorByEmailQuery = mock(GetAdministratorByEmailQuery);
     saveAdministratorCommand = mock(SaveAdministratorCommand);
-    administratorChangeEmailService = new AdministratorChangeEmailService(instance(getAdministratorByEmailQuery), instance(saveAdministratorCommand));
+    changeAdministratorEmailService = new ChangeAdministratorEmailService(instance(getAdministratorByEmailQuery), instance(saveAdministratorCommand));
   });
 
   describe('## execute\n', () => {
@@ -29,7 +29,7 @@ describe('# AdministratorChangeEmailService UnitTest\n', () => {
       when(getAdministratorByEmailQuery.execute(newEmail)).thenResolve(null);
       when(saveAdministratorCommand.execute(anything())).thenResolve();
       // 実行
-      await administratorChangeEmailService.execute(administrator, newEmail);
+      await changeAdministratorEmailService.execute(administrator, newEmail);
       // 確認
       verify(getAdministratorByEmailQuery.execute(newEmail)).once();
       expect(administrator.email).toEqual(newEmail);
@@ -39,7 +39,7 @@ describe('# AdministratorChangeEmailService UnitTest\n', () => {
       // 準備
       when(getAdministratorByEmailQuery.execute(newEmail)).thenResolve(administrator);
       // 実行・確認
-      await expect(administratorChangeEmailService.execute(administrator, newEmail)).rejects.toThrow(EntityError);
+      await expect(changeAdministratorEmailService.execute(administrator, newEmail)).rejects.toThrow(EntityError);
       verify(getAdministratorByEmailQuery.execute(newEmail)).once();
     });
 
@@ -48,7 +48,7 @@ describe('# AdministratorChangeEmailService UnitTest\n', () => {
       when(getAdministratorByEmailQuery.execute(newEmail)).thenResolve(null);
       when(saveAdministratorCommand.execute(anything())).thenThrow(Error());
       // 実行・確認
-      await expect(administratorChangeEmailService.execute(administrator, newEmail)).rejects.toThrow(Error);
+      await expect(changeAdministratorEmailService.execute(administrator, newEmail)).rejects.toThrow(Error);
       verify(getAdministratorByEmailQuery.execute(newEmail)).once();
       verify(saveAdministratorCommand.execute(anything())).once();
     });

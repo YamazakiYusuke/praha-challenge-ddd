@@ -3,12 +3,12 @@ import { AdminEmail } from "src/domain/entities/admin-email";
 import { IMailSenderRepository } from "src/domain/repositories/mail-sender-repository";
 import { EmailStatus } from "src/util/enums";
 
-export interface IAdminEmailSendService {
+export interface ISendAdminEmailService {
   execute(adminEmail: AdminEmail): Promise<void>;
 }
 
 @Injectable()
-export class AdminEmailSendService implements IAdminEmailSendService {
+export class SendAdminEmailService implements ISendAdminEmailService {
   constructor(
     @Inject('IMailSenderRepository')
     private readonly mailSenderRepository: IMailSenderRepository
