@@ -6,7 +6,7 @@ import { Participant } from "src/domain/entities/participant";
 import { EntityError } from "src/domain/errors/entity_error";
 import { ITransactionRepository } from "src/domain/repositories/transaction-repository";
 import { IReallocateLastParticipantInPairService } from "src/domain/services/pair/reallocate-last-participant-in-pair-service";
-import { ITeamMemberValidationService } from "src/domain/services/team/team-member-validation-service";
+import { IValidateTeamMemberService } from "src/domain/services/team/validate-team-member-service";
 import { PairId } from "src/domain/values/id";
 
 export interface ILeaveParticipantService {
@@ -22,8 +22,8 @@ export class LeaveParticipantService implements ILeaveParticipantService {
     private readonly savePairCommand: ISavePairCommand,
     @Inject('ISaveParticipantCommand')
     private readonly saveParticipantCommand: ISaveParticipantCommand,
-    @Inject('ITeamMemberValidationService')
-    private readonly teamMemberValidationService: ITeamMemberValidationService,
+    @Inject('IValidateTeamMemberService')
+    private readonly validateTeamMemberService: IValidateTeamMemberService,
     @Inject('IReallocateLastParticipantInPairService')
     private readonly reallocateLastParticipantInPairService: IReallocateLastParticipantInPairService,
     @Inject('ITransactionRepository')
@@ -44,7 +44,7 @@ export class LeaveParticipantService implements ILeaveParticipantService {
     })
 
 
-    await this.teamMemberValidationService.execute(pair.teamId);
+    await this.validateTeamMemberService.execute(pair.teamId);
     await this.reallocateLastParticipantInPairService.execute(pair);
   }
 }

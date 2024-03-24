@@ -33,7 +33,7 @@ import { ReallocateLastParticipantInPairService } from "src/domain/services/pair
 import { EnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
 import { LeaveParticipantService } from "src/domain/services/participant/leave-participant-service";
 import { WithdrawnParticipantService } from "src/domain/services/participant/withdrawn-participant-service";
-import { TeamMemberValidationService } from "src/domain/services/team/team-member-validation-service";
+import { ValidateTeamMemberService } from "src/domain/services/team/validate-team-member-service";
 import { PrismaAdministratorRepository } from "src/infra/db/repositories/prisma/administrator-repository";
 import { PrismaAssignmentProgressRepository } from "src/infra/db/repositories/prisma/assignment-progress-repository";
 import { PrismaAssignmentRepository } from "src/infra/db/repositories/prisma/assignment-repository";
@@ -175,8 +175,8 @@ export function setupDI() {
     useClass: ReallocateLastParticipantInPairService
   })
 
-  container.register('ITeamMemberValidationService', {
-    useClass: TeamMemberValidationService
+  container.register('IValidateTeamMemberService', {
+    useClass: ValidateTeamMemberService
   })
 
   container.register('IEnrollParticipantService', {
