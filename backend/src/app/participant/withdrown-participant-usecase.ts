@@ -2,27 +2,26 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ErrorResponse } from "src/app/responses/error-response";
 import { SuccessResponse } from "src/app/responses/success-response";
 import { IGetParticipantByIdQuery } from "src/domain/commands/participant/get-participant-by-id-query";
-import { IEnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
+import { IWithdrawnParticipantService } from "src/domain/services/participant/withdrawn-participant-service";
 import { ParticipantId } from "src/domain/values/id";
 import { debuglog } from "util";
 
 @Injectable()
-export class ParticipantToEnrollUseCase {
+export class WithdrawnParticipantUseCase {
   constructor(
-    @Inject('IEnrollParticipantService')
-    private readonly enrollParticipantService: IEnrollParticipantService,
+    @Inject('IWithdrawnParticipantService')
+    private readonly withdrawnParticipantService: IWithdrawnParticipantService,
     @Inject('IGetParticipantByIdQuery')
     private readonly getParticipantByIdQuery: IGetParticipantByIdQuery,
   ) { }
 
-  // Teamの更新
   async execute(participantId: ParticipantId): Promise<SuccessResponse | ErrorResponse> {
     try {
       const participant = await this.getParticipantByIdQuery.execute(participantId);
       if (participant == null) {
         throw Error('参加者が見つかりませんでした');
       }
-      await this.enrollParticipantService.execute(participant)
+      await this.withdrawnParticipantService.execute(participant);
       return new SuccessResponse('参加者のステータス更新に成功失敗しました');
     } catch (e) {
       debuglog(`Exception: ${e}`);

@@ -7,7 +7,7 @@ import { ParticipantId } from "src/domain/values/id";
 import { debuglog } from "util";
 
 @Injectable()
-export class ParticipantToOnLeaveUseCase {
+export class LeaveParticipantUseCase {
   constructor(
     @Inject('ILeaveParticipantService')
     private readonly leaveParticipantService: ILeaveParticipantService,
