@@ -23,7 +23,8 @@ export class SendAdminEmailService implements ISendAdminEmailService {
     } catch (error: any) {
       adminEmail.setErrorMessage(error.message);
       adminEmail.setStatus(EmailStatus.Error);
+    } finally {
+      // TODO: adminEmail　永続化
     }
-    // TODO: adminEmail　永続化
   }
 }
