@@ -3,12 +3,8 @@ import { Participant } from "src/domain/entities/participant";
 import { IParticipantRepository } from "src/domain/repositories/participant-repository";
 import { IGetQuery } from "../base/get-query";
 
-export interface IGetAllParticipantsQuery extends IGetQuery<Participant[]> {
-  execute(): Promise<Participant[]>;
-}
-
 @Injectable()
-export class GetAllParticipantsQuery implements IGetAllParticipantsQuery {
+export class GetAllParticipantsQuery implements IGetQuery<Participant[]> {
   constructor(
     @Inject('IParticipantRepository')
     private readonly participantRepository: IParticipantRepository

@@ -3,12 +3,8 @@ import { Participant } from "src/domain/entities/participant";
 import { IParticipantRepository } from "src/domain/repositories/participant-repository";
 import { ICommand } from "../base/command";
 
-export interface ISaveParticipantCommand extends ICommand<Participant> {
-  execute(participant: Participant, transaction?: any): Promise<void>;
-}
-
 @Injectable()
-export class SaveParticipantCommand implements ISaveParticipantCommand {
+export class SaveParticipantCommand implements ICommand<Participant> {
   constructor(
     @Inject('IParticipantRepository')
     private readonly participantRepository: IParticipantRepository

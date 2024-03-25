@@ -4,12 +4,8 @@ import { IAdministratorRepository } from "src/domain/repositories/administrator-
 import { Email } from "src/domain/values/email";
 import { IGetQuery } from "../base/get-query";
 
-export interface IGetAdministratorByEmailQuery extends IGetQuery<Administrator, Email> {
-  execute(email: Email): Promise<Administrator | null>;
-}
-
 @Injectable()
-export class GetAdministratorByEmailQuery implements IGetAdministratorByEmailQuery {
+export class GetAdministratorByEmailQuery implements IGetQuery<Administrator, Email> {
   constructor(
     @Inject('IAdministratorRepository')
     private readonly administratorRepository: IAdministratorRepository

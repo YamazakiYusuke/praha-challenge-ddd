@@ -3,12 +3,8 @@ import { Administrator } from "src/domain/entities/administrator";
 import { IAdministratorRepository } from "src/domain/repositories/administrator-repository";
 import { IGetQuery } from "../base/get-query";
 
-export interface IGetAllAdministratorsQuery extends IGetQuery<Administrator[]> {
-  execute(): Promise<Administrator[]>;
-}
-
 @Injectable()
-export class GetAllAdministratorsQuery implements IGetAllAdministratorsQuery {
+export class GetAllAdministratorsQuery implements IGetQuery<Administrator[]> {
   constructor(
     @Inject('IAdministratorRepository')
     private readonly administratorRepository: IAdministratorRepository

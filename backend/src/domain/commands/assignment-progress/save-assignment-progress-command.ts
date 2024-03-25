@@ -8,7 +8,7 @@ export interface ISaveAssignmentProgressCommand extends ICommand<AssignmentProgr
 }
 
 @Injectable()
-export class SaveAssignmentProgressCommand implements ISaveAssignmentProgressCommand {
+export class SaveAssignmentProgressCommand implements ICommand<AssignmentProgress> {
   constructor(
     @Inject('IAssignmentProgressRepository')
     private readonly assignmentProgressRepository: IAssignmentProgressRepository

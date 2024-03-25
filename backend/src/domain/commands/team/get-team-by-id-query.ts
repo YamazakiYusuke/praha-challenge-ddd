@@ -4,12 +4,8 @@ import { ITeamRepository } from "src/domain/repositories/team-repository";
 import { TeamId } from "src/domain/values/id";
 import { IGetQuery } from "../base/get-query";
 
-export interface IGetTeamByIdQuery extends IGetQuery<Team, TeamId> {
-  execute(id: TeamId): Promise<Team | null>;
-}
-
 @Injectable()
-export class GetTeamByIdQuery implements IGetTeamByIdQuery {
+export class GetTeamByIdQuery implements IGetQuery<Team, TeamId> {
   constructor(
     @Inject('ITeamRepository')
     private readonly teamRepository: ITeamRepository

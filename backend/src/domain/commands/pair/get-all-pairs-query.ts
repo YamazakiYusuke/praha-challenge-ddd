@@ -3,12 +3,8 @@ import { Pair } from "src/domain/entities/pair";
 import { IPairRepository } from "src/domain/repositories/pair-repository";
 import { IGetQuery } from "../base/get-query";
 
-export interface IGetAllPairsQuery extends IGetQuery<Pair[]> {
-  execute(): Promise<Pair[]>;
-}
-
 @Injectable()
-export class GetAllPairsQuery implements IGetAllPairsQuery {
+export class GetAllPairsQuery implements IGetQuery<Pair[]> {
   constructor(
     @Inject('IPairRepository')
     private readonly pairRepository: IPairRepository

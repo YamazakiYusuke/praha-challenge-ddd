@@ -16,12 +16,8 @@ export interface AssignmentStateProps {
   assignmentProgressState: AssignmentProgressState;
 }
 
-export interface IGetParticipantsWithAssignmentsPagedQuery extends IGetQuery<Participant[], ParticipantPaginationProps> {
-  execute(props: ParticipantPaginationProps): Promise<Participant[]>;
-}
-
 @Injectable()
-export class GetParticipantsWithAssignmentsPagedQuery implements IGetParticipantsWithAssignmentsPagedQuery {
+export class GetParticipantsWithAssignmentsPagedQuery implements IGetQuery<Participant[], ParticipantPaginationProps> {
   constructor(
     @Inject('IParticipantRepository')
     private readonly participantRepository: IParticipantRepository

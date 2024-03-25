@@ -9,7 +9,7 @@ export interface IGetAssignmentProgressByIdQuery extends IGetQuery<AssignmentPro
 }
 
 @Injectable()
-export class GetAssignmentProgressByIdQuery implements IGetAssignmentProgressByIdQuery {
+export class GetAssignmentProgressByIdQuery implements IGetQuery<AssignmentProgress, AssignmentProgressId> {
   constructor(
     @Inject('IAssignmentProgressRepository')
     private readonly assignmentProgressRepository: IAssignmentProgressRepository

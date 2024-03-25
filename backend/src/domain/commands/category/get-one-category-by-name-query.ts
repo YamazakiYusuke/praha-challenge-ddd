@@ -4,12 +4,8 @@ import { ICategoryRepository } from "src/domain/repositories/category-repository
 import { CategoryName } from "src/domain/values/name";
 import { IGetQuery } from "../base/get-query";
 
-export interface IGetCategoryByNameQuery extends IGetQuery<Category, CategoryName> {
-  execute(name: CategoryName): Promise<Category | null>;
-}
-
 @Injectable()
-export class GetCategoryByNameQuery implements IGetCategoryByNameQuery {
+export class GetCategoryByNameQuery implements IGetQuery<Category, CategoryName> {
   constructor(
     @Inject('ICategoryRepository')
     private readonly categoryRepository: ICategoryRepository

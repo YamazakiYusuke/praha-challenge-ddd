@@ -6,12 +6,8 @@ import { PairId, TeamId } from "src/domain/values/id";
 import { createRandomNumUpTo } from "src/util/random";
 import { IGetQuery } from "../base/get-query";
 
-export interface IGetPairWithFewestMembersByTeamIdQuery extends IGetQuery<Pair, TeamId> {
-  execute(teamId: TeamId, excludePairId?: PairId): Promise<Pair | null>;
-}
-
 @Injectable()
-export class GetPairWithFewestMembersByTeamIdQuery implements IGetPairWithFewestMembersByTeamIdQuery {
+export class GetPairWithFewestMembersByTeamIdQuery implements IGetQuery<Pair, TeamId> {
   constructor(
     @Inject('IPairRepository')
     private readonly pairRepository: IPairRepository

@@ -4,12 +4,8 @@ import { IParticipantRepository } from "src/domain/repositories/participant-repo
 import { ParticipantId } from "src/domain/values/id";
 import { IGetQuery } from "../base/get-query";
 
-export interface IGetParticipantByIdQuery extends IGetQuery<Participant, ParticipantId> {
-  execute(id: ParticipantId): Promise<Participant | null>;
-}
-
 @Injectable()
-export class GetParticipantByIdQuery implements IGetParticipantByIdQuery {
+export class GetParticipantByIdQuery implements IGetQuery<Participant, ParticipantId> {
   constructor(
     @Inject('IParticipantRepository')
     private readonly participantRepository: IParticipantRepository

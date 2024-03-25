@@ -3,12 +3,8 @@ import { Administrator } from "src/domain/entities/administrator";
 import { IAdministratorRepository } from "src/domain/repositories/administrator-repository";
 import { ICommand } from "../base/command";
 
-export interface ISaveAdministratorCommand extends ICommand<Administrator> {
-  execute(administrator: Administrator, transaction?: any): Promise<void>;
-}
-
 @Injectable()
-export class SaveAdministratorCommand implements ISaveAdministratorCommand {
+export class SaveAdministratorCommand implements ICommand<Administrator> {
   constructor(
     @Inject('IAdministratorRepository')
     private readonly administratorRepository: IAdministratorRepository

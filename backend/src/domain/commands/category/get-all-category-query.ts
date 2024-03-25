@@ -3,12 +3,8 @@ import { Category } from "src/domain/entities/category";
 import { ICategoryRepository } from "src/domain/repositories/category-repository";
 import { IGetQuery } from "../base/get-query";
 
-export interface IGetAllCategoryQuery extends IGetQuery<Category[]> {
-  execute(): Promise<Category[]>;
-}
-
 @Injectable()
-export class GetAllCategoryQuery implements IGetAllCategoryQuery {
+export class GetAllCategoryQuery implements IGetQuery<Category[]> {
   constructor(
     @Inject('ICategoryRepository')
     private readonly categoryRepository: ICategoryRepository
