@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { AdminEmail } from "src/domain/entities/admin-email";
-import { IMailSenderRepository } from "src/domain/repositories/mail-sender-repository";
+import { ISendMailRepository } from "src/domain/repositories/mail-sender-repository";
 import { EmailStatus } from "src/util/enums";
 
 export interface ISendAdminEmailService {
@@ -10,14 +10,14 @@ export interface ISendAdminEmailService {
 @Injectable()
 export class SendAdminEmailService implements ISendAdminEmailService {
   constructor(
-    @Inject('IMailSenderRepository')
-    private readonly mailSenderRepository: IMailSenderRepository
+    @Inject('ISendMailRepository')
+    private readonly sendMailRepository: ISendMailRepository
   ) { }
 
   async execute(adminEmail: AdminEmail): Promise<void> {
     try {
       adminEmail.setStatus(EmailStatus.Sending);
-      await this.mailSenderRepository.send(adminEmail);
+      await this.sendMailRepository.send(adminEmail);
       adminEmail.setSentDateTime(new Date());
       adminEmail.setStatus(EmailStatus.Sent);
     } catch (error: any) {

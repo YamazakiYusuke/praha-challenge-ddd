@@ -1,5 +1,5 @@
 import { AdminEmail } from "src/domain/entities/admin-email";
 
-export interface IMailSenderRepository {
+export interface ISendMailRepository {
   send(mail: AdminEmail): Promise<void>;
 }
