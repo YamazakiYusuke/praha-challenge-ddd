@@ -10,7 +10,7 @@ describe('# Administrator Entity UnitTest\n', () => {
       const email = Email.restore('test@example.com');
       const props: AdministratorProps = { email };
       // 実行
-      const admin = Administrator.create(props) as Administrator;
+      const admin = Administrator.create(props);
       // 確認
       expect(admin).toBeInstanceOf(Administrator);
       expect(admin.email).toEqual(email);

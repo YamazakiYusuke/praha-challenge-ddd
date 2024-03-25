@@ -13,7 +13,7 @@ describe('# Assignment Entity UnitTest\n', () => {
       const introduction = "This is a test assignment";
       const content = "The content of the test assignment";
       const props: AssignmentProps = { number, title, categoryId, introduction, content };
-      const assignment = Assignment.create(props) as Assignment;
+      const assignment = Assignment.create(props);
       // 確認
       expect(assignment).toBeInstanceOf(Assignment);
       expect(assignment.number).toEqual(number);

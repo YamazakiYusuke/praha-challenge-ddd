@@ -13,7 +13,7 @@ describe('# AssignmentProgress Entity UnitTest\n', () => {
       const assignmentProgressState = AssignmentProgressState.restore(AssignmentProgressStateValue.NotStarted);
       const props: AssignmentProgressProps = { assignmentId, participantId, assignmentProgressState };
       // 実行
-      const assignmentProgress = AssignmentProgress.create(props) as AssignmentProgress;
+      const assignmentProgress = AssignmentProgress.create(props);
       // 確認
       expect(assignmentProgress).toBeInstanceOf(AssignmentProgress);
       expect(assignmentProgress.assignmentId).toEqual(assignmentId);

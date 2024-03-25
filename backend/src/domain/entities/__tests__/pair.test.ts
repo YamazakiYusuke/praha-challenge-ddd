@@ -26,7 +26,7 @@ describe('# Pair Entity UnitTest\n', () => {
             name: PairName.restore('PairName'),
             participantIds: [participantId1, participantId2],
           },
-        ) as Pair;
+        );
         // 確認
         expect(pair).toBeInstanceOf(Pair);
         expect(pair.teamId).toEqual(TeamId.restore('teamId'));

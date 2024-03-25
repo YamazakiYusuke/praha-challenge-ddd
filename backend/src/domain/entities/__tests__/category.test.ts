@@ -7,10 +7,10 @@ describe('# Category Entity UnitTest\n', () => {
   describe('## create\n', () => {
     test('- Success create instance \n', () => {
       // 準備
-      const name = CategoryName.create('Test Category') as CategoryName;
+      const name = CategoryName.create('Test Category');
       const props: CategoryProps = { name };
       // 実行
-      const category = Category.create(props) as Category;
+      const category = Category.create(props);
       // 確認
       expect(category).toBeInstanceOf(Category);
       expect(category.name).toEqual(name);
@@ -21,7 +21,7 @@ describe('# Category Entity UnitTest\n', () => {
     test('- Success create instance \n', () => {
       // 準備
       const id = CategoryId.create();
-      const name = CategoryName.create('Test Category') as CategoryName;
+      const name = CategoryName.create('Test Category');
       const props: CategoryProps = { name };
       // 実行
       const category = Category.restore(id, props);
@@ -35,10 +35,10 @@ describe('# Category Entity UnitTest\n', () => {
   describe('## name\n', () => {
     test('- Success to get instance \n', () => {
       // 準備
-      const name = CategoryName.create('Test Category') as CategoryName;
+      const name = CategoryName.create('Test Category');
       const props: CategoryProps = { name };
       // 実行
-      const category = Category.create(props) as Category;
+      const category = Category.create(props);
       // 確認
       expect(category.name).toEqual(name);
     });
@@ -47,10 +47,10 @@ describe('# Category Entity UnitTest\n', () => {
   describe('## changeName\n', () => {
     test('- Success to change value \n', () => {
       // 準備
-      const name = CategoryName.create('Test Category') as CategoryName;
-      const newName = CategoryName.create('New Test Category') as CategoryName;
+      const name = CategoryName.create('Test Category');
+      const newName = CategoryName.create('New Test Category');
       const props: CategoryProps = { name };
-      const category = Category.create(props) as Category;
+      const category = Category.create(props);
       // 実行
       category.changeName(newName);
       // 確認
@@ -59,10 +59,10 @@ describe('# Category Entity UnitTest\n', () => {
 
     test('- Failed to change value \n', () => {
       // 準備
-      const name = CategoryName.create('Test Category') as CategoryName;
+      const name = CategoryName.create('Test Category');
       const newName = null as unknown as CategoryName;
       const props: CategoryProps = { name };
-      const category = Category.create(props) as Category;
+      const category = Category.create(props);
       // 実行・確認
       expect(() => category.changeName(newName)).toThrow(EntityError);
     });
