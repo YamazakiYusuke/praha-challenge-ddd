@@ -7,7 +7,7 @@ import { PrismaPairRepository } from "src/infra/db/repositories/prisma/pair-repo
 import { PrismaParticipantRepository } from "src/infra/db/repositories/prisma/participant-repository";
 import { PrismaTeamRepository } from "src/infra/db/repositories/prisma/team-repository";
 import { PrismaTransactionRepository } from "src/infra/db/repositories/prisma/transaction-repository";
-import { MockSendMailRepository } from "src/infra/mail/repositories/mock/mock-send-email-repository";
+import { MockSendAdminMailRepository } from "src/infra/mail/repositories/mock/mock-send-admin-email-repository";
 import { container } from "tsyringe";
 
 export function setupRepositoriesDI() {
@@ -27,8 +27,8 @@ export function setupRepositoriesDI() {
     useClass: PrismaCategoryRepository
   })
 
-  container.register('ISendMailRepository', {
-    useClass: MockSendMailRepository
+  container.register('ISendAdminMailRepository', {
+    useClass: MockSendAdminMailRepository
   })
 
   container.register('IPairRepository', {
