@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { AdminEmail } from "src/domain/entities/admin-email";
-import { ISendMailRepository } from "src/domain/repositories/mail-sender-repository";
+import { ISendMailRepository } from "src/domain/repositories/send-mail-repository";
 import { EmailStatus } from "src/util/enums";
 
 export interface ISendAdminEmailService {
