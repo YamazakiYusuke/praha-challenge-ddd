@@ -1,3 +1,4 @@
+import { PrismaAdminMailRepository } from "src/infra/db/repositories/prisma/admin-mail-repository";
 import { PrismaAdministratorRepository } from "src/infra/db/repositories/prisma/administrator-repository";
 import { PrismaAssignmentProgressRepository } from "src/infra/db/repositories/prisma/assignment-progress-repository";
 import { PrismaAssignmentRepository } from "src/infra/db/repositories/prisma/assignment-repository";
@@ -14,6 +15,11 @@ export function setupDI() {
 }
 
 function setupRepositoriesDI() {
+  container.register('IAdminMailRepository', {
+    useClass: PrismaAdminMailRepository
+  })
+
+
   container.register('IAdministratorRepository', {
     useClass: PrismaAdministratorRepository
   })

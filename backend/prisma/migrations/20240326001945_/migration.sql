@@ -95,9 +95,9 @@ CREATE TABLE "AdminEmail" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "body" TEXT NOT NULL,
-    "sentDateTime" TIMESTAMP(3) NOT NULL,
+    "sentDateTime" TIMESTAMP(3),
     "status" INTEGER NOT NULL,
-    "errorMessage" TEXT NOT NULL,
+    "errorMessage" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 

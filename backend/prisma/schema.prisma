@@ -94,9 +94,9 @@ model AdminEmail {
   id           String             @id
   title        String
   body         String
-  sentDateTime DateTime
+  sentDateTime DateTime?
   status       Int
-  errorMessage String
+  errorMessage String?
   createdAt    DateTime           @default(now())
   updatedAt    DateTime           @default(now()) @updatedAt
   senders      AdminEmailSender[]
