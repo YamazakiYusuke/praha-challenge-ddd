@@ -1,20 +1,17 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { IGetAdministratorByEmailQuery } from "src/domain/commands/administrator/get-administrator-by-email-query";
-import { ISaveAdministratorCommand } from "src/domain/commands/administrator/save-administrator-command";
+import { GetAdministratorByEmailQuery } from "src/domain/commands/administrator/get-administrator-by-email-query";
+import { SaveAdministratorCommand } from "src/domain/commands/administrator/save-administrator-command";
 import { EntityError } from "src/domain/errors/entity_error";
+import { container } from "tsyringe";
 import { Administrator, AdministratorProps } from "../../entities/administrator";
 
 export interface ICreateAdministratorService {
   execute(props: AdministratorProps): Promise<Administrator>;
 }
 
-@Injectable()
 export class CreateAdministratorService implements ICreateAdministratorService {
   constructor(
-    @Inject('IGetAdministratorByEmailQuery')
-    private readonly getAdministratorByEmailQuery: IGetAdministratorByEmailQuery,
-    @Inject('ISaveAdministratorCommand')
-    private readonly saveAdministratorCommand: ISaveAdministratorCommand,
+    private readonly getAdministratorByEmailQuery: GetAdministratorByEmailQuery = container.resolve(GetAdministratorByEmailQuery),
+    private readonly saveAdministratorCommand: SaveAdministratorCommand = container.resolve(SaveAdministratorCommand),
   ) { }
 
   async execute(props: AdministratorProps): Promise<Administrator> {

@@ -1,20 +1,17 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { ISaveAdminMailCommand } from "src/domain/commands/admin-mail/save-admin-mail-command";
+import { SaveAdminMailCommand } from "src/domain/commands/admin-mail/save-admin-mail-command";
 import { AdminEmail } from "src/domain/entities/admin-email";
-import { ISendAdminMail } from "src/domain/mail/send-mail/send-admin-mail";
+import { SendAdminMail } from "src/domain/mail/send-mail/send-admin-mail";
 import { EmailStatus } from "src/util/enums";
+import { container } from "tsyringe";
 
 export interface ISendAdminEmailService {
   execute(adminEmail: AdminEmail): Promise<void>;
 }
 
-@Injectable()
 export class SendAdminEmailService implements ISendAdminEmailService {
   constructor(
-    @Inject('ISendAdminMail')
-    private readonly sendAdminMail: ISendAdminMail,
-    @Inject('ISaveAdminMailCommand')
-    private readonly saveAdminMailCommand: ISaveAdminMailCommand,
+    private readonly sendAdminMail: SendAdminMail = container.resolve(SendAdminMail),
+    private readonly saveAdminMailCommand: SaveAdminMailCommand = container.resolve(SaveAdminMailCommand),
   ) { }
 
   async execute(adminEmail: AdminEmail): Promise<void> {

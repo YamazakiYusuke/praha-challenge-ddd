@@ -1,33 +1,26 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { IGetPairByIdQuery } from "src/domain/commands/pair/get-pair-by-id-query";
-import { ISavePairCommand } from "src/domain/commands/pair/save-pair-command";
-import { ISaveParticipantCommand } from "src/domain/commands/participant/save-participant-command";
+import { Injectable } from "@nestjs/common";
+import { GetPairByIdQuery } from "src/domain/commands/pair/get-pair-by-id-query";
+import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
+import { SaveParticipantCommand } from "src/domain/commands/participant/save-participant-command";
+import { Transaction } from "src/domain/commands/transaction/transaction";
 import { Participant } from "src/domain/entities/participant";
 import { EntityError } from "src/domain/errors/entity_error";
-import { ITransactionRepository } from "src/domain/repositories/transaction-repository";
-import { IReallocateLastParticipantInPairService } from "src/domain/services/pair/reallocate-last-participant-in-pair-service";
-import { IValidateTeamMemberService } from "src/domain/services/team/validate-team-member-service";
+import { ReallocateLastParticipantInPairService } from "src/domain/services/pair/reallocate-last-participant-in-pair-service";
+import { ValidateTeamMemberService } from "src/domain/services/team/validate-team-member-service";
 import { PairId } from "src/domain/values/id";
 
 export interface IWithdrawnParticipantService {
   execute(participant: Participant): Promise<void>;
 }
 
-@Injectable()
 export class WithdrawnParticipantService implements IWithdrawnParticipantService {
   constructor(
-    @Inject('IGetPairByIdQuery')
-    private readonly getPairByIdQuery: IGetPairByIdQuery,
-    @Inject('ISavePairCommand')
-    private readonly savePairCommand: ISavePairCommand,
-    @Inject('ISaveParticipantCommand')
-    private readonly saveParticipantCommand: ISaveParticipantCommand,
-    @Inject('IValidateTeamMemberService')
-    private readonly validateTeamMemberService: IValidateTeamMemberService,
-    @Inject('IReallocateLastParticipantInPairService')
-    private readonly reallocateLastParticipantInPairService: IReallocateLastParticipantInPairService,
-    @Inject('ITransactionRepository')
-    private readonly transactionRepository: ITransactionRepository,
+    private readonly getPairByIdQuery: GetPairByIdQuery,
+    private readonly savePairCommand: SavePairCommand,
+    private readonly saveParticipantCommand: SaveParticipantCommand,
+    private readonly validateTeamMemberService: ValidateTeamMemberService,
+    private readonly reallocateLastParticipantInPairService: ReallocateLastParticipantInPairService,
+    private readonly transaction: Transaction,
   ) { }
 
   async execute(participant: Participant): Promise<void> {
@@ -38,7 +31,7 @@ export class WithdrawnParticipantService implements IWithdrawnParticipantService
     participant.changeEnrollmentStatusToWithDrawn();
     pair.removeParticipant(participant.id);
 
-    await this.transactionRepository.execute(async (tx) => {
+    await this.transaction.execute(async (tx) => {
       await this.saveParticipantCommand.execute(participant, tx);
       await this.savePairCommand.execute(pair, tx);
     })
