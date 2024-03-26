@@ -1,14 +1,14 @@
 import { Administrator } from "src/domain/entities/administrator";
 import { EntityError } from "src/domain/errors/entity_error";
 import { Email } from "src/domain/values/email";
-import { EmailContent } from "src/domain/values/email_content";
+import { AdminEmailContent } from "src/domain/values/admin-email-content";
 import { EmailStatus } from "src/util/enums";
 import { AdminEmailId } from "../values/id";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
 export interface AdminEmailProps {
-  readonly content: EmailContent;
+  readonly content: AdminEmailContent;
   readonly recipients: Administrator[];
   readonly sentDateTime?: Date;
   readonly status: EmailStatus;
