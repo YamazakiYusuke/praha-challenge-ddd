@@ -5,11 +5,7 @@ import { AssignmentProgressState } from "src/domain/values/assignment-progress-s
 import { AssignmentProgressId } from "src/domain/values/id";
 import { container } from "tsyringe";
 
-export interface IChangeAssignmentProgressService {
-  execute(assignmentProgressId: AssignmentProgressId, newState: AssignmentProgressState): Promise<void>;
-}
-
-export class ChangeAssignmentProgressService implements IChangeAssignmentProgressService {
+export class ChangeAssignmentProgressService {
   constructor(
     private readonly getAssignmentProgressByIdQuery: GetAssignmentProgressByIdQuery = container.resolve(GetAssignmentProgressByIdQuery),
     private readonly saveAssignmentProgressCommand: SaveAssignmentProgressCommand = container.resolve(SaveAssignmentProgressCommand),

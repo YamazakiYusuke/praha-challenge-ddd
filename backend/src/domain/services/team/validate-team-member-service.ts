@@ -3,11 +3,7 @@ import { Team } from "src/domain/entities/team";
 import { TeamId } from "src/domain/values/id";
 import { container } from "tsyringe";
 
-export interface IValidateTeamMemberService {
-  execute(teamId: TeamId): Promise<void>;
-}
-
-export class ValidateTeamMemberService implements IValidateTeamMemberService {
+export class ValidateTeamMemberService {
   constructor(
     private readonly getTeamByIdQuery: GetTeamByIdQuery = container.resolve(GetTeamByIdQuery),
   ) { }

@@ -7,13 +7,9 @@ import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
 import { ServiceError } from "src/domain/errors/service_error";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";
-import { container, injectable } from "tsyringe";
+import { container } from "tsyringe";
 
-export interface IReallocateLastParticipantInPairService {
-  execute(pair: Pair): Promise<void>;
-}
-
-export class ReallocateLastParticipantInPairService implements IReallocateLastParticipantInPairService {
+export class ReallocateLastParticipantInPairService {
   constructor(
     private readonly getParticipantByIdQuery: GetParticipantByIdQuery = container.resolve(GetParticipantByIdQuery),
     private readonly createPairService: CreatePairService = container.resolve(CreatePairService),

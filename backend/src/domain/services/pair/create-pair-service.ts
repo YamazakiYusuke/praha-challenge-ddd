@@ -6,11 +6,7 @@ import { container } from "tsyringe";
 import { debuglog } from "util";
 import { Pair, PairProps } from "../../entities/pair";
 
-export interface ICreatePairService {
-  execute(props: { teamId: TeamId; participantIds: ParticipantId[]; }): Promise<Pair>;
-}
-
-export class CreatePairService implements ICreatePairService {
+export class CreatePairService {
   constructor(
     private readonly getPairsByTeamIdQuery: GetPairsByTeamIdQuery = container.resolve(GetPairsByTeamIdQuery),
     private readonly savePairCommand: SavePairCommand = container.resolve(SavePairCommand),

@@ -1,4 +1,3 @@
-import { Injectable } from "@nestjs/common";
 import { GetPairByIdQuery } from "src/domain/commands/pair/get-pair-by-id-query";
 import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { SaveParticipantCommand } from "src/domain/commands/participant/save-participant-command";
@@ -10,11 +9,7 @@ import { ValidateTeamMemberService } from "src/domain/services/team/validate-tea
 import { PairId } from "src/domain/values/id";
 import { container } from "tsyringe";
 
-export interface ILeaveParticipantService {
-  execute(participant: Participant): Promise<void>;
-}
-
-export class LeaveParticipantService implements ILeaveParticipantService {
+export class LeaveParticipantService {
   constructor(
     private readonly getPairByIdQuery: GetPairByIdQuery = container.resolve(GetPairByIdQuery),
     private readonly savePairCommand: SavePairCommand = container.resolve(SavePairCommand),

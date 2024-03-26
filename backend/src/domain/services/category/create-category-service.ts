@@ -1,15 +1,10 @@
-import { Inject, Injectable } from "@nestjs/common";
 import { GetCategoryByNameQuery } from "src/domain/commands/category/get-one-category-by-name-query";
 import { SaveCategoryCommand } from "src/domain/commands/category/save-category-command";
+import { container } from "tsyringe";
 import { Category, CategoryProps } from "../../entities/category";
 import { EntityError } from "../../errors/entity_error";
-import { container } from "tsyringe";
 
-export interface ICreateCategoryService {
-  execute(props: CategoryProps): Promise<Category>;
-}
-
-export class CreateCategoryService implements ICreateCategoryService {
+export class CreateCategoryService {
   constructor(
     private readonly getCategoryByNameQuery: GetCategoryByNameQuery = container.resolve(GetCategoryByNameQuery),
     private readonly saveCategoryCommand: SaveCategoryCommand = container.resolve(SaveCategoryCommand),

@@ -4,11 +4,7 @@ import { EntityError } from "src/domain/errors/entity_error";
 import { container } from "tsyringe";
 import { Administrator, AdministratorProps } from "../../entities/administrator";
 
-export interface ICreateAdministratorService {
-  execute(props: AdministratorProps): Promise<Administrator>;
-}
-
-export class CreateAdministratorService implements ICreateAdministratorService {
+export class CreateAdministratorService {
   constructor(
     private readonly getAdministratorByEmailQuery: GetAdministratorByEmailQuery = container.resolve(GetAdministratorByEmailQuery),
     private readonly saveAdministratorCommand: SaveAdministratorCommand = container.resolve(SaveAdministratorCommand),

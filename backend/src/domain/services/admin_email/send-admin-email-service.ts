@@ -4,11 +4,7 @@ import { SendAdminMail } from "src/domain/mail/send-mail/send-admin-mail";
 import { EmailStatus } from "src/util/enums";
 import { container } from "tsyringe";
 
-export interface ISendAdminEmailService {
-  execute(adminEmail: AdminEmail): Promise<void>;
-}
-
-export class SendAdminEmailService implements ISendAdminEmailService {
+export class SendAdminEmailService {
   constructor(
     private readonly sendAdminMail: SendAdminMail = container.resolve(SendAdminMail),
     private readonly saveAdminMailCommand: SaveAdminMailCommand = container.resolve(SaveAdminMailCommand),
