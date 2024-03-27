@@ -1,14 +1,12 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { IGetAllPairsQuery } from "src/domain/commands/pair/get-all-pairs-query";
+import { GetAllPairsQuery } from "src/domain/commands/pair/get-all-pairs-query";
 import { Pair } from "src/domain/entities/pair";
+import { container } from "tsyringe";
 import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
 
-@Injectable()
 export class GetAllPairsUsecase {
   constructor(
-    @Inject('IGetAllPairsQuery')
-    private readonly getAllPairsQuery: IGetAllPairsQuery,
+    private readonly getAllPairsQuery: GetAllPairsQuery = container.resolve(GetAllPairsQuery),
   ) { }
 
   public async execute(): Promise<Pair[] | ErrorResponse> {

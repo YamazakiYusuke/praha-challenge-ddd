@@ -8,10 +8,6 @@ import { ReallocateLastParticipantInPairService } from "src/domain/services/pair
 import { ValidateTeamMemberService } from "src/domain/services/team/validate-team-member-service";
 import { PairId } from "src/domain/values/id";
 
-export interface IWithdrawnParticipantService {
-  execute(participant: Participant): Promise<void>;
-}
-
 export class WithdrawnParticipantService {
   constructor(
     private readonly getPairByIdQuery: GetPairByIdQuery,

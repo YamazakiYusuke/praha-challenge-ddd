@@ -1,8 +1,6 @@
-import { Injectable } from "@nestjs/common";
 import { AdminEmail } from "src/domain/entities/admin-email";
 import { ISendAdminMailRepository } from "src/domain/repositories/send-admin-mail-repository";
 
-@Injectable()
 export class MockSendAdminMailRepository implements ISendAdminMailRepository {
   async send(adminEmail: AdminEmail): Promise<void> {
     console.log(`Mock sending email to ${adminEmail.recipientEmails.map(email => email.value).join(", ")}`);

@@ -6,14 +6,14 @@ import { AssignmentProgressState } from "src/domain/values/assignment-progress-s
 import { AssignmentId } from "src/domain/values/id";
 
 export interface ParticipantPaginationProps {
-  page: number;
-  size: number;
-  assignmentStates: AssignmentStateProps[];
+  readonly page: number;
+  readonly size: number;
+  readonly assignmentStates: AssignmentStateProps[];
 }
 
 export interface AssignmentStateProps {
-  assignmentId: AssignmentId;
-  assignmentProgressState: AssignmentProgressState;
+  readonly assignmentId: AssignmentId;
+  readonly assignmentProgressState: AssignmentProgressState;
 }
 
 @Injectable()

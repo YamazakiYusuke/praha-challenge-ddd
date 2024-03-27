@@ -17,7 +17,7 @@ export class InMemoryParticipantRepository implements IParticipantRepository {
     return this.participants;
   }
 
-  async getAllWithAssignments(): Promise<Error | ParticipantWithAssignments[]> {
+  async getAllWithAssignments(): Promise<ParticipantWithAssignments[]> {
     const id = AssignmentProgressId.restore('Id');
     const assignmentId = AssignmentId.restore('assignmentId');
     const participantId = ParticipantId.restore('participantId');

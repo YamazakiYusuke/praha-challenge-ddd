@@ -2,14 +2,13 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ErrorResponse } from "src/app/responses/error-response";
 import { SuccessResponse } from "src/app/responses/success-response";
 import { Participant } from "src/domain/entities/participant";
-import { IEnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
+import { EnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
+import { container } from "tsyringe";
 import { debuglog } from "util";
 
-@Injectable()
 export class AddNewParticipantUsecase {
   constructor(
-    @Inject('IEnrollParticipantService')
-    private readonly enrollParticipantService: IEnrollParticipantService
+    private readonly enrollParticipantService: EnrollParticipantService = container.resolve(EnrollParticipantService),
   ) { }
 
   async execute(participant: Participant): Promise<SuccessResponse | ErrorResponse> {

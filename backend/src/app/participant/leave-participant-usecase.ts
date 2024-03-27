@@ -1,18 +1,15 @@
-import { Inject, Injectable } from "@nestjs/common";
 import { ErrorResponse } from "src/app/responses/error-response";
 import { SuccessResponse } from "src/app/responses/success-response";
-import { IGetParticipantByIdQuery } from "src/domain/commands/participant/get-participant-by-id-query";
-import { ILeaveParticipantService } from "src/domain/services/participant/leave-participant-service";
+import { GetParticipantByIdQuery } from "src/domain/commands/participant/get-participant-by-id-query";
+import { LeaveParticipantService } from "src/domain/services/participant/leave-participant-service";
 import { ParticipantId } from "src/domain/values/id";
+import { container } from "tsyringe";
 import { debuglog } from "util";
 
-@Injectable()
 export class LeaveParticipantUseCase {
   constructor(
-    @Inject('ILeaveParticipantService')
-    private readonly leaveParticipantService: ILeaveParticipantService,
-    @Inject('IGetParticipantByIdQuery')
-    private readonly getParticipantByIdQuery: IGetParticipantByIdQuery,
+    private readonly leaveParticipantService: LeaveParticipantService = container.resolve(LeaveParticipantService),
+    private readonly getParticipantByIdQuery: GetParticipantByIdQuery = container.resolve(GetParticipantByIdQuery),
   ) { }
 
   async execute(participantId: ParticipantId): Promise<SuccessResponse | ErrorResponse> {

@@ -1,14 +1,12 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { IGetParticipantsWithAssignmentsPagedQuery, ParticipantPaginationProps } from "src/domain/commands/participant/get-participants-paged-query";
+import { GetParticipantsWithAssignmentsPagedQuery, ParticipantPaginationProps } from "src/domain/commands/participant/get-participants-paged-query";
 import { Participant } from "src/domain/entities/participant";
+import { container } from "tsyringe";
 import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
 
-@Injectable()
 export class GetParticipantsPagedUsecase {
   constructor(
-    @Inject('IGetParticipantsWithAssignmentsPagedQuery')
-    private readonly getParticipantsWithAssignmentsPagedQuery: IGetParticipantsWithAssignmentsPagedQuery,
+    private readonly getParticipantsWithAssignmentsPagedQuery: GetParticipantsWithAssignmentsPagedQuery = container.resolve(GetParticipantsWithAssignmentsPagedQuery),
   ) { }
 
   public async execute(props: ParticipantPaginationProps): Promise<Participant[] | ErrorResponse> {

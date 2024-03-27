@@ -1,16 +1,14 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { IChangeAssignmentProgressService } from "src/domain/services/assignment/change-assignment-progress-service";
+import { ChangeAssignmentProgressService } from "src/domain/services/assignment/change-assignment-progress-service";
 import { AssignmentProgressState } from "src/domain/values/assignment-progress-state";
 import { AssignmentProgressId } from "src/domain/values/id";
+import { container } from "tsyringe";
 import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
 import { SuccessResponse } from "../responses/success-response";
 
-@Injectable()
 export class ChangeAssignmentProgressUsecase {
   constructor(
-    @Inject('IChangeAssignmentProgressService')
-    private readonly changeAssignmentProgressService: IChangeAssignmentProgressService,
+    private readonly changeAssignmentProgressService: ChangeAssignmentProgressService = container.resolve(ChangeAssignmentProgressService),
   ) { }
 
   public async execute(assignmentProgressId: AssignmentProgressId, newState: AssignmentProgressState): Promise<SuccessResponse | ErrorResponse> {
