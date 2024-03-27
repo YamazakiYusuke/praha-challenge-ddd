@@ -71,6 +71,9 @@ export class AdminEmail extends Entity<AdminEmailId, AdminEmailProps> {
   }
 
   public setErrorMessage(newErrorMessage: string) {
+    if (this.status != EmailStatus.Error) {
+      throw new EntityError('Current status is not error.');
+    }
     const newProps = { ...this.props, errorMessage: newErrorMessage };
     this.setProps(newProps);
   }
