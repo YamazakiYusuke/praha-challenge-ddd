@@ -17,8 +17,8 @@ export class SendAdminEmailService {
       adminEmail.setSentDateTime(new Date());
       adminEmail.setStatus(EmailStatus.Sent);
     } catch (error: any) {
-      adminEmail.setErrorMessage(error.message);
       adminEmail.setStatus(EmailStatus.Error);
+      adminEmail.setErrorMessage(error.message);
     } finally {
       this.saveAdminMailCommand.execute(adminEmail);
     }
