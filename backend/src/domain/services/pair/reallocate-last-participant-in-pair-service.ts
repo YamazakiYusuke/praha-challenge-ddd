@@ -6,7 +6,10 @@ import { Transaction } from "src/domain/commands/transaction/transaction";
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
 import { ServiceError } from "src/domain/errors/service_error";
+import { CreateAdminEmailService } from "src/domain/services/admin_email/create-admin-email-service";
+import { SendAdminEmailService } from "src/domain/services/admin_email/send-admin-email-service";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";
+import { AdminEmailContent } from "src/domain/values/admin-email-content";
 import { container } from "tsyringe";
 
 export class ReallocateLastParticipantInPairService {
@@ -17,16 +20,19 @@ export class ReallocateLastParticipantInPairService {
     private readonly savePairCommand: SavePairCommand = container.resolve(SavePairCommand),
     private readonly saveParticipantCommand: SaveParticipantCommand = container.resolve(SaveParticipantCommand),
     private readonly transaction: Transaction = container.resolve(Transaction),
+    private readonly createAdminEmailService: CreateAdminEmailService = container.resolve(CreateAdminEmailService),
+    private readonly sendAdminEmailService: SendAdminEmailService = container.resolve(SendAdminEmailService),
   ) { }
 
-  async execute(pair: Pair): Promise<void> {
+  async execute(pair: Pair, leavingParticipant: Participant): Promise<void> {
     if (!pair.hasInsufficientMinParticipants) return;
 
     const lastParticipantId = pair.lastParticipant;
     const lastParticipant = await this.getParticipantByIdQuery.execute(lastParticipantId) as Participant;
     const fewestPair = await this.getPairWithFewestMembersByTeamIdQuery.execute(pair.teamId, pair.id) as Pair;
     if (!fewestPair.hasValidNumberOfParticipants) {
-      // TODO: 合流可能なペアがない為管理者にメール  メール文に「どの参加者が減ったのか」「どの参加者が合流先を探しているのか」を記載
+      const mail = await this.createAdminEmailService.execute(AdminEmailContent.relocate(leavingParticipant, lastParticipant));
+      await this.sendAdminEmailService.execute(mail);
       throw new ServiceError('合流可能なペアーがありません');
     }
     if (fewestPair.participantsLength == Pair.maxNumber) {

@@ -33,7 +33,7 @@ export class LeaveParticipantService {
     })
 
 
-    await this.validateTeamMemberService.execute(pair.teamId);
-    await this.reallocateLastParticipantInPairService.execute(pair);
+    await this.validateTeamMemberService.execute(pair.teamId, participant);
+    await this.reallocateLastParticipantInPairService.execute(pair, participant);
   }
 }

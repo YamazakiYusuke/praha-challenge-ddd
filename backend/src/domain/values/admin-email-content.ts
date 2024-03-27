@@ -42,8 +42,8 @@ export class AdminEmailContent extends Value<AdminEmailContentProps> {
   /**
  * チームのメンバーが2名以下になりました
  */
-  static teamMemberAlert(leavingParticipant: Participant, remainingParticipants: Participant[]): AdminEmailContent {
-    const names = remainingParticipants.map((participant) => participant.name.value).join('/');
+  static teamMemberAlert(leavingParticipant: Participant, remainingParticipants?: Participant[]): AdminEmailContent {
+    const names = remainingParticipants?.map((participant) => participant.name.value).join('/') ?? '参加者は0人です';
     return new AdminEmailContent({
       title: "[重要]プラハチャレンジ",
       body: `チームのメンバーが2名以下になりました。

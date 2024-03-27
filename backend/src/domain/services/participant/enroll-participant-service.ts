@@ -4,6 +4,9 @@ import { SaveParticipantCommand } from "src/domain/commands/participant/save-par
 import { Transaction } from "src/domain/commands/transaction/transaction";
 import { Participant } from "src/domain/entities/participant";
 import { EntityError } from "src/domain/errors/entity_error";
+import { CreateAdminEmailService } from "src/domain/services/admin_email/create-admin-email-service";
+import { SendAdminEmailService } from "src/domain/services/admin_email/send-admin-email-service";
+import { AdminEmailContent } from "src/domain/values/admin-email-content";
 import { container } from "tsyringe";
 
 export class EnrollParticipantService {
@@ -12,12 +15,15 @@ export class EnrollParticipantService {
     private readonly savePairCommand: SavePairCommand = container.resolve(SavePairCommand),
     private readonly saveParticipantCommand: SaveParticipantCommand = container.resolve(SaveParticipantCommand),
     private readonly transaction: Transaction = container.resolve(Transaction),
+    private readonly createAdminEmailService: CreateAdminEmailService = container.resolve(CreateAdminEmailService),
+    private readonly sendAdminEmailService: SendAdminEmailService = container.resolve(SendAdminEmailService),
   ) { }
 
   async execute(participant: Participant): Promise<void> {
     const smallestPair = await this.getPairWithFewestMembersQuery.execute();
     if (smallestPair == null) {
-      // TODO: 管理者にメール
+      const mail = await this.createAdminEmailService.execute(AdminEmailContent.join(participant));
+      await this.sendAdminEmailService.execute(mail);
       throw new EntityError('参加可能なペアがありません');
     }
     participant.changeEnrollmentStatusToEnrolled(smallestPair.teamId, smallestPair.id);

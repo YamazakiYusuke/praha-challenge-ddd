@@ -23,6 +23,9 @@ export class AdminEmail extends Entity<AdminEmailId, AdminEmailProps> {
   }
 
   static create(props: AdminEmailProps): AdminEmail {
+    if (props.status != EmailStatus.Pending) {
+      throw new EntityError('Initial status must be pending');
+    }
     return new AdminEmail(AdminEmailId.create(), props)
   }
 
