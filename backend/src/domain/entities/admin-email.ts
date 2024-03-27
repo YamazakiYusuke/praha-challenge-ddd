@@ -1,7 +1,7 @@
 import { Administrator } from "src/domain/entities/administrator";
 import { EntityError } from "src/domain/errors/entity_error";
-import { Email } from "src/domain/values/email";
 import { AdminEmailContent } from "src/domain/values/admin-email-content";
+import { Email } from "src/domain/values/email";
 import { EmailStatus } from "src/util/enums";
 import { AdminEmailId } from "../values/id";
 import { Entity } from "./base/entity";
@@ -39,6 +39,10 @@ export class AdminEmail extends Entity<AdminEmailId, AdminEmailProps> {
 
   public get body(): string {
     return this.props.content.body;
+  }
+
+  public get recipients(): Administrator[] {
+    return this.props.recipients;
   }
 
   public get recipientEmails(): Email[] {
