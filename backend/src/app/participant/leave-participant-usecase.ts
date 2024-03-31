@@ -3,13 +3,16 @@ import { SuccessResponse } from "src/app/responses/success-response";
 import { GetParticipantByIdQuery } from "src/domain/commands/participant/get-participant-by-id-query";
 import { LeaveParticipantService } from "src/domain/services/participant/leave-participant-service";
 import { ParticipantId } from "src/domain/values/id";
-import { container } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 import { debuglog } from "util";
 
+@injectable()
 export class LeaveParticipantUseCase {
   constructor(
-    private readonly leaveParticipantService: LeaveParticipantService = container.resolve(LeaveParticipantService),
-    private readonly getParticipantByIdQuery: GetParticipantByIdQuery = container.resolve(GetParticipantByIdQuery),
+    @inject(LeaveParticipantService)
+    private readonly leaveParticipantService: LeaveParticipantService,
+    @inject(GetParticipantByIdQuery)
+    private readonly getParticipantByIdQuery: GetParticipantByIdQuery,
   ) { }
 
   async execute(participantId: ParticipantId): Promise<SuccessResponse | ErrorResponse> {

@@ -1,14 +1,16 @@
 import { ChangeAssignmentProgressService } from "src/domain/services/assignment/change-assignment-progress-service";
 import { AssignmentProgressState } from "src/domain/values/assignment-progress-state";
 import { AssignmentProgressId } from "src/domain/values/id";
-import { container } from "tsyringe";
+import { container, inject, injectable } from "tsyringe";
 import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
 import { SuccessResponse } from "../responses/success-response";
 
+@injectable()
 export class ChangeAssignmentProgressUsecase {
   constructor(
-    private readonly changeAssignmentProgressService: ChangeAssignmentProgressService = container.resolve(ChangeAssignmentProgressService),
+    @inject(ChangeAssignmentProgressService)
+    private readonly changeAssignmentProgressService: ChangeAssignmentProgressService,
   ) { }
 
   public async execute(assignmentProgressId: AssignmentProgressId, newState: AssignmentProgressState): Promise<SuccessResponse | ErrorResponse> {

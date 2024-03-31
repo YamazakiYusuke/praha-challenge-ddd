@@ -3,13 +3,16 @@ import { SuccessResponse } from "src/app/responses/success-response";
 import { GetParticipantByIdQuery } from "src/domain/commands/participant/get-participant-by-id-query";
 import { EnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
 import { ParticipantId } from "src/domain/values/id";
-import { container } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 import { debuglog } from "util";
 
+@injectable()
 export class EnrollParticipantUseCase {
   constructor(
-    private readonly enrollParticipantService: EnrollParticipantService = container.resolve(EnrollParticipantService),
-    private readonly getParticipantByIdQuery: GetParticipantByIdQuery = container.resolve(GetParticipantByIdQuery),
+    @inject(EnrollParticipantService)
+    private readonly enrollParticipantService: EnrollParticipantService,
+    @inject(GetParticipantByIdQuery)
+    private readonly getParticipantByIdQuery: GetParticipantByIdQuery,
   ) { }
 
   // Teamの更新

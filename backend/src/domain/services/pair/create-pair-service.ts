@@ -2,10 +2,9 @@ import { GetPairsByTeamIdQuery } from "src/domain/commands/pair/get-pairs-by-tea
 import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { ParticipantId, TeamId } from "src/domain/values/id";
 import { PairName } from "src/domain/values/name";
-import { container } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 import { debuglog } from "util";
 import { Pair, PairProps } from "../../entities/pair";
-import { inject, injectable } from "tsyringe";
 
 @injectable()
 export class CreatePairService {

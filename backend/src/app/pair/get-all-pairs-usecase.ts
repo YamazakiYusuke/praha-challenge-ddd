@@ -1,12 +1,14 @@
 import { GetAllPairsQuery } from "src/domain/commands/pair/get-all-pairs-query";
 import { Pair } from "src/domain/entities/pair";
-import { container } from "tsyringe";
+import { container, inject, injectable } from "tsyringe";
 import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
 
+@injectable()
 export class GetAllPairsUsecase {
   constructor(
-    private readonly getAllPairsQuery: GetAllPairsQuery = container.resolve(GetAllPairsQuery),
+    @inject(GetAllPairsQuery)
+    private readonly getAllPairsQuery: GetAllPairsQuery,
   ) { }
 
   public async execute(): Promise<Pair[] | ErrorResponse> {

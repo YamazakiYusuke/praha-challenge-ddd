@@ -1,12 +1,14 @@
 import { GetParticipantsWithAssignmentsPagedQuery, ParticipantPaginationProps } from "src/domain/commands/participant/get-participants-paged-query";
 import { Participant } from "src/domain/entities/participant";
-import { container } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
 
+@injectable()
 export class GetParticipantsPagedUsecase {
   constructor(
-    private readonly getParticipantsWithAssignmentsPagedQuery: GetParticipantsWithAssignmentsPagedQuery = container.resolve(GetParticipantsWithAssignmentsPagedQuery),
+    @inject(GetParticipantsWithAssignmentsPagedQuery)
+    private readonly getParticipantsWithAssignmentsPagedQuery: GetParticipantsWithAssignmentsPagedQuery,
   ) { }
 
   public async execute(props: ParticipantPaginationProps): Promise<Participant[] | ErrorResponse> {
