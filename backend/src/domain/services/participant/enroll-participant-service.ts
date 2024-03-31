@@ -12,12 +12,18 @@ import { inject, injectable } from "tsyringe";
 @injectable()
 export class EnrollParticipantService {
   constructor(
-    @inject(GetPairWithFewestMembersQuery) private readonly getPairWithFewestMembersQuery: GetPairWithFewestMembersQuery,
-    @inject(SavePairCommand) private readonly savePairCommand: SavePairCommand,
-    @inject(SaveParticipantCommand) private readonly saveParticipantCommand: SaveParticipantCommand,
-    @inject(Transaction) private readonly transaction: Transaction,
-    @inject(CreateAdminEmailService) private readonly createAdminEmailService: CreateAdminEmailService,
-    @inject(SendAdminEmailService) private readonly sendAdminEmailService: SendAdminEmailService,
+    @inject(GetPairWithFewestMembersQuery)
+    private readonly getPairWithFewestMembersQuery: GetPairWithFewestMembersQuery,
+    @inject(SavePairCommand)
+    private readonly savePairCommand: SavePairCommand,
+    @inject(SaveParticipantCommand)
+    private readonly saveParticipantCommand: SaveParticipantCommand,
+    @inject(Transaction)
+    private readonly transaction: Transaction,
+    @inject(CreateAdminEmailService)
+    private readonly createAdminEmailService: CreateAdminEmailService,
+    @inject(SendAdminEmailService)
+    private readonly sendAdminEmailService: SendAdminEmailService,
   ) { }
 
   async execute(participant: Participant): Promise<void> {

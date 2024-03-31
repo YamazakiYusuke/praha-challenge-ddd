@@ -7,8 +7,10 @@ import { inject, injectable } from "tsyringe";
 @injectable()
 export class SendAdminEmailService {
   constructor(
-    @inject(SendAdminMail) private readonly sendAdminMail: SendAdminMail,
-    @inject(SaveAdminMailCommand) private readonly saveAdminMailCommand: SaveAdminMailCommand,
+    @inject(SendAdminMail) 
+    private readonly sendAdminMail: SendAdminMail,
+    @inject(SaveAdminMailCommand) 
+    private readonly saveAdminMailCommand: SaveAdminMailCommand,
   ) { }
 
   async execute(adminEmail: AdminEmail): Promise<void> {

@@ -7,8 +7,10 @@ import { Administrator, AdministratorProps } from "../../entities/administrator"
 @injectable()
 export class CreateAdministratorService {
   constructor(
-    @inject(GetAdministratorByEmailQuery) private readonly getAdministratorByEmailQuery: GetAdministratorByEmailQuery,
-    @inject(SaveAdministratorCommand) private readonly saveAdministratorCommand: SaveAdministratorCommand,
+    @inject(GetAdministratorByEmailQuery) 
+    private readonly getAdministratorByEmailQuery: GetAdministratorByEmailQuery,
+    @inject(SaveAdministratorCommand) 
+    private readonly saveAdministratorCommand: SaveAdministratorCommand,
   ) { }
 
   async execute(props: AdministratorProps): Promise<Administrator> {

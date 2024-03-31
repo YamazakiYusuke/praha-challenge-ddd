@@ -7,7 +7,8 @@ import { inject, injectable } from "tsyringe";
 @injectable()
 export class CreateAdminEmailService {
   constructor(
-    @inject(GetAllAdministratorsQuery) private readonly getAllAdministratorsQuery: GetAllAdministratorsQuery,
+    @inject(GetAllAdministratorsQuery)
+    private readonly getAllAdministratorsQuery: GetAllAdministratorsQuery,
   ) { }
 
   async execute(content: AdminEmailContent): Promise<AdminEmail> {

@@ -8,8 +8,10 @@ import { Administrator } from "../../entities/administrator";
 @injectable()
 export class ChangeAdministratorEmailService {
   constructor(
-    @inject(GetAdministratorByEmailQuery) private readonly getAdministratorByEmailQuery: GetAdministratorByEmailQuery,
-    @inject(SaveAdministratorCommand) private readonly saveAdministratorCommand: SaveAdministratorCommand,
+    @inject(GetAdministratorByEmailQuery) 
+    private readonly getAdministratorByEmailQuery: GetAdministratorByEmailQuery,
+    @inject(SaveAdministratorCommand) 
+    private readonly saveAdministratorCommand: SaveAdministratorCommand,
   ) { }
 
   async execute(administrator: Administrator, newEmail: Email): Promise<void> {

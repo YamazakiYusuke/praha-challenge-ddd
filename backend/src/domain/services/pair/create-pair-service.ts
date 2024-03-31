@@ -10,8 +10,10 @@ import { inject, injectable } from "tsyringe";
 @injectable()
 export class CreatePairService {
   constructor(
-    @inject(GetPairsByTeamIdQuery) private readonly getPairsByTeamIdQuery: GetPairsByTeamIdQuery,
-    @inject(SavePairCommand) private readonly savePairCommand: SavePairCommand,
+    @inject(GetPairsByTeamIdQuery)
+    private readonly getPairsByTeamIdQuery: GetPairsByTeamIdQuery,
+    @inject(SavePairCommand)
+    private readonly savePairCommand: SavePairCommand,
   ) { }
 
   async execute(props: { teamId: TeamId; participantIds: ParticipantId[]; }): Promise<Pair> {

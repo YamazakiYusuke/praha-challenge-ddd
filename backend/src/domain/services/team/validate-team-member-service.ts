@@ -11,10 +11,14 @@ import { container, inject, injectable } from "tsyringe";
 @injectable()
 export class ValidateTeamMemberService {
   constructor(
-    @inject(GetTeamByIdQuery) private readonly getTeamByIdQuery: GetTeamByIdQuery,
-    @inject(CreateAdminEmailService) private readonly createAdminEmailService: CreateAdminEmailService,
-    @inject(SendAdminEmailService) private readonly sendAdminEmailService: SendAdminEmailService,
-    @inject(GetParticipantByTeamIdQuery) private readonly getParticipantByTeamIdQuery: GetParticipantByTeamIdQuery,
+    @inject(GetTeamByIdQuery)
+    private readonly getTeamByIdQuery: GetTeamByIdQuery,
+    @inject(CreateAdminEmailService)
+    private readonly createAdminEmailService: CreateAdminEmailService,
+    @inject(SendAdminEmailService)
+    private readonly sendAdminEmailService: SendAdminEmailService,
+    @inject(GetParticipantByTeamIdQuery)
+    private readonly getParticipantByTeamIdQuery: GetParticipantByTeamIdQuery,
   ) { }
 
   async execute(teamId: TeamId, leavingParticipant: Participant): Promise<void> {

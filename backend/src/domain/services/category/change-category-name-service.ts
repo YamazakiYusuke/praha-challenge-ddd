@@ -9,8 +9,10 @@ import { inject, injectable } from "tsyringe";
 @injectable()
 export class ChangeCategoryNameService {
   constructor(
-    @inject(GetCategoryByNameQuery) private readonly getCategoryByNameQuery: GetCategoryByNameQuery,
-    @inject(SaveCategoryCommand) private readonly saveCategoryCommand: SaveCategoryCommand,
+    @inject(GetCategoryByNameQuery) 
+    private readonly getCategoryByNameQuery: GetCategoryByNameQuery,
+    @inject(SaveCategoryCommand) 
+    private readonly saveCategoryCommand: SaveCategoryCommand,
   ) { }
 
   async execute(category: Category, newName: CategoryName): Promise<void> {

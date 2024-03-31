@@ -8,8 +8,10 @@ import { inject, injectable } from "tsyringe";
 @injectable()
 export class ChangeAssignmentProgressService {
   constructor(
-    @inject(GetAssignmentProgressByIdQuery) private readonly getAssignmentProgressByIdQuery: GetAssignmentProgressByIdQuery,
-    @inject(SaveAssignmentProgressCommand) private readonly saveAssignmentProgressCommand: SaveAssignmentProgressCommand,
+    @inject(GetAssignmentProgressByIdQuery) 
+    private readonly getAssignmentProgressByIdQuery: GetAssignmentProgressByIdQuery,
+    @inject(SaveAssignmentProgressCommand) 
+    private readonly saveAssignmentProgressCommand: SaveAssignmentProgressCommand,
   ) { }
 
   async execute(assignmentProgressId: AssignmentProgressId, newState: AssignmentProgressState): Promise<void> {
