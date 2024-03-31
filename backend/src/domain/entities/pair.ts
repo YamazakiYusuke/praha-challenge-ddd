@@ -48,14 +48,23 @@ export class Pair extends Entity<PairId, PairProps> {
     return this.participantIds.length;
   }
 
+  /**
+   * メンバー数が正常(2人以上3人以下)な場合、trueをreturn
+   */
   public get hasValidNumberOfParticipants(): boolean {
     return this.participantsLength >= Pair.minNumber && this.participantsLength <= Pair.maxNumber;
   }
 
+  /**
+   * メンバー数が多すぎる(4人以上)場合、trueをreturn
+   */
   public get hasExceededMaxParticipants(): boolean {
     return this.participantsLength > Pair.maxNumber;
   }
 
+  /**
+   * メンバー数がすくなすぎる(1人以下)場合、trueをreturn
+   */
   public get hasInsufficientMinParticipants(): boolean {
     return this.participantsLength < Pair.minNumber;
   }

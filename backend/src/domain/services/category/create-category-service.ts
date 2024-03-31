@@ -3,11 +3,13 @@ import { SaveCategoryCommand } from "src/domain/commands/category/save-category-
 import { container } from "tsyringe";
 import { Category, CategoryProps } from "../../entities/category";
 import { EntityError } from "../../errors/entity_error";
+import { inject, injectable } from "tsyringe";
 
+@injectable()
 export class CreateCategoryService {
   constructor(
-    private readonly getCategoryByNameQuery: GetCategoryByNameQuery = container.resolve(GetCategoryByNameQuery),
-    private readonly saveCategoryCommand: SaveCategoryCommand = container.resolve(SaveCategoryCommand),
+    @inject(GetCategoryByNameQuery) private readonly getCategoryByNameQuery: GetCategoryByNameQuery,
+    @inject(SaveCategoryCommand) private readonly saveCategoryCommand: SaveCategoryCommand,
   ) { }
 
   async execute(props: CategoryProps): Promise<Category> {

@@ -6,14 +6,15 @@ import { CreateAdminEmailService } from "src/domain/services/admin_email/create-
 import { SendAdminEmailService } from "src/domain/services/admin_email/send-admin-email-service";
 import { AdminEmailContent } from "src/domain/values/admin-email-content";
 import { TeamId } from "src/domain/values/id";
-import { container } from "tsyringe";
+import { container, inject, injectable } from "tsyringe";
 
+@injectable()
 export class ValidateTeamMemberService {
   constructor(
-    private readonly getTeamByIdQuery: GetTeamByIdQuery = container.resolve(GetTeamByIdQuery),
-    private readonly createAdminEmailService: CreateAdminEmailService = container.resolve(CreateAdminEmailService),
-    private readonly sendAdminEmailService: SendAdminEmailService = container.resolve(SendAdminEmailService),
-    private readonly getParticipantByTeamIdQuery: GetParticipantByTeamIdQuery = container.resolve(GetParticipantByTeamIdQuery),
+    @inject(GetTeamByIdQuery) private readonly getTeamByIdQuery: GetTeamByIdQuery,
+    @inject(CreateAdminEmailService) private readonly createAdminEmailService: CreateAdminEmailService,
+    @inject(SendAdminEmailService) private readonly sendAdminEmailService: SendAdminEmailService,
+    @inject(GetParticipantByTeamIdQuery) private readonly getParticipantByTeamIdQuery: GetParticipantByTeamIdQuery,
   ) { }
 
   async execute(teamId: TeamId, leavingParticipant: Participant): Promise<void> {

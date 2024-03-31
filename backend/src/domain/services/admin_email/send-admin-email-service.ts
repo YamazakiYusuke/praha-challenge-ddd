@@ -2,12 +2,13 @@ import { SaveAdminMailCommand } from "src/domain/commands/admin-mail/save-admin-
 import { AdminEmail } from "src/domain/entities/admin-email";
 import { SendAdminMail } from "src/domain/mail/send-mail/send-admin-mail";
 import { EmailStatus } from "src/util/enums";
-import { container } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 
+@injectable()
 export class SendAdminEmailService {
   constructor(
-    private readonly sendAdminMail: SendAdminMail = container.resolve(SendAdminMail),
-    private readonly saveAdminMailCommand: SaveAdminMailCommand = container.resolve(SaveAdminMailCommand),
+    @inject(SendAdminMail) private readonly sendAdminMail: SendAdminMail,
+    @inject(SaveAdminMailCommand) private readonly saveAdminMailCommand: SaveAdminMailCommand,
   ) { }
 
   async execute(adminEmail: AdminEmail): Promise<void> {

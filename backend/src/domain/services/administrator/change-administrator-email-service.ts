@@ -2,13 +2,14 @@ import { GetAdministratorByEmailQuery } from "src/domain/commands/administrator/
 import { SaveAdministratorCommand } from "src/domain/commands/administrator/save-administrator-command";
 import { EntityError } from "src/domain/errors/entity_error";
 import { Email } from "src/domain/values/email";
-import { container } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 import { Administrator } from "../../entities/administrator";
 
+@injectable()
 export class ChangeAdministratorEmailService {
   constructor(
-    private readonly getAdministratorByEmailQuery: GetAdministratorByEmailQuery = container.resolve(GetAdministratorByEmailQuery),
-    private readonly saveAdministratorCommand: SaveAdministratorCommand = container.resolve(SaveAdministratorCommand),
+    @inject(GetAdministratorByEmailQuery) private readonly getAdministratorByEmailQuery: GetAdministratorByEmailQuery,
+    @inject(SaveAdministratorCommand) private readonly saveAdministratorCommand: SaveAdministratorCommand,
   ) { }
 
   async execute(administrator: Administrator, newEmail: Email): Promise<void> {

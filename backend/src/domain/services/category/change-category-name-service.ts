@@ -4,11 +4,13 @@ import { EntityError } from "src/domain/errors/entity_error";
 import { CategoryName } from "src/domain/values/name";
 import { container } from "tsyringe";
 import { Category } from "../../entities/category";
+import { inject, injectable } from "tsyringe";
 
+@injectable()
 export class ChangeCategoryNameService {
   constructor(
-    private readonly getCategoryByNameQuery: GetCategoryByNameQuery = container.resolve(GetCategoryByNameQuery),
-    private readonly saveCategoryCommand: SaveCategoryCommand = container.resolve(SaveCategoryCommand),
+    @inject(GetCategoryByNameQuery) private readonly getCategoryByNameQuery: GetCategoryByNameQuery,
+    @inject(SaveCategoryCommand) private readonly saveCategoryCommand: SaveCategoryCommand,
   ) { }
 
   async execute(category: Category, newName: CategoryName): Promise<void> {

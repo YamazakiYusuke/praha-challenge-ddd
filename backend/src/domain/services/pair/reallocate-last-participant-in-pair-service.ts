@@ -10,22 +10,23 @@ import { CreateAdminEmailService } from "src/domain/services/admin_email/create-
 import { SendAdminEmailService } from "src/domain/services/admin_email/send-admin-email-service";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";
 import { AdminEmailContent } from "src/domain/values/admin-email-content";
-import { container } from "tsyringe";
+import { container, inject, injectable } from "tsyringe";
 
+@injectable()
 export class ReallocateLastParticipantInPairService {
   constructor(
-    private readonly getParticipantByIdQuery: GetParticipantByIdQuery = container.resolve(GetParticipantByIdQuery),
-    private readonly createPairService: CreatePairService = container.resolve(CreatePairService),
-    private readonly getPairWithFewestMembersByTeamIdQuery: GetPairWithFewestMembersByTeamIdQuery = container.resolve(GetPairWithFewestMembersByTeamIdQuery),
-    private readonly savePairCommand: SavePairCommand = container.resolve(SavePairCommand),
-    private readonly saveParticipantCommand: SaveParticipantCommand = container.resolve(SaveParticipantCommand),
-    private readonly transaction: Transaction = container.resolve(Transaction),
-    private readonly createAdminEmailService: CreateAdminEmailService = container.resolve(CreateAdminEmailService),
-    private readonly sendAdminEmailService: SendAdminEmailService = container.resolve(SendAdminEmailService),
+    @inject(GetParticipantByIdQuery) private readonly getParticipantByIdQuery: GetParticipantByIdQuery,
+    @inject(CreatePairService) private readonly createPairService: CreatePairService,
+    @inject(GetPairWithFewestMembersByTeamIdQuery) private readonly getPairWithFewestMembersByTeamIdQuery: GetPairWithFewestMembersByTeamIdQuery,
+    @inject(SavePairCommand) private readonly savePairCommand: SavePairCommand,
+    @inject(SaveParticipantCommand) private readonly saveParticipantCommand: SaveParticipantCommand,
+    @inject(Transaction) private readonly transaction: Transaction,
+    @inject(CreateAdminEmailService) private readonly createAdminEmailService: CreateAdminEmailService,
+    @inject(SendAdminEmailService) private readonly sendAdminEmailService: SendAdminEmailService,
   ) { }
 
   async execute(pair: Pair, leavingParticipant: Participant): Promise<void> {
-    if (!pair.hasInsufficientMinParticipants) return;
+    if (pair.participantsLength != 1) return;
 
     const lastParticipantId = pair.lastParticipant;
     const lastParticipant = await this.getParticipantByIdQuery.execute(lastParticipantId) as Participant;

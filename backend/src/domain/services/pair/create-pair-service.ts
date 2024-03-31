@@ -5,11 +5,13 @@ import { PairName } from "src/domain/values/name";
 import { container } from "tsyringe";
 import { debuglog } from "util";
 import { Pair, PairProps } from "../../entities/pair";
+import { inject, injectable } from "tsyringe";
 
+@injectable()
 export class CreatePairService {
   constructor(
-    private readonly getPairsByTeamIdQuery: GetPairsByTeamIdQuery = container.resolve(GetPairsByTeamIdQuery),
-    private readonly savePairCommand: SavePairCommand = container.resolve(SavePairCommand),
+    @inject(GetPairsByTeamIdQuery) private readonly getPairsByTeamIdQuery: GetPairsByTeamIdQuery,
+    @inject(SavePairCommand) private readonly savePairCommand: SavePairCommand,
   ) { }
 
   async execute(props: { teamId: TeamId; participantIds: ParticipantId[]; }): Promise<Pair> {

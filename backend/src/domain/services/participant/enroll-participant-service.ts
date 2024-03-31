@@ -7,16 +7,17 @@ import { EntityError } from "src/domain/errors/entity_error";
 import { CreateAdminEmailService } from "src/domain/services/admin_email/create-admin-email-service";
 import { SendAdminEmailService } from "src/domain/services/admin_email/send-admin-email-service";
 import { AdminEmailContent } from "src/domain/values/admin-email-content";
-import { container } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 
+@injectable()
 export class EnrollParticipantService {
   constructor(
-    private readonly getPairWithFewestMembersQuery: GetPairWithFewestMembersQuery = container.resolve(GetPairWithFewestMembersQuery),
-    private readonly savePairCommand: SavePairCommand = container.resolve(SavePairCommand),
-    private readonly saveParticipantCommand: SaveParticipantCommand = container.resolve(SaveParticipantCommand),
-    private readonly transaction: Transaction = container.resolve(Transaction),
-    private readonly createAdminEmailService: CreateAdminEmailService = container.resolve(CreateAdminEmailService),
-    private readonly sendAdminEmailService: SendAdminEmailService = container.resolve(SendAdminEmailService),
+    @inject(GetPairWithFewestMembersQuery) private readonly getPairWithFewestMembersQuery: GetPairWithFewestMembersQuery,
+    @inject(SavePairCommand) private readonly savePairCommand: SavePairCommand,
+    @inject(SaveParticipantCommand) private readonly saveParticipantCommand: SaveParticipantCommand,
+    @inject(Transaction) private readonly transaction: Transaction,
+    @inject(CreateAdminEmailService) private readonly createAdminEmailService: CreateAdminEmailService,
+    @inject(SendAdminEmailService) private readonly sendAdminEmailService: SendAdminEmailService,
   ) { }
 
   async execute(participant: Participant): Promise<void> {

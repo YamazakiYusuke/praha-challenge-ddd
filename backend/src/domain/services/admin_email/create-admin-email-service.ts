@@ -2,11 +2,12 @@ import { GetAllAdministratorsQuery } from "src/domain/commands/administrator/get
 import { AdminEmail } from "src/domain/entities/admin-email";
 import { AdminEmailContent } from "src/domain/values/admin-email-content";
 import { EmailStatus } from "src/util/enums";
-import { container } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 
+@injectable()
 export class CreateAdminEmailService {
   constructor(
-    private readonly getAllAdministratorsQuery: GetAllAdministratorsQuery = container.resolve(GetAllAdministratorsQuery),
+    @inject(GetAllAdministratorsQuery) private readonly getAllAdministratorsQuery: GetAllAdministratorsQuery,
   ) { }
 
   async execute(content: AdminEmailContent): Promise<AdminEmail> {

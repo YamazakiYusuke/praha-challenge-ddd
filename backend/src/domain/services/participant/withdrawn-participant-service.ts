@@ -7,15 +7,17 @@ import { EntityError } from "src/domain/errors/entity_error";
 import { ReallocateLastParticipantInPairService } from "src/domain/services/pair/reallocate-last-participant-in-pair-service";
 import { ValidateTeamMemberService } from "src/domain/services/team/validate-team-member-service";
 import { PairId } from "src/domain/values/id";
+import { inject, injectable } from "tsyringe";
 
+@injectable()
 export class WithdrawnParticipantService {
   constructor(
-    private readonly getPairByIdQuery: GetPairByIdQuery,
-    private readonly savePairCommand: SavePairCommand,
-    private readonly saveParticipantCommand: SaveParticipantCommand,
-    private readonly validateTeamMemberService: ValidateTeamMemberService,
-    private readonly reallocateLastParticipantInPairService: ReallocateLastParticipantInPairService,
-    private readonly transaction: Transaction,
+    @inject(GetPairByIdQuery) private readonly getPairByIdQuery: GetPairByIdQuery,
+    @inject(SavePairCommand) private readonly savePairCommand: SavePairCommand,
+    @inject(SaveParticipantCommand) private readonly saveParticipantCommand: SaveParticipantCommand,
+    @inject(ValidateTeamMemberService) private readonly validateTeamMemberService: ValidateTeamMemberService,
+    @inject(ReallocateLastParticipantInPairService) private readonly reallocateLastParticipantInPairService: ReallocateLastParticipantInPairService,
+    @inject(Transaction) private readonly transaction: Transaction,
   ) { }
 
   async execute(participant: Participant): Promise<void> {
