@@ -62,7 +62,6 @@ export class ReallocateLastParticipantInPairService {
       })
 
     } else {
-      // 4
       fewestPair.appendParticipant(lastParticipantId);
       lastParticipant.changeTeamIdPairId(fewestPair.id, fewestPair.teamId);
 

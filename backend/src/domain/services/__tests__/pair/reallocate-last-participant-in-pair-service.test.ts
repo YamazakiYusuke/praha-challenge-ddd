@@ -17,7 +17,6 @@ import { AdminEmailId, PairId, ParticipantId, TeamId } from "src/domain/values/i
 import { PairName, PersonName } from "src/domain/values/name";
 import { EmailStatus, EnrollmentStatusValue } from "src/util/enums";
 import { anything, instance, mock, verify, when } from 'ts-mockito';
-import { container } from "tsyringe";
 
 describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
   let getParticipantByIdQuery: GetParticipantByIdQuery;
@@ -76,13 +75,6 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
   }
 
   beforeEach(() => {
-    // // 依存関係のモックを作成
-    transaction = {
-      execute: jest.fn().mockImplementation(async (callback) => {
-        // コールバック関数を実行して、内部のモックメソッドが呼び出されるようにする
-        await callback({}); // 空のトランザクションオブジェクトを渡す
-      })
-    } as unknown as Transaction;
     // const mockSaveParticipantCommand = { execute: jest.fn() } as unknown as SaveParticipantCommand;
     // const mockSavePairCommand = { execute: jest.fn() } as unknown as SavePairCommand;
     getParticipantByIdQuery = mock(GetParticipantByIdQuery);;
@@ -91,6 +83,7 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
     savePairCommand = mock(SavePairCommand);
     saveParticipantCommand = mock(SaveParticipantCommand);
     createAdminEmailService = mock(CreateAdminEmailService);
+    transaction = mock(Transaction);
     sendAdminEmailService = mock(SendAdminEmailService);
     reallocateLastParticipantInPairService = new ReallocateLastParticipantInPairService(
       instance(getParticipantByIdQuery),
@@ -98,7 +91,7 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
       instance(getPairWithFewestMembersByTeamIdQuery),
       instance(savePairCommand),
       instance(saveParticipantCommand),
-      transaction,
+      instance(transaction),
       instance(createAdminEmailService),
       instance(sendAdminEmailService),
     );
@@ -175,15 +168,45 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
         when(getParticipantByIdQuery.execute(lastParticipantId)).thenResolve(lastParticipant(lastParticipantId))
         when(getParticipantByIdQuery.execute(otherPairsParticipantId3)).thenResolve(otherPairsParticipant(otherPairsParticipantId3))
         when(createPairService.execute(anything())).thenResolve(pair([lastParticipantId, otherPairsParticipantId3]));
-        when(transaction.execute(anything())).thenResolve();
-        when(savePairCommand.execute(anything())).thenResolve();
-        // 実行・確認
+        when(transaction.execute(anything())).thenCall(async (callback: (transaction: any) => Promise<void>) => {
+          await callback('');
+        });
+        when(savePairCommand.execute(anything(), anything())).thenResolve();
+        when(saveParticipantCommand.execute(anything(), anything())).thenResolve();
+        // 実行
         await reallocateLastParticipantInPairService.execute(pair([lastParticipantId]), leavingParticipant(leavingParticipantId));
-        verify(getParticipantByIdQuery.execute(anything())).times(2);
+        // 確認
+        verify(getParticipantByIdQuery.execute(anything())).twice();
         verify(createPairService.execute(anything())).once();
         verify(getPairWithFewestMembersByTeamIdQuery.execute(anything(), anything())).once();
-        verify(savePairCommand.execute(anything())).never(); // 
-        verify(saveParticipantCommand.execute(anything(), anything())).never();// 
+        verify(savePairCommand.execute(anything(), anything())).twice();
+        verify(saveParticipantCommand.execute(anything(), anything())).twice();
+        verify(transaction.execute(anything())).once();
+        verify(createAdminEmailService.execute(anything())).never();
+        verify(sendAdminEmailService.execute(anything())).never();
+      });
+
+      test('fewestPair does not have pair`s max number participants', async () => {
+        // 準備
+        const lastParticipantId = participantId(1);
+        const leavingParticipantId = participantId(2);
+        const otherPairsParticipantId1 = participantId(3);
+        const otherPairsParticipantId2 = participantId(4);
+        when(getPairWithFewestMembersByTeamIdQuery.execute(anything(), anything())).thenResolve(pair([otherPairsParticipantId1, otherPairsParticipantId2,]));
+        when(getParticipantByIdQuery.execute(lastParticipantId)).thenResolve(lastParticipant(lastParticipantId));
+        when(transaction.execute(anything())).thenCall(async (callback: (transaction: any) => Promise<void>) => {
+          await callback('');
+        });
+        when(savePairCommand.execute(anything(), anything())).thenResolve();
+        when(saveParticipantCommand.execute(anything(), anything())).thenResolve();
+        // 実行
+        await reallocateLastParticipantInPairService.execute(pair([lastParticipantId]), leavingParticipant(leavingParticipantId));
+        // 確認
+        verify(getParticipantByIdQuery.execute(anything())).once();
+        verify(createPairService.execute(anything())).never();
+        verify(getPairWithFewestMembersByTeamIdQuery.execute(anything(), anything())).once();
+        verify(savePairCommand.execute(anything(), anything())).once();
+        verify(saveParticipantCommand.execute(anything(), anything())).once();
         verify(transaction.execute(anything())).once();
         verify(createAdminEmailService.execute(anything())).never();
         verify(sendAdminEmailService.execute(anything())).never();
