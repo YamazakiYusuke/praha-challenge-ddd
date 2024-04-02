@@ -6,7 +6,7 @@ import { CreateAdminEmailService } from "src/domain/services/admin_email/create-
 import { SendAdminEmailService } from "src/domain/services/admin_email/send-admin-email-service";
 import { AdminEmailContent } from "src/domain/values/admin-email-content";
 import { TeamId } from "src/domain/values/id";
-import { container, inject, injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 
 @injectable()
 export class ValidateTeamMemberService {
@@ -23,7 +23,7 @@ export class ValidateTeamMemberService {
 
   async execute(teamId: TeamId, leavingParticipant: Participant): Promise<void> {
     const team = await this.getTeamByIdQuery.execute(teamId) as Team;
-    if (team.hasValidNumberOfParticipants) {
+    if (team.hasInsufficientMinParticipants) {
       const remainingParticipants = await this.getParticipantByTeamIdQuery.execute(teamId) ?? [];
       const mail = await this.createAdminEmailService.execute(AdminEmailContent.teamMemberAlert(leavingParticipant, remainingParticipants));
       await this.sendAdminEmailService.execute(mail);
