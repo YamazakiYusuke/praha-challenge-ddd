@@ -79,7 +79,7 @@ export class Pair extends Entity<PairId, PairProps> {
    * @param participant 
    */
   public appendParticipant(participantId: ParticipantId): void {
-    if (this.participantIds.includes(participantId)) {
+    if (this.includesParticipantId(participantId)) {
       throw new EntityError("Participant ID already exists in the pair.");
     }
     this.participantIds.push(participantId);
@@ -90,11 +90,15 @@ export class Pair extends Entity<PairId, PairProps> {
    * @param participant 
    */
   public removeParticipant(participantId: ParticipantId): void {
-    if (!this.participantIds.includes(participantId)) {
+    if (!this.includesParticipantId(participantId)) {
       throw new EntityError("Participant ID does not exist in the pair.");
     }
     const newParticipantIds = this.participantIds.filter(id => id !== participantId);
     const newProps = { ...this.props, participantIds: newParticipantIds };
     this.setProps(newProps);
+  }
+
+  private includesParticipantId(participantId: ParticipantId): boolean {
+    return this.participantIds.some(id => id.isEqual(participantId));
   }
 }
