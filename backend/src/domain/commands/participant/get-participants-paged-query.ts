@@ -24,7 +24,7 @@ export class GetParticipantsWithAssignmentsPagedQuery implements IGetQuery<Parti
   ) { }
 
   async execute(props: ParticipantPaginationProps): Promise<Participant[]> {
-    const allParticipants = await this.participantRepository.getAllWithAssignments() as ParticipantWithAssignments[];
+    const allParticipants = await this.participantRepository.getAllWithAssignments();
     const filteredParticipants = this.filterByAssignmentState(allParticipants, props.assignmentStates);
     const paginatedParticipants = this.paginate(filteredParticipants, props.page, props.size);
     return paginatedParticipants.map(participantWithAssignments => participantWithAssignments.participant);
