@@ -25,7 +25,8 @@
     "migrate:prd": "prisma migrate deploy --preview-feature",
     "test:unit": "dotenv -e .test.env -- jest",
     "test:integration": "yarn migrate:test && dotenv -e .test.env -- jest -c ./jest.integration.config.js --runInBand",
-    "test": "jest"
+    "test": "jest",
+    "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.0",
