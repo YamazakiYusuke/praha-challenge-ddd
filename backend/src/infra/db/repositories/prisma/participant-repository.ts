@@ -2,7 +2,6 @@ import { Prisma, PrismaClient } from "@prisma/client";
 import { AssignmentProgress } from "src/domain/entities/assignment-progress";
 import { Participant } from "src/domain/entities/participant";
 import { IParticipantRepository, ParticipantWithAssignments } from "src/domain/repositories/participant-repository";
-import { AssignmentProgressState } from "src/domain/values/assignment-progress-state";
 import { Email } from "src/domain/values/email";
 import { AssignmentId, AssignmentProgressId, PairId, ParticipantId, TeamId } from "src/domain/values/id";
 import { PersonName } from "src/domain/values/name";
@@ -68,7 +67,7 @@ export class PrismaParticipantRepository implements IParticipantRepository {
             {
               assignmentId: AssignmentId.restore(progress.assignmentId),
               participantId: ParticipantId.restore(progress.participantId),
-              assignmentProgressState: AssignmentProgressState.restore(restoreAssignmentProgressStateValue(progress.state)),
+              assignmentProgressState: restoreAssignmentProgressStateValue(progress.state),
             }
           )
         ),

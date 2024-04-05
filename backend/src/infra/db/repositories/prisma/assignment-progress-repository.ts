@@ -1,7 +1,6 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { AssignmentProgress } from "src/domain/entities/assignment-progress";
 import { IAssignmentProgressRepository } from "src/domain/repositories/assignment-progress-repository";
-import { AssignmentProgressState } from "src/domain/values/assignment-progress-state";
 import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/id";
 
 export class PrismaAssignmentProgressRepository implements IAssignmentProgressRepository {
@@ -11,10 +10,10 @@ export class PrismaAssignmentProgressRepository implements IAssignmentProgressRe
     const prismaClient = transaction ?? this.prisma;
     await prismaClient.assignmentProgress.upsert({
       where: { id: assignmentProgress.id.value },
-      update: { state: assignmentProgress.assignmentProgressState.value },
+      update: { state: assignmentProgress.assignmentProgressState },
       create: {
         id: assignmentProgress.id.value,
-        state: assignmentProgress.assignmentProgressState.value,
+        state: assignmentProgress.assignmentProgressState,
         participantId: assignmentProgress.participantId.value,
         assignmentId: assignmentProgress.assignmentId.value,
       },
@@ -27,7 +26,7 @@ export class PrismaAssignmentProgressRepository implements IAssignmentProgressRe
       AssignmentProgressId.restore(progress.id), {
       assignmentId: AssignmentId.restore(progress.assignmentId),
       participantId: ParticipantId.restore(progress.participantId),
-      assignmentProgressState: AssignmentProgressState.restore(progress.state),
+      assignmentProgressState: progress.state,
     }
     ));
   }

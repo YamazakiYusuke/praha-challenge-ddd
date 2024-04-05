@@ -1,5 +1,5 @@
+import { AssignmentProgressStateValue } from "src/util/enums";
 import { EntityError } from "../errors/entity_error";
-import { AssignmentProgressState } from "../values/assignment-progress-state";
 import { AssignmentId, AssignmentProgressId, ParticipantId } from "../values/id";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
@@ -7,7 +7,7 @@ import { validateProps } from "./utils/validate-props";
 export interface AssignmentProgressProps {
   readonly assignmentId: AssignmentId;
   readonly participantId: ParticipantId;
-  readonly assignmentProgressState: AssignmentProgressState;
+  readonly assignmentProgressState: AssignmentProgressStateValue;
 }
 
 export class AssignmentProgress extends Entity<AssignmentProgressId, AssignmentProgressProps> {
@@ -33,12 +33,12 @@ export class AssignmentProgress extends Entity<AssignmentProgressId, AssignmentP
     return this.props.participantId;
   }
 
-  public get assignmentProgressState(): AssignmentProgressState {
+  public get assignmentProgressState(): AssignmentProgressStateValue {
     return this.props.assignmentProgressState;
   }
 
-  public changeAssignmentProgressState(newState: AssignmentProgressState) {
-    if (this.assignmentProgressState.isCompleted) {
+  public changeAssignmentProgressState(newState: AssignmentProgressStateValue) {
+    if (this.assignmentProgressState === AssignmentProgressStateValue.Completed) {
       throw new EntityError("Cannot change state, assignment already completed");
     }
     const newProps = { ...this.props, assignmentProgressState: newState };

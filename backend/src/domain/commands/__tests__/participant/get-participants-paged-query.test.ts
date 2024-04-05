@@ -2,7 +2,6 @@ import { GetParticipantsWithAssignmentsPagedQuery, ParticipantPaginationProps } 
 import { AssignmentProgress } from 'src/domain/entities/assignment-progress';
 import { Participant } from 'src/domain/entities/participant';
 import { IParticipantRepository, ParticipantWithAssignments } from 'src/domain/repositories/participant-repository';
-import { AssignmentProgressState } from 'src/domain/values/assignment-progress-state';
 import { Email } from 'src/domain/values/email';
 import { AssignmentId, ParticipantId } from 'src/domain/values/id';
 import { PersonName } from 'src/domain/values/name';
@@ -39,23 +38,23 @@ describe('# GetParticipantsWithAssignmentsPagedQuery UnitTest \n', () => {
       assignmentProgress1 = AssignmentProgress.create({
         assignmentId: assignmentId1,
         participantId: participant.id,
-        assignmentProgressState: AssignmentProgressState.create(AssignmentProgressStateValue.NotStarted)
+        assignmentProgressState: AssignmentProgressStateValue.NotStarted
       });
       assignmentProgress2 = AssignmentProgress.create({
         assignmentId: assignmentId2,
         participantId: participant.id,
-        assignmentProgressState: AssignmentProgressState.create(AssignmentProgressStateValue.NotStarted)
+        assignmentProgressState: AssignmentProgressStateValue.NotStarted
       });
     } else {
       assignmentProgress1 = AssignmentProgress.create({
         assignmentId: assignmentId1,
         participantId: participant.id,
-        assignmentProgressState: AssignmentProgressState.create(AssignmentProgressStateValue.Completed)
+        assignmentProgressState: AssignmentProgressStateValue.Completed
       });
       assignmentProgress2 = AssignmentProgress.create({
         assignmentId: assignmentId2,
         participantId: participant.id,
-        assignmentProgressState: AssignmentProgressState.create(AssignmentProgressStateValue.Completed)
+        assignmentProgressState: AssignmentProgressStateValue.Completed
       });
     }
 
@@ -107,7 +106,7 @@ describe('# GetParticipantsWithAssignmentsPagedQuery UnitTest \n', () => {
         assignmentStates: [
           {
             assignmentId: assignmentId1,
-            assignmentProgressState: AssignmentProgressState.create(AssignmentProgressStateValue.NotStarted)
+            assignmentProgressState: AssignmentProgressStateValue.NotStarted
           }
         ]
       };
@@ -128,11 +127,11 @@ describe('# GetParticipantsWithAssignmentsPagedQuery UnitTest \n', () => {
         assignmentStates: [
           {
             assignmentId: assignmentId1,
-            assignmentProgressState: AssignmentProgressState.create(AssignmentProgressStateValue.NotStarted)
+            assignmentProgressState: AssignmentProgressStateValue.NotStarted
           },
           {
             assignmentId: assignmentId2,
-            assignmentProgressState: AssignmentProgressState.create(AssignmentProgressStateValue.Completed)
+            assignmentProgressState: AssignmentProgressStateValue.Completed
           }
         ]
       };

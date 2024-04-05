@@ -1,7 +1,6 @@
 import { AssignmentProgress, AssignmentProgressProps } from "src/domain/entities/assignment-progress";
 import { Participant } from "src/domain/entities/participant";
 import { IParticipantRepository, ParticipantWithAssignments } from "src/domain/repositories/participant-repository";
-import { AssignmentProgressState } from "src/domain/values/assignment-progress-state";
 import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/id";
 import { AssignmentProgressStateValue } from "src/util/enums";
 
@@ -21,7 +20,7 @@ export class InMemoryParticipantRepository implements IParticipantRepository {
     const id = AssignmentProgressId.restore('Id');
     const assignmentId = AssignmentId.restore('assignmentId');
     const participantId = ParticipantId.restore('participantId');
-    const assignmentProgressState = AssignmentProgressState.restore(AssignmentProgressStateValue.NotStarted);
+    const assignmentProgressState = AssignmentProgressStateValue.NotStarted;
     const props: AssignmentProgressProps = { assignmentId, participantId, assignmentProgressState };
     const assignmentProgress = AssignmentProgress.restore(id, props);
     return this.participants.map((participant) =>

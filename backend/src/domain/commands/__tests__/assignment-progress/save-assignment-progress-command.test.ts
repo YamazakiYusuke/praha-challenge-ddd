@@ -1,7 +1,6 @@
 import { SaveAssignmentProgressCommand } from 'src/domain/commands/assignment-progress/save-assignment-progress-command';
 import { AssignmentProgress } from 'src/domain/entities/assignment-progress';
 import { IAssignmentProgressRepository } from 'src/domain/repositories/assignment-progress-repository';
-import { AssignmentProgressState } from 'src/domain/values/assignment-progress-state';
 import { AssignmentId, AssignmentProgressId, ParticipantId } from 'src/domain/values/id';
 import { AssignmentProgressStateValue } from 'src/util/enums';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
@@ -21,7 +20,7 @@ describe('# SaveAssignmentProgressCommand UnitTest \n', () => {
     const assignmentProgress = AssignmentProgress.restore(assignmentProgressId, {
       assignmentId: AssignmentId.create(),
       participantId: ParticipantId.create(),
-      assignmentProgressState: AssignmentProgressState.create(AssignmentProgressStateValue.NotStarted)
+      assignmentProgressState: AssignmentProgressStateValue.NotStarted
     });
     const transaction = {};
 

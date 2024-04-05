@@ -2,8 +2,8 @@ import { Inject, Injectable } from "@nestjs/common";
 import { IGetQuery } from "src/domain/commands/base/get-query";
 import { Participant } from "src/domain/entities/participant";
 import { IParticipantRepository, ParticipantWithAssignments } from "src/domain/repositories/participant-repository";
-import { AssignmentProgressState } from "src/domain/values/assignment-progress-state";
 import { AssignmentId } from "src/domain/values/id";
+import { AssignmentProgressStateValue } from "src/util/enums";
 
 export interface ParticipantPaginationProps {
   readonly page: number;
@@ -13,7 +13,7 @@ export interface ParticipantPaginationProps {
 
 export interface AssignmentStateProps {
   readonly assignmentId: AssignmentId;
-  readonly assignmentProgressState: AssignmentProgressState;
+  readonly assignmentProgressState: AssignmentProgressStateValue;
 }
 
 @Injectable()
@@ -31,10 +31,10 @@ export class GetParticipantsWithAssignmentsPagedQuery implements IGetQuery<Parti
   }
 
   private filterByAssignmentState(participants: ParticipantWithAssignments[], assignmentStates: AssignmentStateProps[]): ParticipantWithAssignments[] {
-    return participants.filter(participant => 
-      assignmentStates.every(state => 
-        participant.assignmentProgress.some(assignment => 
-          assignment.assignmentId.isEqual(state.assignmentId) && assignment.assignmentProgressState.isEqual(state.assignmentProgressState)
+    return participants.filter(participant =>
+      assignmentStates.every(state =>
+        participant.assignmentProgress.some(assignment =>
+          assignment.assignmentId.isEqual(state.assignmentId) && assignment.assignmentProgressState == state.assignmentProgressState
         )
       )
     );
