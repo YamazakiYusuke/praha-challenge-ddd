@@ -5,7 +5,7 @@ import { TeamId } from "src/domain/values/id";
 import { IGetQuery } from "../base/get-query";
 
 @Injectable()
-export class GetParticipantByTeamIdQuery implements IGetQuery<Participant[], TeamId> {
+export class GetParticipantsByTeamIdQuery implements IGetQuery<Participant[], TeamId> {
   constructor(
     @Inject('IParticipantRepository')
     private readonly participantRepository: IParticipantRepository

@@ -1,4 +1,4 @@
-import { GetParticipantByTeamIdQuery } from 'src/domain/commands/participant/get-participant-by-team-id-query';
+import { GetParticipantsByTeamIdQuery } from 'src/domain/commands/participant/get-participants-by-team-id-query';
 import { Participant } from 'src/domain/entities/participant';
 import { IParticipantRepository } from 'src/domain/repositories/participant-repository';
 import { Email } from 'src/domain/values/email';
@@ -7,13 +7,13 @@ import { PersonName } from 'src/domain/values/name';
 import { EnrollmentStatusValue } from 'src/util/enums';
 import { instance, mock, verify, when } from 'ts-mockito';
 
-describe('# GetParticipantByTeamIdQuery UnitTest \n', () => {
-  let query: GetParticipantByTeamIdQuery;
+describe('# GetParticipantsByTeamIdQuery UnitTest \n', () => {
+  let query: GetParticipantsByTeamIdQuery;
   let participantRepository: IParticipantRepository;
 
   beforeEach(() => {
     participantRepository = mock<IParticipantRepository>();
-    query = new GetParticipantByTeamIdQuery(instance(participantRepository));
+    query = new GetParticipantsByTeamIdQuery(instance(participantRepository));
   });
 
   it('- should get participants by team id \n', async () => {

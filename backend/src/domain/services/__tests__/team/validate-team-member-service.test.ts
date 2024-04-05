@@ -1,4 +1,4 @@
-import { GetParticipantByTeamIdQuery } from "src/domain/commands/participant/get-participant-by-team-id-query";
+import { GetParticipantsByTeamIdQuery } from "src/domain/commands/participant/get-participants-by-team-id-query";
 import { GetTeamByIdQuery } from "src/domain/commands/team/get-team-by-id-query";
 import { Participant } from "src/domain/entities/participant";
 import { Team } from "src/domain/entities/team";
@@ -16,13 +16,13 @@ describe('# ValidateTeamMemberService UnitTest \n', () => {
   let getTeamByIdQuery: GetTeamByIdQuery;
   let createAdminEmailService: CreateAdminEmailService;
   let sendAdminEmailService: SendAdminEmailService;
-  let getParticipantByTeamIdQuery: GetParticipantByTeamIdQuery;
+  let getParticipantByTeamIdQuery: GetParticipantsByTeamIdQuery;
 
   beforeEach(() => {
     getTeamByIdQuery = mock(GetTeamByIdQuery);
     createAdminEmailService = mock(CreateAdminEmailService);
     sendAdminEmailService = mock(SendAdminEmailService);
-    getParticipantByTeamIdQuery = mock(GetParticipantByTeamIdQuery);
+    getParticipantByTeamIdQuery = mock(GetParticipantsByTeamIdQuery);
 
     validateTeamMemberService = new ValidateTeamMemberService(
       instance(getTeamByIdQuery),
@@ -63,7 +63,7 @@ describe('# ValidateTeamMemberService UnitTest \n', () => {
       const teamId = TeamId.create();
       const team = Team.restore(teamId, {
         name: TeamName.create('Test Team'),
-        participantIds: [ParticipantId.create()], 
+        participantIds: [ParticipantId.create()],
         generationId: 'gen1',
       });
       const leavingParticipant = Participant.restore(ParticipantId.create(), {

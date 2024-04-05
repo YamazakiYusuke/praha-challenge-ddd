@@ -1,4 +1,4 @@
-import { GetParticipantByTeamIdQuery } from "src/domain/commands/participant/get-participant-by-team-id-query";
+import { GetParticipantsByTeamIdQuery } from "src/domain/commands/participant/get-participants-by-team-id-query";
 import { GetTeamByIdQuery } from "src/domain/commands/team/get-team-by-id-query";
 import { Participant } from "src/domain/entities/participant";
 import { Team } from "src/domain/entities/team";
@@ -17,8 +17,8 @@ export class ValidateTeamMemberService {
     private readonly createAdminEmailService: CreateAdminEmailService,
     @inject(SendAdminEmailService)
     private readonly sendAdminEmailService: SendAdminEmailService,
-    @inject(GetParticipantByTeamIdQuery)
-    private readonly getParticipantByTeamIdQuery: GetParticipantByTeamIdQuery,
+    @inject(GetParticipantsByTeamIdQuery)
+    private readonly getParticipantByTeamIdQuery: GetParticipantsByTeamIdQuery,
   ) { }
 
   async execute(teamId: TeamId, leavingParticipant: Participant): Promise<void> {

@@ -1,6 +1,6 @@
 import { AssignmentProgressStateValue } from "src/util/enums";
 import { Value } from "./base/value";
-
+// TODO: 値オブジェクトの削除を検討
 export class AssignmentProgressState extends Value<number> {
   private constructor(value: number) {
     super(value)
