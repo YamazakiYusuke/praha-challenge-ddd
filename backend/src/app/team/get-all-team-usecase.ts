@@ -1,5 +1,5 @@
+import { TeamDto } from "src/app/team/dto/team_dto";
 import { GetAllTeamsQuery } from "src/domain/commands/team/get-all-team-query";
-import { Team } from "src/domain/entities/team";
 import { inject, injectable } from "tsyringe";
 import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
@@ -11,9 +11,10 @@ export class GetAllTeamsUsecase {
     private readonly getAllTeamsQuery: GetAllTeamsQuery,
   ) { }
 
-  public async execute(): Promise<Team[] | ErrorResponse> {
+  public async execute(): Promise<TeamDto[] | ErrorResponse> {
     try {
-      return await this.getAllTeamsQuery.execute();
+      const teams = await this.getAllTeamsQuery.execute();
+      return teams.map((team) => new TeamDto(team));
     } catch (e) {
       debuglog(`Exception: ${e}`);
       return new ErrorResponse('チームの取得に失敗しました');

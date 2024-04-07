@@ -1,12 +1,12 @@
 import { TeamName } from "src/domain/values/name";
-import { ParticipantId, TeamId } from "../values/id";
+import { GenerationId, ParticipantId, TeamId } from "../values/id";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
 export interface TeamProps {
   readonly name: TeamName;
   readonly participantIds: ParticipantId[];
-  readonly generationId: string,
+  readonly generationId: GenerationId,
 }
 
 export class Team extends Entity<TeamId, TeamProps> {
@@ -36,7 +36,7 @@ export class Team extends Entity<TeamId, TeamProps> {
     return this.participantIds.length;
   }
 
-  public get generationId(): string {
+  public get generationId(): GenerationId {
     return this.props.generationId;
   }
 

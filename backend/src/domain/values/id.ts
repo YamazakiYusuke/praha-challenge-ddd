@@ -145,3 +145,18 @@ export class AdminEmailId extends Id {
     return true;
   }
 }
+
+export class GenerationId extends Id {
+  static create(): GenerationId {
+    let id = createRandomIdString();
+    return new GenerationId(id);
+  }
+
+  static restore(id: string): GenerationId {
+    return new GenerationId(id);
+  }
+
+  get isGenerationId(): boolean {
+    return true;
+  }
+}
