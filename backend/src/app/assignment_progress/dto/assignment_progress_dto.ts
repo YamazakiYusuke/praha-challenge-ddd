@@ -1,6 +1,6 @@
 import { Dto } from "src/app/base/dto";
 import { AssignmentProgress } from "src/domain/entities/assignment-progress";
-import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/id";
+import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/ids";
 
 export class AssignmentProgressDto extends Dto<AssignmentProgress> {
   public readonly id: string;

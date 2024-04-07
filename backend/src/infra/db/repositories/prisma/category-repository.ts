@@ -1,7 +1,7 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { Category } from "src/domain/entities/category";
 import { ICategoryRepository } from "src/domain/repositories/category-repository";
-import { CategoryId } from "src/domain/values/id";
+import { CategoryId } from "src/domain/values/ids";
 import { CategoryName } from "src/domain/values/name";
 
 export class PrismaCategoryRepository implements ICategoryRepository {

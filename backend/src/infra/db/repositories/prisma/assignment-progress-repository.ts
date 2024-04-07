@@ -1,7 +1,7 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { AssignmentProgress } from "src/domain/entities/assignment-progress";
 import { IAssignmentProgressRepository } from "src/domain/repositories/assignment-progress-repository";
-import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/id";
+import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/ids";
 
 export class PrismaAssignmentProgressRepository implements IAssignmentProgressRepository {
   private readonly prisma = new PrismaClient();

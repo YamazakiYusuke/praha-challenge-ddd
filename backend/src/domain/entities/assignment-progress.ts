@@ -1,6 +1,6 @@
 import { AssignmentProgressStateValue } from "src/util/enums";
 import { EntityError } from "../errors/entity_error";
-import { AssignmentId, AssignmentProgressId, ParticipantId } from "../values/id";
+import { AssignmentId, AssignmentProgressId, ParticipantId } from "../values/ids";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 

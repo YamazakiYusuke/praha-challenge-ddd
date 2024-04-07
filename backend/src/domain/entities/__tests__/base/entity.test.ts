@@ -1,5 +1,5 @@
 import { Entity } from "src/domain/entities/base/entity";
-import { Id } from "src/domain/values/id";
+import { Id } from "src/domain/values/ids";
 import { createRandomIdString } from "src/util/random";
 
 class SameId extends Id {

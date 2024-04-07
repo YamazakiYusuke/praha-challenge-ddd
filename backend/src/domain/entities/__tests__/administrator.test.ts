@@ -1,6 +1,6 @@
 import { EntityError } from "src/domain/errors/entity_error";
 import { Email } from "src/domain/values/email";
-import { AdministratorId } from "src/domain/values/id";
+import { AdministratorId } from "src/domain/values/ids";
 import { Administrator, AdministratorProps } from "../administrator";
 
 describe('# Administrator Entity UnitTest\n', () => {

@@ -1,7 +1,7 @@
 import { Participant } from "src/domain/entities/participant";
 import { EntityError } from "src/domain/errors/entity_error";
 import { Email } from "src/domain/values/email";
-import { PairId, ParticipantId, TeamId } from "src/domain/values/id";
+import { PairId, ParticipantId, TeamId } from "src/domain/values/ids";
 import { PersonName } from "src/domain/values/name";
 import { EnrollmentStatusValue } from "src/util/enums";
 

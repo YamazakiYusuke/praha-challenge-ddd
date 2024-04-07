@@ -3,7 +3,7 @@ import { EntityError } from "src/domain/errors/entity_error";
 import { AdminEmailContent } from "src/domain/values/admin-email-content";
 import { Email } from "src/domain/values/email";
 import { EmailStatus } from "src/util/enums";
-import { AdminEmailId } from "../values/id";
+import { AdminEmailId } from "../values/ids";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 

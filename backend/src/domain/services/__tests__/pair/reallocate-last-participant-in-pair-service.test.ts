@@ -13,7 +13,7 @@ import { CreatePairService } from "src/domain/services/pair/create-pair-service"
 import { ReallocateLastParticipantInPairService } from "src/domain/services/pair/reallocate-last-participant-in-pair-service";
 import { AdminEmailContent } from "src/domain/values/admin-email-content";
 import { Email } from "src/domain/values/email";
-import { AdminEmailId, PairId, ParticipantId, TeamId } from "src/domain/values/id";
+import { AdminEmailId, PairId, ParticipantId, TeamId } from "src/domain/values/ids";
 import { PairName, PersonName } from "src/domain/values/name";
 import { EmailStatus, EnrollmentStatusValue } from "src/util/enums";
 import { anything, instance, mock, verify, when } from 'ts-mockito';
@@ -28,14 +28,14 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
   let createAdminEmailService: CreateAdminEmailService;
   let sendAdminEmailService: SendAdminEmailService;
   let reallocateLastParticipantInPairService: ReallocateLastParticipantInPairService;
-  
+
   const teamId = TeamId.restore('teamId');
   const pairId = PairId.restore('pairId');
-  
+
   function participantId(index: number) {
     return ParticipantId.restore(`participantId${index}`);
   }
-  
+
   const leavingParticipantProps: ParticipantProps = {
     name: PersonName.restore('Leaving Participant'),
     email: Email.create('leaving@example.com'),
@@ -43,11 +43,11 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
     pairId: PairId.create(),
     enrollmentStatus: EnrollmentStatusValue.Enrolled,
   };
-  
+
   function leavingParticipant(participantId: ParticipantId): Participant {
     return Participant.restore(participantId, leavingParticipantProps);
   }
-  
+
   const lastParticipantProps: ParticipantProps = {
     name: PersonName.restore('Last Participant'),
     email: Email.create('last@example.com'),
@@ -55,15 +55,15 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
     pairId: PairId.create(),
     enrollmentStatus: EnrollmentStatusValue.Enrolled,
   };
-  
+
   function lastParticipant(participantId: ParticipantId): Participant {
     return Participant.restore(participantId, lastParticipantProps);
   }
-  
+
   function otherPairsParticipant(participantId: ParticipantId): Participant {
     return Participant.restore(participantId, lastParticipantProps);
   }
-  
+
   function pairProps(participantIds: ParticipantId[]): PairProps {
     return {
       teamId: teamId,
@@ -71,7 +71,7 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
       participantIds: participantIds,
     };
   }
-  
+
   function pair(participantIds: ParticipantId[]) {
     return Pair.restore(pairId, pairProps(participantIds));
   }
@@ -104,10 +104,10 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
         const participantId1 = participantId(1);
         const participantId2 = participantId(2);
         const participantId3 = participantId(3);
-        
+
         // 実行
         await reallocateLastParticipantInPairService.execute(pair([participantId1, participantId2]), leavingParticipant(participantId3));
-        
+
         // 確認
         verify(getParticipantByIdQuery.execute(anything())).never();
         verify(createPairService.execute(anything())).never();
@@ -143,14 +143,14 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
         const leavingParticipantId = participantId(2);
         const otherPairsParticipantId = participantId(3);
         const adminMail = AdminEmail.restore(AdminEmailId.create(), { content: AdminEmailContent.restore({ title: 'Test Title', body: 'Test Body' }), recipients: [], status: EmailStatus.Pending });
-        
+
         when(getPairWithFewestMembersByTeamIdQuery.execute(anything(), anything())).thenResolve(pair([otherPairsParticipantId]));
         when(getParticipantByIdQuery.execute(anything())).thenResolve(lastParticipant(lastParticipantId))
         when(createAdminEmailService.execute(anything())).thenResolve(adminMail);
         when(sendAdminEmailService.execute(anything())).thenResolve();
         // 実行・確認
         await expect(reallocateLastParticipantInPairService.execute(pair([lastParticipantId]), leavingParticipant(leavingParticipantId))).rejects.toThrow(ServiceError);
-        
+
         verify(getParticipantByIdQuery.execute(anything())).once();
         verify(createPairService.execute(anything())).never();
         verify(getPairWithFewestMembersByTeamIdQuery.execute(anything(), anything())).once();
@@ -168,7 +168,7 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
         const otherPairsParticipantId1 = participantId(3);
         const otherPairsParticipantId2 = participantId(4);
         const otherPairsParticipantId3 = participantId(5);
-        
+
         when(getPairWithFewestMembersByTeamIdQuery.execute(anything(), anything())).thenResolve(pair([otherPairsParticipantId1, otherPairsParticipantId2, otherPairsParticipantId3,]));
         when(getParticipantByIdQuery.execute(lastParticipantId)).thenResolve(lastParticipant(lastParticipantId))
         when(getParticipantByIdQuery.execute(otherPairsParticipantId3)).thenResolve(otherPairsParticipant(otherPairsParticipantId3))
@@ -197,7 +197,7 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
         const leavingParticipantId = participantId(2);
         const otherPairsParticipantId1 = participantId(3);
         const otherPairsParticipantId2 = participantId(4);
-        
+
         when(getPairWithFewestMembersByTeamIdQuery.execute(anything(), anything())).thenResolve(pair([otherPairsParticipantId1, otherPairsParticipantId2,]));
         when(getParticipantByIdQuery.execute(lastParticipantId)).thenResolve(lastParticipant(lastParticipantId));
         when(transaction.execute(anything())).thenCall(async (callback: (transaction: any) => Promise<void>) => {

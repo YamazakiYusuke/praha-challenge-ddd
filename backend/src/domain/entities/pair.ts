@@ -1,6 +1,6 @@
 import { EntityError } from "src/domain/errors/entity_error";
 import { PairName } from "src/domain/values/name";
-import { PairId, ParticipantId, TeamId } from "../values/id";
+import { PairId, ParticipantId, TeamId } from "../values/ids";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 

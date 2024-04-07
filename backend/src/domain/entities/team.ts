@@ -1,5 +1,5 @@
 import { TeamName } from "src/domain/values/name";
-import { GenerationId, ParticipantId, TeamId } from "../values/id";
+import { GenerationId, ParticipantId, TeamId } from "../values/ids";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 

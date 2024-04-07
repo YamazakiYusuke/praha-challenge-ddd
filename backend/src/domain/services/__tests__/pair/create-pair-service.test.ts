@@ -1,7 +1,7 @@
 import { GetPairsByTeamIdQuery } from "src/domain/commands/pair/get-pairs-by-team-id-query";
 import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";
-import { ParticipantId, TeamId } from "src/domain/values/id";
+import { ParticipantId, TeamId } from "src/domain/values/ids";
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 
 describe('# CreatePairService UnitTest\n', () => {

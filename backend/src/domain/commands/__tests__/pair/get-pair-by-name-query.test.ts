@@ -1,7 +1,7 @@
 import { GetPairByNameQuery } from 'src/domain/commands/pair/get-pair-by-name-query';
 import { Pair } from 'src/domain/entities/pair';
 import { IPairRepository } from 'src/domain/repositories/pair-repository';
-import { ParticipantId, TeamId } from 'src/domain/values/id';
+import { ParticipantId, TeamId } from 'src/domain/values/ids';
 import { PairName } from 'src/domain/values/name';
 import { instance, mock, verify, when } from 'ts-mockito';
 

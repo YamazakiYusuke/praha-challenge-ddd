@@ -1,7 +1,7 @@
 import { Dto } from "src/app/base/dto";
 import { Participant } from "src/domain/entities/participant";
 import { Email } from "src/domain/values/email";
-import { PairId, ParticipantId, TeamId } from "src/domain/values/id";
+import { PairId, ParticipantId, TeamId } from "src/domain/values/ids";
 import { PersonName } from "src/domain/values/name";
 
 export class ParticipantDto extends Dto<Participant> {

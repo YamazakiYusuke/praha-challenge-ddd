@@ -2,7 +2,7 @@ import { SaveAdminMailCommand } from 'src/domain/commands/admin-mail/save-admin-
 import { AdminEmail } from 'src/domain/entities/admin-email';
 import { IAdminMailRepository } from 'src/domain/repositories/admin-mail-repository';
 import { AdminEmailContent } from 'src/domain/values/admin-email-content';
-import { AdminEmailId } from 'src/domain/values/id';
+import { AdminEmailId } from 'src/domain/values/ids';
 import { EmailStatus } from 'src/util/enums';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 

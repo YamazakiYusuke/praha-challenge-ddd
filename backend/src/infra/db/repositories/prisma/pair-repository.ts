@@ -1,7 +1,7 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { Pair } from "src/domain/entities/pair";
 import { IPairRepository } from "src/domain/repositories/pair-repository";
-import { PairId, ParticipantId, TeamId } from "src/domain/values/id";
+import { PairId, ParticipantId, TeamId } from "src/domain/values/ids";
 import { PairName } from "src/domain/values/name";
 
 export class PrismaPairRepository implements IPairRepository {

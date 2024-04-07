@@ -3,7 +3,7 @@ import { SaveCategoryCommand } from 'src/domain/commands/category/save-category-
 import { Category, CategoryProps } from 'src/domain/entities/category';
 import { EntityError } from 'src/domain/errors/entity_error';
 import { ChangeCategoryNameService } from 'src/domain/services/category/change-category-name-service';
-import { CategoryId } from 'src/domain/values/id';
+import { CategoryId } from 'src/domain/values/ids';
 import { CategoryName } from 'src/domain/values/name';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 

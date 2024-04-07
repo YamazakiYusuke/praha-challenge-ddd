@@ -3,7 +3,7 @@ import { AssignmentProgress } from "src/domain/entities/assignment-progress";
 import { Participant } from "src/domain/entities/participant";
 import { IParticipantRepository, ParticipantWithAssignments } from "src/domain/repositories/participant-repository";
 import { Email } from "src/domain/values/email";
-import { AssignmentId, AssignmentProgressId, PairId, ParticipantId, TeamId } from "src/domain/values/id";
+import { AssignmentId, AssignmentProgressId, PairId, ParticipantId, TeamId } from "src/domain/values/ids";
 import { PersonName } from "src/domain/values/name";
 import { restoreAssignmentProgressStateValue, restoreEnrollmentStatusValue } from "src/util/enums";
 

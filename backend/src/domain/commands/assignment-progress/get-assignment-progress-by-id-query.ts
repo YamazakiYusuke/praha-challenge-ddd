@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { AssignmentProgress } from "src/domain/entities/assignment-progress";
 import { IAssignmentProgressRepository } from "src/domain/repositories/assignment-progress-repository";
-import { AssignmentProgressId } from "src/domain/values/id";
+import { AssignmentProgressId } from "src/domain/values/ids";
 import { IGetQuery } from "../base/get-query";
 
 @Injectable()

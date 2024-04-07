@@ -1,6 +1,6 @@
 import { Dto } from "src/app/base/dto";
 import { Pair } from "src/domain/entities/pair";
-import { PairId, ParticipantId, TeamId } from "src/domain/values/id";
+import { PairId, ParticipantId, TeamId } from "src/domain/values/ids";
 import { PairName } from "src/domain/values/name";
 
 export class PairDto extends Dto<Pair> {

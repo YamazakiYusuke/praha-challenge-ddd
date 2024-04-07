@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Pair } from "src/domain/entities/pair";
 import { IPairRepository } from "src/domain/repositories/pair-repository";
-import { PairId } from "src/domain/values/id";
+import { PairId } from "src/domain/values/ids";
 import { IGetQuery } from "../base/get-query";
 
 @Injectable()

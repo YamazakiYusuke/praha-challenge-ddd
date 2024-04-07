@@ -1,5 +1,5 @@
 import { EntityError } from "src/domain/errors/entity_error";
-import { AssignmentId, CategoryId } from "src/domain/values/id";
+import { AssignmentId, CategoryId } from "src/domain/values/ids";
 import { Assignment, AssignmentProps } from "../assignment";
 
 describe('# Assignment Entity UnitTest\n', () => {

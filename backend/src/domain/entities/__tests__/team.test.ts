@@ -1,6 +1,6 @@
-import { Team, TeamProps } from "../team";
-import { TeamId, ParticipantId } from "src/domain/values/id";
+import { ParticipantId, TeamId } from "src/domain/values/ids";
 import { TeamName } from "src/domain/values/name";
+import { Team, TeamProps } from "../team";
 
 describe('# Team Entity UnitTest\n', () => {
   const participantIds = [ParticipantId.create(), ParticipantId.create()];

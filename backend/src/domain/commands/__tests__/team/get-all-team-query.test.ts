@@ -1,7 +1,7 @@
 import { GetAllTeamsQuery } from 'src/domain/commands/team/get-all-team-query';
 import { Team } from 'src/domain/entities/team';
 import { ITeamRepository } from 'src/domain/repositories/team-repository';
-import { ParticipantId } from 'src/domain/values/id';
+import { ParticipantId } from 'src/domain/values/ids';
 import { TeamName } from 'src/domain/values/name';
 import { instance, mock, verify, when } from 'ts-mockito';
 

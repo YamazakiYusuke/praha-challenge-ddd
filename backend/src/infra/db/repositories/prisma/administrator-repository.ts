@@ -2,7 +2,7 @@ import { Prisma, PrismaClient } from "@prisma/client";
 import { Administrator } from "src/domain/entities/administrator";
 import { IAdministratorRepository } from "src/domain/repositories/administrator-repository";
 import { Email } from "src/domain/values/email";
-import { AdministratorId } from "src/domain/values/id";
+import { AdministratorId } from "src/domain/values/ids";
 
 export class PrismaAdministratorRepository implements IAdministratorRepository {
   private readonly prisma = new PrismaClient();

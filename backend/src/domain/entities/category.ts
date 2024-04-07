@@ -1,6 +1,6 @@
 import { EntityError } from "src/domain/errors/entity_error";
 import { CategoryName } from "src/domain/values/name";
-import { CategoryId } from "../values/id";
+import { CategoryId } from "../values/ids";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 

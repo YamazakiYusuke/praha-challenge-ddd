@@ -1,6 +1,6 @@
 import { GetPairsByTeamIdQuery } from "src/domain/commands/pair/get-pairs-by-team-id-query";
 import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
-import { ParticipantId, TeamId } from "src/domain/values/id";
+import { ParticipantId, TeamId } from "src/domain/values/ids";
 import { PairName } from "src/domain/values/name";
 import { inject, injectable } from "tsyringe";
 import { debuglog } from "util";

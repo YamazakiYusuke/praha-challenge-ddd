@@ -1,7 +1,7 @@
 import { GetAllAssignmentsQuery } from 'src/domain/commands/assignment/get-all-assignment-query';
 import { Assignment } from 'src/domain/entities/assignment';
 import { IAssignmentRepository } from 'src/domain/repositories/assignment-repository';
-import { CategoryId } from 'src/domain/values/id';
+import { CategoryId } from 'src/domain/values/ids';
 import { instance, mock, verify, when } from 'ts-mockito';
 
 describe('# GetAllAssignmentsQuery UnitTest \n', () => {

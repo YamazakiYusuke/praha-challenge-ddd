@@ -1,4 +1,4 @@
-import { AdministratorId, AssignmentId, AssignmentProgressId, CategoryId, PairId, ParticipantId, ParticipantsId, TeamId } from "src/domain/values/id";
+import { AdministratorId, AssignmentId, AssignmentProgressId, CategoryId, PairId, ParticipantId, ParticipantsId, TeamId } from "src/domain/values/ids";
 
 describe('# AdministratorId Value UnitTest \n', () => {
   describe('## create \n', () => {

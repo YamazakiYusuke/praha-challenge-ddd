@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Participant } from "src/domain/entities/participant";
 import { IParticipantRepository } from "src/domain/repositories/participant-repository";
-import { TeamId } from "src/domain/values/id";
+import { TeamId } from "src/domain/values/ids";
 import { IGetQuery } from "../base/get-query";
 
 @Injectable()

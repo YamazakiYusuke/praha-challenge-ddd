@@ -4,7 +4,7 @@ import { Administrator, AdministratorProps } from 'src/domain/entities/administr
 import { EntityError } from 'src/domain/errors/entity_error';
 import { CreateAdministratorService } from 'src/domain/services/administrator/create-administrator-service';
 import { Email } from 'src/domain/values/email';
-import { AdministratorId } from 'src/domain/values/id';
+import { AdministratorId } from 'src/domain/values/ids';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 
 describe('# CreateAdministratorService UnitTest\n', () => {

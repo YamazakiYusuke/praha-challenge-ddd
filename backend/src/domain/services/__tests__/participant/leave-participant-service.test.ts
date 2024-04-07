@@ -9,7 +9,7 @@ import { ReallocateLastParticipantInPairService } from "src/domain/services/pair
 import { LeaveParticipantService } from "src/domain/services/participant/leave-participant-service";
 import { ValidateTeamMemberService } from "src/domain/services/team/validate-team-member-service";
 import { Email } from "src/domain/values/email";
-import { PairId, ParticipantId, TeamId } from "src/domain/values/id";
+import { PairId, ParticipantId, TeamId } from "src/domain/values/ids";
 import { PairName, PersonName } from "src/domain/values/name";
 import { EnrollmentStatusValue } from "src/util/enums";
 import { anything, instance, mock, verify, when } from 'ts-mockito';

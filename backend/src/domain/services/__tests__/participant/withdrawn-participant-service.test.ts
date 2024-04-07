@@ -9,7 +9,7 @@ import { ReallocateLastParticipantInPairService } from "src/domain/services/pair
 import { WithdrawnParticipantService } from "src/domain/services/participant/withdrawn-participant-service";
 import { ValidateTeamMemberService } from "src/domain/services/team/validate-team-member-service";
 import { Email } from "src/domain/values/email";
-import { PairId, ParticipantId, TeamId } from "src/domain/values/id";
+import { PairId, ParticipantId, TeamId } from "src/domain/values/ids";
 import { PairName, PersonName } from "src/domain/values/name";
 import { EnrollmentStatusValue } from "src/util/enums";
 import { anything, instance, mock, verify, when } from 'ts-mockito';
@@ -77,9 +77,9 @@ describe('# WithdrawnParticipantService UnitTest\n', () => {
     test('- when pair exists\n', async () => {
       // 準備
       const withdrawnParticipant = participant(participantId(1));
-      const existingPairProps = { 
-        teamId: TeamId.restore('TeamId'), 
-        name: PairName.restore('PairName'), 
+      const existingPairProps = {
+        teamId: TeamId.restore('TeamId'),
+        name: PairName.restore('PairName'),
         participantIds: [participantId(1), participantId(2)]
       };
       when(getPairByIdQuery.execute(anything())).thenResolve(Pair.restore(PairId.restore('existingPairId'), existingPairProps));

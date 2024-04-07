@@ -2,7 +2,7 @@ import { PersonName } from "src/domain/values/name";
 import { EnrollmentStatusValue } from "src/util/enums";
 import { EntityError } from "../errors/entity_error";
 import { Email } from "../values/email";
-import { PairId, ParticipantId, TeamId } from "../values/id";
+import { PairId, ParticipantId, TeamId } from "../values/ids";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 

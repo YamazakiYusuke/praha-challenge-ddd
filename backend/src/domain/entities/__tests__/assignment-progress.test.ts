@@ -1,5 +1,5 @@
 import { EntityError } from "src/domain/errors/entity_error";
-import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/id";
+import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/ids";
 import { AssignmentProgressStateValue } from "src/util/enums";
 import { AssignmentProgress, AssignmentProgressProps } from "../assignment-progress";
 

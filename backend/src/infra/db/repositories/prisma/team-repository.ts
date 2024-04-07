@@ -1,7 +1,7 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { Team } from "src/domain/entities/team";
 import { ITeamRepository } from "src/domain/repositories/team-repository";
-import { ParticipantId, TeamId } from "src/domain/values/id";
+import { ParticipantId, TeamId } from "src/domain/values/ids";
 import { TeamName } from "src/domain/values/name";
 
 export class PrismaTeamRepository implements ITeamRepository {

@@ -1,7 +1,7 @@
 import { SaveAssignmentCommand } from 'src/domain/commands/assignment/save-assignment-command';
 import { Assignment } from 'src/domain/entities/assignment';
 import { IAssignmentRepository } from 'src/domain/repositories/assignment-repository';
-import { CategoryId } from 'src/domain/values/id';
+import { CategoryId } from 'src/domain/values/ids';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 
 describe('# SaveAssignmentCommand UnitTest \n', () => {

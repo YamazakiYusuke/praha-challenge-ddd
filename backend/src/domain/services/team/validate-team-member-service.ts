@@ -5,7 +5,7 @@ import { Team } from "src/domain/entities/team";
 import { CreateAdminEmailService } from "src/domain/services/admin_email/create-admin-email-service";
 import { SendAdminEmailService } from "src/domain/services/admin_email/send-admin-email-service";
 import { AdminEmailContent } from "src/domain/values/admin-email-content";
-import { TeamId } from "src/domain/values/id";
+import { TeamId } from "src/domain/values/ids";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

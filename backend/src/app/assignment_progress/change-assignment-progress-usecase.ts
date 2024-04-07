@@ -1,12 +1,12 @@
+import { AssignmentProgressDto } from "src/app/assignment_progress/dto/assignment_progress_dto";
+import { AssignmentProgress } from "src/domain/entities/assignment-progress";
 import { ChangeAssignmentProgressService } from "src/domain/services/assignment_progress/change-assignment-progress-service";
-import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/id";
+import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/ids";
 import { AssignmentProgressStateValue } from "src/util/enums";
 import { inject, injectable } from "tsyringe";
 import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
 import { SuccessResponse } from "../responses/success-response";
-import { AssignmentProgressDto } from "src/app/assignment_progress/dto/assignment_progress_dto";
-import { AssignmentProgress } from "src/domain/entities/assignment-progress";
 
 @injectable()
 export class ChangeAssignmentProgressUsecase {

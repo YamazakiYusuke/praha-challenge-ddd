@@ -1,6 +1,6 @@
 import { Dto } from "src/app/base/dto";
 import { Team } from "src/domain/entities/team";
-import { GenerationId, ParticipantId, TeamId } from "src/domain/values/id";
+import { GenerationId, ParticipantId, TeamId } from "src/domain/values/ids";
 import { TeamName } from "src/domain/values/name";
 
 export class TeamDto extends Dto<Team> {

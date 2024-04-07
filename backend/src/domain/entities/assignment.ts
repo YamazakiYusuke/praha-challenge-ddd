@@ -1,5 +1,5 @@
 import { EntityError } from "../errors/entity_error";
-import { AssignmentId, CategoryId } from "../values/id";
+import { AssignmentId, CategoryId } from "../values/ids";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 

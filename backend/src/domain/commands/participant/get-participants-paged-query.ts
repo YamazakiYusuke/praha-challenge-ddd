@@ -2,7 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { IGetQuery } from "src/domain/commands/base/get-query";
 import { Participant } from "src/domain/entities/participant";
 import { IParticipantRepository, ParticipantWithAssignments } from "src/domain/repositories/participant-repository";
-import { AssignmentId } from "src/domain/values/id";
+import { AssignmentId } from "src/domain/values/ids";
 import { AssignmentProgressStateValue } from "src/util/enums";
 
 export interface ParticipantPaginationProps {

@@ -1,7 +1,7 @@
 import { SavePairCommand } from 'src/domain/commands/pair/save-pair-command';
 import { Pair } from 'src/domain/entities/pair';
 import { IPairRepository } from 'src/domain/repositories/pair-repository';
-import { ParticipantId, TeamId } from 'src/domain/values/id';
+import { ParticipantId, TeamId } from 'src/domain/values/ids';
 import { PairName } from 'src/domain/values/name';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 

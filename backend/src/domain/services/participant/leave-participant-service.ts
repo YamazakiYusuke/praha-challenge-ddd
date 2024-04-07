@@ -6,7 +6,7 @@ import { Participant } from "src/domain/entities/participant";
 import { EntityError } from "src/domain/errors/entity_error";
 import { ReallocateLastParticipantInPairService } from "src/domain/services/pair/reallocate-last-participant-in-pair-service";
 import { ValidateTeamMemberService } from "src/domain/services/team/validate-team-member-service";
-import { PairId } from "src/domain/values/id";
+import { PairId } from "src/domain/values/ids";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

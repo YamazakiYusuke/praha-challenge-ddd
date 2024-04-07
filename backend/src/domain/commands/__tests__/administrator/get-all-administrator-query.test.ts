@@ -3,7 +3,7 @@ import { GetAllAdministratorsQuery } from 'src/domain/commands/administrator/get
 import { Administrator } from 'src/domain/entities/administrator';
 import { IAdministratorRepository } from 'src/domain/repositories/administrator-repository';
 import { Email } from 'src/domain/values/email';
-import { AdministratorId } from 'src/domain/values/id';
+import { AdministratorId } from 'src/domain/values/ids';
 import { instance, mock, verify, when } from 'ts-mockito';
 
 describe('# GetAllAdministratorsQuery UnitTest \n', () => {

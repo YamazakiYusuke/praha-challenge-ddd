@@ -6,7 +6,7 @@ import { CreateAdminEmailService } from "src/domain/services/admin_email/create-
 import { SendAdminEmailService } from "src/domain/services/admin_email/send-admin-email-service";
 import { ValidateTeamMemberService } from "src/domain/services/team/validate-team-member-service";
 import { Email } from "src/domain/values/email";
-import { ParticipantId, TeamId } from "src/domain/values/id";
+import { ParticipantId, TeamId } from "src/domain/values/ids";
 import { PersonName, TeamName } from "src/domain/values/name";
 import { EnrollmentStatusValue } from "src/util/enums";
 import { anything, instance, mock, verify, when } from 'ts-mockito';

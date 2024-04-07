@@ -1,6 +1,6 @@
 import { EntityError } from "../errors/entity_error";
 import { Email } from "../values/email";
-import { AdministratorId } from "../values/id";
+import { AdministratorId } from "../values/ids";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
 
