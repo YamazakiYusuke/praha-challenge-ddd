@@ -1,4 +1,4 @@
-import { PairDto } from "src/app/pair/pair_dto";
+import { PairDto } from "src/app/pair/dto/pair_dto";
 import { GetAllPairsQuery } from "src/domain/commands/pair/get-all-pairs-query";
 import { inject, injectable } from "tsyringe";
 import { debuglog } from "util";

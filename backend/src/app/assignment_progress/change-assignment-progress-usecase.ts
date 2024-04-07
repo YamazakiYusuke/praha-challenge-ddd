@@ -5,7 +5,7 @@ import { inject, injectable } from "tsyringe";
 import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
 import { SuccessResponse } from "../responses/success-response";
-import { AssignmentProgressDto } from "src/app/assignment_progress/assignment_progress_dto";
+import { AssignmentProgressDto } from "src/app/assignment_progress/dto/assignment_progress_dto";
 import { AssignmentProgress } from "src/domain/entities/assignment-progress";
 
 @injectable()
