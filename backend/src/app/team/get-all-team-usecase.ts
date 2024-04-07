@@ -1,4 +1,4 @@
-import { TeamDto } from "src/app/team/dto/team_dto";
+import { TeamDto } from "src/app/team/dto/team-dto";
 import { GetAllTeamsQuery } from "src/domain/commands/team/get-all-team-query";
 import { inject, injectable } from "tsyringe";
 import { debuglog } from "util";

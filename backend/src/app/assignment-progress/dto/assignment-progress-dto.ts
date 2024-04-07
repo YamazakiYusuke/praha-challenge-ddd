@@ -1,11 +1,25 @@
+import { ApiProperty } from "@nestjs/swagger";
+import { IsNotEmpty, IsNumber, IsString } from "class-validator";
 import { Dto } from "src/app/base/dto";
 import { AssignmentProgress } from "src/domain/entities/assignment-progress";
 import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/ids";
 
 export class AssignmentProgressDto extends Dto<AssignmentProgress> {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
   public readonly id: string;
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
   public readonly assignmentId: string;
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
   public readonly participantId: string;
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
   public readonly assignmentProgressState: number;
 
   constructor(assignmentProgress: AssignmentProgress) {

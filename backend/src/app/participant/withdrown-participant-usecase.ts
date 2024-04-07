@@ -1,4 +1,4 @@
-import { ParticipantDto } from "src/app/participant/dto/participant_dto";
+import { ParticipantDto } from "src/app/participant/dto/participant-dto";
 import { ErrorResponse } from "src/app/responses/error-response";
 import { SuccessResponse } from "src/app/responses/success-response";
 import { WithdrawnParticipantService } from "src/domain/services/participant/withdrawn-participant-service";

@@ -1,4 +1,4 @@
-import { ParticipantDto } from "src/app/participant/dto/participant_dto";
+import { ParticipantDto } from "src/app/participant/dto/participant-dto";
 import { GetParticipantsWithAssignmentsPagedQuery, ParticipantPaginationProps } from "src/domain/commands/participant/get-participants-paged-query";
 import { inject, injectable } from "tsyringe";
 import { debuglog } from "util";

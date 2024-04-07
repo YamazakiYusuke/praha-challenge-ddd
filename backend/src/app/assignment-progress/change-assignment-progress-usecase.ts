@@ -1,4 +1,4 @@
-import { AssignmentProgressDto } from "src/app/assignment_progress/dto/assignment_progress_dto";
+import { AssignmentProgressDto } from "src/app/assignment-progress/dto/assignment-progress-dto";
 import { AssignmentProgress } from "src/domain/entities/assignment-progress";
 import { ChangeAssignmentProgressService } from "src/domain/services/assignment_progress/change-assignment-progress-service";
 import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/ids";
