@@ -1,13 +1,14 @@
-import { ParticipantId, TeamId } from "src/domain/values/ids";
+import { GenerationId, ParticipantId, TeamId } from "src/domain/values/ids";
 import { TeamName } from "src/domain/values/name";
 import { Team, TeamProps } from "../team";
 
 describe('# Team Entity UnitTest\n', () => {
   const participantIds = [ParticipantId.create(), ParticipantId.create()];
+  const generationId = GenerationId.restore('generation1')
   const teamProps: TeamProps = {
     name: TeamName.create('Test Team'),
     participantIds: participantIds,
-    generationId: 'generation1',
+    generationId: generationId,
   };
 
   describe('## create\n', () => {
@@ -18,7 +19,7 @@ describe('# Team Entity UnitTest\n', () => {
       expect(team).toBeInstanceOf(Team);
       expect(team.name).toEqual(teamProps.name);
       expect(team.participantIds).toEqual(participantIds);
-      expect(team.generationId).toEqual('generation1');
+      expect(team.generationId).toEqual(generationId);
     });
   });
 
@@ -33,7 +34,7 @@ describe('# Team Entity UnitTest\n', () => {
       expect(team.id).toEqual(id);
       expect(team.name).toEqual(teamProps.name);
       expect(team.participantIds).toEqual(participantIds);
-      expect(team.generationId).toEqual('generation1');
+      expect(team.generationId).toEqual(generationId);
     });
   });
 
