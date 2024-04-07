@@ -1,6 +1,6 @@
+import { PairDto } from "src/app/pair/pair_dto";
 import { GetAllPairsQuery } from "src/domain/commands/pair/get-all-pairs-query";
-import { Pair } from "src/domain/entities/pair";
-import { container, inject, injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
 
@@ -11,9 +11,10 @@ export class GetAllPairsUsecase {
     private readonly getAllPairsQuery: GetAllPairsQuery,
   ) { }
 
-  public async execute(): Promise<Pair[] | ErrorResponse> {
+  public async execute(): Promise<PairDto[] | ErrorResponse> {
     try {
-      return await this.getAllPairsQuery.execute();
+      const pairs = await this.getAllPairsQuery.execute();
+      return pairs.map((pair) => new PairDto(pair));
     } catch (e) {
       debuglog(`Exception: ${e}`);
       return new ErrorResponse('ペアの取得に失敗しました');
