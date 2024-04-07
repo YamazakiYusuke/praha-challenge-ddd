@@ -7,7 +7,6 @@ import { AssignmentProgressStateValue } from 'src/util/enums';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 
 describe('# ChangeAssignmentProgressService UnitTest\n', () => {
-  let getAssignmentProgressByIdQuery: GetAssignmentProgressByIdQuery;
   let saveAssignmentProgressCommand: SaveAssignmentProgressCommand;
   let changeAssignmentProgressService: ChangeAssignmentProgressService;
   let assignmentProgress: AssignmentProgress;
@@ -15,9 +14,8 @@ describe('# ChangeAssignmentProgressService UnitTest\n', () => {
   const newState = AssignmentProgressStateValue.Completed;
 
   beforeEach(() => {
-    getAssignmentProgressByIdQuery = mock(GetAssignmentProgressByIdQuery);
     saveAssignmentProgressCommand = mock(SaveAssignmentProgressCommand);
-    changeAssignmentProgressService = new ChangeAssignmentProgressService(instance(getAssignmentProgressByIdQuery), instance(saveAssignmentProgressCommand));
+    changeAssignmentProgressService = new ChangeAssignmentProgressService(instance(saveAssignmentProgressCommand));
 
     assignmentProgress = AssignmentProgress.restore(id, {
       assignmentId: AssignmentId.create(),
@@ -29,22 +27,12 @@ describe('# ChangeAssignmentProgressService UnitTest\n', () => {
   describe('## execute\n', () => {
     test('- should change assignment progress state successfully\n', async () => {
       // 準備
-      when(getAssignmentProgressByIdQuery.execute(id)).thenResolve(assignmentProgress);
       when(saveAssignmentProgressCommand.execute(anything())).thenResolve();
       // 実行
-      await changeAssignmentProgressService.execute(id, newState);
+      await changeAssignmentProgressService.execute(assignmentProgress, newState);
       // 確認
-      verify(getAssignmentProgressByIdQuery.execute(id)).once();
       verify(saveAssignmentProgressCommand.execute(anything())).once();
       expect(assignmentProgress.assignmentProgressState).toEqual(AssignmentProgressStateValue.Completed);
-    });
-
-    test('- should throw error if assignment progress does not exist\n', async () => {
-      // 準備
-      when(getAssignmentProgressByIdQuery.execute(id)).thenResolve(null);
-      // 実行・確認
-      await expect(changeAssignmentProgressService.execute(id, newState)).rejects.toThrow();
-      verify(getAssignmentProgressByIdQuery.execute(id)).once();
     });
   });
 });

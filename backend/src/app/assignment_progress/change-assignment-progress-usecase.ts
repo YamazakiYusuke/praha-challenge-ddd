@@ -1,10 +1,12 @@
 import { ChangeAssignmentProgressService } from "src/domain/services/assignment_progress/change-assignment-progress-service";
-import { AssignmentProgressId } from "src/domain/values/id";
+import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/id";
 import { AssignmentProgressStateValue } from "src/util/enums";
 import { inject, injectable } from "tsyringe";
 import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
 import { SuccessResponse } from "../responses/success-response";
+import { AssignmentProgressDto } from "src/app/assignment_progress/assignment_progress_dto";
+import { AssignmentProgress } from "src/domain/entities/assignment-progress";
 
 @injectable()
 export class ChangeAssignmentProgressUsecase {
@@ -13,9 +15,19 @@ export class ChangeAssignmentProgressUsecase {
     private readonly changeAssignmentProgressService: ChangeAssignmentProgressService,
   ) { }
 
-  public async execute({ assignmentProgressId, newState }: { assignmentProgressId: AssignmentProgressId, newState: AssignmentProgressStateValue }): Promise<SuccessResponse | ErrorResponse> {
+  public async execute({ assignmentProgressDto, newState }: { assignmentProgressDto: AssignmentProgressDto, newState: AssignmentProgressStateValue }): Promise<SuccessResponse | ErrorResponse> {
     try {
-      await this.changeAssignmentProgressService.execute(assignmentProgressId, newState);
+      const assignmentProgressId = AssignmentProgressId.restore(assignmentProgressDto.id);
+      const assignmentId = AssignmentId.restore(assignmentProgressDto.assignmentId);
+      const participantId = ParticipantId.restore(assignmentProgressDto.participantId);
+      const assignmentProgressState = assignmentProgressDto.assignmentProgressState;
+
+      const assignmentProgress = AssignmentProgress.restore(assignmentProgressId, {
+        assignmentId,
+        participantId,
+        assignmentProgressState,
+      });
+      await this.changeAssignmentProgressService.execute(assignmentProgress, newState);
       return new SuccessResponse('課題のステータスの変更に成功しました');
     } catch (e) {
       debuglog(`Exception: ${e}`);
