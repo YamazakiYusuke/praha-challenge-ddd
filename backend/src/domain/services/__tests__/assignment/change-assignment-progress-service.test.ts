@@ -1,7 +1,7 @@
 import { GetAssignmentProgressByIdQuery } from 'src/domain/commands/assignment-progress/get-assignment-progress-by-id-query';
 import { SaveAssignmentProgressCommand } from 'src/domain/commands/assignment-progress/save-assignment-progress-command';
 import { AssignmentProgress } from 'src/domain/entities/assignment-progress';
-import { ChangeAssignmentProgressService } from 'src/domain/services/assignment/change-assignment-progress-service';
+import { ChangeAssignmentProgressService } from 'src/domain/services/assignment_progress/change-assignment-progress-service';
 import { AssignmentId, AssignmentProgressId, ParticipantId } from 'src/domain/values/id';
 import { AssignmentProgressStateValue } from 'src/util/enums';
 import { anything, instance, mock, verify, when } from 'ts-mockito';

@@ -1,4 +1,4 @@
-import { ChangeAssignmentProgressService } from "src/domain/services/assignment/change-assignment-progress-service";
+import { ChangeAssignmentProgressService } from "src/domain/services/assignment_progress/change-assignment-progress-service";
 import { AssignmentProgressId } from "src/domain/values/id";
 import { AssignmentProgressStateValue } from "src/util/enums";
 import { inject, injectable } from "tsyringe";
@@ -13,7 +13,7 @@ export class ChangeAssignmentProgressUsecase {
     private readonly changeAssignmentProgressService: ChangeAssignmentProgressService,
   ) { }
 
-  public async execute(assignmentProgressId: AssignmentProgressId, newState: AssignmentProgressStateValue): Promise<SuccessResponse | ErrorResponse> {
+  public async execute({ assignmentProgressId, newState }: { assignmentProgressId: AssignmentProgressId, newState: AssignmentProgressStateValue }): Promise<SuccessResponse | ErrorResponse> {
     try {
       await this.changeAssignmentProgressService.execute(assignmentProgressId, newState);
       return new SuccessResponse('課題のステータスの変更に成功しました');
