@@ -1,7 +1,7 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { Team } from "src/domain/entities/team";
 import { ITeamRepository } from "src/domain/repositories/team-repository";
-import { ParticipantId, TeamId } from "src/domain/values/ids";
+import { GenerationId, ParticipantId, TeamId } from "src/domain/values/ids";
 import { TeamName } from "src/domain/values/name";
 
 export class PrismaTeamRepository implements ITeamRepository {
@@ -19,7 +19,7 @@ export class PrismaTeamRepository implements ITeamRepository {
       create: {
         id: team.id.value,
         name: team.name.value,
-        generationId: team.generationId,
+        generationId: team.generationId.value,
       }
     });
   }
@@ -46,7 +46,7 @@ export class PrismaTeamRepository implements ITeamRepository {
         {
           name: TeamName.restore(team.name),
           participantIds: participantIds,
-          generationId: team.generationId,
+          generationId: GenerationId.restore(team.generationId),
         }
       );
     });

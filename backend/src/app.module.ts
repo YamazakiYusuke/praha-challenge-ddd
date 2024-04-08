@@ -1,10 +1,10 @@
-import { Module } from '@nestjs/common'
-import { SampleController } from './controller/sample/some-data.controller'
+import { Module } from '@nestjs/common';
+import { AssignmentProgressController } from 'src/controller/assignment-progress/assignment-progress.controller';
 
 // memo: DIコンテナとしては使わないため、controllerの追加だけしてください
 @Module({
   imports: [],
-  controllers: [SampleController],
+  controllers: [AssignmentProgressController],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }
