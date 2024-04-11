@@ -1,13 +1,13 @@
-import { Inject, Injectable } from "@nestjs/common";
 import { Pair } from "src/domain/entities/pair";
 import { IPairRepository } from "src/domain/repositories/pair-repository";
 import { PairId, TeamId } from "src/domain/values/ids";
+import { inject, injectable } from "tsyringe";
 import { IGetQuery } from "../base/get-query";
 
-@Injectable()
+@injectable()
 export class GetPairWithFewestMembersByTeamIdQuery implements IGetQuery<Pair, TeamId> {
   constructor(
-    @Inject('IPairRepository')
+    @inject('IPairRepository')
     private readonly pairRepository: IPairRepository
   ) { }
 

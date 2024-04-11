@@ -1,12 +1,12 @@
-import { Inject, Injectable } from "@nestjs/common";
 import { Assignment } from "src/domain/entities/assignment";
 import { IAssignmentRepository } from "src/domain/repositories/assignment-repository";
+import { inject, injectable } from "tsyringe";
 import { IGetQuery } from "../base/get-query";
 
-@Injectable()
+@injectable()
 export class GetAllAssignmentsQuery implements IGetQuery<Assignment[]> {
   constructor(
-    @Inject('IAssignmentRepository')
+    @inject('IAssignmentRepository')
     private readonly assignmentRepository: IAssignmentRepository
   ) { }
 

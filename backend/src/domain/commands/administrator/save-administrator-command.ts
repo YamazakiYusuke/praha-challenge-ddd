@@ -1,12 +1,12 @@
-import { Inject, Injectable } from "@nestjs/common";
 import { Administrator } from "src/domain/entities/administrator";
 import { IAdministratorRepository } from "src/domain/repositories/administrator-repository";
+import { inject, injectable } from "tsyringe";
 import { ICommand } from "../base/command";
 
-@Injectable()
+@injectable()
 export class SaveAdministratorCommand implements ICommand<Administrator> {
   constructor(
-    @Inject('IAdministratorRepository')
+    @inject('IAdministratorRepository')
     private readonly administratorRepository: IAdministratorRepository
   ) { }
 

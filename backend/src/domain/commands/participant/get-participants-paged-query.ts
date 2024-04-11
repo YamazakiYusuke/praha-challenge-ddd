@@ -1,9 +1,9 @@
-import { Inject, Injectable } from "@nestjs/common";
 import { IGetQuery } from "src/domain/commands/base/get-query";
 import { Participant } from "src/domain/entities/participant";
 import { IParticipantRepository, ParticipantWithAssignments } from "src/domain/repositories/participant-repository";
 import { AssignmentId } from "src/domain/values/ids";
 import { AssignmentProgressStateValue } from "src/util/enums";
+import { inject, injectable } from "tsyringe";
 
 export interface ParticipantPaginationProps {
   readonly page: number;
@@ -16,10 +16,10 @@ export interface AssignmentStateProps {
   readonly assignmentProgressState: AssignmentProgressStateValue;
 }
 
-@Injectable()
+@injectable()
 export class GetParticipantsWithAssignmentsPagedQuery implements IGetQuery<Participant[], ParticipantPaginationProps> {
   constructor(
-    @Inject('IParticipantRepository')
+    @inject('IParticipantRepository')
     private readonly participantRepository: IParticipantRepository
   ) { }
 

@@ -1,10 +1,10 @@
-import { Inject, Injectable } from "@nestjs/common";
 import { ITransactionRepository } from "src/domain/repositories/transaction-repository";
+import { inject, injectable } from "tsyringe";
 
-@Injectable()
+@injectable()
 export class Transaction {
   constructor(
-    @Inject('ITransactionRepository')
+    @inject('ITransactionRepository')
     private readonly transactionRepository: ITransactionRepository,
   ) { }
 

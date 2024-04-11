@@ -1,12 +1,12 @@
-import { Inject, Injectable } from "@nestjs/common";
 import { AdminEmail } from "src/domain/entities/admin-email";
 import { IAdminMailRepository } from "src/domain/repositories/admin-mail-repository";
+import { inject, injectable } from "tsyringe";
 import { ICommand } from "../base/command";
 
-@Injectable()
+@injectable()
 export class SaveAdminMailCommand implements ICommand<AdminEmail> {
   constructor(
-    @Inject('IAdminMailRepository')
+    @inject('IAdminMailRepository')
     private readonly adminMailRepository: IAdminMailRepository
   ) { }
 

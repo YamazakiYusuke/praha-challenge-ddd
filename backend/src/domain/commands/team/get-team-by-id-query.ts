@@ -1,13 +1,13 @@
-import { Inject, Injectable } from "@nestjs/common";
 import { Team } from "src/domain/entities/team";
 import { ITeamRepository } from "src/domain/repositories/team-repository";
 import { TeamId } from "src/domain/values/ids";
+import { inject, injectable } from "tsyringe";
 import { IGetQuery } from "../base/get-query";
 
-@Injectable()
+@injectable()
 export class GetTeamByIdQuery implements IGetQuery<Team, TeamId> {
   constructor(
-    @Inject('ITeamRepository')
+    @inject('ITeamRepository')
     private readonly teamRepository: ITeamRepository
   ) { }
 

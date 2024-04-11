@@ -1,12 +1,12 @@
-import { Inject, Injectable } from "@nestjs/common";
 import { Category } from "src/domain/entities/category";
 import { ICategoryRepository } from "src/domain/repositories/category-repository";
+import { inject, injectable } from "tsyringe";
 import { ICommand } from "../base/command";
 
-@Injectable()
+@injectable()
 export class SaveCategoryCommand implements ICommand<Category> {
   constructor(
-    @Inject('ICategoryRepository')
+    @inject('ICategoryRepository')
     private readonly categoryRepository: ICategoryRepository
   ) { }
 

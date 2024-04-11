@@ -1,13 +1,13 @@
-import { Inject, Injectable } from "@nestjs/common";
 import { Pair } from "src/domain/entities/pair";
 import { IPairRepository } from "src/domain/repositories/pair-repository";
 import { PairName } from "src/domain/values/name";
+import { inject, injectable } from "tsyringe";
 import { IGetQuery } from "../base/get-query";
 
-@Injectable()
+@injectable()
 export class GetPairByNameQuery implements IGetQuery<Pair, PairName> {
   constructor(
-    @Inject('IPairRepository')
+    @inject('IPairRepository')
     private readonly pairRepository: IPairRepository
   ) { }
 

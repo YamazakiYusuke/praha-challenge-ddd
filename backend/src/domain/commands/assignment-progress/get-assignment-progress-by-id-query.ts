@@ -1,13 +1,13 @@
-import { Inject, Injectable } from "@nestjs/common";
 import { AssignmentProgress } from "src/domain/entities/assignment-progress";
 import { IAssignmentProgressRepository } from "src/domain/repositories/assignment-progress-repository";
 import { AssignmentProgressId } from "src/domain/values/ids";
+import { inject, injectable } from "tsyringe";
 import { IGetQuery } from "../base/get-query";
 
-@Injectable()
+@injectable()
 export class GetAssignmentProgressByIdQuery implements IGetQuery<AssignmentProgress, AssignmentProgressId> {
   constructor(
-    @Inject('IAssignmentProgressRepository')
+    @inject('IAssignmentProgressRepository')
     private readonly assignmentProgressRepository: IAssignmentProgressRepository
   ) { }
 

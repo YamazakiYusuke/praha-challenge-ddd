@@ -1,12 +1,12 @@
-import { Inject, Injectable } from "@nestjs/common";
 import { Category } from "src/domain/entities/category";
 import { ICategoryRepository } from "src/domain/repositories/category-repository";
+import { inject, injectable } from "tsyringe";
 import { IGetQuery } from "../base/get-query";
 
-@Injectable()
+@injectable()
 export class GetAllCategoryQuery implements IGetQuery<Category[]> {
   constructor(
-    @Inject('ICategoryRepository')
+    @inject('ICategoryRepository')
     private readonly categoryRepository: ICategoryRepository
   ) { }
 

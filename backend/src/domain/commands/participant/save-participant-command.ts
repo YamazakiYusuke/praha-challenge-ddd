@@ -1,12 +1,12 @@
-import { Inject, Injectable } from "@nestjs/common";
 import { Participant } from "src/domain/entities/participant";
 import { IParticipantRepository } from "src/domain/repositories/participant-repository";
+import { inject, injectable } from "tsyringe";
 import { ICommand } from "../base/command";
 
-@Injectable()
+@injectable()
 export class SaveParticipantCommand implements ICommand<Participant> {
   constructor(
-    @Inject('IParticipantRepository')
+    @inject('IParticipantRepository')
     private readonly participantRepository: IParticipantRepository
   ) { }
 

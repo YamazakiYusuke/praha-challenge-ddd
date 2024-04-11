@@ -1,13 +1,13 @@
-import { Inject, Injectable } from "@nestjs/common";
 import { Participant } from "src/domain/entities/participant";
 import { IParticipantRepository } from "src/domain/repositories/participant-repository";
 import { ParticipantId } from "src/domain/values/ids";
+import { inject, injectable } from "tsyringe";
 import { IGetQuery } from "../base/get-query";
 
-@Injectable()
+@injectable()
 export class GetParticipantByIdQuery implements IGetQuery<Participant, ParticipantId> {
   constructor(
-    @Inject('IParticipantRepository')
+    @inject('IParticipantRepository')
     private readonly participantRepository: IParticipantRepository
   ) { }
 

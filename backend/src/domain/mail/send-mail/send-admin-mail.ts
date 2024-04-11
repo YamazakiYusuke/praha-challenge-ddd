@@ -1,11 +1,11 @@
-import { Inject, Injectable } from "@nestjs/common";
 import { AdminEmail } from "src/domain/entities/admin-email";
 import { ISendAdminMailRepository } from "src/domain/repositories/send-admin-mail-repository";
+import { inject, injectable } from "tsyringe";
 
-@Injectable()
+@injectable()
 export class SendAdminMail {
   constructor(
-    @Inject('ISendAdminMailRepository')
+    @inject('ISendAdminMailRepository')
     private readonly sendMailRepository: ISendAdminMailRepository
   ) { }
 

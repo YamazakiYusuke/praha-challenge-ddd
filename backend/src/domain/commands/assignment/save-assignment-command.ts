@@ -1,12 +1,12 @@
-import { Inject, Injectable } from "@nestjs/common";
 import { Assignment } from "src/domain/entities/assignment";
 import { IAssignmentRepository } from "src/domain/repositories/assignment-repository";
+import { inject, injectable } from "tsyringe";
 import { ICommand } from "../base/command";
 
-@Injectable()
+@injectable()
 export class SaveAssignmentCommand implements ICommand<Assignment> {
   constructor(
-    @Inject('IAssignmentRepository')
+    @inject('IAssignmentRepository')
     private readonly assignmentRepository: IAssignmentRepository
   ) { }
 
