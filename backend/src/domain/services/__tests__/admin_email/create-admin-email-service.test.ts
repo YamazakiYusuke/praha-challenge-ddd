@@ -1,9 +1,8 @@
 import { GetAllAdministratorsQuery } from 'src/domain/commands/administrator/get-all-administrator-query';
-import { AdminEmail } from 'src/domain/entities/admin-email';
+import { CreateAdminEmailService } from 'src/domain/services/admin_email/create-admin-email-service';
 import { AdminEmailContent } from 'src/domain/values/admin-email-content';
 import { EmailStatus } from 'src/util/enums';
-import { CreateAdminEmailService } from 'src/domain/services/admin_email/create-admin-email-service';
-import { anything, instance, mock, verify, when } from 'ts-mockito';
+import { instance, mock, verify, when } from 'ts-mockito';
 
 describe('# CreateAdminEmailService UnitTest\n', () => {
   let getAllAdministratorsQuery: GetAllAdministratorsQuery;
