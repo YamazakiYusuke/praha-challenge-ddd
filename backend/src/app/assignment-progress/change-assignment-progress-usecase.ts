@@ -1,10 +1,10 @@
 import { AssignmentProgressDto } from "src/app/assignment-progress/dto/assignment-progress-dto";
+import { isExpectedError } from "src/app/util/is-expected-error";
 import { AssignmentProgress } from "src/domain/entities/assignment-progress";
 import { ChangeAssignmentProgressService } from "src/domain/services/assignment_progress/change-assignment-progress-service";
+import { AssignmentProgressStateValue } from "src/domain/util/enums";
 import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/ids";
-import { AssignmentProgressStateValue } from "src/util/enums";
 import { inject, injectable } from "tsyringe";
-import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
 import { SuccessResponse } from "../responses/success-response";
 
@@ -29,9 +29,13 @@ export class ChangeAssignmentProgressUsecase {
       });
       await this.changeAssignmentProgressService.execute(assignmentProgress, newState);
       return new SuccessResponse('課題のステータスの変更に成功しました');
-    } catch (e) {
-      debuglog(`Exception: ${e}`);
-      return new ErrorResponse('課題のステータスの変更に失敗しました');
+    } catch (e: any) {
+      if (isExpectedError(e)) {
+        return new ErrorResponse(400, `課題のステータスの変更に失敗しました。${e.name}:${e.message}`);
+      } else {
+        return new ErrorResponse(500, '課題のステータスの変更に失敗しました。');
+      }
     }
   }
 }
+

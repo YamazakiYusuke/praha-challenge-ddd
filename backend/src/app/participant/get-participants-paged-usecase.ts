@@ -3,6 +3,7 @@ import { GetParticipantsWithAssignmentsPagedQuery, ParticipantPaginationProps } 
 import { inject, injectable } from "tsyringe";
 import { debuglog } from "util";
 import { ErrorResponse } from "../responses/error-response";
+import { isExpectedError } from "src/app/util/is-expected-error";
 
 @injectable()
 export class GetParticipantsPagedUsecase {
@@ -15,9 +16,13 @@ export class GetParticipantsPagedUsecase {
     try {
       const participants = await this.getParticipantsWithAssignmentsPagedQuery.execute(props);
       return participants.map((participant) => new ParticipantDto(participant));
-    } catch (e) {
+    } catch (e: any) {
       debuglog(`Exception: ${e}`);
-      return new ErrorResponse('参加者の取得に失敗しました');
+      if (isExpectedError(e)) {
+        return new ErrorResponse(400, `参加者の取得に失敗しました。${e.name}:${e.message}`);
+      } else {
+        return new ErrorResponse(500, '参加者の取得に失敗しました。');
+      }
     }
   }
 }
