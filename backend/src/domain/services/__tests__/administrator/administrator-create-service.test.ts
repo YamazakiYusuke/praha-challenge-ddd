@@ -1,7 +1,7 @@
 import { GetAdministratorByEmailQuery } from 'src/domain/commands/administrator/get-administrator-by-email-query';
 import { SaveAdministratorCommand } from 'src/domain/commands/administrator/save-administrator-command';
 import { Administrator, AdministratorProps } from 'src/domain/entities/administrator';
-import { EntityError } from 'src/domain/errors/entity_error';
+import { DomainServiceError } from 'src/domain/errors/domain_service_error';
 import { CreateAdministratorService } from 'src/domain/services/administrator/create-administrator-service';
 import { Email } from 'src/domain/values/email';
 import { AdministratorId } from 'src/domain/values/ids';
@@ -43,7 +43,7 @@ describe('# CreateAdministratorService UnitTest\n', () => {
       // 準備
       when(getAdministratorByEmailQuery.execute(email)).thenResolve(administrator);
       // 実行・確認
-      await expect(createAdministratorService.execute(props)).rejects.toThrow(EntityError);
+      await expect(createAdministratorService.execute(props)).rejects.toThrow(DomainServiceError);
       verify(getAdministratorByEmailQuery.execute(email)).once();
     });
 

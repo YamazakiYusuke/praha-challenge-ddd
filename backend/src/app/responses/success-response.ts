@@ -1,7 +1,7 @@
 export class SuccessResponse {
-  data: any;
+  readonly data: string;
 
-  constructor(data?: any) {
-    this.data = data || '';
+  constructor(data: string = '') {
+    this.data = data;
   }
 }

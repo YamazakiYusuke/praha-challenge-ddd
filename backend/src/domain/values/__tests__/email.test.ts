@@ -1,5 +1,5 @@
+import { ValueObjectError } from "src/domain/errors/value_object_error";
 import { Email } from "src/domain/values/email";
-import { ValueError } from "src/domain/errors/value_error";
 
 describe('# Email Value UnitTest \n', () => {
   describe('## create \n', () => {
@@ -15,7 +15,7 @@ describe('# Email Value UnitTest \n', () => {
       // 準備
       const invalidEmail = 'invalidEmail';
       // 実行・確認
-      expect(() => Email.create(invalidEmail)).toThrow(ValueError);
+      expect(() => Email.create(invalidEmail)).toThrow(ValueObjectError);
     });
   });
 

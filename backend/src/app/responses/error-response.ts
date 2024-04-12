@@ -1,7 +1,9 @@
 export class ErrorResponse {
-  data: string;
+  public readonly errorCode: number;
+  public readonly data: string;
 
-  constructor(data?: any) {
-    this.data = data || null;
+  constructor(errorCode: number, data: string = '') {
+    this.errorCode = errorCode;
+    this.data = data;
   }
 }

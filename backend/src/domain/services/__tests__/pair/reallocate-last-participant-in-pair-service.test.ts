@@ -6,7 +6,7 @@ import { Transaction } from "src/domain/commands/transaction/transaction";
 import { AdminEmail } from "src/domain/entities/admin-email";
 import { Pair, PairProps } from "src/domain/entities/pair";
 import { Participant, ParticipantProps } from "src/domain/entities/participant";
-import { ServiceError } from "src/domain/errors/service_error";
+import { DomainServiceError } from "src/domain/errors/domain_service_error";
 import { CreateAdminEmailService } from "src/domain/services/admin_email/create-admin-email-service";
 import { SendAdminEmailService } from "src/domain/services/admin_email/send-admin-email-service";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";
@@ -149,7 +149,7 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
         when(createAdminEmailService.execute(anything())).thenResolve(adminMail);
         when(sendAdminEmailService.execute(anything())).thenResolve();
         // 実行・確認
-        await expect(reallocateLastParticipantInPairService.execute(pair([lastParticipantId]), leavingParticipant(leavingParticipantId))).rejects.toThrow(ServiceError);
+        await expect(reallocateLastParticipantInPairService.execute(pair([lastParticipantId]), leavingParticipant(leavingParticipantId))).rejects.toThrow(DomainServiceError);
 
         verify(getParticipantByIdQuery.execute(anything())).once();
         verify(createPairService.execute(anything())).never();

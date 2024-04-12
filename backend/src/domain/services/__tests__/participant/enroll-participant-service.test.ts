@@ -5,6 +5,7 @@ import { SaveParticipantCommand } from "src/domain/commands/participant/save-par
 import { Transaction } from "src/domain/commands/transaction/transaction";
 import { Pair } from "src/domain/entities/pair";
 import { Participant, ParticipantProps } from "src/domain/entities/participant";
+import { DomainServiceError } from "src/domain/errors/domain_service_error";
 import { EntityError } from "src/domain/errors/entity_error";
 import { CreateAdminEmailService } from "src/domain/services/admin_email/create-admin-email-service";
 import { SendAdminEmailService } from "src/domain/services/admin_email/send-admin-email-service";
@@ -72,7 +73,7 @@ describe('# EnrollParticipantService UnitTest\n', () => {
       when(getPairWithFewestMembersQuery.execute()).thenResolve(null);
       const newParticipant = participant(participantId(1));
       // 実行
-      await expect(enrollParticipantService.execute(newParticipant)).rejects.toThrow(EntityError);
+      await expect(enrollParticipantService.execute(newParticipant)).rejects.toThrow(DomainServiceError);
       // 確認
       verify(getPairWithFewestMembersQuery.execute()).once();
       verify(createPairService.execute(anything())).never();

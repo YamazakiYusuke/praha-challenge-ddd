@@ -3,7 +3,7 @@ import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { SaveParticipantCommand } from "src/domain/commands/participant/save-participant-command";
 import { Transaction } from "src/domain/commands/transaction/transaction";
 import { Participant } from "src/domain/entities/participant";
-import { EntityError } from "src/domain/errors/entity_error";
+import { DomainServiceError } from "src/domain/errors/domain_service_error";
 import { ReallocateLastParticipantInPairService } from "src/domain/services/pair/reallocate-last-participant-in-pair-service";
 import { ValidateTeamMemberService } from "src/domain/services/team/validate-team-member-service";
 import { PairId } from "src/domain/values/ids";
@@ -29,7 +29,7 @@ export class LeaveParticipantService {
   async execute(participant: Participant): Promise<void> {
     const pair = await this.getPairByIdQuery.execute(participant.pairId as PairId);
     if (pair == null) {
-      throw new EntityError('ペアが存在しません');
+      throw new DomainServiceError('ペアが存在しません');
     }
     participant.changeEnrollmentStatusToOnLeave();
     pair.removeParticipant(participant.id);

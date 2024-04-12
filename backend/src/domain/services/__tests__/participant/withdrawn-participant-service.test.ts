@@ -4,7 +4,7 @@ import { SaveParticipantCommand } from "src/domain/commands/participant/save-par
 import { Transaction } from "src/domain/commands/transaction/transaction";
 import { Pair } from "src/domain/entities/pair";
 import { Participant, ParticipantProps } from "src/domain/entities/participant";
-import { EntityError } from "src/domain/errors/entity_error";
+import { DomainServiceError } from "src/domain/errors/domain_service_error";
 import { ReallocateLastParticipantInPairService } from "src/domain/services/pair/reallocate-last-participant-in-pair-service";
 import { WithdrawnParticipantService } from "src/domain/services/participant/withdrawn-participant-service";
 import { ValidateTeamMemberService } from "src/domain/services/team/validate-team-member-service";
@@ -64,7 +64,7 @@ describe('# WithdrawnParticipantService UnitTest\n', () => {
       when(getPairByIdQuery.execute(anything())).thenResolve(null);
       const withdrawnParticipant = participant(participantId(1));
       // 実行
-      await expect(withdrawnParticipantService.execute(withdrawnParticipant)).rejects.toThrow(EntityError);
+      await expect(withdrawnParticipantService.execute(withdrawnParticipant)).rejects.toThrow(DomainServiceError);
       // 確認
       verify(getPairByIdQuery.execute(anything())).once();
       verify(saveParticipantCommand.execute(anything(), anything())).never();

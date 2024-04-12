@@ -4,7 +4,7 @@ import { GetParticipantByIdQuery } from "src/domain/commands/participant/get-par
 import { SaveParticipantCommand } from "src/domain/commands/participant/save-participant-command";
 import { Transaction } from "src/domain/commands/transaction/transaction";
 import { Participant } from "src/domain/entities/participant";
-import { EntityError } from "src/domain/errors/entity_error";
+import { DomainServiceError } from "src/domain/errors/domain_service_error";
 import { CreateAdminEmailService } from "src/domain/services/admin_email/create-admin-email-service";
 import { SendAdminEmailService } from "src/domain/services/admin_email/send-admin-email-service";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";
@@ -37,7 +37,7 @@ export class EnrollParticipantService {
     if (smallestPair == null) {
       const mail = await this.createAdminEmailService.execute(AdminEmailContent.join(participant));
       await this.sendAdminEmailService.execute(mail);
-      throw new EntityError('参加可能なペアがありません');
+      throw new DomainServiceError('参加可能なペアがありません');
     }
     if (smallestPair.participantsLength == 3) {
       const moverId = smallestPair.lastParticipant;

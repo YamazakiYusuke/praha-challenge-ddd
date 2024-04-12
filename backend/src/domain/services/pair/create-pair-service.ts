@@ -1,5 +1,6 @@
 import { GetPairsByTeamIdQuery } from "src/domain/commands/pair/get-pairs-by-team-id-query";
 import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
+import { DomainServiceError } from "src/domain/errors/domain_service_error";
 import { ParticipantId, TeamId } from "src/domain/values/ids";
 import { PairName } from "src/domain/values/name";
 import { inject, injectable } from "tsyringe";
@@ -37,6 +38,6 @@ export class CreatePairService {
         return PairName.create(potentialName as string) as PairName;
       }
     }
-    throw new Error('All pair names are taken.');
+    throw new DomainServiceError('All pair names are taken.');
   }
 }

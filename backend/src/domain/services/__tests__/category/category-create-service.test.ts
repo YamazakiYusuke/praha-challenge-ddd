@@ -1,7 +1,7 @@
 import { GetCategoryByNameQuery } from 'src/domain/commands/category/get-one-category-by-name-query';
 import { SaveCategoryCommand } from 'src/domain/commands/category/save-category-command';
 import { Category, CategoryProps } from 'src/domain/entities/category';
-import { EntityError } from 'src/domain/errors/entity_error';
+import { DomainServiceError } from 'src/domain/errors/domain_service_error';
 import { CreateCategoryService } from 'src/domain/services/category/create-category-service';
 import { CategoryId } from 'src/domain/values/ids';
 import { CategoryName } from 'src/domain/values/name';
@@ -41,7 +41,7 @@ describe('# CreateCategoryService UnitTest\n', () => {
       // 準備
       when(getCategoryByNameQuery.execute(name)).thenResolve(Category.restore(CategoryId.restore('Id'), props));
       // 実行・確認
-      await expect(createCategoryService.execute(props)).rejects.toThrow(EntityError);
+      await expect(createCategoryService.execute(props)).rejects.toThrow(DomainServiceError);
       verify(getCategoryByNameQuery.execute(name)).once();
     });
 

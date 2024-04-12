@@ -5,7 +5,7 @@ import { SaveParticipantCommand } from "src/domain/commands/participant/save-par
 import { Transaction } from "src/domain/commands/transaction/transaction";
 import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
-import { ServiceError } from "src/domain/errors/service_error";
+import { DomainServiceError } from "src/domain/errors/domain_service_error";
 import { CreateAdminEmailService } from "src/domain/services/admin_email/create-admin-email-service";
 import { SendAdminEmailService } from "src/domain/services/admin_email/send-admin-email-service";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";
@@ -42,7 +42,7 @@ export class ReallocateLastParticipantInPairService {
     if (!fewestPair.hasValidNumberOfParticipants) {
       const mail = await this.createAdminEmailService.execute(AdminEmailContent.relocate(leavingParticipant, lastParticipant));
       await this.sendAdminEmailService.execute(mail);
-      throw new ServiceError('合流可能なペアーがありません');
+      throw new DomainServiceError('合流可能なペアーがありません');
     }
     if (fewestPair.participantsLength == Pair.maxNumber) {
 

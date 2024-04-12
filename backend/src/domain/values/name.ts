@@ -1,10 +1,10 @@
-import { ValueError } from "../errors/value_error";
+import { ValueObjectError } from "../errors/value_object_error";
 import { Value } from "./base/value";
 
 class Name extends Value<string> {
   protected constructor(value: string) {
     if (!value || value.trim() === '') {
-      throw new ValueError('Value cannot be empty');
+      throw new ValueObjectError('Value cannot be empty');
     }
     super(value)
   }
