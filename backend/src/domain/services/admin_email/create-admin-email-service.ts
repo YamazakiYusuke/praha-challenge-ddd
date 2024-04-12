@@ -1,7 +1,7 @@
 import { GetAllAdministratorsQuery } from "src/domain/commands/administrator/get-all-administrator-query";
 import { AdminEmail } from "src/domain/entities/admin-email";
+import { EmailStatus } from "src/domain/util/enums";
 import { AdminEmailContent } from "src/domain/values/admin-email-content";
-import { EmailStatus } from "src/util/enums";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

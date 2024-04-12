@@ -1,4 +1,4 @@
-import { createRandomIdString } from "src/util/random";
+import { createRandomIdString } from "src/domain/util/random";
 import { Value } from "./base/value";
 
 export class Id extends Value<string> {

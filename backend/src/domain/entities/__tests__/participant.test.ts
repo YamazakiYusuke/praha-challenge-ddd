@@ -1,9 +1,9 @@
 import { Participant } from "src/domain/entities/participant";
 import { EntityError } from "src/domain/errors/entity_error";
+import { EnrollmentStatusValue } from "src/domain/util/enums";
 import { Email } from "src/domain/values/email";
 import { PairId, ParticipantId, TeamId } from "src/domain/values/ids";
 import { PersonName } from "src/domain/values/name";
-import { EnrollmentStatusValue } from "src/util/enums";
 
 describe('# Participant Entity UnitTest \n', () => {
   describe('## restore \n', () => {

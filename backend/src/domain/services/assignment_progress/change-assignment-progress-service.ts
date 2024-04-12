@@ -1,6 +1,6 @@
 import { SaveAssignmentProgressCommand } from "src/domain/commands/assignment-progress/save-assignment-progress-command";
 import { AssignmentProgress } from "src/domain/entities/assignment-progress";
-import { AssignmentProgressStateValue } from "src/util/enums";
+import { AssignmentProgressStateValue } from "src/domain/util/enums";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

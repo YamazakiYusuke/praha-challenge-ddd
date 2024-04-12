@@ -1,5 +1,5 @@
+import { EnrollmentStatusValue } from "src/domain/util/enums";
 import { PersonName } from "src/domain/values/name";
-import { EnrollmentStatusValue } from "src/util/enums";
 import { EntityError } from "../errors/entity_error";
 import { Email } from "../values/email";
 import { PairId, ParticipantId, TeamId } from "../values/ids";

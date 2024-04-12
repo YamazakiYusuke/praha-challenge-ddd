@@ -1,8 +1,8 @@
 import { GetAssignmentProgressByIdQuery } from 'src/domain/commands/assignment-progress/get-assignment-progress-by-id-query';
 import { AssignmentProgress } from 'src/domain/entities/assignment-progress';
 import { IAssignmentProgressRepository } from 'src/domain/repositories/assignment-progress-repository';
+import { AssignmentProgressStateValue } from 'src/domain/util/enums';
 import { AssignmentId, AssignmentProgressId, ParticipantId } from 'src/domain/values/ids';
-import { AssignmentProgressStateValue } from 'src/util/enums';
 import { instance, mock, verify, when } from 'ts-mockito';
 
 describe('# GetAssignmentProgressByIdQuery UnitTest \n', () => {

@@ -1,10 +1,10 @@
 import { SaveParticipantCommand } from 'src/domain/commands/participant/save-participant-command';
 import { Participant } from 'src/domain/entities/participant';
 import { IParticipantRepository } from 'src/domain/repositories/participant-repository';
+import { EnrollmentStatusValue } from 'src/domain/util/enums';
 import { Email } from 'src/domain/values/email';
 import { PairId, TeamId } from 'src/domain/values/ids';
 import { PersonName } from 'src/domain/values/name';
-import { EnrollmentStatusValue } from 'src/util/enums';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 
 describe('# SaveParticipantCommand UnitTest \n', () => {

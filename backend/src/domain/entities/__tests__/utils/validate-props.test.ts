@@ -1,6 +1,6 @@
 import { validateProps } from "src/domain/entities/utils/validate-props";
+import { createRandomIdString } from "src/domain/util/random";
 import { Id } from "src/domain/values/ids";
-import { createRandomIdString } from "src/util/random";
 
 class SameId extends Id {
   static create(): SameId {

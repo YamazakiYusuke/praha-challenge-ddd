@@ -1,9 +1,9 @@
 import { SaveAdminMailCommand } from 'src/domain/commands/admin-mail/save-admin-mail-command';
 import { AdminEmail } from 'src/domain/entities/admin-email';
 import { IAdminMailRepository } from 'src/domain/repositories/admin-mail-repository';
+import { EmailStatus } from 'src/domain/util/enums';
 import { AdminEmailContent } from 'src/domain/values/admin-email-content';
 import { AdminEmailId } from 'src/domain/values/ids';
-import { EmailStatus } from 'src/util/enums';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 
 describe('# SaveAdminMailCommand UnitTest \n', () => {

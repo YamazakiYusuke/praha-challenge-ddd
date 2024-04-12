@@ -11,11 +11,11 @@ import { CreateAdminEmailService } from "src/domain/services/admin_email/create-
 import { SendAdminEmailService } from "src/domain/services/admin_email/send-admin-email-service";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";
 import { ReallocateLastParticipantInPairService } from "src/domain/services/pair/reallocate-last-participant-in-pair-service";
+import { EmailStatus, EnrollmentStatusValue } from "src/domain/util/enums";
 import { AdminEmailContent } from "src/domain/values/admin-email-content";
 import { Email } from "src/domain/values/email";
 import { AdminEmailId, PairId, ParticipantId, TeamId } from "src/domain/values/ids";
 import { PairName, PersonName } from "src/domain/values/name";
-import { EmailStatus, EnrollmentStatusValue } from "src/util/enums";
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 
 describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {

@@ -1,4 +1,4 @@
-import { AssignmentProgressStateValue } from "src/util/enums";
+import { AssignmentProgressStateValue } from "src/domain/util/enums";
 import { EntityError } from "../errors/entity_error";
 import { AssignmentId, AssignmentProgressId, ParticipantId } from "../values/ids";
 import { Entity } from "./base/entity";

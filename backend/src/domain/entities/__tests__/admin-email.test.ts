@@ -1,9 +1,9 @@
 import { Administrator } from "src/domain/entities/administrator";
 import { EntityError } from "src/domain/errors/entity_error";
+import { EmailStatus } from "src/domain/util/enums";
 import { AdminEmailContent } from "src/domain/values/admin-email-content";
 import { Email } from "src/domain/values/email";
 import { AdminEmailId } from "src/domain/values/ids";
-import { EmailStatus } from "src/util/enums";
 import { AdminEmail, AdminEmailProps } from "../admin-email";
 
 describe('# AdminEmail Entity UnitTest\n', () => {

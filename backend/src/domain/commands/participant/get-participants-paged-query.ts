@@ -1,8 +1,8 @@
 import { IGetQuery } from "src/domain/commands/base/get-query";
 import { Participant } from "src/domain/entities/participant";
 import { IParticipantRepository, ParticipantWithAssignments } from "src/domain/repositories/participant-repository";
+import { AssignmentProgressStateValue } from "src/domain/util/enums";
 import { AssignmentId } from "src/domain/values/ids";
-import { AssignmentProgressStateValue } from "src/util/enums";
 import { inject, injectable } from "tsyringe";
 
 export interface ParticipantPaginationProps {

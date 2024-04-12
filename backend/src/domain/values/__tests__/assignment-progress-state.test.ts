@@ -1,4 +1,4 @@
-import { AssignmentProgressStateValue } from "src/util/enums";
+import { AssignmentProgressStateValue } from "src/domain/util/enums";
 
 describe('# AssignmentProgressState UnitTest \n', () => {
   describe('## create \n', () => {

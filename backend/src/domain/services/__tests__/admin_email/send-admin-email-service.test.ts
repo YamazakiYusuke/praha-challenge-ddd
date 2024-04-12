@@ -1,9 +1,9 @@
-import { AdminEmail } from 'src/domain/entities/admin-email';
-import { AdminEmailContent } from 'src/domain/values/admin-email-content';
-import { EmailStatus } from 'src/util/enums';
-import { SendAdminEmailService } from 'src/domain/services/admin_email/send-admin-email-service';
-import { SendAdminMail } from 'src/domain/mail/send-mail/send-admin-mail';
 import { SaveAdminMailCommand } from 'src/domain/commands/admin-mail/save-admin-mail-command';
+import { AdminEmail } from 'src/domain/entities/admin-email';
+import { SendAdminMail } from 'src/domain/mail/send-mail/send-admin-mail';
+import { SendAdminEmailService } from 'src/domain/services/admin_email/send-admin-email-service';
+import { EmailStatus } from 'src/domain/util/enums';
+import { AdminEmailContent } from 'src/domain/values/admin-email-content';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 
 describe('# SendAdminEmailService UnitTest\n', () => {
@@ -16,7 +16,7 @@ describe('# SendAdminEmailService UnitTest\n', () => {
     sendAdminMail = mock(SendAdminMail);
     saveAdminMailCommand = mock(SaveAdminMailCommand);
     sendAdminEmailService = new SendAdminEmailService(instance(sendAdminMail), instance(saveAdminMailCommand));
-    
+
     const adminEmailContent = AdminEmailContent.restore({
       title: 'Test Email Title',
       body: 'Test Email Body',

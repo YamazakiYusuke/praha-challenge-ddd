@@ -10,10 +10,10 @@ import { CreateAdminEmailService } from "src/domain/services/admin_email/create-
 import { SendAdminEmailService } from "src/domain/services/admin_email/send-admin-email-service";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";
 import { EnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
+import { EnrollmentStatusValue } from "src/domain/util/enums";
 import { Email } from "src/domain/values/email";
 import { PairId, ParticipantId, TeamId } from "src/domain/values/ids";
 import { PairName, PersonName } from "src/domain/values/name";
-import { EnrollmentStatusValue } from "src/util/enums";
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 
 describe('# EnrollParticipantService UnitTest\n', () => {

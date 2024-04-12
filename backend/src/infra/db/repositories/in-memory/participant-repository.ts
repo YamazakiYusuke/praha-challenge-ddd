@@ -1,8 +1,8 @@
 import { AssignmentProgress, AssignmentProgressProps } from "src/domain/entities/assignment-progress";
 import { Participant } from "src/domain/entities/participant";
 import { IParticipantRepository, ParticipantWithAssignments } from "src/domain/repositories/participant-repository";
+import { AssignmentProgressStateValue } from "src/domain/util/enums";
 import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/ids";
-import { AssignmentProgressStateValue } from "src/util/enums";
 
 export class InMemoryParticipantRepository implements IParticipantRepository {
   private participants: Participant[] = [];

@@ -1,8 +1,8 @@
 import { Administrator } from "src/domain/entities/administrator";
 import { EntityError } from "src/domain/errors/entity_error";
+import { EmailStatus } from "src/domain/util/enums";
 import { AdminEmailContent } from "src/domain/values/admin-email-content";
 import { Email } from "src/domain/values/email";
-import { EmailStatus } from "src/util/enums";
 import { AdminEmailId } from "../values/ids";
 import { Entity } from "./base/entity";
 import { validateProps } from "./utils/validate-props";
