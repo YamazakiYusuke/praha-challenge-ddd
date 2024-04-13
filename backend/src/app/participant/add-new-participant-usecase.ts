@@ -1,10 +1,8 @@
 import { ParticipantDto } from "src/app/participant/dto/participant-dto";
-import { ErrorResponse } from "src/app/responses/error-response";
-import { SuccessResponse } from "src/app/responses/success-response";
-import { isExpectedError } from "src/app/util/is-expected-error";
+import { ExpectedErrorResponse, SuccessResponse, UnExpectedErrorResponse, UsecaseResponse } from "src/app/responses/usecase-responses";
+import { BaseError } from "src/domain/errors/base/base_error";
 import { EnrollParticipantService } from "src/domain/services/participant/enroll-participant-service";
 import { inject, injectable } from "tsyringe";
-import { debuglog } from "util";
 
 @injectable()
 export class AddNewParticipantUsecase {
@@ -13,16 +11,15 @@ export class AddNewParticipantUsecase {
     private readonly enrollParticipantService: EnrollParticipantService,
   ) { }
 
-  async execute(participantDto: ParticipantDto): Promise<SuccessResponse | ErrorResponse> {
+  async execute(participantDto: ParticipantDto): Promise<UsecaseResponse> {
     try {
       await this.enrollParticipantService.execute(participantDto.toEntity);
-      return new SuccessResponse('新規参加者の追加に成功しました');
+      return new SuccessResponse();
     } catch (e: any) {
-      debuglog(`Exception: ${e}`);
-      if (isExpectedError(e)) {
-        return new ErrorResponse(400, `新規参加者の追加に失敗しました。${e.name}:${e.message}`);
+      if (e instanceof BaseError) {
+        return new ExpectedErrorResponse();
       } else {
-        return new ErrorResponse(500, '新規参加者の追加に失敗しました。');
+        return new UnExpectedErrorResponse();
       }
     }
   }

@@ -1,4 +1,6 @@
-export class ValueObjectError extends Error {
+import { BaseError } from "src/domain/errors/base/base_error";
+
+export class ValueObjectError extends BaseError {
   constructor(message: string) {
     super(message);
     this.name = 'ValueObjectError';

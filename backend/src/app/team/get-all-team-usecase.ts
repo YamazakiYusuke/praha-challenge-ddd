@@ -1,9 +1,8 @@
+import { ExpectedErrorResponse, SuccessResponse, UnExpectedErrorResponse, UsecaseResponse } from "src/app/responses/usecase-responses";
 import { TeamDto } from "src/app/team/dto/team-dto";
-import { isExpectedError } from "src/app/util/is-expected-error";
 import { GetAllTeamsQuery } from "src/domain/commands/team/get-all-team-query";
+import { BaseError } from "src/domain/errors/base/base_error";
 import { inject, injectable } from "tsyringe";
-import { debuglog } from "util";
-import { ErrorResponse } from "../responses/error-response";
 
 @injectable()
 export class GetAllTeamsUsecase {
@@ -12,16 +11,16 @@ export class GetAllTeamsUsecase {
     private readonly getAllTeamsQuery: GetAllTeamsQuery,
   ) { }
 
-  public async execute(): Promise<TeamDto[] | ErrorResponse> {
+  public async execute(): Promise<UsecaseResponse> {
     try {
       const teams = await this.getAllTeamsQuery.execute();
-      return teams.map((team) => new TeamDto(team));
+      const value = teams.map((team) => new TeamDto(team));
+      return new SuccessResponse(value);
     } catch (e: any) {
-      debuglog(`Exception: ${e}`);
-      if (isExpectedError(e)) {
-        return new ErrorResponse(400, `チームの取得に失敗しました。${e.name}:${e.message}`);
+      if (e instanceof BaseError) {
+        return new ExpectedErrorResponse();
       } else {
-        return new ErrorResponse(500, 'チームの取得に失敗しました。');
+        return new UnExpectedErrorResponse();
       }
     }
   }

@@ -1,12 +1,11 @@
 import { AssignmentProgressDto } from "src/app/assignment-progress/dto/assignment-progress-dto";
-import { isExpectedError } from "src/app/util/is-expected-error";
+import { ExpectedErrorResponse, SuccessResponse, UnExpectedErrorResponse, UsecaseResponse } from "src/app/responses/usecase-responses";
 import { AssignmentProgress } from "src/domain/entities/assignment-progress";
+import { BaseError } from "src/domain/errors/base/base_error";
 import { ChangeAssignmentProgressService } from "src/domain/services/assignment_progress/change-assignment-progress-service";
 import { AssignmentProgressStateValue } from "src/domain/util/enums";
 import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/ids";
 import { inject, injectable } from "tsyringe";
-import { ErrorResponse } from "../responses/error-response";
-import { SuccessResponse } from "../responses/success-response";
 
 @injectable()
 export class ChangeAssignmentProgressUsecase {
@@ -15,7 +14,7 @@ export class ChangeAssignmentProgressUsecase {
     private readonly changeAssignmentProgressService: ChangeAssignmentProgressService,
   ) { }
 
-  public async execute({ assignmentProgressDto, newState }: { assignmentProgressDto: AssignmentProgressDto, newState: AssignmentProgressStateValue }): Promise<SuccessResponse | ErrorResponse> {
+  public async execute({ assignmentProgressDto, newState }: { assignmentProgressDto: AssignmentProgressDto, newState: AssignmentProgressStateValue }): Promise<UsecaseResponse> {
     try {
       const assignmentProgressId = AssignmentProgressId.restore(assignmentProgressDto.id);
       const assignmentId = AssignmentId.restore(assignmentProgressDto.assignmentId);
@@ -28,12 +27,12 @@ export class ChangeAssignmentProgressUsecase {
         assignmentProgressState,
       });
       await this.changeAssignmentProgressService.execute(assignmentProgress, newState);
-      return new SuccessResponse('課題のステータスの変更に成功しました');
+      return new SuccessResponse();
     } catch (e: any) {
-      if (isExpectedError(e)) {
-        return new ErrorResponse(400, `課題のステータスの変更に失敗しました。${e.name}:${e.message}`);
+      if (e instanceof BaseError) {
+        return new ExpectedErrorResponse();
       } else {
-        return new ErrorResponse(500, '課題のステータスの変更に失敗しました。');
+        return new UnExpectedErrorResponse();
       }
     }
   }

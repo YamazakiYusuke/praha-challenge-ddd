@@ -1,9 +1,8 @@
 import { ParticipantDto } from "src/app/participant/dto/participant-dto";
+import { ExpectedErrorResponse, SuccessResponse, UnExpectedErrorResponse, UsecaseResponse } from "src/app/responses/usecase-responses";
 import { GetAllParticipantsQuery } from "src/domain/commands/participant/get-all-participants-query";
+import { BaseError } from "src/domain/errors/base/base_error";
 import { inject, injectable } from "tsyringe";
-import { debuglog } from "util";
-import { ErrorResponse } from "../responses/error-response";
-import { isExpectedError } from "src/app/util/is-expected-error";
 
 @injectable()
 export class GetAllParticipantsUsecase {
@@ -12,16 +11,16 @@ export class GetAllParticipantsUsecase {
     private readonly getAllParticipantsQuery: GetAllParticipantsQuery,
   ) { }
 
-  public async execute(): Promise<ParticipantDto[] | ErrorResponse> {
+  public async execute(): Promise<UsecaseResponse> {
     try {
       const participants = await this.getAllParticipantsQuery.execute();
-      return participants.map((participant) => new ParticipantDto(participant));
+      const value = participants.map((participant) => new ParticipantDto(participant));
+      return new SuccessResponse(value);
     } catch (e: any) {
-      debuglog(`Exception: ${e}`);
-      if (isExpectedError(e)) {
-        return new ErrorResponse(400, `参加者の取得に失敗しました。${e.name}:${e.message}`);
+      if (e instanceof BaseError) {
+        return new ExpectedErrorResponse();
       } else {
-        return new ErrorResponse(500, '参加者の取得に失敗しました。');
+        return new UnExpectedErrorResponse();
       }
     }
   }

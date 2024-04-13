@@ -1,9 +1,8 @@
 import { PairDto } from "src/app/pair/dto/pair-dto";
 import { GetAllPairsQuery } from "src/domain/commands/pair/get-all-pairs-query";
+import { BaseError } from "src/domain/errors/base/base_error";
 import { inject, injectable } from "tsyringe";
-import { debuglog } from "util";
-import { ErrorResponse } from "../responses/error-response";
-import { isExpectedError } from "src/app/util/is-expected-error";
+import { ExpectedErrorResponse, SuccessResponse, UnExpectedErrorResponse, UsecaseResponse } from "../responses/usecase-responses";
 
 @injectable()
 export class GetAllPairsUsecase {
@@ -12,16 +11,16 @@ export class GetAllPairsUsecase {
     private readonly getAllPairsQuery: GetAllPairsQuery,
   ) { }
 
-  public async execute(): Promise<PairDto[] | ErrorResponse> {
+  public async execute(): Promise<UsecaseResponse> {
     try {
       const pairs = await this.getAllPairsQuery.execute();
-      return pairs.map((pair) => new PairDto(pair));
+      const value = pairs.map((pair) => new PairDto(pair));
+      return new SuccessResponse(value);
     } catch (e: any) {
-      debuglog(`Exception: ${e}`);
-      if (isExpectedError(e)) {
-        return new ErrorResponse(400, `ペアの取得に失敗しました。${e.name}:${e.message}`);
+      if (e instanceof BaseError) {
+        return new ExpectedErrorResponse();
       } else {
-        return new ErrorResponse(500, 'ペアの取得に失敗しました。');
+        return new UnExpectedErrorResponse();
       }
     }
   }
