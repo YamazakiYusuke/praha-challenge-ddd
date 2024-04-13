@@ -1,6 +1,8 @@
-import { Body, Controller, Put } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Put, Res } from '@nestjs/common';
+import { Response } from 'express';
 import { ChangeAssignmentProgressUsecase } from 'src/app/assignment-progress/change-assignment-progress-usecase';
 import { AssignmentProgressDto } from 'src/app/assignment-progress/dto/assignment-progress-dto';
+import { ExpectedErrorResponse, SuccessResponse, UnExpectedErrorResponse } from 'src/app/responses/usecase-responses';
 import { PutAssignmentProgressParam } from 'src/controller/assignment-progress/put_assignment_param';
 import { container } from 'tsyringe';
 
@@ -10,6 +12,7 @@ import { container } from 'tsyringe';
 export class AssignmentProgressController {
   @Put()
   async putAssignmentProgress(
+    @Res() res: Response,
     @Body() putAssignmentProgressParam: PutAssignmentProgressParam,
   ): Promise<void> {
     const dto = new AssignmentProgressDto({
@@ -19,9 +22,16 @@ export class AssignmentProgressController {
       assignmentProgressState: putAssignmentProgressParam.assignmentProgressState
     })
     const usecase = container.resolve(ChangeAssignmentProgressUsecase);
-    await usecase.execute({
+    const result = await usecase.execute({
       assignmentProgressDto: dto,
       newState: putAssignmentProgressParam.newState,
     })
+    if (result instanceof SuccessResponse) {
+      res.status(HttpStatus.CREATED).send();
+    } else if (result instanceof ExpectedErrorResponse) {
+      res.status(HttpStatus.BAD_REQUEST).send();
+    } else if (result instanceof UnExpectedErrorResponse) {
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
+    }
   }
 }

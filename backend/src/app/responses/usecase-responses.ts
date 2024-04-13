@@ -1,7 +1,7 @@
 export abstract class UsecaseResponse {}
 
-export class SuccessResponse implements UsecaseResponse {
-  constructor(public readonly value: any = undefined) {}
+export class SuccessResponse<T = any> implements UsecaseResponse {
+  constructor(public readonly value: T) {}
 
   get isSuccessResponse(): boolean {
     return true;
