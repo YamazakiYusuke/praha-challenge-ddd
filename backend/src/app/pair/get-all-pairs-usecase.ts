@@ -15,7 +15,7 @@ export class GetAllPairsUsecase {
     try {
       const pairs = await this.getAllPairsQuery.execute();
       const value = pairs.map((pair) => new PairDto(pair));
-      return new SuccessResponse(value);
+      return new SuccessResponse<PairDto[]>(value);
     } catch (e: any) {
       if (e instanceof BaseError) {
         return new ExpectedErrorResponse();

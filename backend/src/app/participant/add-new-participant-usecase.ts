@@ -14,7 +14,7 @@ export class AddNewParticipantUsecase {
   async execute(participantDto: ParticipantDto): Promise<UsecaseResponse> {
     try {
       await this.enrollParticipantService.execute(participantDto.toEntity);
-      return new SuccessResponse();
+      return new SuccessResponse(null);
     } catch (e: any) {
       if (e instanceof BaseError) {
         return new ExpectedErrorResponse();

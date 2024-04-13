@@ -1,8 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsNumber, IsString } from "class-validator";
-import { AssignmentProgressDto } from "src/app/assignment-progress/dto/assignment-progress-dto";
 
-export class PutAssignmentProgressParam {
+export class PutAssignmentProgressRequest {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()

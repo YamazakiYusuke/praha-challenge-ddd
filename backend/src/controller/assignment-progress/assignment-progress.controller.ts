@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { ChangeAssignmentProgressUsecase } from 'src/app/assignment-progress/change-assignment-progress-usecase';
 import { AssignmentProgressDto } from 'src/app/assignment-progress/dto/assignment-progress-dto';
 import { ExpectedErrorResponse, SuccessResponse, UnExpectedErrorResponse } from 'src/app/responses/usecase-responses';
-import { PutAssignmentProgressParam } from 'src/controller/assignment-progress/put_assignment_param';
+import { PutAssignmentProgressRequest } from 'src/controller/assignment-progress/request/put_assignment_request';
 import { container } from 'tsyringe';
 
 @Controller({
@@ -13,7 +13,7 @@ export class AssignmentProgressController {
   @Put()
   async putAssignmentProgress(
     @Res() res: Response,
-    @Body() putAssignmentProgressParam: PutAssignmentProgressParam,
+    @Body() putAssignmentProgressParam: PutAssignmentProgressRequest,
   ): Promise<void> {
     const dto = new AssignmentProgressDto({
       id: putAssignmentProgressParam.id,

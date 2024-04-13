@@ -14,7 +14,7 @@ export class LeaveParticipantUseCase {
   async execute(participantDto: ParticipantDto): Promise<UsecaseResponse> {
     try {
       await this.leaveParticipantService.execute(participantDto.toEntity);
-      return new SuccessResponse();
+      return new SuccessResponse(null);
     } catch (e: any) {
       if (e instanceof BaseError) {
         return new ExpectedErrorResponse();
