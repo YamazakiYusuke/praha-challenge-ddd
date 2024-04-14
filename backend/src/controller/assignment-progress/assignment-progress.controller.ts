@@ -1,4 +1,5 @@
 import { Body, Controller, HttpStatus, Put, Res } from '@nestjs/common';
+import { ApiResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 import { ChangeAssignmentProgressUsecase } from 'src/app/assignment-progress/change-assignment-progress-usecase';
 import { AssignmentProgressDto } from 'src/app/assignment-progress/dto/assignment-progress-dto';
@@ -11,6 +12,9 @@ import { container } from 'tsyringe';
 })
 export class AssignmentProgressController {
   @Put()
+  @ApiResponse({ status: HttpStatus.CREATED, description: 'Request succeed.'})
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request.'})
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Server error.'})
   async putAssignmentProgress(
     @Res() res: Response,
     @Body() putAssignmentProgressParam: PutAssignmentProgressRequest,

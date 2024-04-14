@@ -1,4 +1,5 @@
 import { Controller, Get, HttpStatus, Res } from '@nestjs/common';
+import { ApiResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 import { GetAllPairsUsecase } from 'src/app/pair/get-all-pairs-usecase';
 import { ExpectedErrorResponse, SuccessResponse, UnExpectedErrorResponse } from 'src/app/responses/usecase-responses';
@@ -10,6 +11,9 @@ import { container } from 'tsyringe';
 })
 export class PairController {
   @Get()
+  @ApiResponse({ status: HttpStatus.CREATED, description: 'Request succeed.', type: GetPairsResponse})
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request.'})
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Server error.'})
   async getPairs(
     @Res() res: Response,
   ): Promise<void> {
