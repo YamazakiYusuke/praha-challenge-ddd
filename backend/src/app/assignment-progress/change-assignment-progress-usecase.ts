@@ -1,5 +1,5 @@
 import { AssignmentProgressDto } from "src/app/assignment-progress/dto/assignment-progress-dto";
-import { ExpectedErrorResponse, SuccessResponse, UnExpectedErrorResponse, UsecaseResponse } from "src/app/responses/usecase-responses";
+import { ExpectedErrorResponse, UnExpectedErrorResponse, UsecaseErrorResponse, UsecaseSuccessResponse } from "src/app/responses/usecase-responses";
 import { AssignmentProgress } from "src/domain/entities/assignment-progress";
 import { BaseError } from "src/domain/errors/base/base_error";
 import { ChangeAssignmentProgressService } from "src/domain/services/assignment_progress/change-assignment-progress-service";
@@ -14,7 +14,7 @@ export class ChangeAssignmentProgressUsecase {
     private readonly changeAssignmentProgressService: ChangeAssignmentProgressService,
   ) { }
 
-  public async execute({ assignmentProgressDto, newState }: { assignmentProgressDto: AssignmentProgressDto, newState: AssignmentProgressStateValue }): Promise<UsecaseResponse> {
+  public async execute({ assignmentProgressDto, newState }: { assignmentProgressDto: AssignmentProgressDto, newState: AssignmentProgressStateValue }): Promise<UsecaseSuccessResponse<null> | UsecaseErrorResponse> {
     try {
       const assignmentProgressId = AssignmentProgressId.restore(assignmentProgressDto.id);
       const assignmentId = AssignmentId.restore(assignmentProgressDto.assignmentId);
@@ -27,7 +27,7 @@ export class ChangeAssignmentProgressUsecase {
         assignmentProgressState,
       });
       await this.changeAssignmentProgressService.execute(assignmentProgress, newState);
-      return new SuccessResponse(null);
+      return new UsecaseSuccessResponse(null);
     } catch (e: any) {
       if (e instanceof BaseError) {
         return new ExpectedErrorResponse();

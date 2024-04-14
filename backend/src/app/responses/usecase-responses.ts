@@ -1,20 +1,20 @@
-export abstract class UsecaseResponse {}
+export abstract class UsecaseErrorResponse { }
 
-export class SuccessResponse<T = any> implements UsecaseResponse {
-  constructor(public readonly value: T) {}
+export class UsecaseSuccessResponse<T = any> {
+  constructor(public readonly value: T) { }
 
   get isSuccessResponse(): boolean {
     return true;
   }
 }
 
-export class ExpectedErrorResponse implements UsecaseResponse {
+export class ExpectedErrorResponse implements UsecaseErrorResponse {
   get isExpectedErrorResponse(): boolean {
     return true;
   }
 }
 
-export class UnExpectedErrorResponse implements UsecaseResponse {
+export class UnExpectedErrorResponse implements UsecaseErrorResponse {
   get isUnExpectedErrorResponse(): boolean {
     return true;
   }

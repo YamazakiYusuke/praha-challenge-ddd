@@ -1,5 +1,5 @@
 import { ParticipantDto } from "src/app/participant/dto/participant-dto";
-import { ExpectedErrorResponse, SuccessResponse, UnExpectedErrorResponse, UsecaseResponse } from "src/app/responses/usecase-responses";
+import { ExpectedErrorResponse, UnExpectedErrorResponse, UsecaseErrorResponse, UsecaseSuccessResponse } from "src/app/responses/usecase-responses";
 import { GetAllParticipantsQuery } from "src/domain/commands/participant/get-all-participants-query";
 import { BaseError } from "src/domain/errors/base/base_error";
 import { inject, injectable } from "tsyringe";
@@ -11,11 +11,11 @@ export class GetAllParticipantsUsecase {
     private readonly getAllParticipantsQuery: GetAllParticipantsQuery,
   ) { }
 
-  public async execute(): Promise<UsecaseResponse> {
+  public async execute(): Promise<UsecaseSuccessResponse<ParticipantDto[]> | UsecaseErrorResponse> {
     try {
       const participants = await this.getAllParticipantsQuery.execute();
       const value = participants.map((participant) => new ParticipantDto(participant));
-      return new SuccessResponse(value);
+      return new UsecaseSuccessResponse(value);
     } catch (e: any) {
       if (e instanceof BaseError) {
         return new ExpectedErrorResponse();

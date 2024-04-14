@@ -1,4 +1,4 @@
-import { ExpectedErrorResponse, SuccessResponse, UnExpectedErrorResponse, UsecaseResponse } from "src/app/responses/usecase-responses";
+import { ExpectedErrorResponse, UnExpectedErrorResponse, UsecaseErrorResponse, UsecaseSuccessResponse } from "src/app/responses/usecase-responses";
 import { TeamDto } from "src/app/team/dto/team-dto";
 import { GetAllTeamsQuery } from "src/domain/commands/team/get-all-team-query";
 import { BaseError } from "src/domain/errors/base/base_error";
@@ -11,11 +11,11 @@ export class GetAllTeamsUsecase {
     private readonly getAllTeamsQuery: GetAllTeamsQuery,
   ) { }
 
-  public async execute(): Promise<UsecaseResponse> {
+  public async execute(): Promise<UsecaseSuccessResponse<TeamDto[]> | UsecaseErrorResponse> {
     try {
       const teams = await this.getAllTeamsQuery.execute();
       const value = teams.map((team) => new TeamDto(team));
-      return new SuccessResponse(value);
+      return new UsecaseSuccessResponse(value);
     } catch (e: any) {
       if (e instanceof BaseError) {
         return new ExpectedErrorResponse();

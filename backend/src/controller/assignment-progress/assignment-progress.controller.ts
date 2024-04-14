@@ -3,7 +3,7 @@ import { ApiResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 import { ChangeAssignmentProgressUsecase } from 'src/app/assignment-progress/change-assignment-progress-usecase';
 import { AssignmentProgressDto } from 'src/app/assignment-progress/dto/assignment-progress-dto';
-import { ExpectedErrorResponse, SuccessResponse, UnExpectedErrorResponse } from 'src/app/responses/usecase-responses';
+import { ExpectedErrorResponse, UnExpectedErrorResponse, UsecaseSuccessResponse } from 'src/app/responses/usecase-responses';
 import { PutAssignmentProgressRequest } from 'src/controller/assignment-progress/request/put_assignment_request';
 import { container } from 'tsyringe';
 
@@ -12,9 +12,9 @@ import { container } from 'tsyringe';
 })
 export class AssignmentProgressController {
   @Put()
-  @ApiResponse({ status: HttpStatus.CREATED, description: 'Request succeed.'})
-  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request.'})
-  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Server error.'})
+  @ApiResponse({ status: HttpStatus.CREATED, description: 'Request succeed.' })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request.' })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Server error.' })
   async putAssignmentProgress(
     @Res() res: Response,
     @Body() putAssignmentProgressParam: PutAssignmentProgressRequest,
@@ -30,7 +30,7 @@ export class AssignmentProgressController {
       assignmentProgressDto: dto,
       newState: putAssignmentProgressParam.newState,
     })
-    if (result instanceof SuccessResponse) {
+    if (result instanceof UsecaseSuccessResponse) {
       res.status(HttpStatus.CREATED).send();
     } else if (result instanceof ExpectedErrorResponse) {
       res.status(HttpStatus.BAD_REQUEST).send();
