@@ -13,7 +13,10 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
-    "paths": {"@testUtil/*": ["testUtil/*"]},
-    "lib": ["es2019"]
+    "paths": {
+      "@testUtil/*": ["testUtil/*"]
+    },
+    "lib": ["es2019"],
+    "moduleResolution": "node"
   }
 }
