@@ -17,18 +17,18 @@ export class AssignmentProgressController {
   @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Server error.' })
   async putAssignmentProgress(
     @Res() res: Response,
-    @Body() putAssignmentProgressParam: PutAssignmentProgressRequest,
+    @Body() putAssignmentProgressRequest: PutAssignmentProgressRequest,
   ): Promise<void> {
     const dto = new AssignmentProgressDto({
-      id: putAssignmentProgressParam.id,
-      assignmentId: putAssignmentProgressParam.assignmentId,
-      participantId: putAssignmentProgressParam.participantId,
-      assignmentProgressState: putAssignmentProgressParam.assignmentProgressState
+      id: putAssignmentProgressRequest.id,
+      assignmentId: putAssignmentProgressRequest.assignmentId,
+      participantId: putAssignmentProgressRequest.participantId,
+      assignmentProgressState: putAssignmentProgressRequest.assignmentProgressState
     })
     const usecase = container.resolve(ChangeAssignmentProgressUsecase);
     const result = await usecase.execute({
       assignmentProgressDto: dto,
-      newState: putAssignmentProgressParam.newState,
+      newState: putAssignmentProgressRequest.newState,
     })
     if (result instanceof UsecaseSuccessResponse) {
       res.status(HttpStatus.CREATED).send();
