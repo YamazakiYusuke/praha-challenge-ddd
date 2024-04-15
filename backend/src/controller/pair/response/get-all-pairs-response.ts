@@ -1,17 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { PairDto } from 'src/app/pair/dto/pair-dto'
 
-export class GetPairsResponse {
+export class GetAllPairsResponse {
   @ApiProperty({ type: () => PairData, isArray: true })
   readonly pairs: PairData[]
 
   public constructor(dtoPairs: PairDto[]) {
     this.pairs = dtoPairs.map(({ id, teamId, name, participantIds }) => {
       return new PairData({
-        id,
-        teamId,
-        name,
-        participantIds
+        id: id,
+        teamId: teamId,
+        name: name,
+        participantIds: participantIds
       })
     })
   }
