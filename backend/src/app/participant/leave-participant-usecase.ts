@@ -13,6 +13,7 @@ export class LeaveParticipantUseCase {
 
   async execute(participantDto: ParticipantDto): Promise<UsecaseSuccessResponse<null> | UsecaseErrorResponse> {
     try {
+      // TODO: participantが存在するかのバリデーション実装
       await this.leaveParticipantService.execute(participantDto.toEntity);
       return new UsecaseSuccessResponse(null);
     } catch (e: any) {

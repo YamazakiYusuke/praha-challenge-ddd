@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger'
 import { ParticipantDto } from 'src/app/participant/dto/participant-dto'
 import { ParticipantResponse } from 'src/controller/participant/response/participant-response'
 
-export class GetPairsResponse {
+export class GetAllParticipantsResponse {
   @ApiProperty({ type: () => ParticipantResponse, isArray: true })
   readonly participants: ParticipantResponse[]
 

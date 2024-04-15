@@ -12,14 +12,34 @@ export class ParticipantDto extends Dto<Participant> {
   public readonly pairId: string | undefined;
   public readonly enrollmentStatus: number;
 
-  constructor(participant: Participant) {
+  constructor(props: {
+    id: string;
+    name: string;
+    email: string;
+    teamId: string | undefined;
+    pairId: string | undefined;
+    enrollmentStatus: number;
+  }) {
     super();
-    this.id = participant.id.value;
-    this.name = participant.name.value;
-    this.email = participant.email.value;
-    this.teamId = participant.teamId ? participant.teamId.value : undefined;
-    this.pairId = participant.pairId ? participant.pairId.value : undefined;
-    this.enrollmentStatus = participant.enrollmentStatus;
+    this.id = props.id;
+    this.name = props.name;
+    this.email = props.email;
+    this.teamId = props.teamId;
+    this.pairId = props.pairId;
+    this.enrollmentStatus = props.enrollmentStatus;
+  }
+
+  static fromEntity(participant: Participant): ParticipantDto {
+    return new ParticipantDto(
+      {
+        id: participant.id.value,
+        name: participant.name.value,
+        email: participant.email.value,
+        teamId: participant.teamId ? participant.teamId.value : undefined,
+        pairId: participant.pairId ? participant.pairId.value : undefined,
+        enrollmentStatus: participant.enrollmentStatus,
+      }
+    );
   }
 
   get toEntity(): Participant {

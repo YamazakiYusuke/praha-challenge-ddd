@@ -3,6 +3,7 @@ import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { GetParticipantByIdQuery } from "src/domain/commands/participant/get-participant-by-id-query";
 import { SaveParticipantCommand } from "src/domain/commands/participant/save-participant-command";
 import { Transaction } from "src/domain/commands/transaction/transaction";
+import { Pair } from "src/domain/entities/pair";
 import { Participant } from "src/domain/entities/participant";
 import { DomainServiceError } from "src/domain/errors/domain_service_error";
 import { CreateAdminEmailService } from "src/domain/services/admin_email/create-admin-email-service";
@@ -39,7 +40,7 @@ export class EnrollParticipantService {
       await this.sendAdminEmailService.execute(mail);
       throw new DomainServiceError('参加可能なペアがありません');
     }
-    if (smallestPair.participantsLength == 3) {
+    if (smallestPair.participantsLength == Pair.maxNumber) {
       const moverId = smallestPair.lastParticipant;
       const mover = await this.getParticipantByIdQuery.execute(moverId) as Participant;
 

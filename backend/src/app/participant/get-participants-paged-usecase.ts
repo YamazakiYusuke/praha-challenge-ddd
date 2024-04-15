@@ -14,7 +14,7 @@ export class GetParticipantsPagedUsecase {
   public async execute(props: ParticipantPaginationProps): Promise<UsecaseSuccessResponse<ParticipantDto[]> | UsecaseErrorResponse> {
     try {
       const participants = await this.getParticipantsWithAssignmentsPagedQuery.execute(props);
-      const value = participants.map((participant) => new ParticipantDto(participant));
+      const value = participants.map((participant) => ParticipantDto.fromEntity(participant));
       return new UsecaseSuccessResponse(value);
     } catch (e: any) {
       if (e instanceof BaseError) {

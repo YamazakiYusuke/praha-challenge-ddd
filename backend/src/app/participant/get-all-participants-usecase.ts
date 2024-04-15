@@ -14,7 +14,7 @@ export class GetAllParticipantsUsecase {
   public async execute(): Promise<UsecaseSuccessResponse<ParticipantDto[]> | UsecaseErrorResponse> {
     try {
       const participants = await this.getAllParticipantsQuery.execute();
-      const value = participants.map((participant) => new ParticipantDto(participant));
+      const value = participants.map((participant) => ParticipantDto.fromEntity(participant));
       return new UsecaseSuccessResponse(value);
     } catch (e: any) {
       if (e instanceof BaseError) {

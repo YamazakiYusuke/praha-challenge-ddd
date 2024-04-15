@@ -4,7 +4,7 @@ import { Response } from 'express';
 import { ChangeAssignmentProgressUsecase } from 'src/app/assignment-progress/change-assignment-progress-usecase';
 import { AssignmentProgressDto } from 'src/app/assignment-progress/dto/assignment-progress-dto';
 import { ExpectedErrorResponse, UnExpectedErrorResponse, UsecaseSuccessResponse } from 'src/app/responses/usecase-responses';
-import { PutAssignmentProgressRequest } from 'src/controller/assignment-progress/request/put_assignment_request';
+import { PutAssignmentProgressRequest } from 'src/controller/assignment-progress/request/put-assignment-request';
 import { container } from 'tsyringe';
 
 @Controller({
