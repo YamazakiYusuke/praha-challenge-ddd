@@ -6,7 +6,6 @@ import { Transaction } from "src/domain/commands/transaction/transaction";
 import { Pair } from "src/domain/entities/pair";
 import { Participant, ParticipantProps } from "src/domain/entities/participant";
 import { DomainServiceError } from "src/domain/errors/domain_service_error";
-import { EntityError } from "src/domain/errors/entity_error";
 import { CreateAdminEmailService } from "src/domain/services/admin_email/create-admin-email-service";
 import { SendAdminEmailService } from "src/domain/services/admin_email/send-admin-email-service";
 import { CreatePairService } from "src/domain/services/pair/create-pair-service";

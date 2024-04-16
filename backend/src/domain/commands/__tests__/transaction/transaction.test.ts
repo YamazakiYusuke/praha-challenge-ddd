@@ -13,9 +13,7 @@ describe('# Transaction UnitTest \n', () => {
 
   it('- should execute transaction \n', async () => {
     // 準備
-    const transactionCallback = async (transaction: any) => {
-      // Your transaction logic here
-    };
+    const transactionCallback = async () => {};
 
     when(transactionRepository.execute(transactionCallback)).thenResolve();
 

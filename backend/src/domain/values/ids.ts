@@ -13,7 +13,7 @@ export class Id extends Value<string> {
 
 export class AdministratorId extends Id {
   static create(): AdministratorId {
-    let id = createRandomIdString();
+    const id = createRandomIdString();
     return new AdministratorId(id);
   }
 
@@ -28,7 +28,7 @@ export class AdministratorId extends Id {
 
 export class AssignmentProgressId extends Id {
   static create(): AssignmentProgressId {
-    let id = createRandomIdString();
+    const id = createRandomIdString();
     return new AssignmentProgressId(id);
   }
 
@@ -43,7 +43,7 @@ export class AssignmentProgressId extends Id {
 
 export class AssignmentId extends Id {
   static create(): AssignmentId {
-    let id = createRandomIdString();
+    const id = createRandomIdString();
     return new AssignmentId(id);
   }
 
@@ -58,7 +58,7 @@ export class AssignmentId extends Id {
 
 export class CategoryId extends Id {
   static create(): CategoryId {
-    let id = createRandomIdString();
+    const id = createRandomIdString();
     return new CategoryId(id);
   }
 
@@ -73,7 +73,7 @@ export class CategoryId extends Id {
 
 export class PairId extends Id {
   static create(): PairId {
-    let id = createRandomIdString();
+    const id = createRandomIdString();
     return new PairId(id);
   }
 
@@ -88,7 +88,7 @@ export class PairId extends Id {
 
 export class ParticipantId extends Id {
   static create(): ParticipantId {
-    let id = createRandomIdString();
+    const id = createRandomIdString();
     return new ParticipantId(id);
   }
 
@@ -103,7 +103,7 @@ export class ParticipantId extends Id {
 
 export class ParticipantsId extends Id {
   static create(): ParticipantsId {
-    let id = createRandomIdString();
+    const id = createRandomIdString();
     return new ParticipantsId(id);
   }
 
@@ -118,7 +118,7 @@ export class ParticipantsId extends Id {
 
 export class TeamId extends Id {
   static create(): TeamId {
-    let id = createRandomIdString();
+    const id = createRandomIdString();
     return new TeamId(id);
   }
 
@@ -133,7 +133,7 @@ export class TeamId extends Id {
 
 export class AdminEmailId extends Id {
   static create(): AdminEmailId {
-    let id = createRandomIdString();
+    const id = createRandomIdString();
     return new AdminEmailId(id);
   }
 
@@ -148,7 +148,7 @@ export class AdminEmailId extends Id {
 
 export class GenerationId extends Id {
   static create(): GenerationId {
-    let id = createRandomIdString();
+    const id = createRandomIdString();
     return new GenerationId(id);
   }
 

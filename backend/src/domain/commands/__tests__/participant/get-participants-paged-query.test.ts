@@ -24,10 +24,9 @@ describe('# GetParticipantsWithAssignmentsPagedQuery UnitTest \n', () => {
   const assignmentId2 = AssignmentId.restore('2');
   const participantWithAssignmentLength = 14;
   const participantWithAssignments: ParticipantWithAssignments[] = Array.from({ length: participantWithAssignmentLength }, (_, i) => {
-    let participant: Participant;
     let assignmentProgress1: AssignmentProgress;
     let assignmentProgress2: AssignmentProgress;
-    participant = Participant.restore(participantId(i), {
+    const participant = Participant.restore(participantId(i), {
       name: PersonName.create(`Participant ${i}`),
       email: Email.create(`participant${i}@example.com`),
       enrollmentStatus: EnrollmentStatusValue.Enrolled,

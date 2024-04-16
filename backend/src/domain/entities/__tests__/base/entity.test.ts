@@ -4,13 +4,13 @@ import { Id } from "src/domain/values/ids";
 
 class SameId extends Id {
   static create(): SameId {
-    let id = createRandomIdString();
+    const id = createRandomIdString();
     return new SameId(id);
   }
 }
 interface SameProps {
   name: string;
-  sex: Number;
+  sex: number;
 }
 class SameEntity extends Entity<SameId, SameProps> {
   constructor(id: SameId, props: SameProps) {
