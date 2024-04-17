@@ -20,8 +20,15 @@ export class Participant extends Entity<ParticipantId, ParticipantProps> {
     super(id, props)
   }
 
-  static create(props: ParticipantProps): Participant {
-    return new Participant(ParticipantId.create(), props);
+  static create(props: {name: PersonName, email: Email}): Participant {
+    const newProps = {
+      name: props.name,
+      email: props.email,
+      teamId: undefined,
+      pairId: undefined,
+      enrollmentStatus: EnrollmentStatusValue.Enrolled
+    };
+    return new Participant(ParticipantId.create(), newProps);
   }
 
   static restore(id: ParticipantId, props: ParticipantProps): Participant {

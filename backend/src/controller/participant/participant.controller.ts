@@ -2,14 +2,16 @@ import { Body, Controller, Get, HttpStatus, Post, Put, Res } from '@nestjs/commo
 import { ApiResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AddNewParticipantUsecase } from 'src/app/participant/add-new-participant-usecase';
+import { ParticipantDto } from 'src/app/participant/dto/participant-dto';
 import { EnrollParticipantUseCase } from 'src/app/participant/enroll-participant-usecase';
 import { GetAllParticipantsUsecase } from 'src/app/participant/get-all-participants-usecase';
 import { GetParticipantsPagedUsecase } from 'src/app/participant/get-participants-paged-usecase';
 import { LeaveParticipantUseCase } from 'src/app/participant/leave-participant-usecase';
 import { WithdrawnParticipantUseCase } from 'src/app/participant/withdrawn-participant-usecase';
 import { ExpectedErrorResponse, UnExpectedErrorResponse, UsecaseSuccessResponse } from 'src/app/responses/usecase-responses';
-import { ParticipantRequest } from 'src/controller/participant/request/get-participant-request';
 import { GetParticipantsPagedRequest } from 'src/controller/participant/request/get-participants-paged-request';
+import { ParticipantRequest } from 'src/controller/participant/request/participant-request';
+import { PostParticipantRequest } from 'src/controller/participant/request/post-participant-request';
 import { GetAllParticipantsResponse } from 'src/controller/participant/response/get-all-participants-response';
 import { GetParticipantsPagedResponse } from 'src/controller/participant/response/get-participants-paged-response';
 import { ParticipantPaginationProps } from 'src/domain/commands/participant/get-participants-paged-query';
@@ -66,11 +68,10 @@ export class ParticipantController {
   @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Server error.' })
   async addNewParticipant(
     @Res() res: Response,
-    @Body() participantRequest: ParticipantRequest,
+    @Body() postParticipantRequest: PostParticipantRequest,
   ): Promise<void> {
     const usecase = container.resolve(AddNewParticipantUsecase);
-    const props = participantRequest.toProps;
-    const result = await usecase.execute(props);
+    const result = await usecase.execute(postParticipantRequest.name, postParticipantRequest.email);
     if (result instanceof UsecaseSuccessResponse) {
       res.status(HttpStatus.CREATED).send();
     } else if (result instanceof ExpectedErrorResponse) {
@@ -89,8 +90,8 @@ export class ParticipantController {
     @Body() participantRequest: ParticipantRequest,
   ): Promise<void> {
     const usecase = container.resolve(EnrollParticipantUseCase);
-    const props = participantRequest.toProps;
-    const result = await usecase.execute(props);
+    const dto = this.toParticipantDto(participantRequest);
+    const result = await usecase.execute(dto);
     if (result instanceof UsecaseSuccessResponse) {
       res.status(HttpStatus.CREATED).send();
     } else if (result instanceof ExpectedErrorResponse) {
@@ -109,8 +110,8 @@ export class ParticipantController {
     @Body() participantRequest: ParticipantRequest,
   ): Promise<void> {
     const usecase = container.resolve(LeaveParticipantUseCase);
-    const props = participantRequest.toProps;
-    const result = await usecase.execute(props);
+    const dto = this.toParticipantDto(participantRequest);
+    const result = await usecase.execute(dto);
     if (result instanceof UsecaseSuccessResponse) {
       res.status(HttpStatus.CREATED).send();
     } else if (result instanceof ExpectedErrorResponse) {
@@ -129,8 +130,8 @@ export class ParticipantController {
     @Body() participantRequest: ParticipantRequest,
   ): Promise<void> {
     const usecase = container.resolve(WithdrawnParticipantUseCase);
-    const props = participantRequest.toProps;
-    const result = await usecase.execute(props);
+    const dto = this.toParticipantDto(participantRequest);
+    const result = await usecase.execute(dto);
     if (result instanceof UsecaseSuccessResponse) {
       res.status(HttpStatus.CREATED).send();
     } else if (result instanceof ExpectedErrorResponse) {
@@ -149,5 +150,16 @@ export class ParticipantController {
         assignmentProgressState: state.assignmentProgressState
       }))
     };
+  }
+
+  private toParticipantDto(request: ParticipantRequest): ParticipantDto {
+    return new ParticipantDto({
+      id: request.id,
+      name: request.name,
+      email: request.email,
+      teamId: request.teamId,
+      pairId: request.pairId,
+      enrollmentStatus: request.enrollmentStatus
+    });
   }
 }

@@ -3,7 +3,7 @@ import { Participant } from 'src/domain/entities/participant';
 import { IParticipantRepository } from 'src/domain/repositories/participant-repository';
 import { EnrollmentStatusValue } from 'src/domain/util/enums';
 import { Email } from 'src/domain/values/email';
-import { PairId, TeamId } from 'src/domain/values/ids';
+import { PairId, ParticipantId, TeamId } from 'src/domain/values/ids';
 import { PersonName } from 'src/domain/values/name';
 import { instance, mock, verify, when } from 'ts-mockito';
 
@@ -19,7 +19,7 @@ describe('# GetParticipantByEmailQuery UnitTest \n', () => {
   it('- should get participant by email \n', async () => {
     // 準備
     const email = Email.create('test@example.com');
-    const participant = Participant.create({
+    const participant = Participant.restore(ParticipantId.create(), {
       name: PersonName.create('Test Participant'),
       email: email,
       teamId: TeamId.create(),
