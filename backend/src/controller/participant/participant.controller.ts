@@ -12,6 +12,8 @@ import { ParticipantRequest } from 'src/controller/participant/request/get-parti
 import { GetParticipantsPagedRequest } from 'src/controller/participant/request/get-participants-paged-request';
 import { GetAllParticipantsResponse } from 'src/controller/participant/response/get-all-participants-response';
 import { GetParticipantsPagedResponse } from 'src/controller/participant/response/get-participants-paged-response';
+import { ParticipantPaginationProps } from 'src/domain/commands/participant/get-participants-paged-query';
+import { AssignmentId } from 'src/domain/values/ids';
 import { container } from 'tsyringe';
 
 @Controller({
@@ -46,7 +48,7 @@ export class ParticipantController {
     @Body() getParticipantsPagedRequest: GetParticipantsPagedRequest,
   ): Promise<void> {
     const usecase = container.resolve(GetParticipantsPagedUsecase);
-    const props = getParticipantsPagedRequest.toProps;
+    const props = this.toParticipantPaginationProps(getParticipantsPagedRequest);
     const result = await usecase.execute(props);
     if (result instanceof UsecaseSuccessResponse) {
       const response = new GetParticipantsPagedResponse(result.value, getParticipantsPagedRequest);
@@ -136,5 +138,16 @@ export class ParticipantController {
     } else if (result instanceof UnExpectedErrorResponse) {
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
     }
+  }
+
+  private toParticipantPaginationProps(request: GetParticipantsPagedRequest): ParticipantPaginationProps {
+    return {
+      page: request.page,
+      size: request.size,
+      assignmentStates: request.assignmentStates.map(state => ({
+        assignmentId: AssignmentId.restore(state.assignmentId),
+        assignmentProgressState: state.assignmentProgressState
+      }))
+    };
   }
 }

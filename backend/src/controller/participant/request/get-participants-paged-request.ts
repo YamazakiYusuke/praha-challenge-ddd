@@ -12,18 +12,4 @@ export class GetParticipantsPagedRequest {
 
   @ApiProperty({ type: () => AssignmentStateRequest, isArray: true })
   readonly assignmentStates!: AssignmentStateRequest[];
-
-  public get toProps(): ParticipantPaginationProps {
-    console.log(`Error toProps page: ${this.page}`)
-    console.log(`Error toProps size: ${this.size}`)
-    console.log(`Error toProps: ${this.assignmentStates}`)
-    return {
-      page: this.page,
-      size: this.size,
-      assignmentStates: this.assignmentStates.map(state => ({
-        assignmentId: AssignmentId.restore(state.assignmentId),
-        assignmentProgressState: state.assignmentProgressState
-      }))
-    };
-  }
 }
