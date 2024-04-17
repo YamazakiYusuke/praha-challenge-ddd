@@ -17,6 +17,7 @@ export class EnrollParticipantUseCase {
       await this.enrollParticipantService.execute(participantDto.toEntity)
       return new UsecaseSuccessResponse(null);
     } catch (e: any) {
+      console.error('EnrollParticipantUseCase:', e);
       if (e instanceof BaseError) {
         return new ExpectedErrorResponse();
       } else {

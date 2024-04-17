@@ -17,6 +17,7 @@ export class GetAllPairsUsecase {
       const value = pairs.map((pair) => new PairDto(pair));
       return new UsecaseSuccessResponse<PairDto[]>(value);
     } catch (e: any) {
+      console.error('GetAllPairsUsecase:', e);
       if (e instanceof BaseError) {
         return new ExpectedErrorResponse();
       } else {

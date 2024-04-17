@@ -17,6 +17,7 @@ export class GetAllTeamsUsecase {
       const value = teams.map((team) => new TeamDto(team));
       return new UsecaseSuccessResponse(value);
     } catch (e: any) {
+      console.error('GetAllTeamsUsecase:', e);
       if (e instanceof BaseError) {
         return new ExpectedErrorResponse();
       } else {

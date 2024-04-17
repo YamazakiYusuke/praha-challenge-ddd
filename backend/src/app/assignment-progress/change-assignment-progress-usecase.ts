@@ -29,6 +29,7 @@ export class ChangeAssignmentProgressUsecase {
       await this.changeAssignmentProgressService.execute(assignmentProgress, newState);
       return new UsecaseSuccessResponse(null);
     } catch (e: any) {
+      console.error('ChangeAssignmentProgressUsecase:', e);
       if (e instanceof BaseError) {
         return new ExpectedErrorResponse();
       } else {

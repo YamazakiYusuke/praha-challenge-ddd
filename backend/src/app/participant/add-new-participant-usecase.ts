@@ -26,6 +26,7 @@ export class AddNewParticipantUsecase {
       await this.enrollParticipantService.execute(newParticipant);
       return new UsecaseSuccessResponse(null);
     } catch (e: any) {
+      console.error('AddNewParticipantUsecase:', e);
       if (e instanceof BaseError) {
         return new ExpectedErrorResponse();
       } else {

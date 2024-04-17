@@ -17,6 +17,7 @@ export class LeaveParticipantUseCase {
       await this.leaveParticipantService.execute(participantDto.toEntity);
       return new UsecaseSuccessResponse(null);
     } catch (e: any) {
+      console.error('LeaveParticipantUseCase:', e);
       if (e instanceof BaseError) {
         return new ExpectedErrorResponse();
       } else {

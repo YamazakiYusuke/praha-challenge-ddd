@@ -17,6 +17,7 @@ export class GetParticipantsPagedUsecase {
       const value = participants.map((participant) => ParticipantDto.fromEntity(participant));
       return new UsecaseSuccessResponse(value);
     } catch (e: any) {
+      console.error('GetParticipantsPagedUsecase:', e);
       if (e instanceof BaseError) {
         return new ExpectedErrorResponse();
       } else {

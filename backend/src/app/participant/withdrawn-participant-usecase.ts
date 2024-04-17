@@ -17,6 +17,7 @@ export class WithdrawnParticipantUseCase {
       await this.withdrawnParticipantService.execute(participantDto.toEntity);
       return new UsecaseSuccessResponse(null);
     } catch (e: any) {
+      console.error('WithdrawnParticipantUseCase:', e);
       if (e instanceof BaseError) {
         return new ExpectedErrorResponse();
       } else {

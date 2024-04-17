@@ -17,6 +17,7 @@ export class GetAllParticipantsUsecase {
       const value = participants.map((participant) => ParticipantDto.fromEntity(participant));
       return new UsecaseSuccessResponse(value);
     } catch (e: any) {
+      console.error('GetAllParticipantsUsecase:', e);
       if (e instanceof BaseError) {
         return new ExpectedErrorResponse();
       } else {
