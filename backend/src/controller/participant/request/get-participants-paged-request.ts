@@ -1,33 +1,29 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { ParticipantDto } from "src/app/participant/dto/participant-dto";
+import { AssignmentStateRequest } from "src/controller/participant/request/assignment-state-request";
+import { ParticipantPaginationProps } from "src/domain/commands/participant/get-participants-paged-query";
+import { AssignmentId } from "src/domain/values/ids";
 
-export class ParticipantRequest {
+export class GetParticipantsPagedRequest {
   @ApiProperty()
-  readonly id!: string;
-
-  @ApiProperty()
-  readonly name!: string;
-
-  @ApiProperty()
-  readonly email!: string;
+  readonly page!: number;
 
   @ApiProperty()
-  readonly teamId?: string;
+  readonly size!: number;
 
-  @ApiProperty()
-  readonly pairId?: string;
+  @ApiProperty({ type: () => AssignmentStateRequest, isArray: true })
+  readonly assignmentStates!: AssignmentStateRequest[];
 
-  @ApiProperty()
-  readonly enrollmentStatus!: number;
-
-  public get toProps(): ParticipantDto {
-    return new ParticipantDto({
-      id: this.id,
-      name: this.name,
-      email: this.email,
-      teamId: this.teamId,
-      pairId: this.pairId,
-      enrollmentStatus: this.enrollmentStatus
-    });
+  public get toProps(): ParticipantPaginationProps {
+    console.log(`Error toProps page: ${this.page}`)
+    console.log(`Error toProps size: ${this.size}`)
+    console.log(`Error toProps: ${this.assignmentStates}`)
+    return {
+      page: this.page,
+      size: this.size,
+      assignmentStates: this.assignmentStates.map(state => ({
+        assignmentId: AssignmentId.restore(state.assignmentId),
+        assignmentProgressState: state.assignmentProgressState
+      }))
+    };
   }
 }

@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ParticipantDto } from 'src/app/participant/dto/participant-dto';
 import { AssignmentStateRequest } from 'src/controller/participant/request/assignment-state-request';
-import { GetParticipantsPagedRequest } from 'src/controller/participant/request/get-participants-paged-request copy';
+import { GetParticipantsPagedRequest } from 'src/controller/participant/request/get-participants-paged-request';
 import { ParticipantResponse } from 'src/controller/participant/response/participant-response';
 
 export class GetParticipantsPagedResponse {
