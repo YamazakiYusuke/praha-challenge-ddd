@@ -8,8 +8,8 @@ import { GetParticipantsPagedUsecase } from 'src/app/participant/get-participant
 import { LeaveParticipantUseCase } from 'src/app/participant/leave-participant-usecase';
 import { WithdrawnParticipantUseCase } from 'src/app/participant/withdrawn-participant-usecase';
 import { ExpectedErrorResponse, UnExpectedErrorResponse, UsecaseSuccessResponse } from 'src/app/responses/usecase-responses';
-import { ParticipantRequest } from 'src/controller/participant/request/get-participants-paged-request';
-import { GetParticipantsPagedRequest } from 'src/controller/participant/request/get-participants-paged-request copy';
+import { ParticipantRequest } from 'src/controller/participant/request/get-participant-request';
+import { GetParticipantsPagedRequest } from 'src/controller/participant/request/get-participants-paged-request';
 import { GetAllParticipantsResponse } from 'src/controller/participant/response/get-all-participants-response';
 import { GetParticipantsPagedResponse } from 'src/controller/participant/response/get-participants-paged-response';
 import { container } from 'tsyringe';
@@ -117,7 +117,7 @@ export class ParticipantController {
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
     }
   }
-  
+
   @Put('withdrawn')
   @ApiResponse({ status: HttpStatus.CREATED, description: 'Request succeed.' })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request.' })
