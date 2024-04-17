@@ -1,10 +1,8 @@
 import { GetPairsByTeamIdQuery } from "src/domain/commands/pair/get-pairs-by-team-id-query";
-import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { DomainServiceError } from "src/domain/errors/domain_service_error";
 import { ParticipantId, TeamId } from "src/domain/values/ids";
 import { PairName } from "src/domain/values/name";
 import { inject, injectable } from "tsyringe";
-import { debuglog } from "util";
 import { Pair, PairProps } from "../../entities/pair";
 
 @injectable()
@@ -12,8 +10,6 @@ export class CreatePairService {
   constructor(
     @inject(GetPairsByTeamIdQuery)
     private readonly getPairsByTeamIdQuery: GetPairsByTeamIdQuery,
-    @inject(SavePairCommand)
-    private readonly savePairCommand: SavePairCommand,
   ) { }
 
   async execute(props: { teamId: TeamId; participantIds: ParticipantId[]; }): Promise<Pair> {
@@ -23,18 +19,16 @@ export class CreatePairService {
       name: name,
       participantIds: props.participantIds,
     }
-    debuglog(`entityProps: ${entityProps}`);
     const newPair = Pair.create(entityProps) as Pair;
-    await this.savePairCommand.execute(newPair);
     return newPair;
   }
 
   private async getName(teamId: TeamId): Promise<PairName> {
-    const allPairNames = await (this.getPairsByTeamIdQuery.execute(teamId)) as Pair[];
+    const allPairs = await this.getPairsByTeamIdQuery.execute(teamId);
     const alphabet = 'abcdefghijklmnopqrstuvwxyz';
     for (let i = 0; i < alphabet.length; i++) {
       const potentialName = alphabet[i];
-      if (!allPairNames.some(pair => pair.name.isEqual(potentialName))) {
+      if (!allPairs.some(pair => pair.name.value == potentialName)) {
         return PairName.create(potentialName as string) as PairName;
       }
     }

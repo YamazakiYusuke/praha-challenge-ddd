@@ -48,7 +48,7 @@ export class EnrollParticipantService {
       const newPair = await this.createPairService.execute({ teamId: smallestPair.teamId, participantIds: [participant.id, moverId] });
       participant.changeTeamIdPairId(newPair.id, newPair.teamId);
       mover.changeTeamIdPairId(newPair.id, newPair.teamId);
-
+      // FIX: 処理に失敗
       await this.transaction.execute(async (tx) => {
         await this.saveParticipantCommand.execute(participant, tx);
         await this.saveParticipantCommand.execute(mover, tx);
