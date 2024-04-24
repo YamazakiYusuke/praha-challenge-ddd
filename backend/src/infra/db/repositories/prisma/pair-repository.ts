@@ -14,17 +14,11 @@ export class PrismaPairRepository implements IPairRepository {
       update: {
         name: pair.name.value,
         teamId: pair.teamId.value,
-        participants: {
-          connect: pair.participantIds.map(participantId => ({ id: participantId.value })),
-        },
       },
       create: {
         id: PairId.create().value,
         name: pair.name.value,
         teamId: pair.teamId.value,
-        participants: {
-          connect: pair.participantIds.map(participantId => ({ id: participantId.value })),
-        },
       },
     });
   }

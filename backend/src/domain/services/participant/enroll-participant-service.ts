@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { GetPairWithFewestMembersQuery } from "src/domain/commands/pair/get-pair-with-fewest-members-query";
 import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { GetParticipantByIdQuery } from "src/domain/commands/participant/get-participant-by-id-query";
@@ -48,22 +49,16 @@ export class EnrollParticipantService {
       const newPair = await this.createPairService.execute({ teamId: smallestPair.teamId, participantIds: [participant.id, moverId] });
       participant.changeTeamIdPairId(newPair.id, newPair.teamId);
       mover.changeTeamIdPairId(newPair.id, newPair.teamId);
-      // FIX: 処理に失敗
       await this.transaction.execute(async (tx) => {
+        // pairが正常に作成されていない。
+        await this.savePairCommand.execute(newPair, tx);
         await this.saveParticipantCommand.execute(participant, tx);
         await this.saveParticipantCommand.execute(mover, tx);
-        await this.savePairCommand.execute(smallestPair, tx);
-        await this.savePairCommand.execute(newPair, tx);
       })
-
     } else {
       participant.changeEnrollmentStatusToEnrolled(smallestPair.teamId, smallestPair.id);
       smallestPair.appendParticipant(participant.id);
-
-      await this.transaction.execute(async (tx) => {
-        await this.saveParticipantCommand.execute(participant, tx);
-        await this.savePairCommand.execute(smallestPair, tx);
-      })
+      await this.saveParticipantCommand.execute(participant);
     }
   }
 }

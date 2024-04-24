@@ -13,8 +13,16 @@ export class PrismaParticipantRepository implements IParticipantRepository {
   async save(participant: Participant, transaction?: Prisma.TransactionClient): Promise<void> {
     const prismaClient = transaction ?? this.prisma;
 
-    await prismaClient.participant.create({
-      data: {
+    await prismaClient.participant.upsert({
+      where: {id: participant.id.value},
+      update: {
+        name: participant.name.value,
+        email: participant.email.value,
+        pairId: participant.pairId?.value,
+        teamId: participant.teamId?.value,
+        enrollmentStatus: participant.enrollmentStatus,
+      },
+      create: {
         id: participant.id.value,
         name: participant.name.value,
         email: participant.email.value,

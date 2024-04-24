@@ -8,8 +8,16 @@ export class PrismaAssignmentRepository implements IAssignmentRepository {
 
   async save(assignment: Assignment, transaction?: Prisma.TransactionClient): Promise<void> {
     const prismaClient = transaction ?? this.prisma;
-    await prismaClient.assignment.create({
-      data: {
+    await prismaClient.assignment.upsert({
+      where: { id: assignment.id.value },
+      update: {
+        number: assignment.number,
+        title: assignment.title,
+        introduction: assignment.introduction,
+        content: assignment.content,
+        categoryId: assignment.categoryId.value,
+      },
+      create: {
         id: assignment.id.value,
         number: assignment.number,
         title: assignment.title,

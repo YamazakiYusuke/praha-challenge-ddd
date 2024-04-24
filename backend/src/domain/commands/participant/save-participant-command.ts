@@ -10,7 +10,7 @@ export class SaveParticipantCommand implements ICommand<Participant> {
     private readonly participantRepository: IParticipantRepository
   ) { }
 
-  async execute(participant: Participant, transaction: any): Promise<void> {
+  async execute(participant: Participant, transaction?: any): Promise<void> {
     await this.participantRepository.save(participant, transaction);
   }
 }
