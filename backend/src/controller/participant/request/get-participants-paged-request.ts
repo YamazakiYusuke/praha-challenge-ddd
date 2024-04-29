@@ -1,15 +1,13 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { AssignmentStateRequest } from "src/controller/participant/request/assignment-state-request";
-import { ParticipantPaginationProps } from "src/domain/commands/participant/get-participants-paged-query";
-import { AssignmentId } from "src/domain/values/ids";
 
 export class GetParticipantsPagedRequest {
-  @ApiProperty()
+  @ApiProperty({ example: 1, description: 'Start from 1' })
   readonly page!: number;
 
-  @ApiProperty()
+  @ApiProperty({ example: 10 })
   readonly size!: number;
 
-  @ApiProperty({ type: () => AssignmentStateRequest, isArray: true })
+  @ApiProperty({ type: () => AssignmentStateRequest, isArray: true, example: [{ assignmentId: '1', assignmentProgressState: 0 }] })
   readonly assignmentStates!: AssignmentStateRequest[];
 }

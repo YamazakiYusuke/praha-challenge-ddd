@@ -8,13 +8,13 @@ export class GetParticipantsPagedResponse {
   @ApiProperty({ type: () => ParticipantResponse, isArray: true })
   readonly participants: ParticipantResponse[]
 
-  @ApiProperty()
+  @ApiProperty({ example: 1 })
   readonly page: number;
 
-  @ApiProperty()
+  @ApiProperty({ example: 10 })
   readonly size: number;
 
-  @ApiProperty({ type: () => AssignmentStateRequest, isArray: true })
+  @ApiProperty({ type: () => AssignmentStateRequest, isArray: true, example: [{ assignmentId: '1', assignmentProgressState: 0 }] })
   readonly assignmentStates: AssignmentStateRequest[];
 
   public constructor(dtoParticipants: ParticipantDto[], getParticipantsPagedRequest: GetParticipantsPagedRequest) {
