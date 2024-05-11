@@ -33,7 +33,6 @@ export class LeaveParticipantService {
     }
     participant.changeEnrollmentStatusToOnLeave();
     pair.removeParticipant(participant.id);
-    console.log(participant)
     await this.transaction.execute(async (tx) => {
       await this.saveParticipantCommand.execute(participant, tx);
       await this.savePairCommand.execute(pair, tx);

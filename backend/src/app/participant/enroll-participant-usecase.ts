@@ -18,7 +18,6 @@ export class EnrollParticipantUseCase {
     try {
       const participantId = ParticipantId.restore(stringParticipantId);
       const participant = await this.getParticipantByIdQuery.execute(participantId);
-      console.log(participant)
       if (participant == null) return new ExpectedErrorResponse();
       await this.enrollParticipantService.execute(participant)
       return new UsecaseSuccessResponse(null);
