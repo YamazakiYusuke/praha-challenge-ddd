@@ -36,7 +36,7 @@ export class WithdrawnParticipantService {
 
     await this.transaction.execute(async (tx) => {
       await this.saveParticipantCommand.execute(participant, tx);
-      await this.savePairCommand.execute(pair, tx);
+      await this.savePairCommand.execute(pair, tx); // TODO: これ実際はcallする必要ない
     })
 
     await this.validateTeamMemberService.execute(pair.teamId, participant);

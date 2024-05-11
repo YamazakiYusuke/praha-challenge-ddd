@@ -50,7 +50,6 @@ export class EnrollParticipantService {
       participant.changeTeamIdPairId(newPair.id, newPair.teamId);
       mover.changeTeamIdPairId(newPair.id, newPair.teamId);
       await this.transaction.execute(async (tx) => {
-        // pairが正常に作成されていない。
         await this.savePairCommand.execute(newPair, tx);
         await this.saveParticipantCommand.execute(participant, tx);
         await this.saveParticipantCommand.execute(mover, tx);

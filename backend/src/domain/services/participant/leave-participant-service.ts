@@ -35,7 +35,7 @@ export class LeaveParticipantService {
     pair.removeParticipant(participant.id);
     await this.transaction.execute(async (tx) => {
       await this.saveParticipantCommand.execute(participant, tx);
-      await this.savePairCommand.execute(pair, tx);
+      await this.savePairCommand.execute(pair, tx); // TODO: これ実際はcallする必要ない
     })
 
 
