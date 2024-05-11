@@ -9,8 +9,8 @@ import { validateProps } from "./utils/validate-props";
 export interface ParticipantProps {
   readonly name: PersonName;
   readonly email: Email;
-  readonly teamId: TeamId | undefined;
-  readonly pairId: PairId | undefined;
+  readonly teamId: TeamId | null;
+  readonly pairId: PairId | null;
   readonly enrollmentStatus: EnrollmentStatusValue;
 }
 
@@ -24,8 +24,8 @@ export class Participant extends Entity<ParticipantId, ParticipantProps> {
     const newProps = {
       name: props.name,
       email: props.email,
-      teamId: undefined,
-      pairId: undefined,
+      teamId: null,
+      pairId: null,
       enrollmentStatus: EnrollmentStatusValue.Enrolled
     };
     return new Participant(ParticipantId.create(), newProps);
@@ -43,11 +43,11 @@ export class Participant extends Entity<ParticipantId, ParticipantProps> {
     return this.props.email;
   }
 
-  public get teamId(): TeamId | undefined {
+  public get teamId(): TeamId | null {
     return this.props.teamId;
   }
 
-  public get pairId(): PairId | undefined {
+  public get pairId(): PairId | null {
     return this.props.pairId;
   }
 
@@ -82,7 +82,7 @@ export class Participant extends Entity<ParticipantId, ParticipantProps> {
   }
 
   private deleteTeamIdPairId(): void {
-    const newProps = { ...this.props, pairId: undefined, teamId: undefined };
+    const newProps = { ...this.props, pairId: null, teamId: null };
     this.setProps(newProps);
   }
 

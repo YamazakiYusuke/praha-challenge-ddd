@@ -43,8 +43,8 @@ describe('# ValidateTeamMemberService UnitTest \n', () => {
       const leavingParticipant = Participant.restore(ParticipantId.create(), {
         name: PersonName.restore('John Doe'),
         email: Email.restore('john@example.com'),
-        teamId: undefined,
-        pairId: undefined,
+        teamId: null,
+        pairId: null,
         enrollmentStatus: EnrollmentStatusValue.OnLeave,
       });
 
@@ -69,8 +69,8 @@ describe('# ValidateTeamMemberService UnitTest \n', () => {
       const leavingParticipant = Participant.restore(ParticipantId.create(), {
         name: PersonName.restore('John Doe'),
         email: Email.restore('john@example.com'),
-        teamId: undefined,
-        pairId: undefined,
+        teamId: null,
+        pairId: null,
         enrollmentStatus: EnrollmentStatusValue.OnLeave,
       });
 

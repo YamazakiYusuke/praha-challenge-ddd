@@ -10,7 +10,7 @@ import { LeaveParticipantUseCase } from 'src/app/participant/leave-participant-u
 import { WithdrawnParticipantUseCase } from 'src/app/participant/withdrawn-participant-usecase';
 import { ExpectedErrorResponse, UnExpectedErrorResponse, UsecaseSuccessResponse } from 'src/app/responses/usecase-responses';
 import { GetParticipantsPagedRequest } from 'src/controller/participant/request/get-participants-paged-request';
-import { ParticipantRequest } from 'src/controller/participant/request/participant-request';
+import { ParticipantIdRequest } from 'src/controller/participant/request/participant-id-request';
 import { PostParticipantRequest } from 'src/controller/participant/request/post-participant-request';
 import { GetAllParticipantsResponse } from 'src/controller/participant/response/get-all-participants-response';
 import { GetParticipantsPagedResponse } from 'src/controller/participant/response/get-participants-paged-response';
@@ -87,11 +87,10 @@ export class ParticipantController {
   @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Server error.' })
   async enrollParticipant(
     @Res() res: Response,
-    @Body() participantRequest: ParticipantRequest,
+    @Body() participantIdRequest: ParticipantIdRequest,
   ): Promise<void> {
     const usecase = container.resolve(EnrollParticipantUseCase);
-    const dto = this.toParticipantDto(participantRequest);
-    const result = await usecase.execute(dto);
+    const result = await usecase.execute(participantIdRequest.id);
     if (result instanceof UsecaseSuccessResponse) {
       res.status(HttpStatus.CREATED).send();
     } else if (result instanceof ExpectedErrorResponse) {
@@ -107,11 +106,10 @@ export class ParticipantController {
   @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Server error.' })
   async leaveParticipant(
     @Res() res: Response,
-    @Body() participantRequest: ParticipantRequest,
+    @Body() participantIdRequest: ParticipantIdRequest,
   ): Promise<void> {
     const usecase = container.resolve(LeaveParticipantUseCase);
-    const dto = this.toParticipantDto(participantRequest);
-    const result = await usecase.execute(dto);
+    const result = await usecase.execute(participantIdRequest.id);
     if (result instanceof UsecaseSuccessResponse) {
       res.status(HttpStatus.CREATED).send();
     } else if (result instanceof ExpectedErrorResponse) {
@@ -127,11 +125,10 @@ export class ParticipantController {
   @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Server error.' })
   async withdrawnParticipant(
     @Res() res: Response,
-    @Body() participantRequest: ParticipantRequest,
+    @Body() participantIdRequest: ParticipantIdRequest,
   ): Promise<void> {
     const usecase = container.resolve(WithdrawnParticipantUseCase);
-    const dto = this.toParticipantDto(participantRequest);
-    const result = await usecase.execute(dto);
+    const result = await usecase.execute(participantIdRequest.id);
     if (result instanceof UsecaseSuccessResponse) {
       res.status(HttpStatus.CREATED).send();
     } else if (result instanceof ExpectedErrorResponse) {
@@ -150,16 +147,5 @@ export class ParticipantController {
         assignmentProgressState: state.assignmentProgressState
       }))
     };
-  }
-
-  private toParticipantDto(request: ParticipantRequest): ParticipantDto {
-    return new ParticipantDto({
-      id: request.id,
-      name: request.name,
-      email: request.email,
-      teamId: request.teamId,
-      pairId: request.pairId,
-      enrollmentStatus: request.enrollmentStatus
-    });
   }
 }

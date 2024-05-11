@@ -30,8 +30,8 @@ describe('# GetParticipantsWithAssignmentsPagedQuery UnitTest \n', () => {
       name: PersonName.create(`Participant ${i}`),
       email: Email.create(`participant${i}@example.com`),
       enrollmentStatus: EnrollmentStatusValue.Enrolled,
-      teamId: undefined,
-      pairId: undefined,
+      teamId: null,
+      pairId: null,
     });
     if (i % 2 == 0) {
       assignmentProgress1 = AssignmentProgress.create({

@@ -37,8 +37,8 @@ describe('# Participant Entity UnitTest \n', () => {
     const participantId = ParticipantId.restore('participantId');
     const name = PersonName.restore('PersonName');
     const email = Email.restore('test@example.com');
-    const teamId = enrollmentStatusValue == EnrollmentStatusValue.Enrolled ? TeamId.restore('teamId') : undefined;
-    const pairId = enrollmentStatusValue == EnrollmentStatusValue.Enrolled ? PairId.restore('pairId') : undefined;
+    const teamId = enrollmentStatusValue == EnrollmentStatusValue.Enrolled ? TeamId.restore('teamId') : null;
+    const pairId = enrollmentStatusValue == EnrollmentStatusValue.Enrolled ? PairId.restore('pairId') : null;
     const enrollmentStatus = enrollmentStatusValue;
     const props = {
       name: name,
@@ -82,8 +82,8 @@ describe('# Participant Entity UnitTest \n', () => {
       participant.changeEnrollmentStatusToOnLeave();
       // 確認
       expect(participant.enrollmentStatus).toEqual(EnrollmentStatusValue.OnLeave);
-      expect(participant.teamId).toBeUndefined();
-      expect(participant.pairId).toBeUndefined();
+      expect(participant.teamId).toBeNull();
+      expect(participant.pairId).toBeNull();
     });
 
     it('- Failed change status \n', () => {
@@ -102,8 +102,8 @@ describe('# Participant Entity UnitTest \n', () => {
       participant.changeEnrollmentStatusToWithDrawn();
       // 確認
       expect(participant.enrollmentStatus).toEqual(EnrollmentStatusValue.Withdrawn);
-      expect(participant.teamId).toBeUndefined();
-      expect(participant.pairId).toBeUndefined();
+      expect(participant.teamId).toBeNull();
+      expect(participant.pairId).toBeNull();
     });
 
     it('- Failed change status \n', () => {
