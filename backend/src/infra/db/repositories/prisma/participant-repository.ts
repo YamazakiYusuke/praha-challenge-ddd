@@ -18,8 +18,8 @@ export class PrismaParticipantRepository implements IParticipantRepository {
       update: {
         name: participant.name.value,
         email: participant.email.value,
-        pairId: participant.pairId?.value,
-        teamId: participant.teamId?.value,
+        pairId: participant.pairId?.value ?? null,
+        teamId: participant.teamId?.value ?? null,
         enrollmentStatus: participant.enrollmentStatus,
       },
       create: {
@@ -42,8 +42,8 @@ export class PrismaParticipantRepository implements IParticipantRepository {
         {
           name: PersonName.restore(participant.name),
           email: Email.restore(participant.email),
-          pairId: participant.pairId ? PairId.restore(participant.pairId) : undefined,
-          teamId: participant.teamId ? TeamId.restore(participant.teamId) : undefined,
+          pairId: participant.pairId ? PairId.restore(participant.pairId) : null,
+          teamId: participant.teamId ? TeamId.restore(participant.teamId) : null,
           enrollmentStatus: restoreEnrollmentStatusValue(participant.enrollmentStatus),
         }
       )
@@ -64,8 +64,8 @@ export class PrismaParticipantRepository implements IParticipantRepository {
           {
             name: PersonName.restore(participant.name),
             email: Email.restore(participant.email),
-            pairId: participant.pairId ? PairId.restore(participant.pairId) : undefined,
-            teamId: participant.teamId ? TeamId.restore(participant.teamId) : undefined,
+            pairId: participant.pairId ? PairId.restore(participant.pairId) : null,
+            teamId: participant.teamId ? TeamId.restore(participant.teamId) : null,
             enrollmentStatus: restoreEnrollmentStatusValue(participant.enrollmentStatus),
           }
         ),

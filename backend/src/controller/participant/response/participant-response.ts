@@ -11,10 +11,10 @@ export class ParticipantResponse {
   readonly email: string;
 
   @ApiProperty()
-  readonly teamId?: string;
+  readonly teamId: string | null;
 
   @ApiProperty()
-  readonly pairId?: string;
+  readonly pairId: string | null;
 
   @ApiProperty()
   readonly enrollmentStatus: number;
@@ -23,8 +23,8 @@ export class ParticipantResponse {
     id: string
     name: string
     email: string
-    teamId?: string
-    pairId?: string
+    teamId: string | null
+    pairId: string | null
     enrollmentStatus: number
   }) {
     this.id = params.id;
