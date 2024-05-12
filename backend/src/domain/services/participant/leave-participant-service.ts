@@ -13,7 +13,7 @@ export class LeaveParticipantService {
   constructor(
     @inject(GetPairByIdQuery)
     private readonly getPairByIdQuery: GetPairByIdQuery,
-    @inject(SavePairCommand)
+    @inject(SaveParticipantCommand)
     private readonly saveParticipantCommand: SaveParticipantCommand,
     @inject(ValidateTeamMemberService)
     private readonly validateTeamMemberService: ValidateTeamMemberService,
