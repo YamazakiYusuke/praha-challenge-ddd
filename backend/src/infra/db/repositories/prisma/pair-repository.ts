@@ -16,7 +16,7 @@ export class PrismaPairRepository implements IPairRepository {
         teamId: pair.teamId.value,
       },
       create: {
-        id: PairId.create().value,
+        id: pair.id.value,
         name: pair.name.value,
         teamId: pair.teamId.value,
       },
