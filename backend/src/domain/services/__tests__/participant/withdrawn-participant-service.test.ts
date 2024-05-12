@@ -1,7 +1,5 @@
 import { GetPairByIdQuery } from "src/domain/commands/pair/get-pair-by-id-query";
-import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { SaveParticipantCommand } from "src/domain/commands/participant/save-participant-command";
-import { Transaction } from "src/domain/commands/transaction/transaction";
 import { Pair } from "src/domain/entities/pair";
 import { Participant, ParticipantProps } from "src/domain/entities/participant";
 import { DomainServiceError } from "src/domain/errors/domain_service_error";
@@ -16,9 +14,7 @@ import { anything, instance, mock, verify, when } from 'ts-mockito';
 
 describe('# WithdrawnParticipantService UnitTest\n', () => {
   let getPairByIdQuery: GetPairByIdQuery;
-  let savePairCommand: SavePairCommand;
   let saveParticipantCommand: SaveParticipantCommand;
-  let transaction: Transaction;
   let validateTeamMemberService: ValidateTeamMemberService;
   let reallocateLastParticipantInPairService: ReallocateLastParticipantInPairService;
   let withdrawnParticipantService: WithdrawnParticipantService;
@@ -43,18 +39,14 @@ describe('# WithdrawnParticipantService UnitTest\n', () => {
 
   beforeEach(() => {
     getPairByIdQuery = mock(GetPairByIdQuery);
-    savePairCommand = mock(SavePairCommand);
     saveParticipantCommand = mock(SaveParticipantCommand);
-    transaction = mock(Transaction);
     validateTeamMemberService = mock(ValidateTeamMemberService);
     reallocateLastParticipantInPairService = mock(ReallocateLastParticipantInPairService);
     withdrawnParticipantService = new WithdrawnParticipantService(
       instance(getPairByIdQuery),
-      instance(savePairCommand),
       instance(saveParticipantCommand),
       instance(validateTeamMemberService),
       instance(reallocateLastParticipantInPairService),
-      instance(transaction),
     );
   });
 
@@ -68,8 +60,6 @@ describe('# WithdrawnParticipantService UnitTest\n', () => {
       // 確認
       verify(getPairByIdQuery.execute(anything())).once();
       verify(saveParticipantCommand.execute(anything(), anything())).never();
-      verify(savePairCommand.execute(anything(), anything())).never();
-      verify(transaction.execute(anything())).never();
       verify(validateTeamMemberService.execute(anything(), anything())).never();
       verify(reallocateLastParticipantInPairService.execute(anything(), anything())).never();
     });
@@ -83,16 +73,10 @@ describe('# WithdrawnParticipantService UnitTest\n', () => {
         participantIds: [participantId(1), participantId(2)]
       };
       when(getPairByIdQuery.execute(anything())).thenResolve(Pair.restore(PairId.restore('existingPairId'), existingPairProps));
-      when(transaction.execute(anything())).thenCall(async (callback: (transaction: any) => Promise<void>) => {
-        await callback('');
-      });
       // 実行
       await withdrawnParticipantService.execute(withdrawnParticipant);
       // 確認
       verify(getPairByIdQuery.execute(anything())).once();
-      verify(saveParticipantCommand.execute(anything(), anything())).once();
-      verify(savePairCommand.execute(anything(), anything())).once();
-      verify(transaction.execute(anything())).once();
       verify(validateTeamMemberService.execute(anything(), anything())).once();
       verify(reallocateLastParticipantInPairService.execute(anything(), anything())).once();
     });
