@@ -3,7 +3,7 @@ import { TeamName } from "src/domain/values/name";
 import { Team, TeamProps } from "../team";
 
 describe('# Team Entity UnitTest\n', () => {
-  const participantIds = [ParticipantId.create(), ParticipantId.create()];
+  const participantIds = [ParticipantId.create(), ParticipantId.create(), ParticipantId.create()];
   const generationId = GenerationId.restore('generation1')
   const teamProps: TeamProps = {
     name: TeamName.create('Test Team'),
@@ -48,7 +48,7 @@ describe('# Team Entity UnitTest\n', () => {
 
     test('- Insufficient number of participants \n', () => {
       // 準備
-      const insufficientProps = { ...teamProps, participantIds: [ParticipantId.create()] };
+      const insufficientProps = { ...teamProps, participantIds: [ParticipantId.create(), ParticipantId.create()] };
       // 実行
       const team = Team.create(insufficientProps);
       // 確認

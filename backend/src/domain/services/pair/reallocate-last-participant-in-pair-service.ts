@@ -34,7 +34,7 @@ export class ReallocateLastParticipantInPairService {
   ) { }
 
   async execute(pair: Pair, leavingParticipant: Participant): Promise<void> {
-    if (pair.participantsLength != 1) return;
+    if (!pair.hasInsufficientMinParticipants) return;
 
     const lastParticipantId = pair.lastParticipant;
     const lastParticipant = await this.getParticipantByIdQuery.execute(lastParticipantId) as Participant;
@@ -57,7 +57,6 @@ export class ReallocateLastParticipantInPairService {
       await this.transaction.execute(async (tx) => {
         await this.saveParticipantCommand.execute(lastParticipant, tx);
         await this.saveParticipantCommand.execute(mover, tx);
-        await this.savePairCommand.execute(fewestPair, tx);
         await this.savePairCommand.execute(newPair, tx);
       })
 
@@ -65,10 +64,7 @@ export class ReallocateLastParticipantInPairService {
       fewestPair.appendParticipant(lastParticipantId);
       lastParticipant.changeTeamIdPairId(fewestPair.id, fewestPair.teamId);
 
-      await this.transaction.execute(async (tx) => {
-        await this.saveParticipantCommand.execute(lastParticipant, tx);
-        await this.savePairCommand.execute(fewestPair, tx);
-      })
+      await this.saveParticipantCommand.execute(lastParticipant);
     }
   }
 }

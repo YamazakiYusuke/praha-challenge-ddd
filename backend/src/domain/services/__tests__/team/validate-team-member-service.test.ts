@@ -37,7 +37,7 @@ describe('# ValidateTeamMemberService UnitTest \n', () => {
       const teamId = TeamId.create();
       const team = Team.restore(teamId, {
         name: TeamName.create('Test Team'),
-        participantIds: [ParticipantId.create(), ParticipantId.create()],
+        participantIds: [ParticipantId.create(), ParticipantId.create(), ParticipantId.create()],
         generationId: GenerationId.restore('gen1'),
       });
       const leavingParticipant = Participant.restore(ParticipantId.create(), {
@@ -63,7 +63,7 @@ describe('# ValidateTeamMemberService UnitTest \n', () => {
       const teamId = TeamId.create();
       const team = Team.restore(teamId, {
         name: TeamName.create('Test Team'),
-        participantIds: [ParticipantId.create()],
+        participantIds: [ParticipantId.create(), ParticipantId.create()],
         generationId: GenerationId.restore('gen1'),
       });
       const leavingParticipant = Participant.restore(ParticipantId.create(), {

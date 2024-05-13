@@ -10,7 +10,7 @@ export interface TeamProps {
 }
 
 export class Team extends Entity<TeamId, TeamProps> {
-  static readonly minNumber = 2;
+  static readonly minNumber = 3;
   private constructor(id: TeamId, props: TeamProps) {
     validateProps(id, props);
     super(id, props)

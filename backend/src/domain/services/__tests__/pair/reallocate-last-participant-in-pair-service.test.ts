@@ -184,7 +184,7 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
         verify(getParticipantByIdQuery.execute(anything())).twice();
         verify(createPairService.execute(anything())).once();
         verify(getPairWithFewestMembersByTeamIdQuery.execute(anything(), anything())).once();
-        verify(savePairCommand.execute(anything(), anything())).twice();
+        verify(savePairCommand.execute(anything(), anything())).once();
         verify(saveParticipantCommand.execute(anything(), anything())).twice();
         verify(transaction.execute(anything())).once();
         verify(createAdminEmailService.execute(anything())).never();
@@ -211,9 +211,9 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
         verify(getParticipantByIdQuery.execute(anything())).once();
         verify(createPairService.execute(anything())).never();
         verify(getPairWithFewestMembersByTeamIdQuery.execute(anything(), anything())).once();
-        verify(savePairCommand.execute(anything(), anything())).once();
-        verify(saveParticipantCommand.execute(anything(), anything())).once();
-        verify(transaction.execute(anything())).once();
+        verify(savePairCommand.execute(anything(), anything())).never();
+        verify(saveParticipantCommand.execute(anything())).once();
+        verify(transaction.execute(anything())).never();
         verify(createAdminEmailService.execute(anything())).never();
         verify(sendAdminEmailService.execute(anything())).never();
       });
