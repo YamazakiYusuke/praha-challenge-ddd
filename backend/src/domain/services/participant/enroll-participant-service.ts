@@ -36,7 +36,7 @@ export class EnrollParticipantService {
 
   async execute(participant: Participant): Promise<void> {
     const smallestPair = await this.getPairWithFewestMembersQuery.execute();
-    if (smallestPair == null || !smallestPair.hasValidNumberOfParticipants) {
+    if (smallestPair == null) {
       const mail = await this.createAdminEmailService.execute(AdminEmailContent.join(participant));
       await this.sendAdminEmailService.execute(mail);
       throw new DomainServiceError('参加可能なペアがありません');
