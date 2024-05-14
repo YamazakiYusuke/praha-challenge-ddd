@@ -122,17 +122,8 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
       test('pair.participantsLength is 0', async () => {
         // 準備
         const leavingParticipantId = participantId(1);
-        // 実行
-        await reallocateLastParticipantInPairService.execute(pair([]), leavingParticipant(leavingParticipantId));
-        // 確認
-        verify(getParticipantByIdQuery.execute(anything())).never();
-        verify(createPairService.execute(anything())).never();
-        verify(getPairWithFewestMembersByTeamIdQuery.execute(anything(), anything())).never();
-        verify(savePairCommand.execute(anything())).never();
-        verify(saveParticipantCommand.execute(anything(), anything())).never();
-        verify(transaction.execute(anything())).never();
-        verify(createAdminEmailService.execute(anything())).never();
-        verify(sendAdminEmailService.execute(anything())).never();
+        // 実行 確認
+        await expect(reallocateLastParticipantInPairService.execute(pair([]), leavingParticipant(leavingParticipantId))).rejects.toThrow(Error);
       });
     });
 
