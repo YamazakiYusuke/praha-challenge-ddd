@@ -2,7 +2,6 @@ import { Prisma, PrismaClient } from "@prisma/client";
 import { AssignmentProgress } from "src/domain/entities/assignment-progress";
 import { Participant } from "src/domain/entities/participant";
 import { IParticipantRepository, ParticipantWithAssignments } from "src/domain/repositories/participant-repository";
-import { restoreAssignmentProgressStateValue, restoreEnrollmentStatusValue } from "src/domain/util/enums";
 import { Email } from "src/domain/values/email";
 import { AssignmentId, AssignmentProgressId, PairId, ParticipantId, TeamId } from "src/domain/values/ids";
 import { PersonName } from "src/domain/values/name";
@@ -44,7 +43,7 @@ export class PrismaParticipantRepository implements IParticipantRepository {
           email: Email.restore(participant.email),
           pairId: participant.pairId ? PairId.restore(participant.pairId) : null,
           teamId: participant.teamId ? TeamId.restore(participant.teamId) : null,
-          enrollmentStatus: restoreEnrollmentStatusValue(participant.enrollmentStatus),
+          enrollmentStatus: participant.enrollmentStatus,
         }
       )
     );
@@ -66,7 +65,7 @@ export class PrismaParticipantRepository implements IParticipantRepository {
             email: Email.restore(participant.email),
             pairId: participant.pairId ? PairId.restore(participant.pairId) : null,
             teamId: participant.teamId ? TeamId.restore(participant.teamId) : null,
-            enrollmentStatus: restoreEnrollmentStatusValue(participant.enrollmentStatus),
+            enrollmentStatus: participant.enrollmentStatus,
           }
         ),
         participant.progresses.map(progress =>
@@ -75,7 +74,7 @@ export class PrismaParticipantRepository implements IParticipantRepository {
             {
               assignmentId: AssignmentId.restore(progress.assignmentId),
               participantId: ParticipantId.restore(progress.participantId),
-              assignmentProgressState: restoreAssignmentProgressStateValue(progress.state),
+              assignmentProgressState: progress.state,
             }
           )
         ),

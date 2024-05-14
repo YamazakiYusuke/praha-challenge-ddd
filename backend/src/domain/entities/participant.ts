@@ -17,7 +17,14 @@ export interface ParticipantProps {
 export class Participant extends Entity<ParticipantId, ParticipantProps> {
   private constructor(id: ParticipantId, props: ParticipantProps) {
     validateProps(id, props, ['teamId', 'pairId']);
+    Participant.validateEnrollmentStatusValue(props.enrollmentStatus);
     super(id, props)
+  }
+
+  private static validateEnrollmentStatusValue(enrollmentStatus: EnrollmentStatusValue) {
+    if (!(enrollmentStatus in EnrollmentStatusValue)) {
+      throw new EntityError(`Unknown EnrollmentStatusValue: ${enrollmentStatus}`);
+    }
   }
 
   static create(props: {name: PersonName, email: Email}): Participant {

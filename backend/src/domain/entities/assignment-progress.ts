@@ -14,7 +14,14 @@ export class AssignmentProgress extends Entity<AssignmentProgressId, AssignmentP
 
   private constructor(id: AssignmentProgressId, props: AssignmentProgressProps) {
     validateProps(id, props);
+    AssignmentProgress.validateAssignmentProgressStateValue(props.assignmentProgressState);
     super(id, props)
+  }
+
+  private static validateAssignmentProgressStateValue(assignmentProgressState: AssignmentProgressStateValue) {
+    if (!(assignmentProgressState in AssignmentProgressStateValue)) {
+      throw new EntityError(`Unknown AssignmentProgressStateValue: ${assignmentProgressState}`);
+    }
   }
 
   static create(props: AssignmentProgressProps): AssignmentProgress {
@@ -41,6 +48,7 @@ export class AssignmentProgress extends Entity<AssignmentProgressId, AssignmentP
     if (this.assignmentProgressState === AssignmentProgressStateValue.Completed) {
       throw new EntityError("Cannot change state, assignment already completed");
     }
+    AssignmentProgress.validateAssignmentProgressStateValue(newState);
     const newProps = { ...this.props, assignmentProgressState: newState };
     this.setProps(newProps);
   }

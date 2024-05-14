@@ -19,7 +19,14 @@ export class AdminEmail extends Entity<AdminEmailId, AdminEmailProps> {
 
   private constructor(id: AdminEmailId, props: AdminEmailProps) {
     validateProps(id, props);
+    AdminEmail.validateEmailStatus(props.status);
     super(id, props)
+  }
+
+  private static validateEmailStatus(status: EmailStatus) {
+    if (!(status in EmailStatus)) {
+      throw new EntityError(`Unknown EmailStatus: ${status}`);
+    }
   }
 
   static create(props: AdminEmailProps): AdminEmail {
@@ -70,6 +77,7 @@ export class AdminEmail extends Entity<AdminEmailId, AdminEmailProps> {
     if (this.status == EmailStatus.Sent) {
       throw new EntityError('Current status is already sent.');
     }
+    AdminEmail.validateEmailStatus(newEmailStatus);
     const newProps = { ...this.props, status: newEmailStatus };
     this.setProps(newProps);
   }
