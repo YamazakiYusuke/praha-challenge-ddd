@@ -14,7 +14,7 @@ export class GetPairWithFewestMembersByTeamIdQuery implements IGetQuery<Pair, Te
   async execute(teamId: TeamId, excludePairId?: PairId): Promise<Pair | null> {
     const allPairs = await this.pairRepository.getAll();
     const filteredPairs = allPairs.filter((pair: Pair) =>
-      pair.teamId.isEqual(teamId) && pair.id !== excludePairId
+      pair.teamId.isEqual(teamId) && !pair.id.isEqual(excludePairId)
     );
 
     if (filteredPairs.length === 0) return null

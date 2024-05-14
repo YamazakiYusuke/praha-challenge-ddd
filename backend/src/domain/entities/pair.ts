@@ -93,7 +93,7 @@ export class Pair extends Entity<PairId, PairProps> {
     if (!this.includesParticipantId(participantId)) {
       throw new EntityError("Participant ID does not exist in the pair.");
     }
-    const newParticipantIds = this.participantIds.filter(id => id !== participantId);
+    const newParticipantIds = this.participantIds.filter(id => !id.isEqual(participantId));
     const newProps = { ...this.props, participantIds: newParticipantIds };
     this.setProps(newProps);
   }
