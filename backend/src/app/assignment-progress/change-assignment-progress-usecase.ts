@@ -1,10 +1,10 @@
-import { AssignmentProgressDto } from "src/app/assignment-progress/dto/assignment-progress-dto";
 import { ExpectedErrorResponse, UnExpectedErrorResponse, UsecaseErrorResponse, UsecaseSuccessResponse } from "src/app/responses/usecase-responses";
+import { GetAssignmentProgressByIdQuery } from "src/domain/commands/assignment-progress/get-assignment-progress-by-id-query";
 import { AssignmentProgress } from "src/domain/entities/assignment-progress";
 import { BaseError } from "src/domain/errors/base/base_error";
 import { ChangeAssignmentProgressService } from "src/domain/services/assignment_progress/change-assignment-progress-service";
 import { AssignmentProgressStateValue } from "src/domain/util/enums";
-import { AssignmentId, AssignmentProgressId, ParticipantId } from "src/domain/values/ids";
+import { AssignmentProgressId } from "src/domain/values/ids";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -12,20 +12,19 @@ export class ChangeAssignmentProgressUsecase {
   constructor(
     @inject(ChangeAssignmentProgressService)
     private readonly changeAssignmentProgressService: ChangeAssignmentProgressService,
+    @inject(GetAssignmentProgressByIdQuery)
+    private readonly getAssignmentProgressByIdQuery: GetAssignmentProgressByIdQuery
   ) { }
 
-  public async execute({ assignmentProgressDto, newState }: { assignmentProgressDto: AssignmentProgressDto, newState: AssignmentProgressStateValue }): Promise<UsecaseSuccessResponse<null> | UsecaseErrorResponse> {
+  public async execute({ assignmentProgressStringId, newState }: { assignmentProgressStringId: string, newState: AssignmentProgressStateValue }): Promise<UsecaseSuccessResponse<null> | UsecaseErrorResponse> {
     try {
-      const assignmentProgressId = AssignmentProgressId.restore(assignmentProgressDto.id);
-      const assignmentId = AssignmentId.restore(assignmentProgressDto.assignmentId);
-      const participantId = ParticipantId.restore(assignmentProgressDto.participantId);
-      const assignmentProgressState = assignmentProgressDto.assignmentProgressState;
+      const assignmentProgressId = AssignmentProgressId.restore(assignmentProgressStringId);
+      const assignmentProgress = await this.getAssignmentProgressByIdQuery.execute(assignmentProgressId);
+      if (assignmentProgress == null) {
+        console.log("idが存在しません")
+        return new ExpectedErrorResponse();
+      }
 
-      const assignmentProgress = AssignmentProgress.restore(assignmentProgressId, {
-        assignmentId,
-        participantId,
-        assignmentProgressState,
-      });
       await this.changeAssignmentProgressService.execute(assignmentProgress, newState);
       return new UsecaseSuccessResponse(null);
     } catch (e: any) {

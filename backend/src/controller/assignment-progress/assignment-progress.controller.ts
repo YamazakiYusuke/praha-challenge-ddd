@@ -19,16 +19,10 @@ export class AssignmentProgressController {
     @Res() res: Response,
     @Body() putAssignmentProgressRequest: PutAssignmentProgressRequest,
   ): Promise<void> {
-    const dto = new AssignmentProgressDto({
-      id: putAssignmentProgressRequest.id,
-      assignmentId: putAssignmentProgressRequest.assignmentId,
-      participantId: putAssignmentProgressRequest.participantId,
-      assignmentProgressState: putAssignmentProgressRequest.assignmentProgressState
-    })
     const usecase = container.resolve(ChangeAssignmentProgressUsecase);
     const result = await usecase.execute({
-      assignmentProgressDto: dto,
-      newState: putAssignmentProgressRequest.newState,
+      assignmentProgressStringId: putAssignmentProgressRequest.id,
+      newState: putAssignmentProgressRequest.assignmentProgressState,
     })
     if (result instanceof UsecaseSuccessResponse) {
       res.status(HttpStatus.CREATED).send();
