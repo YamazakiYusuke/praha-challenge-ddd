@@ -41,4 +41,11 @@ export class PrismaPairRepository implements IPairRepository {
       )
     );
   }
+
+  async delete(pair: Pair, transaction?: Prisma.TransactionClient): Promise<void> {
+    const prismaClient = transaction ?? this.prisma;
+    await prismaClient.pair.delete({
+      where: { id: pair.id.value },
+    });
+  }
 }

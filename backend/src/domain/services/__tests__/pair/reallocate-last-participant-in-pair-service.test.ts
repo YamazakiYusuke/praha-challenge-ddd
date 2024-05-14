@@ -1,3 +1,4 @@
+import { DeletePairCommand } from "src/domain/commands/pair/delete-pair-command";
 import { GetPairWithFewestMembersByTeamIdQuery } from "src/domain/commands/pair/get-pair-with-fewest-members-by-team-id-query";
 import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { GetParticipantByIdQuery } from "src/domain/commands/participant/get-participant-by-id-query";
@@ -27,6 +28,7 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
   let transaction: Transaction;
   let createAdminEmailService: CreateAdminEmailService;
   let sendAdminEmailService: SendAdminEmailService;
+  let deletePairCommand: DeletePairCommand;
   let reallocateLastParticipantInPairService: ReallocateLastParticipantInPairService;
 
   const teamId = TeamId.restore('teamId');
@@ -85,6 +87,7 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
     createAdminEmailService = mock(CreateAdminEmailService);
     transaction = mock(Transaction);
     sendAdminEmailService = mock(SendAdminEmailService);
+    deletePairCommand = mock(DeletePairCommand);
     reallocateLastParticipantInPairService = new ReallocateLastParticipantInPairService(
       instance(getParticipantByIdQuery),
       instance(createPairService),
@@ -94,6 +97,7 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
       instance(transaction),
       instance(createAdminEmailService),
       instance(sendAdminEmailService),
+      instance(deletePairCommand),
     );
   });
 
@@ -180,6 +184,7 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
         verify(transaction.execute(anything())).once();
         verify(createAdminEmailService.execute(anything())).never();
         verify(sendAdminEmailService.execute(anything())).never();
+        verify(deletePairCommand.execute(anything(), anything())).once();
       });
 
       test('fewestPair does not have pair`s max number participants', async () => {
@@ -203,10 +208,11 @@ describe('# ReallocateLastParticipantInPairService UnitTest\n', () => {
         verify(createPairService.execute(anything())).never();
         verify(getPairWithFewestMembersByTeamIdQuery.execute(anything(), anything())).once();
         verify(savePairCommand.execute(anything(), anything())).never();
-        verify(saveParticipantCommand.execute(anything())).once();
-        verify(transaction.execute(anything())).never();
+        verify(saveParticipantCommand.execute(anything(), anything())).once();
+        verify(transaction.execute(anything())).once();
         verify(createAdminEmailService.execute(anything())).never();
         verify(sendAdminEmailService.execute(anything())).never();
+        verify(deletePairCommand.execute(anything(), anything())).once();
       });
     });
   });

@@ -12,4 +12,9 @@ export class InMemoryPairRepository implements IPairRepository {
   async getAll(): Promise<Pair[]> {
     return this.pairs;
   }
+
+  async delete(pair: Pair): Promise<void> {
+    this.pairs = this.pairs.filter((thisPair: Pair) => !thisPair.id.isEqual(pair.id));
+    return;
+  }
 }

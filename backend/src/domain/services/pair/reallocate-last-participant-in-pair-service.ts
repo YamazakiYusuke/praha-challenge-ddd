@@ -1,3 +1,4 @@
+import { DeletePairCommand } from "src/domain/commands/pair/delete-pair-command";
 import { GetPairWithFewestMembersByTeamIdQuery } from "src/domain/commands/pair/get-pair-with-fewest-members-by-team-id-query";
 import { SavePairCommand } from "src/domain/commands/pair/save-pair-command";
 import { GetParticipantByIdQuery } from "src/domain/commands/participant/get-participant-by-id-query";
@@ -31,6 +32,8 @@ export class ReallocateLastParticipantInPairService {
     private readonly createAdminEmailService: CreateAdminEmailService,
     @inject(SendAdminEmailService)
     private readonly sendAdminEmailService: SendAdminEmailService,
+    @inject(DeletePairCommand)
+    private readonly deletePairCommand: DeletePairCommand,
   ) { }
 
   async execute(pair: Pair, leavingParticipant: Participant): Promise<void> {
@@ -38,8 +41,8 @@ export class ReallocateLastParticipantInPairService {
 
     const lastParticipantId = pair.lastParticipant;
     const lastParticipant = await this.getParticipantByIdQuery.execute(lastParticipantId) as Participant;
-    const fewestPair = await this.getPairWithFewestMembersByTeamIdQuery.execute(pair.teamId, pair.id) as Pair;
-    if (!fewestPair.hasValidNumberOfParticipants) {
+    const fewestPair = await this.getPairWithFewestMembersByTeamIdQuery.execute(pair.teamId, pair.id) as Pair | null;
+    if (fewestPair == null || !fewestPair.hasValidNumberOfParticipants) {
       const mail = await this.createAdminEmailService.execute(AdminEmailContent.relocate(leavingParticipant, lastParticipant));
       await this.sendAdminEmailService.execute(mail);
       throw new DomainServiceError('合流可能なペアーがありません');
@@ -58,13 +61,17 @@ export class ReallocateLastParticipantInPairService {
         await this.saveParticipantCommand.execute(lastParticipant, tx);
         await this.saveParticipantCommand.execute(mover, tx);
         await this.savePairCommand.execute(newPair, tx);
+        await this.deletePairCommand.execute(pair, tx);
       })
 
     } else {
       fewestPair.appendParticipant(lastParticipantId);
       lastParticipant.changeTeamIdPairId(fewestPair.id, fewestPair.teamId);
 
-      await this.saveParticipantCommand.execute(lastParticipant);
+      await this.transaction.execute(async (tx) => {
+        await this.saveParticipantCommand.execute(lastParticipant, tx);
+        await this.deletePairCommand.execute(pair, tx);
+      })
     }
   }
 }
