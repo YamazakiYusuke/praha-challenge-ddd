@@ -25,8 +25,8 @@ export class TeamDto extends Dto<Team> {
 
     return Team.restore(teamId, {
       name: teamName,
-      participantIds,
-      generationId,
+      participantIds: participantIds,
+      generationId: generationId,
     });
   }
 }
