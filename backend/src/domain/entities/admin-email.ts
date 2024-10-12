@@ -49,7 +49,7 @@ export class AdminEmail extends Entity<AdminEmailId, AdminEmailProps> {
   }
 
   public get recipients(): Administrator[] {
-    return this.props.recipients;
+    return [...this.props.recipients];
   }
 
   public get recipientEmails(): Email[] {
@@ -57,7 +57,7 @@ export class AdminEmail extends Entity<AdminEmailId, AdminEmailProps> {
   }
 
   public get sentDateTime(): Date | undefined {
-    return this.props.sentDateTime;
+    return this.props.sentDateTime ? new Date(this.props.sentDateTime) : undefined;
   }
 
   public get status(): EmailStatus {
@@ -69,7 +69,7 @@ export class AdminEmail extends Entity<AdminEmailId, AdminEmailProps> {
   }
 
   public setSentDateTime(newSentDateTime: Date) {
-    const newProps = { ...this.props, sentDateTime: newSentDateTime };
+    const newProps = { ...this.props, sentDateTime: new Date(newSentDateTime) };
     this.setProps(newProps);
   }
 

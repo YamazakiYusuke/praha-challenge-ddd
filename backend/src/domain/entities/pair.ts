@@ -37,7 +37,7 @@ export class Pair extends Entity<PairId, PairProps> {
   }
 
   public get participantIds(): ParticipantId[] {
-    return this.props.participantIds;
+    return [...this.props.participantIds];
   }
 
   public get lastParticipant(): ParticipantId {
@@ -82,7 +82,9 @@ export class Pair extends Entity<PairId, PairProps> {
     if (this.includesParticipantId(participantId)) {
       throw new EntityError("Participant ID already exists in the pair.");
     }
-    this.participantIds.push(participantId);
+    const newParticipantIds = [...this.participantIds, participantId];
+    const newProps = { ...this.props, participantIds: newParticipantIds };
+    this.setProps(newProps);
   }
 
   /**

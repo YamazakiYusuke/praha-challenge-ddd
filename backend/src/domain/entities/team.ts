@@ -29,7 +29,7 @@ export class Team extends Entity<TeamId, TeamProps> {
   }
 
   public get participantIds(): ParticipantId[] {
-    return this.props.participantIds;
+    return [...this.props.participantIds];
   }
 
   public get participantsLength(): number {
