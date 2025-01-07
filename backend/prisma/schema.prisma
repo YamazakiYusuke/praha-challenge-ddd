@@ -4,12 +4,109 @@ datasource db {
 }
 
 generator client {
-  previewFeatures = ["nativeTypes"]
   provider        = "prisma-client-js"
 }
 
-model SomeData {
-  id        String    @id
-  required Boolean
-  number   Int     @db.SmallInt
+model Generation {
+  id        String   @id
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  teams     Team[]
+}
+
+model Team {
+  id         String   @id
+  name       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+  pairs      Pair[]
+  participants Participant[]
+  generation  Generation @relation(fields: [generationId], references: [id])
+  generationId String
+}
+
+model Pair {
+  id         String       @id
+  name       String
+  teamId     String
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @default(now()) @updatedAt
+  team       Team         @relation(fields: [teamId], references: [id])
+  participants Participant[]
+}
+
+model Category {
+  id        String      @id
+  name      String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+  assignments Assignment[]
+}
+
+model Assignment {
+  id           String                @id
+  number       Int
+  title        String
+  introduction String
+  content      String
+  categoryId   String
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @default(now()) @updatedAt
+  category     Category              @relation(fields: [categoryId], references: [id])
+  progresses   AssignmentProgress[]
+}
+
+model Participant {
+  id               String               @id
+  name             String
+  email            String
+  enrollmentStatus Int
+  teamId           String?
+  pairId           String?
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @default(now()) @updatedAt
+  team             Team?                @relation(fields: [teamId], references: [id])
+  pair             Pair?                @relation(fields: [pairId], references: [id])
+  progresses       AssignmentProgress[]
+}
+
+model AssignmentProgress {
+  id             String    @id
+  state          Int
+  participantId  String
+  assignmentId   String
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @default(now()) @updatedAt
+  participant    Participant @relation(fields: [participantId], references: [id])
+  assignment     Assignment  @relation(fields: [assignmentId], references: [id])
+}
+
+model Administrator {
+  id        String             @id
+  email     String
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @default(now()) @updatedAt
+  senders   AdminEmailSender[]
+}
+
+model AdminEmail {
+  id           String             @id
+  title        String
+  body         String
+  sentDateTime DateTime?
+  status       Int
+  errorMessage String?
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @default(now()) @updatedAt
+  senders      AdminEmailSender[]
+}
+
+model AdminEmailSender {
+  id              String      @id
+  administratorId String
+  adminEmailId    String
+  createdAt       DateTime    @default(now())
+  administrator   Administrator @relation(fields: [administratorId], references: [id])
+  adminEmail      AdminEmail    @relation(fields: [adminEmailId], references: [id])
 }
