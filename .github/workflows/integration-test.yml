@@ -1,0 +1,53 @@
+name: Integration Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:12
+        ports:
+          - 5402:5432
+        env:
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: prisma2020
+          POSTGRES_DB: prisma
+          POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+          TZ: "Asia/Tokyo"
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Wait for Postgres
+      run: |
+        until pg_isready -h localhost -p 5402; do
+          echo "Waiting for postgres..."
+          sleep 1
+        done
+
+    - name: Change directory
+      run: cd ./backend
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '21.x'
+
+    - name: Install dependencies
+      run: |
+        yarn install
+
+    - name: Run integration tests
+      run: yarn test:integration
+
