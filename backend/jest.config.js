@@ -7,4 +7,5 @@ module.exports = {
   testMatch: ['**/__tests__/**/*.test.[jt]s'],
   testPathIgnorePatterns: ['integration'],
   collectCoverageFrom: ['**/*.(t|j)s'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 }
