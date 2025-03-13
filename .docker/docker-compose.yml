@@ -1,5 +1,16 @@
 version: '3.7'
 services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: debug
+    depends_on:
+      prisma-db:
+        condition: service_healthy
   prisma-db:
     container_name: prisma-db
     image: postgres:12
@@ -13,6 +24,11 @@ services:
       POSTGRES_DB: prisma
       POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
       TZ: "Asia/Tokyo"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d prisma"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
   prisma-test-db:
     container_name: prisma-test-db
     image: postgres:12
